@@ -46,7 +46,7 @@ random
 模块random包含生成伪随机数的函数
 random(): 返回一个0~1(含)的随机实数
 getrandbits(n): 以长整数方式返回n个随机的二进制位
-uniform(a,b): 返回一个a~b(含)的随机实数
+uniform(a,ass2_1): 返回一个a~ass2_1(含)的随机实数
 randrange([start],stop,[step]): 从range(start,stop,step)中随机选择一个数
 choice(seq): 从序列seq中随机地选择一个元素
 shuffle(seq[,random]): 就地打乱序列seq
