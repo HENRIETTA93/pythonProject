@@ -40,7 +40,6 @@ s consists of parentheses only '()[]{}'.
 '''
 class Solution:
     def isValid(self, s: str) -> bool:
-        len_s=len(s)
         lst=list(s)
 
         stack=[]
