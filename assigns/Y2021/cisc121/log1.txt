@@ -1,0 +1,245 @@
+G:\99_PythonProjects\pythonProject\venv\Scripts\python.exe G:/99_PythonProjects/pythonProject/assigns/Y2021/cisc121/game_four_five_six.py
+************Game of Four,Five,Six************
+please input your name: colin
+please input your name: morgan
+----------------------------------------------
+game start!
+two human players are: colin, morgan. a computer player is: computer
+----------------------------------------------
+determine the banker, each player rolls a die
+colin rolls 6.
+morgan rolls 5.
+computer rolls 1.
+the banker is colin
+----------------------------------------------
+----------------------------------------------
+the 1 round plays:
+banker input the bet: 1
+banker-colin places the bets: 1 against morgan
+banker input the bet: 2
+banker-colin places the bets: 2 against computer
+colin rolls a 2,2,3
+morgan rolls a 1,1,2
+computer rolls a 2,5,5
+after round 1, the total chips of three players:
+colin has 6 chips
+morgan has 0 chips
+computer has 0 chips
+----------------------------------------------
+the 2 round plays:
+banker input the bet: 1
+banker-colin places the bets: 1 against morgan
+banker input the bet: 2
+banker-colin places the bets: 2 against computer
+colin rolls a 1,1,2
+morgan rolls a 3,3,5
+computer rolls a 3,5,5
+after round 2, the total chips of three players:
+colin has 6 chips
+morgan has 2 chips
+computer has 4 chips
+----------------------------------------------
+the 3 round plays:
+banker input the bet: 2
+banker-colin places the bets: 2 against morgan
+banker input the bet: 1
+banker-colin places the bets: 1 against computer
+colin rolls a 3,3,4
+morgan rolls a 3,3,6
+computer rolls a 6,6,6
+after round 3, the total chips of three players:
+colin has 6 chips
+morgan has 6 chips
+computer has 6 chips
+----------------------------------------------
+the 4 round plays:
+banker input the bet: 1
+banker-colin places the bets: 1 against morgan
+banker input the bet: 1
+banker-colin places the bets: 1 against computer
+colin rolls a 2,2,4
+morgan rolls a 2,2,6
+computer rolls a 2,3,3
+after round 4, the total chips of three players:
+colin has 8 chips
+morgan has 8 chips
+computer has 6 chips
+----------------------------------------------
+the 5 round plays:
+banker input the bet: 2
+banker-colin places the bets: 2 against morgan
+banker input the bet: 2
+banker-colin places the bets: 2 against computer
+colin rolls a 2,3,3
+morgan rolls a 2,4,4
+computer rolls a 4,4,6
+Two players tie for the highest score, require re-roll!!!
+colin rolls a 3,3,5
+morgan rolls a 2,4,4
+computer rolls a 1,2,3
+after round 5, the total chips of three players:
+colin has 16 chips
+morgan has 8 chips
+computer has 6 chips
+----------------------------------------------
+the 6 round plays:
+banker input the bet: 1
+banker-colin places the bets: 1 against morgan
+banker input the bet: 1
+banker-colin places the bets: 1 against computer
+colin rolls a 3,6,6
+morgan rolls a 5,6,6
+computer rolls a 1,2,2
+after round 6, the total chips of three players:
+colin has 18 chips
+morgan has 10 chips
+computer has 6 chips
+----------------------------------------------
+the 7 round plays:
+banker input the bet: 2
+banker-colin places the bets: 2 against morgan
+banker input the bet: 1
+banker-colin places the bets: 1 against computer
+colin rolls a 5,6,6
+morgan rolls a 2,3,3
+computer rolls a 2,2,5
+Two players tie for the highest score, require re-roll!!!
+colin rolls a 5,6,6
+morgan rolls a 1,1,3
+computer rolls a 2,4,4
+after round 7, the total chips of three players:
+colin has 24 chips
+morgan has 10 chips
+computer has 6 chips
+----------------------------------------------
+the 8 round plays:
+banker input the bet: 2
+banker-colin places the bets: 2 against morgan
+banker input the bet: 1
+banker-colin places the bets: 1 against computer
+colin rolls a 3,5,5
+morgan rolls a 3,6,6
+computer rolls a 4,4,5
+Two players tie for the highest score, require re-roll!!!
+colin rolls a 2,3,3
+morgan rolls a 2,5,5
+computer rolls a 1,1,5
+Two players tie for the highest score, require re-roll!!!
+colin rolls a 4,4,5
+morgan rolls a 4,4,6
+computer rolls a 1,6,6
+after round 8, the total chips of three players:
+colin has 26 chips
+morgan has 14 chips
+computer has 6 chips
+----------------------------------------------
+the 9 round plays:
+banker input the bet: 2
+banker-colin places the bets: 2 against morgan
+banker input the bet: 1
+banker-colin places the bets: 1 against computer
+colin rolls a 1,2,3
+morgan rolls a 2,5,5
+computer rolls a 2,2,4
+after round 9, the total chips of three players:
+colin has 26 chips
+morgan has 18 chips
+computer has 8 chips
+----------------------------------------------
+the 10 round plays:
+banker input the bet: 2
+banker-colin places the bets: 2 against morgan
+banker input the bet: 1
+banker-colin places the bets: 1 against computer
+colin rolls a 1,2,2
+morgan rolls a 3,3,6
+computer rolls a 1,6,6
+Two players tie for the highest score, require re-roll!!!
+colin rolls a 3,3,6
+morgan rolls a 2,2,5
+computer rolls a 2,2,4
+after round 10, the total chips of three players:
+colin has 32 chips
+morgan has 18 chips
+computer has 8 chips
+----------------------------------------------
+the 11 round plays:
+banker input the bet: 2
+banker-colin places the bets: 2 against morgan
+banker input the bet: 1
+banker-colin places the bets: 1 against computer
+colin rolls a 1,1,2
+morgan rolls a 4,5,6
+computer rolls a 1,2,3
+for morgan rolls 456, so morgan becomes new banker in the next round!!!
+after round 11, the total chips of three players:
+colin has 34 chips
+morgan has 22 chips
+computer has 8 chips
+----------------------------------------------
+the 12 round plays:
+banker input the bet: 1
+banker-morgan places the bets: 1 against colin
+banker input the bet: 1
+banker-morgan places the bets: 1 against computer
+morgan rolls a 2,2,6
+colin rolls a 1,6,6
+computer rolls a 3,3,6
+Two players tie for the highest score, require re-roll!!!
+morgan rolls a 2,6,6
+colin rolls a 1,1,4
+computer rolls a 4,6,6
+after round 12, the total chips of three players:
+colin has 36 chips
+morgan has 22 chips
+computer has 10 chips
+----------------------------------------------
+the 13 round plays:
+banker input the bet: 1
+banker-morgan places the bets: 1 against colin
+banker input the bet: 1
+banker-morgan places the bets: 1 against computer
+morgan rolls a 1,2,3
+colin rolls a 1,3,3
+computer rolls a 5,5,6
+after round 13, the total chips of three players:
+colin has 38 chips
+morgan has 22 chips
+computer has 12 chips
+----------------------------------------------
+the 14 round plays:
+banker input the bet: 1
+banker-morgan places the bets: 1 against colin
+banker input the bet: 1
+banker-morgan places the bets: 1 against computer
+morgan rolls a 2,4,4
+colin rolls a 2,3,3
+computer rolls a 4,5,5
+Two players tie for the highest score, require re-roll!!!
+morgan rolls a 3,3,6
+colin rolls a 1,2,3
+computer rolls a 1,1,6
+Two players tie for the highest score, require re-roll!!!
+morgan rolls a 2,5,5
+colin rolls a 3,3,4
+computer rolls a 4,5,5
+after round 14, the total chips of three players:
+colin has 40 chips
+morgan has 22 chips
+computer has 14 chips
+----------------------------------------------
+the 15 round plays:
+banker input the bet: 1
+banker-morgan places the bets: 1 against colin
+banker input the bet: 2
+banker-morgan places the bets: 2 against computer
+morgan rolls a 5,5,6
+colin rolls a 4,6,6
+computer rolls a 2,5,5
+after round 15, the total chips of three players:
+colin has 40 chips
+morgan has 28 chips
+computer has 14 chips
+after round 15, the winner player is colin, the max chips is 40
+
+Process finished with exit code 0

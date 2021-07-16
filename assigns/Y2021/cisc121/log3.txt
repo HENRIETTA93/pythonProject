@@ -1,0 +1,304 @@
+G:\99_PythonProjects\pythonProject\venv\Scripts\python.exe G:/99_PythonProjects/pythonProject/assigns/Y2021/cisc121/game_four_five_six.py
+************Game of Four,Five,Six************
+please input your name: lucy
+please input your name: linda
+----------------------------------------------
+game start!
+two human players are: lucy, linda. a computer player is: computer
+----------------------------------------------
+determine the banker, each player rolls a die
+lucy rolls 6.
+linda rolls 1.
+computer rolls 1.
+the banker is lucy
+----------------------------------------------
+----------------------------------------------
+the 1 round plays:
+banker input the bet: 2
+banker-lucy places the bets: 2 against linda
+banker input the bet: 1
+banker-lucy places the bets: 1 against computer
+lucy rolls a 4,5,5
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a 4,5,6
+computer rolls a 3,3,6
+for linda rolls 456, so linda becomes new banker in the next round!!!
+after round 1, the total chips of three players:
+lucy has 0 chips
+linda has 4 chips
+computer has 2 chips
+----------------------------------------------
+the 2 round plays:
+banker input the bet: 2
+banker-linda places the bets: 2 against lucy
+banker input the bet: 1
+banker-linda places the bets: 1 against computer
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a 4,5,6
+lucy rolls a 2,2,4
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a 4,4,4
+after round 2, the total chips of three players:
+lucy has 0 chips
+linda has 10 chips
+computer has 2 chips
+----------------------------------------------
+the 3 round plays:
+banker input the bet: 2
+banker-linda places the bets: 2 against lucy
+banker input the bet: 3
+banker-linda places the bets: 3 against computer
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a 2,3,3
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a 1,1,5
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a 1,1,5
+after round 3, the total chips of three players:
+lucy has 4 chips
+linda has 10 chips
+computer has 8 chips
+----------------------------------------------
+the 4 round plays:
+banker input the bet: 3
+banker-linda places the bets: 3 against lucy
+banker input the bet: 2
+banker-linda places the bets: 2 against computer
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a 1,5,5
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a 4,4,5
+computer rolls a 1,3,3
+Two players tie for the highest score, require re-roll!!!
+linda rolls a 3,3,6
+lucy rolls a 4,4,5
+computer rolls a 3,4,4
+after round 4, the total chips of three players:
+lucy has 4 chips
+linda has 20 chips
+computer has 8 chips
+----------------------------------------------
+the 5 round plays:
+banker input the bet: 3
+banker-linda places the bets: 3 against lucy
+banker input the bet: 2
+banker-linda places the bets: 2 against computer
+linda rolls a 4,4,6
+lucy rolls a 5,5,6
+computer rolls a 1,2,2
+Two players tie for the highest score, require re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a 3,3,4
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a 1,1,5
+computer rolls a 5,6,6
+after round 5, the total chips of three players:
+lucy has 10 chips
+linda has 20 chips
+computer has 12 chips
+----------------------------------------------
+the 6 round plays:
+banker input the bet: 3
+banker-linda places the bets: 3 against lucy
+banker input the bet: 2
+banker-linda places the bets: 2 against computer
+linda rolls a 3,5,5
+lucy rolls a 2,2,3
+computer rolls a 5,5,5
+Two players tie for the highest score, require re-roll!!!
+linda rolls a 3,3,4
+lucy rolls a 3,3,4
+computer rolls a 1,2,3
+Two players tie for the highest score, require re-roll!!!
+linda rolls a 1,2,3
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a 1,1,2
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a 2,2,3
+after round 6, the total chips of three players:
+lucy has 16 chips
+linda has 20 chips
+computer has 16 chips
+----------------------------------------------
+the 7 round plays:
+banker input the bet: 1
+banker-linda places the bets: 1 against lucy
+banker input the bet: 2
+banker-linda places the bets: 2 against computer
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a 2,2,3
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a 1,1,6
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a 1,5,5
+after round 7, the total chips of three players:
+lucy has 18 chips
+linda has 24 chips
+computer has 16 chips
+----------------------------------------------
+the 8 round plays:
+banker input the bet: 1
+banker-linda places the bets: 1 against lucy
+banker input the bet: 3
+banker-linda places the bets: 3 against computer
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a 3,3,5
+lucy rolls a 1,3,3
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a 1,1,2
+after round 8, the total chips of three players:
+lucy has 18 chips
+linda has 32 chips
+computer has 16 chips
+----------------------------------------------
+the 9 round plays:
+banker input the bet: 1
+banker-linda places the bets: 1 against lucy
+banker input the bet: 3
+banker-linda places the bets: 3 against computer
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a 4,4,6
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a 3,4,4
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a 3,5,5
+after round 9, the total chips of three players:
+lucy has 18 chips
+linda has 40 chips
+computer has 16 chips
+----------------------------------------------
+the 10 round plays:
+banker input the bet: 2
+banker-linda places the bets: 2 against lucy
+banker input the bet: 3
+banker-linda places the bets: 3 against computer
+linda rolls a 1,2,3
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a 5,5,5
+computer rolls a 4,5,6
+for computer rolls 456, so computer becomes new banker in the next round!!!
+after round 10, the total chips of three players:
+lucy has 22 chips
+linda has 40 chips
+computer has 22 chips
+----------------------------------------------
+the 11 round plays:
+banker-computer places the bets: 78 against lucy
+banker-computer places the bets: 48 against linda
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a 5,6,6
+lucy rolls a 3,3,5
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a 3,5,5
+Two players tie for the highest score, require re-roll!!!
+computer rolls a 4,4,6
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a 1,5,5
+linda rolls a 1,1,2
+after round 11, the total chips of three players:
+lucy has 22 chips
+linda has 40 chips
+computer has 274 chips
+----------------------------------------------
+the 12 round plays:
+banker-computer places the bets: 48 against lucy
+banker-computer places the bets: 99 against linda
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a 3,3,5
+lucy rolls a 1,1,5
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a 2,3,3
+Two players tie for the highest score, require re-roll!!!
+computer rolls a 2,2,6
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a 4,5,6
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a 3,5,5
+for lucy rolls 456, so lucy becomes new banker in the next round!!!
+after round 12, the total chips of three players:
+lucy has 118 chips
+linda has 40 chips
+computer has 472 chips
+----------------------------------------------
+the 13 round plays:
+banker input the bet: 2
+banker-lucy places the bets: 2 against linda
+banker input the bet: 3
+banker-lucy places the bets: 3 against computer
+lucy rolls a 1,3,3
+linda rolls a 5,5,5
+computer rolls a fumble -- the player must re-roll!!!
+computer rolls a 1,1,3
+after round 13, the total chips of three players:
+lucy has 118 chips
+linda has 44 chips
+computer has 478 chips
+----------------------------------------------
+the 14 round plays:
+banker input the bet: 1
+banker-lucy places the bets: 1 against linda
+banker input the bet: 3
+banker-lucy places the bets: 3 against computer
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a 4,5,6
+linda rolls a 3,6,6
+computer rolls a 2,2,3
+after round 14, the total chips of three players:
+lucy has 126 chips
+linda has 44 chips
+computer has 478 chips
+----------------------------------------------
+the 15 round plays:
+banker input the bet: 1
+banker-lucy places the bets: 1 against linda
+banker input the bet: 2
+banker-lucy places the bets: 2 against computer
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a fumble -- the player must re-roll!!!
+lucy rolls a 1,5,5
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a fumble -- the player must re-roll!!!
+linda rolls a 2,4,4
+computer rolls a 2,5,5
+after round 15, the total chips of three players:
+lucy has 126 chips
+linda has 46 chips
+computer has 482 chips
+after round 15, the winner player is computer, the max chips is 482
+
+Process finished with exit code 0

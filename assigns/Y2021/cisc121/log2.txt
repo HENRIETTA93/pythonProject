@@ -1,0 +1,194 @@
+G:\99_PythonProjects\pythonProject\venv\Scripts\python.exe G:/99_PythonProjects/pythonProject/assigns/Y2021/cisc121/game_four_five_six.py
+************Game of Four,Five,Six************
+please input your name: jucy
+please input your name: linda
+----------------------------------------------
+game start!
+two human players are: jucy, linda. a computer player is: computer
+----------------------------------------------
+determine the banker, each player rolls a die
+jucy rolls 3.
+linda rolls 2.
+computer rolls 4.
+the banker is computer
+----------------------------------------------
+----------------------------------------------
+the 1 round plays:
+banker-computer places the bets: 36 against jucy
+banker-computer places the bets: 10 against linda
+computer rolls a 1,2,3
+jucy rolls a 1,3,3
+linda rolls a 2,3,3
+after round 1, the total chips of three players:
+jucy has 72 chips
+linda has 20 chips
+computer has 0 chips
+----------------------------------------------
+the 2 round plays:
+banker-computer places the bets: 43 against jucy
+banker-computer places the bets: 40 against linda
+computer rolls a 3,3,4
+jucy rolls a 1,4,4
+linda rolls a 2,2,5
+after round 2, the total chips of three players:
+jucy has 72 chips
+linda has 100 chips
+computer has 86 chips
+----------------------------------------------
+the 3 round plays:
+banker-computer places the bets: 45 against jucy
+banker-computer places the bets: 42 against linda
+computer rolls a 1,2,2
+jucy rolls a 1,1,6
+linda rolls a 6,6,6
+after round 3, the total chips of three players:
+jucy has 162 chips
+linda has 184 chips
+computer has 86 chips
+----------------------------------------------
+the 4 round plays:
+banker-computer places the bets: 44 against jucy
+banker-computer places the bets: 35 against linda
+computer rolls a 2,6,6
+jucy rolls a 3,5,5
+linda rolls a 4,5,6
+for linda rolls 456, so linda becomes new banker in the next round!!!
+after round 4, the total chips of three players:
+jucy has 250 chips
+linda has 254 chips
+computer has 86 chips
+----------------------------------------------
+the 5 round plays:
+banker input the bet: 2
+banker-linda places the bets: 2 against jucy
+banker input the bet: 1
+banker-linda places the bets: 1 against computer
+linda rolls a 3,3,5
+jucy rolls a 1,2,3
+computer rolls a 1,6,6
+after round 5, the total chips of three players:
+jucy has 250 chips
+linda has 260 chips
+computer has 86 chips
+----------------------------------------------
+the 6 round plays:
+banker input the bet: 2
+banker-linda places the bets: 2 against jucy
+banker input the bet: 1
+banker-linda places the bets: 1 against computer
+linda rolls a 1,3,3
+jucy rolls a 2,2,3
+computer rolls a 2,2,4
+after round 6, the total chips of three players:
+jucy has 254 chips
+linda has 260 chips
+computer has 88 chips
+----------------------------------------------
+the 7 round plays:
+banker input the bet: 2
+banker-linda places the bets: 2 against jucy
+banker input the bet: 1
+banker-linda places the bets: 1 against computer
+linda rolls a 1,1,2
+jucy rolls a 5,5,6
+computer rolls a 4,5,6
+for computer rolls 456, so computer becomes new banker in the next round!!!
+after round 7, the total chips of three players:
+jucy has 258 chips
+linda has 260 chips
+computer has 90 chips
+----------------------------------------------
+the 8 round plays:
+banker-computer places the bets: 34 against jucy
+banker-computer places the bets: 85 against linda
+computer rolls a 3,6,6
+jucy rolls a 5,5,6
+linda rolls a 4,4,5
+after round 8, the total chips of three players:
+jucy has 326 chips
+linda has 430 chips
+computer has 90 chips
+----------------------------------------------
+the 9 round plays:
+banker-computer places the bets: 10 against jucy
+banker-computer places the bets: 92 against linda
+computer rolls a 1,1,2
+jucy rolls a 1,1,6
+linda rolls a 4,4,4
+after round 9, the total chips of three players:
+jucy has 346 chips
+linda has 614 chips
+computer has 90 chips
+----------------------------------------------
+the 10 round plays:
+banker-computer places the bets: 18 against jucy
+banker-computer places the bets: 11 against linda
+computer rolls a 1,1,6
+jucy rolls a 1,2,3
+linda rolls a 1,2,3
+after round 10, the total chips of three players:
+jucy has 346 chips
+linda has 614 chips
+computer has 148 chips
+----------------------------------------------
+the 11 round plays:
+banker-computer places the bets: 68 against jucy
+banker-computer places the bets: 22 against linda
+computer rolls a 2,4,4
+jucy rolls a 1,2,3
+linda rolls a 1,1,4
+after round 11, the total chips of three players:
+jucy has 346 chips
+linda has 658 chips
+computer has 284 chips
+----------------------------------------------
+the 12 round plays:
+banker-computer places the bets: 4 against jucy
+banker-computer places the bets: 41 against linda
+computer rolls a 2,3,3
+jucy rolls a 1,1,4
+linda rolls a 1,6,6
+after round 12, the total chips of three players:
+jucy has 354 chips
+linda has 658 chips
+computer has 366 chips
+----------------------------------------------
+the 13 round plays:
+banker-computer places the bets: 34 against jucy
+banker-computer places the bets: 69 against linda
+computer rolls a 1,1,5
+jucy rolls a 1,5,5
+linda rolls a 1,1,1
+after round 13, the total chips of three players:
+jucy has 354 chips
+linda has 796 chips
+computer has 434 chips
+----------------------------------------------
+the 14 round plays:
+banker-computer places the bets: 70 against jucy
+banker-computer places the bets: 62 against linda
+computer rolls a 2,5,5
+jucy rolls a 2,5,5
+linda rolls a 2,2,3
+Two players tie for the highest score, require re-roll!!!
+computer rolls a 3,6,6
+jucy rolls a 2,3,3
+linda rolls a 4,4,6
+after round 14, the total chips of three players:
+jucy has 354 chips
+linda has 920 chips
+computer has 574 chips
+----------------------------------------------
+the 15 round plays:
+banker-computer places the bets: 36 against jucy
+banker-computer places the bets: 91 against linda
+computer rolls a 1,1,3
+jucy rolls a 5,6,6
+linda rolls a 2,2,6
+after round 15, the total chips of three players:
+jucy has 426 chips
+linda has 1102 chips
+computer has 574 chips
+after round 15, the winner player is linda, the max chips is 1102
+
+Process finished with exit code 0

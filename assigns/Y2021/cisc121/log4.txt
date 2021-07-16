@@ -1,0 +1,264 @@
+************Game of Four,Five,Six************
+please input your name: joy
+please input your name: lucy
+----------------------------------------------
+game start!
+two human players are: joy, lucy. a computer player is: computer
+----------------------------------------------
+determine the banker, each player rolls a die
+joy rolls 4.
+lucy rolls 5.
+computer rolls 2.
+the banker is lucy
+----------------------------------------------
+----------------------------------------------
+the 1 round plays:
+banker input the bet: 1
+banker-lucy places the bets: 1 against joy
+banker input the bet: 2
+banker-lucy places the bets: 2 against computer
+lucy rolls a 1,6,6
+joy rolls a 1,5,6, it's a fumble -- the player must re-roll!!!
+joy rolls a 1,4,6, it's a fumble -- the player must re-roll!!!
+joy rolls a 1,1,3
+computer rolls a 2,4,4
+after round 1, the total chips of three players:
+joy has 2 chips
+lucy has 0 chips
+computer has 4 chips
+----------------------------------------------
+the 2 round plays:
+banker input the bet: 3
+banker-lucy places the bets: 3 against joy
+banker input the bet: 1
+banker-lucy places the bets: 1 against computer
+lucy rolls a 2,3,5, it's  a fumble -- the player must re-roll!!!
+lucy rolls a 2,2,6
+joy rolls a 4,4,5
+computer rolls a 1,3,5, it's a fumble -- the player must re-roll!!!
+computer rolls a 2,4,6, it's a fumble -- the player must re-roll!!!
+computer rolls a 4,5,6
+for computer rolls 456, so computer becomes new banker in the next round!!!
+after round 2, the total chips of three players:
+joy has 2 chips
+lucy has 6 chips
+computer has 6 chips
+----------------------------------------------
+the 3 round plays:
+banker-computer places the bets: 79 against joy
+banker-computer places the bets: 22 against lucy
+computer rolls a 2,3,4, it's  a fumble -- the player must re-roll!!!
+computer rolls a 4,6,6
+joy rolls a 1,1,5
+lucy rolls a 1,2,4, it's a fumble -- the player must re-roll!!!
+lucy rolls a 1,2,6, it's a fumble -- the player must re-roll!!!
+lucy rolls a 2,2,3
+after round 3, the total chips of three players:
+joy has 160 chips
+lucy has 6 chips
+computer has 50 chips
+----------------------------------------------
+the 4 round plays:
+banker-computer places the bets: 35 against joy
+banker-computer places the bets: 19 against lucy
+computer rolls a 2,3,6, it's  a fumble -- the player must re-roll!!!
+computer rolls a 3,3,5
+joy rolls a 1,2,5, it's a fumble -- the player must re-roll!!!
+joy rolls a 1,6,6
+lucy rolls a 2,3,5, it's a fumble -- the player must re-roll!!!
+lucy rolls a 3,4,4
+after round 4, the total chips of three players:
+joy has 160 chips
+lucy has 6 chips
+computer has 158 chips
+----------------------------------------------
+the 5 round plays:
+banker-computer places the bets: 64 against joy
+banker-computer places the bets: 53 against lucy
+computer rolls a 2,5,6, it's  a fumble -- the player must re-roll!!!
+computer rolls a 2,5,5
+joy rolls a 5,5,6
+lucy rolls a 1,4,5, it's a fumble -- the player must re-roll!!!
+lucy rolls a 3,6,6
+after round 5, the total chips of three players:
+joy has 288 chips
+lucy has 112 chips
+computer has 158 chips
+----------------------------------------------
+the 6 round plays:
+banker-computer places the bets: 52 against joy
+banker-computer places the bets: 4 against lucy
+computer rolls a 5,6,6
+joy rolls a 1,2,6, it's a fumble -- the player must re-roll!!!
+joy rolls a 1,3,5, it's a fumble -- the player must re-roll!!!
+joy rolls a 1,2,4, it's a fumble -- the player must re-roll!!!
+joy rolls a 2,4,6, it's a fumble -- the player must re-roll!!!
+joy rolls a 2,3,6, it's a fumble -- the player must re-roll!!!
+joy rolls a 2,2,3
+lucy rolls a 1,2,3
+after round 6, the total chips of three players:
+joy has 288 chips
+lucy has 112 chips
+computer has 270 chips
+----------------------------------------------
+the 7 round plays:
+banker-computer places the bets: 87 against joy
+banker-computer places the bets: 27 against lucy
+computer rolls a 1,4,6, it's  a fumble -- the player must re-roll!!!
+computer rolls a 1,5,6, it's  a fumble -- the player must re-roll!!!
+computer rolls a 1,5,6, it's  a fumble -- the player must re-roll!!!
+computer rolls a 2,5,6, it's  a fumble -- the player must re-roll!!!
+computer rolls a 1,4,5, it's  a fumble -- the player must re-roll!!!
+computer rolls a 2,5,6, it's  a fumble -- the player must re-roll!!!
+computer rolls a 2,4,6, it's  a fumble -- the player must re-roll!!!
+computer rolls a 1,2,3
+joy rolls a 3,3,6
+lucy rolls a 1,1,3
+after round 7, the total chips of three players:
+joy has 462 chips
+lucy has 166 chips
+computer has 270 chips
+----------------------------------------------
+the 8 round plays:
+banker-computer places the bets: 92 against joy
+banker-computer places the bets: 26 against lucy
+computer rolls a 1,3,3
+joy rolls a 3,4,6, it's a fumble -- the player must re-roll!!!
+joy rolls a 2,5,6, it's a fumble -- the player must re-roll!!!
+joy rolls a 3,5,6, it's a fumble -- the player must re-roll!!!
+joy rolls a 2,3,4, it's a fumble -- the player must re-roll!!!
+joy rolls a 1,2,3
+lucy rolls a 4,4,4
+after round 8, the total chips of three players:
+joy has 462 chips
+lucy has 218 chips
+computer has 454 chips
+----------------------------------------------
+the 9 round plays:
+banker-computer places the bets: 5 against joy
+banker-computer places the bets: 73 against lucy
+computer rolls a 6,6,6
+joy rolls a 1,3,4, it's a fumble -- the player must re-roll!!!
+joy rolls a 1,5,6, it's a fumble -- the player must re-roll!!!
+joy rolls a 1,3,6, it's a fumble -- the player must re-roll!!!
+joy rolls a 3,5,5
+lucy rolls a 1,1,3
+after round 9, the total chips of three players:
+joy has 462 chips
+lucy has 218 chips
+computer has 610 chips
+----------------------------------------------
+the 10 round plays:
+banker-computer places the bets: 7 against joy
+banker-computer places the bets: 69 against lucy
+computer rolls a 2,2,2
+joy rolls a 1,5,6, it's a fumble -- the player must re-roll!!!
+joy rolls a 1,2,5, it's a fumble -- the player must re-roll!!!
+joy rolls a 1,5,5
+lucy rolls a 4,5,6
+for lucy rolls 456, so lucy becomes new banker in the next round!!!
+after round 10, the total chips of three players:
+joy has 462 chips
+lucy has 356 chips
+computer has 624 chips
+----------------------------------------------
+the 11 round plays:
+banker input the bet: 2
+banker-lucy places the bets: 2 against joy
+banker input the bet: 1
+banker-lucy places the bets: 1 against computer
+lucy rolls a 1,1,4
+joy rolls a 3,3,4
+computer rolls a 1,2,6, it's a fumble -- the player must re-roll!!!
+computer rolls a 2,4,4
+Two players tie for the highest score, require re-roll!!!
+lucy rolls a 3,3,6
+joy rolls a 1,3,5, it's a fumble -- the player must re-roll!!!
+joy rolls a 1,4,6, it's a fumble -- the player must re-roll!!!
+joy rolls a 1,4,4
+computer rolls a 1,4,6, it's a fumble -- the player must re-roll!!!
+computer rolls a 3,4,6, it's a fumble -- the player must re-roll!!!
+computer rolls a 2,3,5, it's a fumble -- the player must re-roll!!!
+computer rolls a 2,6,6
+after round 11, the total chips of three players:
+joy has 462 chips
+lucy has 362 chips
+computer has 624 chips
+----------------------------------------------
+the 12 round plays:
+banker input the bet: 2
+banker-lucy places the bets: 2 against joy
+banker input the bet: 1
+banker-lucy places the bets: 1 against computer
+lucy rolls a 2,3,4, it's  a fumble -- the player must re-roll!!!
+lucy rolls a 2,3,5, it's  a fumble -- the player must re-roll!!!
+lucy rolls a 3,4,4
+joy rolls a 3,5,5
+computer rolls a 2,3,4, it's a fumble -- the player must re-roll!!!
+computer rolls a 1,5,6, it's a fumble -- the player must re-roll!!!
+computer rolls a 1,2,5, it's a fumble -- the player must re-roll!!!
+computer rolls a 1,1,6
+Two players tie for the highest score, require re-roll!!!
+lucy rolls a 1,2,4, it's  a fumble -- the player must re-roll!!!
+lucy rolls a 2,5,6, it's  a fumble -- the player must re-roll!!!
+lucy rolls a 2,3,4, it's  a fumble -- the player must re-roll!!!
+lucy rolls a 2,6,6
+joy rolls a 4,5,6
+computer rolls a 1,5,5
+for joy rolls 456, so joy becomes new banker in the next round!!!
+after round 12, the total chips of three players:
+joy has 466 chips
+lucy has 364 chips
+computer has 624 chips
+----------------------------------------------
+the 13 round plays:
+banker input the bet: 2
+banker-joy places the bets: 2 against lucy
+banker input the bet: 1
+banker-joy places the bets: 1 against computer
+joy rolls a 3,4,5, it's  a fumble -- the player must re-roll!!!
+joy rolls a 4,6,6
+lucy rolls a 1,4,5, it's a fumble -- the player must re-roll!!!
+lucy rolls a 2,5,6, it's a fumble -- the player must re-roll!!!
+lucy rolls a 2,4,5, it's a fumble -- the player must re-roll!!!
+lucy rolls a 1,2,6, it's a fumble -- the player must re-roll!!!
+lucy rolls a 3,5,5
+computer rolls a 1,6,6
+after round 13, the total chips of three players:
+joy has 472 chips
+lucy has 364 chips
+computer has 624 chips
+----------------------------------------------
+the 14 round plays:
+banker input the bet: 2
+banker-joy places the bets: 2 against lucy
+banker input the bet: 1
+banker-joy places the bets: 1 against computer
+joy rolls a 1,2,3
+lucy rolls a 3,5,5
+computer rolls a 2,3,6, it's a fumble -- the player must re-roll!!!
+computer rolls a 2,4,5, it's a fumble -- the player must re-roll!!!
+computer rolls a 2,5,6, it's a fumble -- the player must re-roll!!!
+computer rolls a 2,3,4, it's a fumble -- the player must re-roll!!!
+computer rolls a 2,3,4, it's a fumble -- the player must re-roll!!!
+computer rolls a 2,2,3
+after round 14, the total chips of three players:
+joy has 472 chips
+lucy has 368 chips
+computer has 626 chips
+----------------------------------------------
+the 15 round plays:
+banker input the bet: 2
+banker-joy places the bets: 2 against lucy
+banker input the bet: 12
+banker-joy places the bets: 12 against computer
+joy rolls a 3,3,4
+lucy rolls a 1,2,6, it's a fumble -- the player must re-roll!!!
+lucy rolls a 5,6,6
+computer rolls a 2,2,6
+after round 15, the total chips of three players:
+joy has 472 chips
+lucy has 372 chips
+computer has 650 chips
+after round 15, the winner player is computer, the max chips is 650
+game over!
