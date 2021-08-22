@@ -1,0 +1,10 @@
+﻿pclass,survived,name,sex,age,sibsp,parch,ticket,fare,cabin,embarked,boat,body,home.dest
+3,1,"Yasbeck, Mrs. Antoni (Selini Alexander)",female,15,1,0,2659,14.4542,,C,,,
+3,0,"Youseff, Mr. Gerious",male,45.5,0,0,2628,7.2250,,C,,312,
+3,0,"Yousif, Mr. Wazli",male,,0,0,2647,7.2250,,C,,,
+3,0,"Yousseff, Mr. Gerious",male,,0,0,2627,14.4583,,C,,,
+3,0,"Zabour, Miss. Hileni",female,14.5,1,0,2665,14.4542,,C,,328,
+3,0,"Zabour, Miss. Thamine",female,,1,0,2665,14.4542,,C,,,
+3,0,"Zakarian, Mr. Mapriededer",male,26.5,0,0,2656,7.2250,,C,,304,
+3,0,"Zakarian, Mr. Ortin",male,27,0,0,2670,7.2250,,C,,,
+3,0,"Zimmerman, Mr. Leo",male,29,0,0,315082,7.8750,,S,,,
