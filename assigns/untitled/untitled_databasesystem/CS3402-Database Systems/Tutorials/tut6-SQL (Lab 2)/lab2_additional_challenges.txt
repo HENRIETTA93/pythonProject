@@ -1,0 +1,10 @@
+List the names of all employees that were hired in the year 1981 and whose name is at least 5 characters long.
+Solution:
+select ename from emp where hiredate between '01-JAN-81' and '31-DEC-81' and length(ename) >= 5
+
+List the names of all employees in alphabetical order that are clerks, managers, or analysts, and who are not managed by JAMES or ADAMS.
+Solution:
+select ename from emp
+where job in ('CLERK','MANAGER','ANALYST')
+and mgr not in (select empno from emp E where E.ename in ('JAMES','ADAMS'))
+order by ename
