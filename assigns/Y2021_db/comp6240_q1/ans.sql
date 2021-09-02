@@ -31,7 +31,7 @@ select number_crews
 from
 (
 select c.title, c.production_year, count(c.id) as number_crews
-from CREW
+from CREW c
 group by c.title, c.production_year
 order by count(c.id) desc
 ) t;
