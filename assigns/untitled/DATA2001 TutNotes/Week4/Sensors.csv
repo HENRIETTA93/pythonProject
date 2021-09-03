@@ -1,0 +1,8 @@
+sensor,description,metric
+levl,Level - Stream Water (Gauge Height),meter
+temp,Water Temperature,celsius
+disc,Discharge Rate,ML/d
+disvol,Discharge Volume,ML
+ph,pH Value,pH
+ec25,Electrical Conductivity @25 C,us/cm
+ec,Electrical Conductivity (uncorrected),us/cm
