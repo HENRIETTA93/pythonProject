@@ -114,7 +114,7 @@ insert into opt_email_info values(3,'2021-08-22','deposit','wrong email address'
 insert into opt_email_info values(4,'2021-08-28','deposit','interested in savings','in',2,2,'131001111@gmail.com');
 insert into opt_email_info values(5,'2021-08-29','repayment','contest January','in',null,3,'181122341@gmail.com');
 
-insert into opt_phone_info value(1,'2021-06-21','credit card','not interested','out',null,5,131345171);
+insert into opt_phone_info values(1,'2021-06-21','credit card','not interested','out',null,5,131345171);
 insert into opt_phone_info values(2,'2021-08-21','deposit','too much communication','out',null,6,13802341);
 insert into opt_phone_info values(3,'2021-08-22','deposit','wrong phone number','out',null,3,13102341);
 insert into opt_phone_info values(4,'2021-08-28','deposit','interested in savings','in',2,6,13802341);
@@ -174,6 +174,46 @@ left join current_account ca on a.AccountId = ca.AccountId
 where year(now())-year(p.BirthDate)>18 and a.Balance>1000
 and oei.InOutFlag='in'
 and sa.InterestRate is not null and (ca.Flag!='Credit' or ca.Flag is null);
+
+
+
+
+
+
+-- sql server queries
+-- 1
+select distinct ec.Email
+from person p join email_chl ec on p.PersonId = ec.PersonId
+join opt_email_info oei on ec.PersonId = oei.PersonId and ec.Email = oei.Email
+where oei.OptReason like '%too much communication%' and datediff(MONTH,oei.OptDate,getdate())<=6;
+
+-- 2
+
+select p.*, pc.PhoneNbr
+from person p join account a on p.PersonId = a.PersonId
+join phone_chl pc on a.PersonId = pc.PersonId
+join opt_phone_info opi on pc.PersonId = opi.PersonId and pc.PhoneNbr = opi.PhoneNbr
+left join saving_account sa on a.AccountId = sa.AccountId
+left join term_deposit td on a.AccountId = td.AccountId
+where a.Balance>10000 and td.InterestRate is null and sa.InterestRate is not null
+and opi.InOutFlag='in';
+
+-- 3
+select p.FirstName,p.LastName,datename(month,p.BirthDate) as monthBirth,
+case when a.Balance>=1000 and a.Balance<5000 then 'Light saver'
+when a.Balance>=5000 and a.Balance<25000 then 'Medium saver'
+when a.Balance>25000 then 'Heavy saver' end as balanceCategory
+from person p join email_chl ec on p.PersonId = ec.PersonId
+join opt_email_info oei on ec.PersonId = oei.PersonId and ec.Email = oei.Email
+join account a on p.PersonId = a.PersonId
+left join saving_account sa on a.AccountId = sa.AccountId
+left join current_account ca on a.AccountId = ca.AccountId
+where year(getdate())-year(p.BirthDate)>18 and a.Balance>1000
+and oei.InOutFlag='in'
+and sa.InterestRate is not null and (ca.Flag!='Credit' or ca.Flag is null);
+
+
+
 
 -- below draft--
 -- queries
