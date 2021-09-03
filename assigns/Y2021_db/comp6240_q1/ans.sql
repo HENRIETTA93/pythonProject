@@ -62,6 +62,7 @@ having count(w.id)=1
 
 #9
 select t.id
+from
 (
 select distinct d.id
 from DIRECTOR d
@@ -73,7 +74,7 @@ group by t.id
 order by count(d1.title) desc limit 1;
 
 #10
-select t1.id, p.first_name, p.last_name
+select p.first_name, p.last_name
 from
 (
 select d.id, count(d.title) as m_num
