@@ -1,0 +1,40 @@
+
+本次设计主要分为4个module
+其中：
+csvHandler.py 处理csv 文件，主要事读和写文件
+注：写文件可以指定文件名，如果用原来给的csv文件名也可以
+
+
+inputCheck.py 主要是检查模块，对于要用户输入的信息根据题目要求做检查
+里面的的每个函数都是检查函数
+例如：def checkIDnumber(idnumber) 检查输入的id号码是不是5个数字
+
+handleData.py 主要是数据处理模块，是本次设计的核心模块，主要是对集合的增、删、改、查
+
+main.py 模块是主模块，调用其他模块
+主模块会提示用户输入信息，根据提示做响应的操作，主要是调用数据处理模块
+
+
+
+# result_calllog=hdata.retriveRecords(csv_content)
+# print('--------------retrive all records---------------------')
+# hdata.displayRecords(result_calllog)
+# result_calllog=hdata.retriveRecords(csv_content,'department','BYLAW')
+# print('--------------retrive bylaw records---------------------')
+#
+# hdata.displayRecords(result_calllog)
+#
+# hdata.displayRecords([])
+#
+# result_calllog=hdata.retriveRecords(csv_content)
+# hdata.removeRecords('12345',result_calllog)
+# print('--------------retrive all records---------------------')
+#
+# hdata.displayRecords(result_calllog)
+#
+# hdata.updateRecords('19394','department name','FIRE',result_calllog)
+# print('--------------retrive all records---------------------')
+#
+# hdata.displayRecords(result_calllog)
+#
+
