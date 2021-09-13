@@ -1,0 +1,117 @@
+SQL> spool off;
+SQL> set echo off
+SQL> spool output.txt
+SQL> drop table ClassStaff;
+
+Table CLASSSTAFF已删除。
+
+SQL> drop table MemberAttend;
+
+Table MEMBERATTEND已删除。
+
+SQL> drop table ClassMember;
+
+Table CLASSMEMBER已删除。
+
+SQL> drop table CentreClass;
+
+Table CENTRECLASS已删除。
+
+SQL> drop table Class;
+
+Table CLASS已删除。
+
+SQL> drop table Centre;
+
+Table CENTRE已删除。
+
+SQL> drop table StaffMember;
+
+Table STAFFMEMBER已删除。
+
+SQL> drop table Address;
+
+Table ADDRESS已删除。
+
+SQL> create table Address(
+Postcode varchar2(20) primary key,
+Town varchar2(50),
+Street varchar2(50)
+);
+
+Table ADDRESS 已创建。
+
+SQL> create table Centre(
+CentreID Number(5) primary key,
+CentreName varchar2(50),
+Postcode varchar2(20),
+foreign key(Postcode) references Address(Postcode)
+);
+
+Table CENTRE 已创建。
+
+SQL> create table Class(
+ClassNumber Number(5) primary key,
+ClassType varchar2(20),
+ClassDescription varchar2(40),
+FacilityRoomNo Number(5),
+StartDate Date,
+StartTime Timestamp,
+NoofSessions Number(5)
+);
+
+Table CLASS 已创建。
+
+SQL> create table CentreClass(
+CentreID Number(5),
+ClassNumber Number(5),
+primary key (CentreID, ClassNumber),
+foreign key(CentreID) references Centre(CentreID),
+foreign key(ClassNumber) references Class(ClassNumber)
+);
+
+Table CENTRECLASS 已创建。
+
+SQL> create table ClassMember(
+ClassNumber Number(5),
+MemberNo Number(5),
+PaymentDate Date,
+TotalAttendance Number(5),
+primary key(ClassNumber,MemberNo),
+foreign key(ClassNumber) references Class(ClassNumber)
+);
+
+Table CLASSMEMBER 已创建。
+
+SQL> create table MemberAttend(
+ClassNumber Number(5),
+MemberNo Number(5),
+SessionDate Date,
+Attendance varchar2(20),
+primary key(ClassNumber,MemberNo,SessionDate),
+foreign key(ClassNumber,MemberNo) references ClassMember(ClassNumber,MemberNo)
+);
+
+Table MEMBERATTEND 已创建。
+
+SQL> create table StaffMember(
+StaffID Number(5) primary key,
+StaffName varchar2(20),
+ClassLeader varchar2(5),
+FirstAidCertified varchar2(5)
+);
+
+Table STAFFMEMBER 已创建。
+
+SQL> create table ClassStaff(
+ClassNumber Number(5),
+StaffID Number(5),
+primary key(ClassNumber,StaffID),
+foreign key(ClassNumber) references Class(ClassNumber),
+foreign key(StaffID) references StaffMember(StaffID)
+);
+
+Table CLASSSTAFF 已创建。
+
+SQL> spool off;
+SQL> set echo off
