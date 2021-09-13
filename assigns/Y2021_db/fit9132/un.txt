@@ -1,0 +1,53 @@
+UNF
+MMMemberAttendance: (CentreID, CentreName, (ClassNumber, ClassType, ClassDescription, FacilityRoomNo, StartDate,StartTime,NoofSessions,
+(MemberNo, PaymentDate, TotalAttendance,(SessionDate, Attendance)))
+)
+MMClassStaff: (CentreID, CentreName, Street, Town, Postcode, (ClassNumber, ClassDuration, FacilityRoomNo, StartDate,StartTime,NoofSessions,
+(StaffID, StaffName, ClassLeader, FirstAidCertified))
+)
+
+1NF
+Centre: (CentreID, CentreName, Street, Town, Postcode)
+Class: (CentreID, ClassNumber, ClassType, ClassDescription, ClassDuration, FacilityRoomNo, StartDate,StartTime,NoofSessions)
+ClassMember: (CentreID, ClassNumber, MemberNo, PaymentDate, TotalAttendance)
+MemberAttend: (CentreID, ClassNumber, MemberNo, SessionDate, Attendance)
+Staff: (CentreID, ClassNumber, StaffID, StaffName, ClassLeader, FirstAidCertified)
+
+
+Partital dependencies:
+ClassNumber -> ClassType, ClassDescription, FacilityRoomNo, StartDate,StartTime,NoofSessions
+ClassNumber, MemberNo->PaymentDate, TotalAttendance
+ClassNumber, MemberNo, SessionDate -> Attendance
+StaffID -> StaffName, ClassLeader, FirstAidCertified
+
+2NF
+Centre: (CentreID, CentreName, Street, Town, Postcode)
+CentreClass: (CentreID, ClassNumber)
+Class: (ClassNumber, ClassType, ClassDescription, FacilityRoomNo, StartDate,StartTime,NoofSessions)
+ClassMember: (ClassNumber, MemberNo, PaymentDate, TotalAttendance)
+MemberAttend: (ClassNumber, MemberNo, SessionDate, Attendance)
+Staff: (StaffID, StaffName, ClassLeader, FirstAidCertified)
+ClassStaff: (ClassNumber, StaffID)
+
+
+Transitive dependencies:
+Postcode -> Town, Street
+
+3NF
+Address: (Postcode, Town, Street)
+Centre: (CentreID, CentreName, Postcode)
+CentreClass: (CentreID, ClassNumber)
+Class: (ClassNumber, ClassType, ClassDescription, FacilityRoomNo, StartDate,StartTime,NoofSessions)
+ClassMember: (ClassNumber, MemberNo, PaymentDate, TotalAttendance)
+MemberAttend: (ClassNumber, MemberNo, SessionDate, Attendance)
+Staff: (StaffID, StaffName, ClassLeader, FirstAidCertified)
+ClassStaff: (ClassNumber, StaffID)
+
+
+final dependencies：
+Postcode -> Town, Street
+CentreID -> CentreName, Postcode
+ClassNumber -> ClassType, ClassDescription, FacilityRoomNo, StartDate,StartTime,NoofSessions, CentreID
+ClassNumber, MemberNo -> PaymentDate, TotalAttendance
+ClassNumber, MemberNo, SessionDate -> Attendance
+StaffID -> StaffName, ClassLeader, FirstAidCertified
