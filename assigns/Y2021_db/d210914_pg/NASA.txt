@@ -1,0 +1,2818 @@
+-- 
+-- The NASA Database, Version 2
+--
+-- This database describes the United States space program, up to AND
+-- INCLUDING space shuttle.  
+--
+-- If you are concerned that NASA history is not relevant
+-- to a Business-oriented student, you are wrong: Forom a business perspective
+-- these are just projects, and the astronauts are 'just' workers assigned to
+-- one or more tasks (ie. missions).
+--
+-- Prior to the shuttle, NASA ran five different 'manned' space projects:
+-- 
+-- Project Mercury (1961-63): The six missions of this project carried a
+-- single astronaut, the 'pilot'. The first two missions were sub-orbital
+-- (missionType = 'SO') and four missions that took the astronauts INTO
+-- Earth orbit (missionType = 'EO').
+-- 
+-- Project Gemini (1965-66):  Each of the 10 manned missions of this
+-- program carried two astronauts, the 'Commander' and 'Pilot', INTO Earth
+-- orbit (missionType = 'EO'). (The first manned mission was number 3, the
+-- first two were unmanned tests.)
+-- 
+-- Project Apollo (1967-1972): Each of these missions carried three
+-- astronauts, the 'Commander', 'Command Module Pilot', and 'Lunar Module
+-- Pilot.  Most missions used two spacecraft, the 'Command Service Module'
+-- (craftType='CSM') and the 'Lunar Module' (craftType='LM').  In most
+-- missions (missionType = 'LL'), the Command Module Pilot would stay in
+-- lunar orbit in the CSM, while the Commander and Lunar Module Pilot
+-- descended in the LM.  Apollo 11 was the first mission to land on the
+-- moon.  Earlier missions were test flights.  Apollo 1 did not fly
+-- (hence the missionType of this mission has been left null). The crew of
+-- Apollo 1 was killed while testing the spacecraft on the launch pad.
+-- The first manned Apollo mission was Apollo 7.  It tested a CSM in earth
+-- orbit (missionType = 'EO') and did not have a lunar module.  Apollo 8
+-- tested a CSM in lunar orbit (missionType = 'LO') and also did not have
+-- a lunar module.  Apollo 9 tested a LM in Earth orbit, and Apollo 10
+-- tested a LM in lunar orbit.  From Apollo 11 onward, all missions landed
+-- on the moon (missionType = 'LL'), with one exception, Apollo 13, which
+-- aborted its mission on the way to the moon, and looped round the moon
+-- without entering orbit (a 'Fly By', missionType='LF').
+-- 
+-- Project Skylab (1973):  Skylab 1 was the launch of the first US space
+-- station, in Earth orbit.   Each of Skylab missions 2 to 4 took a
+-- three-man crew to the Skylab station in an Apollo CSM. The third member
+-- of each crew was called the scientist (not Lunar Module Pilot).
+-- 
+-- Project Apollo-Soyuz (1975): A three-man crew in an Apollo CSM docked
+-- with a Russian Soyuz spacecraft in Earth orbit.  The third member of
+-- that crew was called the Docking Module Pilot (not Lunar Module Pilot).
+
+DROP view ShuttleMission CASCADE;
+DROP view ShuttleCrew CASCADE;
+
+DROP table NASA2_Assigned CASCADE;
+DROP table NASA2_SpaceCraft CASCADE;
+DROP table NASA2_Mission CASCADE;
+DROP table NASA2_Astronaut CASCADE;
+DROP table NASA2_Projects CASCADE;
+
+
+Create table NASA2_Projects
+(
+	project		TEXT,
+	
+	CONSTRAINT NASA2_ProjectsPK PRIMARY KEY (project)
+);
+
+Create table NASA2_Astronaut
+(
+	astroNo		integer,
+	astroName	TEXT	 NOT NULL,
+	birth		integer,
+	death		integer,
+	country         TEXT,
+	gender	        char(1),
+
+	CONSTRAINT nasa2_astronaut_pk PRIMARY KEY (astroNo),
+
+        CONSTRAINT di_table_nasa2_astronaut_birth CHECK (birth >= 1900 AND
+                                                         birth <= 1999),
+
+        CONSTRAINT di_table_nasa2_astronaut_death CHECK 
+                    ((death IS NULL) OR ((death > birth) AND (death < 2010))),
+
+        CONSTRAINT di_table_nasa2_astronaut_gender CHECK (gender IN (
+                'M',   -- Male
+                'F'))  -- Female
+);
+
+Create table NASA2_Mission
+(
+	projectName 	TEXT       NOT NULL,
+	missionNo	TEXT       NOT NULL,
+	missionType 	char(2)    NOT NULL,
+	launchYear	integer    NOT NULL,
+	launchMonth	integer    NOT NULL,
+	launchDay	integer    NOT NULL,
+	days		integer    NOT NULL,
+	hours		integer    NOT NULL,
+     	minutes		integer    NOT NULL,
+	description	TEXT,
+
+        CONSTRAINT NASA2_MissionPK PRIMARY KEY (projectName, missionNo),
+        CONSTRAINT NASA2_MissionFK FOREIGN KEY (projectName) 
+                                                     REFERENCES NASA2_Projects,
+
+        CONSTRAINT di_table_nasa2_mission_missionno CHECK (
+                    (( missionno LIKE 'STS-%' ) OR
+					((missionno::integer >= 1) AND (missionno::integer <=  9)) OR	
+                    ((missionno::integer >=10) AND (missionno::integer <= 17)))
+                ),
+
+        CONSTRAINT di_table_nasa2_mission_missiontype CHECK (missionType IN (
+                'SO',   -- suborbital
+                'EO',   -- Earth orbit
+                'LO',   -- Lunar orbit
+                'LL',   -- Lunar landing
+                'LF',   -- Lunar flyby
+                'XX'    -- Unclassified / disaster
+                )),
+
+        CONSTRAINT di_table_nasa2_mission_launchyear CHECK 
+                    ((launchYear >= 1961) AND (launchYear <= 2011)),
+
+        CONSTRAINT di_table_nasa2_mission_launchmonth CHECK 
+                    ((launchMonth >= 1) AND (launchMonth <= 12)),
+
+        CONSTRAINT di_table_nasa2_mission_launchday CHECK 
+                    ((launchDay >= 1) AND (launchDay <= 31)),
+
+        CONSTRAINT di_table_nasa2_mission_days CHECK 
+                    ((days >= 0) AND (days <= 99)),
+
+        CONSTRAINT di_table_nasa2_mission_hours CHECK 
+                    ((hours >= 0) AND (hours <= 23)),
+
+        CONSTRAINT di_table_nasa2_mission_minutes CHECK 
+                    ((minutes >= 0) AND (minutes <= 59))
+);
+
+
+Create table NASA2_Assigned
+(
+	projectName	TEXT,
+	missionNo  	TEXT,
+	astroNo	  	integer,
+	role		TEXT,
+
+   CONSTRAINT NASA2_AssignedPK PRIMARY KEY (projectName, missionNo, astroNo),
+
+   CONSTRAINT NASA2_AssignedFK_Mission FOREIGN KEY
+			(projectName, missionNo) REFERENCES NASA2_Mission,
+
+   CONSTRAINT NASA2_AssignedFK_Astronaut FOREIGN KEY
+			(astroNo) REFERENCES NASA2_Astronaut,
+
+   CONSTRAINT di_table_assigned_role CHECK (role IN (
+                'Pilot',
+                'Commander',
+                'Command Module Pilot',
+                'Lunar Module Pilot',
+                'Scientist',
+                'Docking Module Pilot',
+                'Mission Specialist',
+                'Payload Commander',
+                'Payload Specialist',
+                'Flight Engineer',
+                'Mir Up',
+                'Mir Down',
+                'ISS Up',
+                'ISS Down',
+                'Other Role'
+   ))
+);
+
+Create table NASA2_SpaceCraft
+(
+	projectName	TEXT,
+	missionNo	TEXT,
+	craftType	TEXT,
+	craftName	TEXT,
+
+  CONSTRAINT NASA2_SpaceCraftPK PRIMARY KEY (projectName, missionNo, craftType),
+
+  CONSTRAINT NASA2_SpaceCraftFK FOREIGN KEY
+			(projectName, missionNo) REFERENCES NASA2_Mission,
+
+  CONSTRAINT NASA2_SpaceCraftShuttleNameDomainIntegrity CHECK 
+             ((craftType <> 'orbiter') OR
+              (craftType  = 'orbiter') AND (craftName IN ( 'Columbia',
+                                                           'Challenger',
+                                                           'Discovery',
+                                                           'Atlantis',
+                                                           'Endeavour')))
+);
+
+
+CREATE VIEW ShuttleMission AS
+    SELECT missionno as no, missiontype as type, launchyear as year,
+           launchmonth as month, launchday as day, days, hours, minutes,
+           craftname as orbiter
+    FROM NASA2_Mission  natural join  NASA2_Spacecraft
+    WHERE projectName = 'Shuttle';
+
+
+CREATE VIEW ShuttleCrew AS
+    select MissionNo as Miss, astroname, birth as born,
+                                     death as dead, country, gender as G, role
+    from  NASA2_Astronaut natural join NASA2_Assigned
+    where Projectname = 'Shuttle'
+    order by MissionNo;
+
+
+INSERT INTO NASA2_Projects VALUES('Mercury');
+INSERT INTO NASA2_Projects VALUES('Gemini');
+INSERT INTO NASA2_Projects VALUES('Apollo');
+INSERT INTO NASA2_Projects VALUES('Skylab');
+INSERT INTO NASA2_Projects VALUES('Apollo-Soyuz');
+INSERT INTO NASA2_Projects VALUES('Shuttle');
+
+
+Insert INTO NASA2_Mission VALUES('Mercury',  '1', 'SO', 1961,  5,  5,  0,  0, 15, 'First American INTO space');
+Insert INTO NASA2_Mission VALUES('Mercury',  '2', 'SO', 1961,  7, 21,  0,  0, 15, 'Capsule sank after splashdown');
+Insert INTO NASA2_Mission VALUES('Mercury',  '3', 'EO', 1962,  2, 20,  0,  4, 55, 'First American INTO orbit');
+Insert INTO NASA2_Mission VALUES('Mercury',  '4', 'EO', 1962,  5, 24,  0,  4, 56, 'Cronkite: We may have lost an astronaut');
+Insert INTO NASA2_Mission VALUES('Mercury',  '5', 'EO', 1962, 10,  3,  0,  9, 13,NULL);
+Insert INTO NASA2_Mission VALUES('Mercury',  '6', 'EO', 1963,  5, 15,  1, 10, 20,NULL);
+Insert INTO NASA2_Mission VALUES('Gemini',  '3', 'EO', 1965,  3, 23,  0,  4, 53, 'First Ham Sandwich in Space');
+Insert INTO NASA2_Mission VALUES('Gemini',  '4', 'EO', 1965,  6,  3,  4,  1, 56, 'First American Spacewalk');
+Insert INTO NASA2_Mission VALUES('Gemini',  '5', 'EO', 1965,  8, 21,  7, 22, 55, 'Eight Days or Bust');
+Insert INTO NASA2_Mission VALUES('Gemini',  '6', 'EO', 1965, 12, 15,  1,  1, 52, 'First Rendevous');
+Insert INTO NASA2_Mission VALUES('Gemini',  '7', 'EO', 1965, 12,  4, 13, 18, 35, 'Longest Flight not on a Space Station');
+Insert INTO NASA2_Mission VALUES('Gemini',  '8', 'EO', 1966,  3, 16,  0, 10, 41, 'First docking; first space emergency');
+Insert INTO NASA2_Mission VALUES('Gemini',  '9', 'EO', 1966,  6,  3,  3,  0, 20, 'The Angry Alligator; aborted spacewalk');
+Insert INTO NASA2_Mission VALUES('Gemini', '10', 'EO', 1966,  7, 18,  2, 22, 47,NULL);
+Insert INTO NASA2_Mission VALUES('Gemini', '11', 'EO', 1966,  9, 12,  2, 23, 17,NULL);
+Insert INTO NASA2_Mission VALUES('Gemini', '12', 'EO', 1966, 11, 11,  3, 22, 34, 'First unequivocally successful EVA');
+Insert INTO NASA2_Mission VALUES('Apollo',  '1', 'XX', 1967,  1, 27,  0,  0,  0, 'Crew killed in launch test');
+Insert INTO NASA2_Mission VALUES('Apollo',  '7', 'EO', 1968, 10, 11, 10, 20,  9, 'First successful Apollo mission');
+Insert INTO NASA2_Mission VALUES('Apollo',  '8', 'LO', 1968, 12, 21,  6,  3,  0, 'THAT photo of Earth from Moon; Genesis');
+Insert INTO NASA2_Mission VALUES('Apollo',  '9', 'EO', 1969,  3,  3, 10,  1,  0,NULL);
+Insert INTO NASA2_Mission VALUES('Apollo', '10', 'LO', 1969,  5, 18,  8,  0,  3,NULL);
+Insert INTO NASA2_Mission VALUES('Apollo', '11', 'LL', 1969,  7, 16,  8,  3, 19, 'One Small Step for [a] man, one giant leap for mankind');
+Insert INTO NASA2_Mission VALUES('Apollo', '12', 'LL', 1969, 11, 14, 10,  4, 36, 'It might have been a small step for Neil, but it was a big one for me');
+Insert INTO NASA2_Mission VALUES('Apollo', '13', 'LF', 1970,  4, 11,  5, 22, 54, 'Houston, we have a problem');
+Insert INTO NASA2_Mission VALUES('Apollo', '14', 'LL', 1971,  1, 31,  9,  0,  0,NULL);
+Insert INTO NASA2_Mission VALUES('Apollo', '15', 'LL', 1971,  7, 26, 12,  7, 12, 'Man must explore; First use of lunar rover');
+
+Insert INTO NASA2_Mission VALUES('Apollo', '16', 'LL', 1972,  4, 16, 11,  1, 51,NULL);
+Insert INTO NASA2_Mission VALUES('Apollo', '17', 'LL', 1972, 12,  7, 12, 13, 51,NULL);
+Insert INTO NASA2_Mission VALUES('Skylab', '2', 'EO', 1973,  5, 25, 28,  0, 50, 'Skylab rescue mission');
+Insert INTO NASA2_Mission VALUES('Skylab',  '3', 'EO', 1973,  7, 28, 59, 11,  9,NULL);
+Insert INTO NASA2_Mission VALUES('Skylab',  '4', 'EO', 1973, 11, 16, 84,  1, 15,NULL);
+Insert INTO NASA2_Mission VALUES('Apollo-Soyuz', '1', 'EO', 1975, 7, 15, 9, 1, 28,NULL);
+
+
+Insert INTO NASA2_SpaceCraft VALUES('Mercury',  '1', 'capsule', 'Freedom 7');
+Insert INTO NASA2_SpaceCraft VALUES('Mercury',  '2', 'capsule', 'Liberty Bell 7');
+Insert INTO NASA2_SpaceCraft VALUES('Mercury',  '3', 'capsule', 'Friendship 7');
+Insert INTO NASA2_SpaceCraft VALUES('Mercury',  '4', 'capsule', 'Aurora 7');
+Insert INTO NASA2_SpaceCraft VALUES('Mercury',  '5', 'capsule', 'Sigma 7');
+Insert INTO NASA2_SpaceCraft VALUES('Mercury',  '6', 'capsule', 'Faith 7');
+Insert INTO NASA2_SpaceCraft VALUES('Gemini',   '3', 'capsule', 'Molly Brown');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',   '9', 'CSM',     'Gum Drop');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',   '9', 'LM',      'Spider');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '10', 'CSM',     'Charlie Brown');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '10', 'LM',      'Snoopy');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '11', 'CSM',     'Columbia');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '11', 'LM',      'Eagle');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '12', 'CSM',     'Yankee Clipper');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '12', 'LM',      'Intrepid');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '13', 'CSM',     'Odyssey');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '13', 'LM',      'Aquarius');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '14', 'CSM',     'Kitty Hawk');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '14', 'LM',      'Antares');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '15', 'CSM',     'Endeavour');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '15', 'LM',      'Falcon');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '16', 'CSM',     'Casper');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '16', 'LM',      'Orion');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '17', 'CSM',     'America');
+Insert INTO NASA2_SpaceCraft VALUES('Apollo',  '17', 'LM',      'Challenger');
+
+Insert INTO NASA2_Astronaut VALUES( 1,'Aldrin, Buzz',1930,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES( 2,'Anders, William',1933,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES( 3,'Armstrong, Neil',1930,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES( 4,'Bean, Alan',1932,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES( 5,'Borman, Frank',1928,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES( 6,'Brand, Vance',1931,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES( 7,'Carpenter, Scott',1925,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES( 8,'Carr, Gerald',1932,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES( 9,'Cernan, Gene',1934,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(10,'Chaffee, Roger',1935,1967,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(11,'Collins, Michael',1930,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(12,'Conrad, Charles',1930,1999,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(13,'Cooper, Gordo',1927,2004,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(14,'Cunningham, Walter',1932,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(15,'Duke, Charles',1935,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(16,'Eisele, Donn',1930,1987,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(17,'Evans, Ron',1933,1990,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(18,'Garriott, Owen',1930,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(19,'Gibson, Edward',1936,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(20,'Glenn, John',1921,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(21,'Gordon, Richard',1929,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(22,'Grissom, Gus',1926,1967,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(23,'Haise, Fred',1933,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(24,'Irwin, James',1930,1991,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(25,'Kerwin, Joseph',1932,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(26,'Lousma, Jack',1936,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(27,'Lovell, James',1928,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(28,'Mattingly, Thomas',1936,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(29,'McDivitt, James',1929,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(30,'Mitchell, Edgar',1930,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(31,'Pogue, William',1930,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(32,'Roosa, Stu',1933,1994,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(33,'Schirra, Wally',1923,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(34,'Schmitt, Harrison',1935,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(35,'Schweickart, Rusty',1935,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(36,'Scott, David',1932,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(37,'Shepard, Alan',1923,1998,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(38,'Slayton, Deke',1924,1993,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(39,'Stafford, Thomas',1930,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(40,'Swigert, John',1931,1982,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(41,'Weitz, Paul',1932,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(42,'White, Edward',1930,1967,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(43,'Worden, Alfred',1932,NULL,'USA','M');
+Insert INTO NASA2_Astronaut VALUES(44,'Young, John',1930,NULL,'USA','M');
+
+
+Insert INTO NASA2_Assigned VALUES('Mercury',  '1', 37, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Mercury',  '2', 22, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Mercury',  '3', 20, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Mercury',  '4',  7, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Mercury',  '5', 33, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Mercury',  '6', 13, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Gemini',  '3', 22, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Gemini',  '3', 44, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Gemini',  '4', 29, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Gemini',  '4', 42, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Gemini',  '5', 13, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Gemini',  '5', 12, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Gemini',  '6',  5, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Gemini',  '6', 27, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Gemini',  '7', 33, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Gemini',  '7', 39, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Gemini',  '8',  3, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Gemini',  '8', 36, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Gemini',  '9', 39, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Gemini',  '9',  9, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Gemini', '10', 44, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Gemini', '10', 11, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Gemini', '11', 12, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Gemini', '11', 21, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Gemini', '12', 27, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Gemini', '12',  1, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo',  '1', 22, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Apollo',  '1', 42, 'Command Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo',  '1', 10, 'Lunar Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo',  '7', 33, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Apollo',  '7', 16, 'Command Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo',  '7', 14, 'Lunar Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo',  '8',  5, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Apollo',  '8', 27, 'Command Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo',  '8',  2, 'Lunar Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo',  '9', 29, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Apollo',  '9', 36, 'Command Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo',  '9', 35, 'Lunar Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '10', 39, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Apollo', '10', 44, 'Command Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '10',  9, 'Lunar Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '11',  3, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Apollo', '11', 11, 'Command Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '11',  1, 'Lunar Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '12', 12, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Apollo', '12', 21, 'Command Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '12',  4, 'Lunar Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '13', 27, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Apollo', '13', 40, 'Command Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '13', 23, 'Lunar Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '14', 37, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Apollo', '14', 32, 'Command Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '14', 30, 'Lunar Module Pilot');
+
+Insert INTO NASA2_Assigned VALUES('Apollo', '15', 24, 'Command Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '15', 43, 'Lunar Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '16', 44, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Apollo', '16', 28, 'Command Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '16', 15, 'Lunar Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '17',  9, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Apollo', '17', 17, 'Command Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo', '17', 34, 'Lunar Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Skylab',  '2', 12, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Skylab',  '2', 41, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Skylab',  '2', 25, 'Scientist');
+Insert INTO NASA2_Assigned VALUES('Skylab',  '3',  4, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Skylab',  '3', 26, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Skylab',  '3', 18, 'Scientist');
+Insert INTO NASA2_Assigned VALUES('Skylab',  '4',  8, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Skylab',  '4', 31, 'Pilot');
+Insert INTO NASA2_Assigned VALUES('Skylab',  '4', 19, 'Scientist');
+Insert INTO NASA2_Assigned VALUES('Apollo-Soyuz', '1', 39, 'Commander');
+Insert INTO NASA2_Assigned VALUES('Apollo-Soyuz', '1',  6, 'Command Module Pilot');
+Insert INTO NASA2_Assigned VALUES('Apollo-Soyuz', '1', 38, 'Docking Module Pilot');
+
+
+INSERT INTO NASA2_Astronaut VALUES(45,'Acton, Loren',1936,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(46,'Adamson, James',1946,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(47,'Afanasyev, Viktor M.',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(48,'Ahad Mohmand, Abdul',1959,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(49,'Akers, Thomas',1951,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(50,'Akiyama, Toyohiro',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(51,'Aksyonov, Vladimir',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(52,'Allen, Andrew',1955,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(53,'Allen, Joseph',1937,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(54,'Altman, Scott',1959,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(55,'Anderson, Michael P.',1959,2003,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(56,'Apt, Jerome',1949,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(57,'Artsebarsky, Anatoly',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(58,'Artyukhin, Yuri',1930,1998,'USSR',NULL);
+INSERT INTO NASA2_Astronaut VALUES(59,'Ashby, Jeffrey',1954,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(60,'Atkov, Oleg',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(61,'Aubakirov, Toktar',1946,NULL,'USSR',NULL);
+INSERT INTO NASA2_Astronaut VALUES(62,'Avdeyev, Sergei',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(63,'Bagian, James',1952,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(64,'Baker, Ellen',1953,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(65,'Baker, Michael',1953,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(66,'Balandin, Aleksandr',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(67,'Barry, Daniel',1953,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(68,'Bartoe, John-David F.',1944,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(69,'Bassett, Charles',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(70,'Baturin, Yuri',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(71,'Baudry, Patrick',1946,NULL,'France','M');
+INSERT INTO NASA2_Astronaut VALUES(72,'Bella, Ivan',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(73,'Belyayev, Pavel',1925,1970,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(74,'Beregovoi, Georgi',1921,1995,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(75,'Berezovoy, Anatoli',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(76,'Binnie, Brian',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(77,'Blaha, John',1942,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(78,'Bloomfield, Michael',1959,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(79,'Bluford, Guion',1942,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(80,'Bobko, Karol',1937,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(81,'Bolden, Charles',1946,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(82,'Bondar, Roberta',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(83,'Bowersox, Kenneth',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(84,'Brady, Charles',1951,2006,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(85,'Brandenstein, Daniel',1943,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(86,'Bridges, Roy',1942,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(87,'Brown, Curtis',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(88,'Brown, David M.',1956,2003,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(89,'Brown, Mark',1951,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(90,'Buchli, James',1945,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(91,'Buckey, Jay',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(92,'Budarin, Nikolai',1953,NULL,'Russia','M');
+INSERT INTO NASA2_Astronaut VALUES(93,'Burbank, Daniel',1961,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(94,'Bursch, Daniel',1957,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(95,'Bykovsky, Valery',1934,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(96,'Cabana, Robert',1949,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(97,'Cameron, Kenneth',1949,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(98,'Carey, Duane',1957,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(99,'Carter, Sonny',1947,1991,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(100,'Casper, John',1943,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(101,'Cenker, Robert',1948,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(102,'Chang-Diaz, Franklin',1950,NULL,'Costa Rica','M');
+INSERT INTO NASA2_Astronaut VALUES(103,'Chawla, Kalpana',1961,2003,'India','F');
+INSERT INTO NASA2_Astronaut VALUES(104,'Cheli, Maurizio',1959,NULL,'Italy','M');
+INSERT INTO NASA2_Astronaut VALUES(105,'Chiao, Leroy',1960,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(106,'Chilton, Kevin',1954,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(107,'Chretien, Jean-Loup',1938,NULL,'France','M');
+INSERT INTO NASA2_Astronaut VALUES(108,'Clark, Laurel',1961,2003,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(109,'Cleave, Mary',1947,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(110,'Clervoy, Jean-Francois',1958,NULL,'France','M');
+INSERT INTO NASA2_Astronaut VALUES(111,'Clifford, Michael',1952,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(112,'Coats, Michael',1946,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(113,'Cockrell, Kenneth',1950,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(114,'Coleman, Catherine',1960,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(115,'Collins, Eileen',1956,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(116,'Covey, Richard',1946,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(117,'Creighton, John',1943,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(118,'Crews, Albert H.',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(119,'Crippen, Robert',1937,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(120,'Crouch, Roger',1940,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(121,'Culbertson, Frank',1949,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(122,'Curbeam, Robert',1962,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(123,'Currie, Nancy',1958,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(124,'Dana, William H.',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(125,'De Winne, Frank',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(126,'DeLucas, Lawrence J.',1950,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(127,'Demin, Lev',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(128,'Dezhurov, Vladimir N.',1962,NULL,'Russia','M');
+INSERT INTO NASA2_Astronaut VALUES(129,'Dobrovolski, Georgi',1928,1971,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(130,'Doi, Takao',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(131,'Duffy, Brian',1953,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(132,'Dunbar, Bonnie J.',1949,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(133,'Duque, Pedro',1963,NULL,'Spain','M');
+INSERT INTO NASA2_Astronaut VALUES(134,'Durrance, Samuel T.',1943,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(135,'Dzhanibekov, Vladimir',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(136,'Edwards, Joe',1958,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(137,'England, Anthony W.',1942,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(138,'Engle, Joseph H.',1932,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(139,'Ewald, Reinhold',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(140,'Eyharts, Leopold',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(141,'Fabian, John',1939,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(142,'Faris, Muhammed',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(143,'Farkas, Bertalan',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(144,'Favier, Jean-Jacques',1949,NULL,'France','M');
+INSERT INTO NASA2_Astronaut VALUES(145,'Feoktistov, Konstantin',1926,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(146,'Fettman, Martin',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(147,'Filipchenko, Anatoli',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(148,'Fincke, Edward',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(149,'Fisher, Anna',1949,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(150,'Fisher, William',1946,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(151,'Flade, Klaus-Dietrich',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(152,'Foale, Michael',1957,NULL,'UK','M');
+INSERT INTO NASA2_Astronaut VALUES(153,'Forrester, Patrick',1957,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(154,'Frick, Stephen',1964,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(155,'Frimout, Dirk',1941,NULL,'Belgium','M');
+INSERT INTO NASA2_Astronaut VALUES(156,'Fullerton, Charles',1936,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(157,'Furrer, Reinhard',1940,1995,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(158,'Gaffney, Francis',1946,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(159,'Gagarin, Yuri',1934,1968,'USSR','M');
+INSERT INTO NASA2_Astronaut VALUES(160,'Gardner, Dale',1948,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(161,'Gardner, Guy',1948,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(162,'Garn, Jake',1932,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(163,'Garneau, Marc',1949,NULL,'Canada','M');
+INSERT INTO NASA2_Astronaut VALUES(164,'Gemar, Charles',1955,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(165,'Gernhardt, Michael',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(166,'Gibson, Robert',1946,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(167,'Gidzenko, Yuri',1962,NULL,'Russia','M');
+INSERT INTO NASA2_Astronaut VALUES(168,'Glazkov, Yuri',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(169,'Godwin, Linda',1952,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(170,'Gorbatko, Viktor',1934,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(171,'Gordon, Henry C.',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(172,'Gorie, Dominic',1957,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(173,'Grabe, Ronald',1945,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(174,'Grechko, Georgi',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(175,'Gregory, Frederick',1941,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(176,'Gregory, William',1957,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(177,'Griggs, Stanley',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(178,'Grunsfeld, John',1958,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(179,'Gubarev, Aleksei',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(180,'Guidoni, Umberto',1954,NULL,'Italy','M');
+INSERT INTO NASA2_Astronaut VALUES(181,'Gurragcha, Zhugderdemidiyn',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(182,'Gutierrez, Sidney',1951,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(183,'Hadfield, Chris',1959,NULL,'Canada','M');
+INSERT INTO NASA2_Astronaut VALUES(184,'Haignere, Claudie',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(185,'Haignere, Jean-Pierre',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(186,'Halsell, James',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(187,'Hammond, Lloyd',1952,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(188,'Harbaugh, Gregory',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(189,'Harris, Bernard',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(190,'Hart, Terry',1946,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(191,'Hartsfield, Henry',1933,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(192,'Hauck, Frederick',1941,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(193,'Hawley, Steven',1951,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(194,'Helms, Susan',1958,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(195,'Henize, Karl',1926,1993,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(196,'Hennen, Thomas',1952,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(197,'Henricks, Terence',1952,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(198,'Hermaszewski, Miroslaw',1941,NULL,'Poland','M');
+INSERT INTO NASA2_Astronaut VALUES(199,'Herrington, John',1958,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(200,'Hieb, Richard',1955,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(201,'Hilmers, David',1950,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(202,'Hire, Kathryn',1959,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(203,'Hobaugh, Charles',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(204,'Hoffman, Jeffrey',1944,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(205,'Horowitz, Scott',1957,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(206,'Hughes-Fulford, Millie',1945,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(207,'Husband, Rick D.',1957,2003,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(208,'Ivanchenkov, Aleksandr',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(209,'Ivanov, Georgi',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(210,'Ivins, Marsha',1951,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(211,'Jahn, Sigmund',1937,NULL,'Germany',NULL);
+INSERT INTO NASA2_Astronaut VALUES(212,'Jan Davis, Nancy',1953,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(213,'Jarvis, Greg',1944,1986,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(214,'Jemison, Mae',1956,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(215,'Jernigan, Tamara E.',1959,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(216,'Jett, Jr. Brent',1958,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(217,'Jones, Thomas D.',1955,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(218,'Kadenyuk, Leonid',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(219,'Kaleri, Alexander',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(220,'Kavandi, Janet',1959,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(221,'Kelly, James M.',1964,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(222,'Kelly, Mark',1964,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(223,'Kelly, Scott',1964,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(224,'Khrunov, Yevgeny',1933,2000,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(225,'Kizim, Leonid',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(226,'Klimuk, Petr',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(227,'Knight, William J.',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(228,'Komarov, Vladimir',1927,1967,'USSR',NULL);
+INSERT INTO NASA2_Astronaut VALUES(229,'Kondakova, Elena V.',1957,NULL,'Russia','F');
+INSERT INTO NASA2_Astronaut VALUES(230,'Korzun, Valery',1953,NULL,'Russia','M');
+INSERT INTO NASA2_Astronaut VALUES(231,'Kovalyonok, Vladimir',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(232,'Kozeyev, Konstantin',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(233,'Kregel, Kevin',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(234,'Krikalev, Sergei',1958,NULL,'Russia','M');
+INSERT INTO NASA2_Astronaut VALUES(235,'Kubasov, Valeri',1935,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(236,'Kuipers, Andre',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(237,'Lapierre, Judith',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(238,'Laveykin, Aleksandr',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(239,'Lawrence, Wendy',1959,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(240,'Lazarev, Vasili',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(241,'Lazutkin, Aleksandr',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(242,'Lebedev, Valentin',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(243,'Lee, Mark',1952,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(244,'Leestma, David',1949,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(245,'Lenoir, William',1939,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(246,'Leonov, Aleksei',1934,NULL,'USSR','M');
+INSERT INTO NASA2_Astronaut VALUES(247,'Leslie, Frederick',1951,NULL,'Panama','M');
+INSERT INTO NASA2_Astronaut VALUES(248,'Levchenko, Anatoli',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(249,'Lichtenberg, Byron',1948,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(250,'Lind, Don',1930,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(251,'Lindsey, Steven',1960,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(252,'Linenger, Jerry',1955,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(253,'Linnehan, Richard',1957,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(254,'Linteris, Gregory',1957,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(255,'Liwei, Yang',NULL,NULL,'China','M');
+INSERT INTO NASA2_Astronaut VALUES(256,'Lockhart, Paul',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(257,'Lonchakov, Yuri',1965,NULL,'Kazakhstan','M');
+INSERT INTO NASA2_Astronaut VALUES(258,'Lopez-Alegria, Michael',1958,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(259,'Lounge, John',1946,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(260,'Low, George',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(261,'Lu, Edward',1963,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(262,'Lucid, Shannon',1943,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(263,'Lyakhov, Vladimir',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(264,'MacLean, Steven',1954,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(265,'Magnus, Sandra',1964,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(266,'Makarov, Oleg',1933,2003,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(267,'Malenchenko, Yuri',1961,NULL,'Ukraine','M');
+INSERT INTO NASA2_Astronaut VALUES(268,'Malerba, Franco',1946,NULL,'Italy','M');
+INSERT INTO NASA2_Astronaut VALUES(269,'Malyshev, Yuri',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(270,'Manakov, Gennadi',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(271,'Manarov, Musa',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(272,'Massimino, Michael',1962,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(273,'Mastracchio, Richard',1960,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(274,'McArthur, William',1951,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(275,'McAuliffe, Christa',1948,1986,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(276,'McBride, Jon',1943,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(277,'McCandless, Bruce',1937,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(278,'McCool, William C.',1961,2003,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(279,'McCulley, Michael',1943,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(280,'McMonagle, Donald',1952,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(281,'McNair, Ronald',1950,1986,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(282,'Meade, Carl',1950,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(283,'Melnick, Bruce',1949,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(284,'Melroy, Pamela',1961,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(285,'Melville, Mike',NULL,NULL,NULL,'M');
+INSERT INTO NASA2_Astronaut VALUES(286,'Merbold, Ulf',1941,NULL,'Germany','M');
+INSERT INTO NASA2_Astronaut VALUES(287,'Messerschmid, Ernst',1945,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(288,'Mohri, Mamoru',1948,NULL,'Japan','M');
+INSERT INTO NASA2_Astronaut VALUES(289,'Morin, Lee',1952,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(290,'Morukov, Boris','1950',NULL,'Russia','M');
+INSERT INTO NASA2_Astronaut VALUES(291,'Mukai, Chiaki',1952,NULL,'Japan','F');
+INSERT INTO NASA2_Astronaut VALUES(292,'Mullane, Richard',1945,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(293,'Musabayev, Talgat',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(294,'Musgrave, Story',1935,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(295,'Nagel, Steven R.',1946,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(296,'Nelson, George',1950,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(297,'Nelson, William',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(298,'Neri Vela, Rodolfo',1952,NULL,'Mexico','M');
+INSERT INTO NASA2_Astronaut VALUES(299,'Newman, James H.',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(300,'Nicollier, Claude',1944,NULL,'Switzerland','M');
+INSERT INTO NASA2_Astronaut VALUES(301,'Nikolayev, Andrian',1929,2004,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(302,'Noriega, Carlos',1959,NULL,'Peru','M');
+INSERT INTO NASA2_Astronaut VALUES(303,'Ochoa, Ellen',1958,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(304,'Ockels, Wubbo',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(305,'O''Connor, Bryan',1946,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(306,'Onizuka, Ellison',1946,1986,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(307,'Onufriyenko, Yuri',1961,NULL,'Ukraine','M');
+INSERT INTO NASA2_Astronaut VALUES(308,'Oswald, Stephen',1951,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(309,'Overmyer, Robert',1936,1996,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(310,'Padalka, Gennady',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(311,'Palies, William A.',1959,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(312,'Panayotov Aleksandrov, Aleksandr',NULL,NULL,'Bulgaria',NULL);
+INSERT INTO NASA2_Astronaut VALUES(313,'Parazynski, Scott',1961,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(314,'Parise, Ronald A.',1951,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(315,'Parker, Robert',1936,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(316,'Patsayev, Viktor',1933,1971,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(317,'Pavlovich Aleksandrov, Aleksandr',NULL,NULL,'Russia',NULL);
+INSERT INTO NASA2_Astronaut VALUES(318,'Pawelczyk, James',1960,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(319,'Payette, Julie',1963,NULL,'CSA','F');
+INSERT INTO NASA2_Astronaut VALUES(320,'Payton, Gary',1948,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(321,'Perrin, Philippe',1963,NULL,'France','M');
+INSERT INTO NASA2_Astronaut VALUES(322,'Peterson, Donald',1933,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(323,'Pettit, Donald',1955,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(324,'Pham, Tuan',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(325,'Phillips, John',1951,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(326,'Polansky, Mark',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(327,'Poleshchuk, Alexander',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(328,'Polyakov, Valeri',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(329,'Popov, Leonid',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(330,'Popovich, Pavel',1930,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(331,'Precourt, Charles',1955,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(332,'Prunariu, Dumitru',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(333,'Ramon, Ilan',1954,2003,'Israel','M');
+INSERT INTO NASA2_Astronaut VALUES(334,'Readdy, William',1952,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(335,'Reightler, Kenneth',1951,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(336,'Reilly, James',1954,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(337,'Reiter, Thomas',1958,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(338,'Remek, Vladimir',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(339,'Resnik, Judith',1949,1986,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(340,'Richards, Paul W.',1964,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(341,'Richards, Richard',1946,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(342,'Ride, Sally',1951,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(343,'Robinson, Stephen',1955,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(344,'Rogers, Russell L.',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(345,'Romanenko, Yuri',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(346,'Rominger, Kent',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(347,'Ross, Jerry',1948,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(348,'Rozhdestvensky, Valeri',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(349,'Rukavishnikov, Nikolay',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(350,'Runco, Mario',1952,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(351,'Ryumin, Valery',1939,NULL,'Russia','M');
+INSERT INTO NASA2_Astronaut VALUES(352,'Sacco, Albert',1949,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(353,'Salman Al-Saud, Sultan',1956,NULL,'Saudi Arabia','M');
+INSERT INTO NASA2_Astronaut VALUES(354,'Sarafanov, Gennadi',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(355,'Savinykh, Viktor',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(356,'Savitskaya, Svetlana',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(357,'Schlegel, Hans',1951,NULL,'Germany','M');
+INSERT INTO NASA2_Astronaut VALUES(358,'Scobee, Dick',1939,1986,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(359,'Scott, Winston',1950,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(360,'Scully-Power, Paul',1944,NULL,'Australia','M');
+INSERT INTO NASA2_Astronaut VALUES(361,'Searfoss, Richard',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(362,'Seddon, Rhea',1947,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(363,'Sega, Ronald',1952,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(364,'Sellers, Piers',1955,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(365,'Serebrov, Aleksandr',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(366,'Sevastyanov, Vitali',1935,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(367,'Shargin, Yuri',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(368,'Sharipov, Salizhan',1964,NULL,'Kirghizia','M');
+INSERT INTO NASA2_Astronaut VALUES(369,'Sharma, Rakesh',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(370,'Sharman, Helen',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(371,'Shatalov, Vladimir',1927,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(372,'Shaw, Brewster',1945,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(373,'Shepherd, Bill',1949,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(374,'Shonin, Georgi',1935,1997,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(375,'Shriver, Loren',1944,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(376,'Shuttleworth, Mark',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(377,'Smith, Michael J.',1945,1986,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(378,'Smith, Steven',1958,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(379,'Soloviyov, Vladimir',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(380,'Solovyev, Anatoly',1948,NULL,'Russia','M');
+INSERT INTO NASA2_Astronaut VALUES(381,'Spring, Sherwood',1944,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(382,'Springer, Robert',1942,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(383,'Stewart, Robert',1942,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(384,'Still, Susan',1961,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(385,'Strekalov, Gennady',1940,NULL,'Russia','M');
+INSERT INTO NASA2_Astronaut VALUES(386,'Sturckow, Frederick',1961,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(387,'Sullivan, Kathryn D.',1951,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(388,'Tamayo-Mendez, Arnaldo',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(389,'Tani, Daniel',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(390,'Tanner, Joseph',1950,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(391,'Tereshkova, Valentina',1937,NULL,'USSR','F');
+INSERT INTO NASA2_Astronaut VALUES(392,'Thagard, Norman',1943,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(393,'Thiele, Gerhard',1953,NULL,'Germany','M');
+INSERT INTO NASA2_Astronaut VALUES(394,'Thirsk, Robert',1953,NULL,'Canada','M');
+INSERT INTO NASA2_Astronaut VALUES(395,'Thomas, Andrew',1951,NULL,'Australia','M');
+INSERT INTO NASA2_Astronaut VALUES(396,'Thomas, Donald',1955,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(397,'Thompson, Milton O.',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(398,'Thornton, Kathryn',1952,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(399,'Thornton, William E.',1929,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(400,'Thuot, Pierre',1955,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(401,'Tito, Dennis',1937,NULL,NULL,'M');
+INSERT INTO NASA2_Astronaut VALUES(402,'Titov, Gherman',1935,2000,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(403,'Titov, Vladimir',1947,NULL,'Russia','M');
+INSERT INTO NASA2_Astronaut VALUES(404,'Tognini, Michel',1949,NULL,'France','M');
+INSERT INTO NASA2_Astronaut VALUES(405,'Tokarev, Valery',1952,NULL,'Russia','M');
+INSERT INTO NASA2_Astronaut VALUES(406,'Treschev, Sergei',1958,NULL,'Russia','M');
+INSERT INTO NASA2_Astronaut VALUES(407,'Trinh, Eugene',1950,NULL,'Vietnam','M');
+INSERT INTO NASA2_Astronaut VALUES(408,'Truly, Richard',1937,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(409,'Tryggvason, Bjarni',1945,NULL,'Iceland','M');
+INSERT INTO NASA2_Astronaut VALUES(410,'Tsibliyev, Vasili',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(411,'Tyurin, Mikhail',1960,NULL,'Russia','M');
+INSERT INTO NASA2_Astronaut VALUES(412,'Usachev, Yury',1957,NULL,'Russia','M');
+INSERT INTO NASA2_Astronaut VALUES(413,'van den Berg, Lodewijk',1932,NULL,'The Netherlands','M');
+INSERT INTO NASA2_Astronaut VALUES(414,'van Hoften, James',1944,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(415,'Vasyutin, Vladimir',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(416,'Veach, Charles',1944,1995,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(417,'Viehbock, Franz',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(418,'Viktorenko, Alexander',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(419,'Vinogradov, Pavel',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(420,'Vittori, Roberto',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(421,'Volk, Igor',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(422,'Volkov, Alexander A.',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(423,'Volkov, Vladislav',1935,1971,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(424,'Volynov, Boris',1934,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(425,'Voss, James',1949,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(426,'Voss, Janice',1956,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(427,'Wakata, Koichi',1963,NULL,'Japan','M');
+INSERT INTO NASA2_Astronaut VALUES(428,'Walheim, Rex',1962,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(429,'Walker, Charles',1948,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(430,'Walker, David',1944,2001,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(431,'Walker, Joseph A.',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(432,'Walter, Ulrich',1954,NULL,'Germany','M');
+INSERT INTO NASA2_Astronaut VALUES(433,'Walz, Carl',1955,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(434,'Wang, Taylor',1940,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(435,'Weber, Mary',1962,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(436,'Wetherbee, James',1952,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(437,'Whitson, Peggy',1960,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(438,'Wilcutt, Terrence',1949,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(439,'Williams, Dafydd',1954,NULL,'Canada','M');
+INSERT INTO NASA2_Astronaut VALUES(440,'Williams, Donald',1942,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(441,'Williams, Jeffrey',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(442,'Wisoff, Peter',1958,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(443,'Wolf, David',1956,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(444,'Wood, James W.',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(445,'Yegorov, Boris',1937,1994,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(446,'Yeliseyev, Aleksei',1934,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(447,'Yurchikhin, Fyodor',1959,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(448,'Zalyotin, Sergei',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(449,'Zholobov, Vitali',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(450,'Zudov, Vyacheslav',NULL,NULL,NULL,NULL);
+INSERT INTO NASA2_Astronaut VALUES(451,'Camarda, Charles J.',1952,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(452,'Noguchi, Soichi',1965,NULL,'Japan','M');
+INSERT INTO NASA2_Astronaut VALUES(453,'Wilson, Stephanie',1966,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(454,'Fossum, Michael',1957,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(455,'Nowak, Lisa',1963,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(456,'Ferguson, Christopher J.',1961,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(457,'Stefanyshyn-Piper, Heidemarie M.',1963,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(458,'Williams, Sunita',1965,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(459,'Oefelein, William',1965,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(460,'Higginbotham, Joan',1964,NULL,'USA','F');
+INSERT INTO NASA2_Astronaut VALUES(461,'Patrick, Nicholas',1964,NULL,'USA','M');
+INSERT INTO NASA2_Astronaut VALUES(462,'Fuglesang, Christer',1957,NULL,'Sweden','M');
+
+
+
+\! echo
+\! echo 'STS-1'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-1','EO',1981,
+                                     4,12,2,6,20,'First Shuttle Mission');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-1',44,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-1',119,'Pilot');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-1','orbiter','Columbia');
+
+
+
+\! echo
+\! echo 'STS-2'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-2','EO',1981,11,12,
+                                              2,3,14,'Second Shuttle Mission');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-2',138,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-2',408,'Pilot');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-2','orbiter','Columbia');
+
+
+
+
+\! echo
+\! echo 'STS-3'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-3','EO',1982,3,22,8,0,4,'Third Shuttle Mission');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-3',25,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-3',156,'Pilot');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-3','orbiter','Columbia');
+
+
+
+\! echo
+\! echo 'STS-4'
+
+Insert INTO NASA2_Mission VALUES('Shuttle','STS-4','EO',1982,6,27,7,1,
+        9,'First experiment involving Continuous Flow Electrophoresis System');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-4',28,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-4',191,'Pilot');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-4','orbiter','Columbia');
+
+
+
+\! echo
+\! echo 'STS-5'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-5','EO',1982,11,11,
+                                   4,23,14,'First Shuttle operational mission');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-5',6 ,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-5',309 ,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-5',53 ,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-5',245 ,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-5','orbiter','Columbia');
+
+
+
+
+\! echo
+\! echo 'STS-6'
+Insert INTO NASA2_Mission VALUES('Shuttle','STS-6','EO',1983,4,4,5,0,23,
+'First space walk of the shuttle program and deployment of first Tracking and Data Relay satellite');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-6',41 ,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-6',80 ,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-6',294,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-6',322,'Mission Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-6','orbiter','Challenger');
+
+
+
+\! echo
+\! echo 'STS-7'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-7','EO',1983,6,18,
+                                      6,2,23,'First American Woman in Space');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-7',119,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-7',192,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-7',141,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-7',342,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-7',392,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-7','orbiter','Challenger');
+
+
+
+\! echo
+\! echo 'STS-8'
+Insert INTO NASA2_Mission VALUES('Shuttle','STS-8','EO',1983,8,30,6,1,8,'Bluford became the African-American INTO space');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-8',408,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-8',85,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-8',160,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-8',79,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-8',399,'Mission Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-8','orbiter','Challenger');
+
+
+
+\! echo
+\! echo 'STS-9'
+Insert INTO NASA2_Mission VALUES('Shuttle','STS-9','EO',1983,11,28,10,7,47,'First Spacelab Mission');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-9',44,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-9',372,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-9',18,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-9',315,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-9',249,'Payload Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-9',286,'Payload Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-9','orbiter','Columbia');
+
+
+
+
+\! echo
+\! echo 'STS-51A'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-51A','EO',1984,11,8,7,23,44,'Retrieved two malfunctioning satellites');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-51A',192,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-51A',430,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-51A',149,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-51A',160,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-51A',53,'Mission Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-51A','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-41G'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-41G','EO',1984,10,5,
+                                   8,5,23,'First flight to include two women');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41G',119,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41G',276,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41G',387,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41G',342,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41G',244,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41G',163,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41G',360,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-41G','orbiter','Challenger');
+
+
+
+
+\! echo
+\! echo 'STS-41D'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-41D','EO',1984,9,30,
+          6,0,56,'Deployment of 3 satellites and Air Force CLOUDS experiment');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41D',191,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41D',112,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41D',339,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41D',193,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41D',292,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41D',429,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-41D','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-41C'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-41C','EO',1984,4,6,
+                                  6,23,40,'The first direct ascent trajectory');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41C',358,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41C',119,'Commander' );
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41C',296,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41C',414,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41C',190,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-41C','orbiter','Challenger');
+
+
+
+
+\! echo
+\! echo 'STS-41B'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-41B','EO',1984,2,3,
+                                             7,23,15,'Manned Maneuvering Unit');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41B',166,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41B',277,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41B',281,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41B',383,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-41B','orbiter','Challenger');
+
+
+
+
+\! echo
+\! echo 'STS-61A'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-61A','EO',1985,10,30,
+             7,0,44,'D-1 Spacelab mission (first German-dedicated Spacelab)');
+
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61A',191,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61A',295,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61A',90,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61A',79,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61A',132,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61A',157,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61A',287,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61A',304,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-61A','orbiter','Challenger');
+
+
+
+
+\! echo
+\! echo 'STS-51J'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-51J','EO',1985,10,3,11,15,30,'Second mission dedicated to the department of defence');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51J',80,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51J',173,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51J',201,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51J',383,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51J',311,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-51J','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-51I'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-51I','EO',1985,8,27,
+                                                    7,2,17,'AUSSAT-1 deployed');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51I',138,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51I',116,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51I',414,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51I',259,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51I',150,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-51I','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-51F'
+INSERT INTO Nasa2_Mission VALUES('Shuttle','STS-51F','EO','1985',7,29,
+                       7,22,45,'Three communications satellites,were deployed');
+
+INSERT INTO Nasa2_Assigned VALUES('Shuttle','STS-51F',156,'Commander');
+INSERT INTO Nasa2_Assigned VALUES('Shuttle','STS-51F',86,'Pilot');
+INSERT INTO Nasa2_Assigned VALUES('Shuttle','STS-51F',294,'Mission Specialist');
+INSERT INTO Nasa2_Assigned VALUES('Shuttle','STS-51F',137,'Mission Specialist');
+INSERT INTO Nasa2_Assigned VALUES('Shuttle','STS-51F',195,'Mission Specialist');
+INSERT INTO Nasa2_Assigned VALUES('Shuttle','STS-51F',45,'Payload Specialist');
+INSERT INTO Nasa2_Assigned VALUES('Shuttle','STS-51F',68,'Payload Specialist');
+
+INSERT INTO Nasa2_Spacecraft VALUES('Shuttle','STS-51F','orbiter','Challenger');
+
+
+
+
+
+\! echo
+\! echo 'STS-51G'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-51G','EO',1985,6,17,
+                          7,1,38,'Three communications satellites deployed');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51G',85,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51G',117,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51G',262,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51G',141,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51G',295,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51G',71,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51G',353,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-51G','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-51B'
+
+INSERT into NASA2_Mission VALUES('Shuttle','STS-51B','EO',1985,4,29,
+       7,0,8,'Studied the behavior of simple toys in a weightless environment');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51B',309,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51B',175,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51B',250,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51B',392,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51B',399,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51B',413,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51B',434,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-51B','orbiter','Challenger');
+
+
+
+
+\! echo
+\! echo 'STS-51D'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-51D','EO',1985,4,12,
+                      6,23,55,'SYNCOM IV deployed but launch sequencer failed');
+
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51D', 80,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51D',440,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51D',362,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51D',204,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51D',177,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51D',429,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51D',162,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-51D','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-51C'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-51C','EO',1985,1,24,3,1,33,'First mission dedicated to the Department of Defense');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51C',28,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51C',375,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51C',306,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51C',90,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51C',320,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-51C','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-61B'
+Insert INTO NASA2_Mission VALUES('Shuttle','STS-61B','EO',1985,11,26,
+                 6,21,4,'Tested assembling erectable structures in space');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-61B',372,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-61B',305,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-61B',109,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-61B',381,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-61B',347,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-61B',298,'Payload Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-61B',429,'Payload Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-61B','orbiter','Atlantis');
+
+
+
+\! echo
+\! echo 'STS-51L'
+INSERT INTO NASA2_Mission VALUES ('Shuttle','STS-51L','EO',1986,1,28,
+       0,0,1,'Explosion 73 seconds after liftoff claimed crew and vehicle');
+
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-51L',358,'Commander');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-51L',377,'Pilot');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-51L',339,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-51L',306,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-51L',281,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-51L',213,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-51L',275,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES ('Shuttle','STS-51L','orbiter','Challenger');
+
+
+
+
+\! echo
+\! echo 'STS-61C'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-61C','EO',1986,1,12,
+                                   6,2,3,'Deployment of SATCOM KU-I satellite');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61C',166,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61C', 81,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61C',102,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61C',193,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61C',296,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61C',456,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61C',101,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-61C','orbiter','Columbia');
+
+
+
+\! echo
+\! echo 'STS-26'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-26','EO',1988,9,29,
+                                                            4,1,0,'TDRS-C');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-26',192,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-26',116,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-26',259,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-26',296,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-26',201,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-26','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-27'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-27','EO',1988,12,2,
+                 4,9,5,'Third mission dedicated to the Department of Defense');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-27',166,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-27',161,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-27',292,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-27',347,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-27',373,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-27','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-28'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-28','EO',1989,8,8,
+                                                   5,1,0,'3rd DoD mission');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-28',372,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-28',341,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-28',46,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-28',244,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-28',89,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-28','orbiter','Columbia');
+
+
+
+
+
+
+\! echo
+\! echo 'STS-29'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-29','EO',1989,3,13,
+                     4,23,38,'Tracking and Data Relay Satellite-D (TDRS-D)');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-29',112,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-29',77,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-29',63,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-29',90,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-29',382,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-29','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-30'
+Insert Into NASA2_Mission VALUES('Shuttle','STS-30','EO',1989,5,4,
+                          4,0,56,'First time a GPC was switched on orbit');
+
+Insert Into NASA2_Assigned VALUES('Shuttle','STS-30',430,'Commander');
+Insert Into NASA2_Assigned VALUES('Shuttle','STS-30',173,'Pilot');
+Insert Into NASA2_Assigned VALUES('Shuttle','STS-30',392,'Mission Specialist');
+Insert Into NASA2_Assigned VALUES('Shuttle','STS-30',109,'Mission Specialist');
+Insert Into NASA2_Assigned VALUES('Shuttle','STS-30',243,'Mission Specialist');
+
+Insert Into NASA2_SpaceCraft VALUES('Shuttle','STS-30','orbiter','Atlantis');
+
+
+
+\! echo
+\! echo 'STS-31'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-31','EO',1990,4,29,
+                                        5,1,16,'Hubble Telescope Deployed');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-31',375,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-31',84,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-31',193,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-31',277,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-31',387,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-31','orbiter','Discovery');
+
+
+
+\! echo
+\! echo 'STS-32'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-32','EO',1990,1,20,
+         10,21,0,'Deployment of SYNCOM IV-F5 and retrieval of NASA''s LDEF');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-32',85,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-32',436,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-32',132,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-32',260,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-32',210,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-32','orbiter','Columbia');
+
+
+
+
+\! echo
+\! echo 'STS-33'
+INSERT into NASA2_Mission VALUES('Shuttle','STS-33','EO',1989,12,22,5,0,6,'Fifth mission dedicated to the Department of Defense');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-33',175,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-33',77,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-33',294,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-33',99,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-33',398,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-33','orbiter','Discovery');
+
+
+
+\! echo
+\! echo 'STS-34'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-34','EO',1989,10,18,
+          4,23,39,'Galileo; Shuttle Solar Backscatter Ultraviolet Experiment');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-34',440,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-34',279,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-34',102,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-34',262,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-34',64,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-34','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-35'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-35','EO',1990,12,2,
+                                                             8,23,5,'ASTRO-1');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-35',6,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-35',161,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-35',204,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-35',259,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-35',315,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-35',134,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-35',314,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-35','orbiter','Columbia');
+
+
+
+
+\! echo
+\! echo 'STS-36'
+INSERT into Nasa2_Mission VALUES ('Shuttle','STS-36','EO',1990,2,28,
+                           4,7,18,'Sixth mission dedicated to Dep of Defence');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-36',117,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-36',100,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-36',292,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-36',201,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-36',400,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-36',438,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-36','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-37'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-37','EO',1991,4,5,
+                       5,23,30,'The deployment of the Gamma Ray Observatory');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-37',295,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-37',97,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-37',347,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-37',56,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-37',169,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-37','orbiter','Atlantis');
+
+
+
+
+
+\! echo
+\! echo 'STS-38'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-38','EO',1990,11,15,
+                 4,21,54,'Seventh mission dedicated to Department of Defense');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-38',116,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-38',121,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-38',164,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-38',282,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-38',382,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-38','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-39'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-39','EO',1991,4,28,
+                             8,7,22,'Dedicated Department of Defense mission');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-39',112,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-39',187,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-39', 79,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-39',188,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-39',200,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-39',280,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-39',416,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-39','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-40'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-40','EO',1991,6,5,
+                 9,2,14,'The first mission dedicated solely to life sciences');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-40',305,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-40',182,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-40', 63,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-40',215,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-40',362,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-40',158,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-40',206,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-40','orbiter','Columbia');
+
+
+
+
+\! echo
+\! echo 'STS-41'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-41','EO',1990,10,6,4,2,10,'First time the IUS and PAM-S were combined.');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41',49,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41',96,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41',283,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41',341,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41',373,'Mission Specialist');
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-41','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-42'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-42','EO',1992,1,
+22,8,1,14,'First flight using pressurized Spacelab module');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-42',173,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-42',308,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-42',392,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-42',201,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-42',334,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-42',82,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-42',286,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-42','orbiter','Discovery');
+
+
+
+
+
+
+\! echo
+\! echo 'STS-43'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-43','EO',1991,8,2,8,21,21,'Propelling the Tracking and Data Relay Satellite-5 (TDRS-5) into geosynchronous orbit');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-43',77,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-43',65,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-43',262,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-43',46,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-43',260,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-43','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-44'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-44','EO',1991,11,24,6,22,50,'DOD and DSP on the launch?');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-44',175,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-44',197,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-44',350,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-44',425,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-44',294,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-44',196,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-44','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-45'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-45','EO',1992,3,24,8,22,9,'Carried Atmospheric Laboratory for scientific tests in space');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-45',81 ,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-45',131 ,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-45',387,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-45',244,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-45',152 ,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-45',249 ,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-45',155,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-45','orbiter','Atlantis');
+
+
+
+
+
+
+\! echo
+\! echo 'STS-46'
+
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-46','EO',1992,7,31,7,23,15,'Deployment of the EURECA and operation of the joint NASA/Italian Space Agency Tethered Satellite System');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-46',375,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-46',52,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-46',204,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-46',102,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-46',300,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-46',210,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-46',268,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-46','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-47'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-47','EO',1992,12,12,
+                                       7,22,30,'Joint Nasa and Japan mission');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-47',166,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-47', 87,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-47',243,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-47',212,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-47', 56,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-47',214,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-47',288,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-47','orbiter','Endeavour');
+
+
+
+
+\! echo
+\! echo 'STS-48'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-48','EO',1991,9,12,
+       5,8,27,'most extensive study ever conducted of the Earths troposphere');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-48',117,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-48',335,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-48',89,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-48',164,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-48',90,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-48','orbiter','Discovery');
+
+
+
+\! echo
+\! echo 'STS-49'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-49','EO',1992,5,7,8,21,17,'Intelsat VI Repair');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-49',85,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-49',106,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-49',400,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-49',398,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-49',200,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-49',49,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-49',283,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-49','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-50'
+Insert INTO NASA2_Mission VALUES('Shuttle','STS-50','EO',1992,6,25,13,19,30,'Payload was the United States Microgravity Laboratory-I (USML-1)');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-50',341,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-50',83,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-50',132,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-50',64,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-50',282,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-50',126,'Payload Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-50',407,'Payload Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-50','orbiter','Columbia');
+
+
+
+
+\! echo
+\! echo 'STS-51'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-51','EO',1993,9,12,9,20,11,'Advanced Communications Technology Satellite');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51',121,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51',334,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51',299,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51',94,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-51',433,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-51','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-52'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-52','EO',1992,10,22,
+                 9,20,56,'Deployment of the Laser Geodynamic Satellite II');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-52',436,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-52',65,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-52',416,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-52',373,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-52',215,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-52',264,'Payload Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-52','orbiter','Columbia');
+
+
+
+
+\! echo
+\! echo 'STS-53'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-53','EO',1992,12,2,7,7,19,'A Shuttle Mission with department of Defense  primary payload');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-53',430,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-53',96,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-53',79,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-53',425,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-53',111,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-53','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-54'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-54','EO',1993,1,13,5,23,38,'Fifth successful launch of the Tracking and Data Relay Satellite');
+
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-54',100,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-54',280,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-54',350,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-54',188,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-54',194,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-54','orbiter','Endeavour');
+
+
+
+\! echo
+\! echo 'STS-55'
+Insert INTO NASA2_Mission VALUES('Shuttle','STS-55','EO',1993,4,26,9,23,39,'second Spacelab flight under German mission management');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-55',295,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-55',197,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-55',347,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-55',331,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-55',189,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-55',432,'Payload Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-55',357,'Payload Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-55','orbiter','Columbia');
+
+
+
+\! echo
+\! echo 'STS-56'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-56','EO',1993,4,8,9,6,8,'null');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-56',97,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-56',308,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-56',152,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-56',113,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-56',303,'Mission Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-56','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-57'
+INSERT INTO nasa2_mission VALUES ('Shuttle','STS-57','EO',1993,6,21,
+                 9,23,44,'First flight of the commercially-developed SPACEHAB');
+
+INSERT INTO nasa2_assigned VALUES ('Shuttle','STS-57',173,'Commander');
+INSERT INTO nasa2_assigned VALUES ('Shuttle','STS-57',131,'Pilot');
+INSERT INTO nasa2_assigned VALUES ('Shuttle','STS-57',260,'Payload Commander');
+INSERT INTO nasa2_assigned VALUES ('Shuttle','STS-57',123,'Mission Specialist');
+INSERT INTO nasa2_assigned VALUES ('Shuttle','STS-57',442,'Mission Specialist');
+INSERT INTO nasa2_assigned VALUES ('Shuttle','STS-57',426,'Mission Specialist');
+
+INSERT INTO nasa2_spacecraft VALUES ('Shuttle','STS-57','orbiter','Endeavour');
+
+
+
+
+\! echo
+\! echo 'STS-58'
+Insert INTO NASA2_Mission VALUES('Shuttle','STS-58','EO',1993,10,18,14,0,13,'Launch of Spacelab SLS-2');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-58',77,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-58',361,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-58',362,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-58',274,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-58',443,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-58',262,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-58',146,'Payload Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-58','orbiter','Columbia');
+
+
+
+
+\! echo
+\! echo 'STS-59'
+INSERT into NASA2_Mission values('Shuttle','STS-59','EO',1994,4,9,13,23,16,'Was the first flight to use Toughened Uni-Piece Fibrous Insulation');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-59',182,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-59',106,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-59',169,'Payload Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-59',56,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-59',111,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-59',217,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft values('Shuttle','STS-59','orbiter','Endeavour');
+
+
+
+
+
+\! echo
+\! echo 'STS-60'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-60','EO',1994,2,11,
+                                          8,7,9,'First shuttle flight of 1994');
+
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-60',81,'Commander');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-60',335,'Pilot');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-60',212,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-60',363,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-60',102,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-60',234,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES ('Shuttle','STS-60','orbiter','Discovery');
+
+
+
+\! echo
+\! echo 'STS-61'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-61','EO',1993,12,2,10,
+            19,58,'The first servicing of the Hubble Space Telescope (HST)');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61',116,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61',83,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61',294,'Payload Commander'); 
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61',398,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61',300,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61',204,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-61',49,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-61','orbiter','Endeavour');
+
+
+\! echo
+\! echo 'STS-62'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-62','EO',1994,3,4,
+                                     13,23,16,'Cystal growth in microgravity');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-62',100,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-62',52,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-62',400,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-62',164,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-62',210,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-62','orbiter','Columbia');
+
+
+
+
+\! echo
+\! echo 'STS-63'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-63','EO',1995,2,3,
+       7,18,29,'MIR Rendezvous / Fly around & First Mission with Female Pilot');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-63',436 ,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-63',115 ,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-63',152 ,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-63',426 ,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-63',189 ,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-63','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-64'
+
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-64','EO',1994,
+       9,9,10,22,49,'First Flight with LITE testing earths atmosphere');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-64',341,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-64',187,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-64',252,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-64',194,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-64',282,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-64',243,'Mission Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-64','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-65'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-65','EO',1994,7,8,
+                                14,17,55,'International Microgravity Library');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-65', 96,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-65',186,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-65',200,'Payload Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-65',433,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-65',105,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-65',396,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-65',291,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-65','orbiter','Columbia');
+
+
+
+
+\! echo
+\! echo 'STS-66'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-66','EO',1994,11,3,10,22,34,'Atlantis-3');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-66',280,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-66',87,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-66',303,'Payload Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-66',313,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-66',390,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-66',110,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-66','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-67'
+
+Insert INTO NASA2_Mission VALUES('Shuttle','STS-67','EO',1995,3,2,16,15,8,
+         'Longest shuttle flight to date; examination of ultraviloet universe');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-67',308,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-67',176,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-67',215,'Payload Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-67',178,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-67',239,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-67',314,'Payload Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-67',134,'Payload Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-67','orbiter','Endeavour');
+
+
+
+
+\! echo
+\! echo 'STS-68'
+
+Insert INTO NASA2_Mission VALUES('Shuttle','STS-68','EO',1994,
+                 10,11,11,5,46,'Launch of Space Radar Laboratory (SRL-2)');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-68',65,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-68',438,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-68',94,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-68',217,'Payload Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-68',378,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-68',442,'Mission Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-68','orbiter','Endeavour');
+
+
+
+
+\! echo
+\! echo 'STS-69'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-69','EO',1995,9,7,
+                   10,20,28,'Two Payloads Retreived & Deployed in 1 Mission');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-69',430,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-69',113,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-69',425,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-69',299,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-69',165,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-69','orbiter','Endeavour');
+
+
+
+
+\! echo
+\! echo 'STS-70'
+Insert INTO NASA2_Mission VALUES('Shuttle','STS-70','EO',1995,7,13,8,22,20,'Delay caused by Woodpecker Damage to ET');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-70',197,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-70',233,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-70',123,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-70',396,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-70',435,'Mission Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-70','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-71'
+Insert INTO NASA2_Mission VALUES('Shuttle','STS-71','EO',1995,6,27,9,19,22,'First Shuttle-Mir Docking');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-71',166,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-71',331,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-71',64,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-71',132,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-71',188,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-71',380,'Mir Up');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-71',92,'Mir Up');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-71',392,'Mir Down');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-71',128,'Mir Down');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-71',385,'Mir Down');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-71','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-72'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-72','EO',1996,1,11,
+                                   8,22,1,'Retrieval of a Japanese satellite');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-72',131,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-72',216,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-72',105,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-72',67,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-72',359,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-72',427,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-72','orbiter','Endeavour');
+
+
+
+
+\! echo
+\! echo 'STS-73'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-73','EO',1995,10,20,
+                15,21,53,'Second US Microgravity Laboratory Spacelab mission ');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41B',83,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41B',346,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41B',398,'Payload Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41B',114,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41B',258,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41B',247,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-41B',352,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-73','orbiter','Columbia');
+
+
+
+\! echo
+\! echo 'STS-74'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-74','EO',1995,11,12,
+                                                  8,4,31,'Second Mir Docking');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-74',97,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-74',186,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-74',347,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-74',274,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-74',183,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-74','orbiter','Atlantis');
+
+
+
+\! echo
+\! echo 'STS-75'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-75','EO',1996,2,22,
+                   15,17,41,'Marred by loss of satellite on flight day three');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-75',52,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-75',205,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-75',102,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-75',104,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-75',204,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-75',300,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-75',180,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-75','orbiter','Columbia');
+
+
+
+
+
+\! echo
+\! echo 'STS-76'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-76','EO',1996,3,22,9,5,15,'Third Shuttle-Mir Docking');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-76',106,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-76',361,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-76',262,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-76',169,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-76',111,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-76',363,'Mission Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-76','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-77'
+INSERT into NASA2_Mission values('Shuttle','STS-77','EO',1996,5,19,
+                                   10,0,39,'The fourth shuttle flight of 1996');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-77',100,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-77',87,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-77',94,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-77',350,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-77',163,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-77',395,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft values('Shuttle','STS-77','orbiter','Endeavour');
+
+
+
+
+\! echo
+\! echo 'STS-78'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-78','EO',1996,6,20,16,21,47,'More than 40 experiments flown grouped into life sciences and microgravity science');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-78',197,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-78',233,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-78',194,'Flight Engineer');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-78',253,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-78',84,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-78',144,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-78',394,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-78','orbiter','Columbia');
+
+
+
+
+
+\! echo
+\! echo 'STS-79'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-79','EO',1996,9,16,
+           10,3,18,'First U.S. crew exchange aboard Russian Space Station Mir');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-79',334,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-79',438,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-79', 49,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-79',433,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-79', 56,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-79',  77,'Mir Up');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-79', 262,'Mir Down');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-79','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-80'
+INSERT INTO Nasa2_Mission VALUES('Shuttle','STS-80','EO','1996',11,19,
+   17,15,53,'successful deployment, operation and retrieval of two spacecraft');
+
+INSERT INTO Nasa2_Assigned VALUES('Shuttle','STS-80',113,'Commander');
+INSERT INTO Nasa2_Assigned VALUES('Shuttle','STS-80',346,'Pilot');
+INSERT INTO Nasa2_Assigned VALUES('Shuttle','STS-80',215,'Mission Specialist');
+INSERT INTO Nasa2_Assigned VALUES('Shuttle','STS-80',217,'Mission Specialist');
+INSERT INTO Nasa2_Assigned VALUES('Shuttle','STS-80',294,'Mission Specialist');
+
+INSERT INTO Nasa2_Spacecraft VALUES('Shuttle','STS-80','orbiter','Columbia');
+
+
+
+
+
+\! echo
+\! echo 'STS-81'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-81','EO',1997,1,12,
+                          10,4,55,'Mission to Mir: Linenger up,Blaha down');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-81',65,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-81',216,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-81',178,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-81',210,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-81',442,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-81',252,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-81','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-82'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-82','EO',1997,2,11,
+                                               9,23,38,'Second Hubble service');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-82',83,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-82',205,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-82',243,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-82',193,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-82',188,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-82',290,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-82',378,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-82','orbiter','Discovery');
+
+
+
+
+
+\! echo
+\! echo 'STS-83'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-83','EO',1997,4,4,2,20,32,'first flight of the microgravity science laboratory but returned early');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-83',186,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-83',384,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-83',426,'Payload Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-83',396,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-83',165,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-83',120,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-83',254,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-83','orbiter','Columbia');
+
+
+
+
+
+\! echo
+\! echo 'STS-84'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-84','EO',1997,5,15,
+                                         9,23,19,'Sixth Shuttle-Mir docking');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-84',331,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-84',115,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-84',152,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-84',302,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-84',261,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-84',110,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-84',229,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-84','orbiter','Atlantis');
+
+
+
+
+
+\! echo
+\! echo 'STS-85'
+Insert INTO NASA2_Mission VALUES('Shuttle','STS-85','EO',1997,8,7,11,19,18,'Preparing for International Space Station assembly');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-85',87,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-85',346,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-85',212,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-85',122,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-85',343,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-85',409,'Payload Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-85','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-86'
+INSERT INTO NASA2_Mission VALUES ('Shuttle','STS-86','EO',1997,10,6,
+                                10,19,21,'Mir; exchange of Foale and Wolf');
+
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-86',436,'Commander');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-86',78,'Pilot');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-86',403,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-86',313,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-86',107,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-86',239,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES ('Shuttle','STS-86',443,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES ('Shuttle','STS-86','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-87'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-87','EO',1997,11,19,
+     15,16,34,'First time since 1992 eight flights were conducted in one year');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-87',233,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-87',251,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-87',359,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-87',103,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-87',130,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-87',218,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-87','orbiter','Columbia');
+
+
+
+\! echo
+\! echo 'STS-88'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-88','EO',1998,12,4,
+                 11,19,18,'First mission to the International Space Station');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-88', 96,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-88',386,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-88',123,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-88',347,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-88',299,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-88',234,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-88','orbiter','Endeavour');
+
+
+
+
+\! echo
+\! echo 'STS-89'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-89','EO',1998,1,22,
+              8,19,46,'first orbiter other than Atlantis to dock with Mir');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-89',438,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-89',136,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-89',132,'Payload Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-89',55,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-89',336,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-89',368,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-89',395,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-89','orbiter','Endeavour');
+
+
+
+\! echo
+\! echo 'STS-90'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-90','EO',1998,4,17,15,21,50,'Final spacelab mission');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-90',361,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-90',54,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-90',253,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-90',439,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-90',202,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-90',91,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-90',318,'Payload Specialist');
+
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-90','orbiter','Columbia');
+
+
+
+
+\! echo
+\! echo 'STS-91'
+Insert Into NASA2_Mission VALUES('Shuttle','STS-91','EO',1998,6,12,
+                                        9,19,54,'Alpha Magnetic Spectrometer');
+
+Insert Into NASA2_Assigned VALUES('Shuttle','STS-91',331,'Commander');
+Insert Into NASA2_Assigned VALUES('Shuttle','STS-91',172,'Pilot');
+Insert Into NASA2_Assigned VALUES('Shuttle','STS-91',239,'Mission Specialist');
+Insert Into NASA2_Assigned VALUES('Shuttle','STS-91',102,'Mission Specialist');
+Insert Into NASA2_Assigned VALUES('Shuttle','STS-91',220,'Mission Specialist');
+Insert Into NASA2_Assigned VALUES('Shuttle','STS-91',351,'Mission Specialist');
+
+Insert Into NASA2_SpaceCraft VALUES('Shuttle','STS-91','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-92'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-92','EO',2000,10,11,
+                         11,19,12,'100th flight of the space shuttle program');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-92',131,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-92',284,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-92',427,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-92',105,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-92',442,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-92',258,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-92',274,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-92','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-93'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-93','EO',1999,7,22,
+                                     4,22,50,'First Female Shuttle Commander');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-93',115,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-93',59,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-93',193,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-93',114,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-93',404,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-93','orbiter','Columbia');
+
+
+
+
+\! echo
+\! echo 'STS-94'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-94','EO',1997,7,1,
+                                                    15,16,44,'MSL-1 Reflight');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-94',186,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-94',384,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-94',426,'Payload Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-94',396,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-94',165,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-94',120,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-94',254,'Payload Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-94','orbiter','Columbia');
+
+
+
+
+
+\! echo
+\! echo 'STS-95'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-95','EO',1998,10,29,
+                                  9,19,54,'John Glenn''s return to space');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-95',87,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-95',251,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-95',313,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-95',343,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-95',133,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-95',291,'Payload Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-95',20,'Payload Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-95','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-96'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-96','EO',1999,5,27,9,13,
+19,'Performing spacewalk and installing the new equipment for the Shuttle');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-96',346,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-96',207,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-96',303,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-96',319,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-96',67,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-96',215,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-96',405,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-96','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-97'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-97','EO',2000,11,30,10,19,57,'STS-97 delivered giant solar arrays to the International Space Station');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-97',78,'Pilot');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-97',163,'Mission Specialist');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-97',216,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-97',302,'Mission Specialist');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-97',390,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-97','orbiter','Endeavour');
+
+
+
+
+
+\! echo
+\! echo 'STS-98'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-98','EO',2001,2,
+7,12,21,21,'International Space Station Assembly Flight');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-98',113,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-98',326,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-98',122,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-98',217,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-98',210,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-98','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-99'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-99','EO',2000,2,11,
+                                 11,5,38,' Shuttle Radar Topography Mission');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-99',233,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-99',172,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-99',426,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-99',220,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-99',393,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-99',288,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-99','orbiter','Endeavour');
+
+
+
+
+
+\! echo
+\! echo 'STS-100'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-100','EO',2001,4,19,
+                           11,21,30,'Larger range of motion than a human arm');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-100',346,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-100', 59,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-100',183,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-100',313,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-100',325,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-100',180,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-100',257,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-100','orbiter','Endeavour');
+
+
+
+
+
+\! echo
+\! echo 'STS-101'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-101','EO',2000,5,19,
+                            9,20,9,'International Space Station Flight 2A.2a');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-101',186,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-101',205,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-101',435,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-101',194,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-101',412,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-101',425,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-101',441,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-101','orbiter','Atlantis');
+
+
+
+
+
+\! echo
+\! echo 'STS-102'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-102','EO',2001,3,8,
+                        12,19,49,'A new space walking record in this mission');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-102',436,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-102',221,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-102',395,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-102',340,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-102',425,'ISS Up');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-102',194,'ISS Up');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-102',412,'ISS Up');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-102',234,'ISS Down');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-102',373,'ISS Down');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-102',167,'ISS Down');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-102','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-103'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-103','EO',1999,12,19,
+                     7,23,10,'Third Hubble Space Telescope Servicing Mission');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-103',87,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-103',223,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-103',378,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-103',152,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-103',178,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-103',300,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-103',110,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-103','orbiter','Discovery');
+
+
+
+\! echo
+\! echo 'STS-104'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-104','EO',2001,7,12,12,18,35,'Installation of Quest Air lock on the International Space Station');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-104',194,'Other Role');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-104',425,'Other Role');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-104',412,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-104',165,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-104',336,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-104','orbiter','Atlantis');
+
+
+
+
+
+\! echo
+\! echo 'STS-105'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-105','EO',2001,8,10,11,19,38,'First Flight with LITE testing earth''s atmosphere');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-105',205,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-105',386,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-105',67,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-105',153,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-105',121,'Other Role');  
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-105',411,'Other Role');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-105',128,'Other Role');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-105',425,'Other Role');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-105',412,'Other Role');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-105',194,'Other Role');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-105','orbiter','Discovery');
+
+
+
+
+
+\! echo
+\! echo 'STS-106'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-106','EO',2000,9,8,
+                      11,19,12,'Docking cargo to International Space Station');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-106',54,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-106',93,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-106',261,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-106',273,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-106',267,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-106',290,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-106','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-107'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-107','EO',2003,1,16,15,22,20,'Columbia and crew lost during entry 16 minutes before landing' );
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-107',207,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-107',278,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-107',103,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-107',88,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-107',55,'Payload Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-107',108,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-107',333,'Payload Specialist');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-107','orbiter','Columbia');
+
+
+
+
+\! echo
+\! echo 'STS-108'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-108','EO',2001,12,5,
+                           11,19,36,'International Space Station Flight UF-1');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-108',307,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-108',433,'Other Role');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-108',94,'Other Role');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-108',121,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-108',128,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-108',411,'Other Role');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-108','orbiter','Endeavour');
+
+
+
+
+\! echo
+\! echo 'STS-109'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-109','EO',2002,3,1,10,22,10,'Maintenence of the Hubble Space Telescope' );
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-109',54 ,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-109',98 ,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-109',178,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-109',123,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-109',253 ,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-109',299 ,'Payload Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-109',272,'Other Role');
+
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-109','orbiter','Columbia');
+
+
+
+
+
+\! echo
+\! echo 'STS-110'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-110','EO',2002,4,8,10,19,42,'Mission Specialist (MS) Jerry Ross became the first human to fly in space seven times');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-110',78,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-110',154,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-110',347,'Mission Specialist'); 
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-110',378,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-110',303,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-110',289,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-110',428,'Mission Specialist'); 
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-110','orbiter','Atlantis');
+
+
+
+
+
+
+\! echo
+\! echo 'STS-111'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-111','EO',2002,6,19,
+                                   13,20,35,'International Space Station UF2');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-111',113,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-111',256,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-111',102,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-111',321,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-111',230,'ISS Up');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-111',437,'ISS Up');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-111',406,'ISS Up');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-111',307,'ISS Down');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-111',433,'ISS Down');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-111', 94,'ISS Down');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-111','orbiter','Endeavour');
+
+
+
+
+\! echo
+\! echo 'STS-112'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-112','EO',2002,10,7,10,19,58,'International Space Station 9A');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-112',59,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-112',284,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-112',443,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-112',364,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-112',265,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-112',447,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-112','orbiter','Endeavour');
+
+
+
+
+
+\! echo
+\! echo 'STS-113'
+Insert INTO NASA2_Mission VALUES('Shuttle','STS-113','EO',2002,11,23,13,18,48,'Installed the new P1 truss to the International Space Station');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-113',436,'Commander');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-113',256,'Pilot');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-113',258,'Mission Specialist');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-113',199,'Mission Specialist');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-113',83,'ISS Up');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-113',92,'ISS Up');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-113',323,'ISS Up');
+
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-113',230,'ISS Down');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-113',437,'ISS Down');
+Insert INTO NASA2_Assigned VALUES('Shuttle','STS-113',406,'ISS Down');
+
+Insert INTO NASA2_SpaceCraft VALUES('Shuttle','STS-113','orbiter','Endeavour');
+
+
+
+
+\! echo
+\! echo 'STS-114'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-114','EO',2005,6,26,13,21,32,'First Flight mission since the tragic loss in 2003');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-114',115,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-114',221,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-114',451,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-114',239,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-114',452,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-114',343,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-114',395,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-114','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-115'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-115','EO',2006,9,9,11,19,6,'Space Station Assembly Mission');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-115',216,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-115',456,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-115',390,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-115',93,'Mission Specialist'); 
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-115',264,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-115',457,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-115','orbiter','Atlantis');
+
+
+
+
+\! echo
+\! echo 'STS-121'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-121','EO',2006,7,4,
+                     12,18,37,'International Space Station Assembly Flight');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-121',251,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-121',222,'Pilot');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-121',364,'Mission Specialist'); 
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-121',337,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-121',453,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-121',454,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-121',455,'Mission Specialist');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-121','orbiter','Discovery');
+
+
+
+
+\! echo
+\! echo 'STS-116'
+INSERT INTO NASA2_Mission VALUES('Shuttle','STS-116','EO',2006,12,9,
+                                       12,20,45,'ISS Assembly, P5 Truss');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-116',326,'Commander');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-116',459,'Pilot');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-116',460,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-116',122,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-116',461,'Mission Specialist');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-116',462,'Mission Specialist');
+
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-116',458,'ISS Up');
+INSERT INTO NASA2_Assigned VALUES('Shuttle','STS-116',337,'ISS Down');
+
+INSERT INTO NASA2_SpaceCraft VALUES('Shuttle','STS-116','orbiter','Discovery');
+
+\! echo
+\! echo Check details of mission STS-116:
+\! echo launchYear, launchMonth, and launchDay.
+\! echo duration ... days, hours, and minutes.
+
+
+\! echo 
+\! echo 'select * from ShuttleMission order by year,month,day;'
+\! echo 'select miss,astroname,country,g,role from ShuttleCrew;'
+\! echo "select * from ShuttleMission where No = 'STS-';"
+\! echo "select * from ShuttleCrew where Miss = 'STS-';"
+
+\! echo
+\! echo Check details of mission STS-116:
+\! echo launchYear, launchMonth, and launchDay.
+\! echo duration ... days, hours, and minutes.

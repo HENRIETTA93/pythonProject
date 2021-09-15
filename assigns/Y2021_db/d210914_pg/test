@@ -1,0 +1,29 @@
+1.	USE  “GROUP BY”, which may require WHERE and HAVING conditions.
+With the given data, produce a query which will be able to display the below result.
+
+
+
+2.	Use a  sub-query to get the below result.
+
+3.	Get the below result using a join requiring the use of cross product notation.
+Produce the below result
+
+
+
+select ast.astroname,asg.role,   count(asg.missionno) as missions
+from nasa2_astronaut ast join nasa2_assigned asg on ast.astrono=asg.astrono
+group by ast.astroname,asg.role
+having count(asg.missionno)=7;
+
+
+select mis.missionno, launchyear, days
+from nasa2_mission mis
+where mis.missionno in
+( select missionno from nasa2_assigned where missionno='15' or missionno='17');
+
+select asg1.role as spaceinvaders, asg2.role as themartian, asg1.missionno
+from nasa2_assigned asg1 cross join nasa2_assigned asg2
+where asg1.missionno=asg2.missionno
+and asg1.missionno like 'STS-2%'
+and asg1.role='Commander'
+and asg2.role='Pilot';
