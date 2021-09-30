@@ -1,0 +1,67 @@
+category_name,supplier_region,unit_in_stock,unit_on_order,reorder_level
+Beverages,Australia,15,10,30
+Beverages,Brazil,20,0,0
+Beverages,Finland,57,0,20
+Beverages,France,69,0,5
+Beverages,France,17,0,15
+Beverages,Germany,125,0,25
+Beverages,Singapore,17,10,25
+Beverages,UK,39,0,10
+Beverages,UK,17,40,25
+Beverages,USA,52,0,10
+Beverages,USA,131,0,15
+Condiments,Australia,24,0,5
+Condiments,Canada,113,0,25
+Condiments,Germany,32,0,15
+Condiments,Japan,39,0,5
+Condiments,Singapore,27,0,15
+Condiments,UK,13,70,25
+Condiments,USA,135,0,0
+Condiments,USA,4,100,20
+Condiments,USA,120,0,25
+Confections,Australia,29,0,10
+Confections,Canada,17,0,0
+Confections,Finland,10,60,15
+Confections,Finland,65,0,30
+Confections,Germany,15,0,0
+Confections,Germany,125,0,30
+Confections,Netherlands,36,0,0
+Confections,Netherlands,15,70,25
+Confections,UK,40,0,0
+Confections,UK,28,40,5
+Confections,UK,6,10,15
+Dairy Products,France,98,0,0
+Dairy Products,Italy,14,0,0
+Dairy Products,Italy,0,70,20
+Dairy Products,Italy,9,40,25
+Dairy Products,Norway,26,0,0
+Dairy Products,Norway,26,0,15
+Dairy Products,Norway,112,0,20
+Grains/Cereals,Australia,38,0,25
+Grains/Cereals,Germany,22,80,30
+Grains/Cereals,Italy,36,0,20
+Grains/Cereals,Italy,21,10,30
+Grains/Cereals,Singapore,26,0,0
+Grains/Cereals,Sweden,165,0,25
+Meat/Poultry,Australia,0,0,0
+Meat/Poultry,Canada,21,0,10
+Meat/Poultry,Canada,115,0,20
+Meat/Poultry,Germany,0,0,0
+Meat/Poultry,Japan,29,0,0
+Produce,Australia,20,0,10
+Produce,Germany,26,0,0
+Produce,Japan,35,0,0
+Produce,Japan,4,20,5
+Produce,USA,15,0,10
+Seafood,Australia,42,0,0
+Seafood,Denmark,95,0,0
+Seafood,Denmark,5,70,15
+Seafood,France,62,0,20
+Seafood,Germany,10,0,15
+Seafood,Japan,31,0,0
+Seafood,Japan,24,0,5
+Seafood,Sweden,101,0,5
+Seafood,Sweden,112,0,20
+Seafood,Sweden,11,50,25
+Seafood,USA,85,0,10
+Seafood,USA,123,0,30
