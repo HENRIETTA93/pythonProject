@@ -1,0 +1,181 @@
+--****PLEASE ENTER YOUR DETAILS BELOW****
+--T2-ml-insert.sql
+
+--Student ID:
+--Student Name:
+--Tutorial No:
+
+/* Comments for your marker:
+
+
+
+
+*/
+
+-- 2 (a) Load the BOOK_COPY, LOAN and RESERVE tables with your own
+-- test data following the data requirements expressed in the brief
+-- BOOK_COPY
+INSERT INTO book_copy VALUES(
+10,
+1,
+88,
+'Y',
+'005.74 D691D'
+);
+
+INSERT INTO book_copy VALUES(
+10,
+2,
+46,
+'N',
+'005.756 G476F'
+);
+
+INSERT INTO book_copy VALUES(
+11,
+1,
+88,
+'Y',
+'005.74 D691D'
+);
+INSERT INTO book_copy VALUES(
+11,
+2,
+76,
+'Y',
+'112.6 S874D'
+);
+INSERT INTO book_copy VALUES(
+11,
+3,
+89,
+'N',
+'823.914 H219A'
+);
+INSERT INTO book_copy VALUES(
+13,
+1,
+67,
+'Y',
+'823.914 A211H'
+);
+INSERT INTO book_copy VALUES(
+13,
+2,
+55,
+'N',
+'823.914 H219A'
+);
+INSERT INTO book_copy VALUES(
+13,
+3,
+90,
+'N',
+'005.432 L761P'
+);
+INSERT INTO book_copy VALUES(
+15,
+1,
+90,
+'N',
+'005.432 L761P'
+);
+INSERT INTO book_copy VALUES(
+15,
+2,
+55,
+'Y',
+'823.914 H219A'
+);
+
+-- LOAN
+INSERT INTO loan VALUES(
+10,
+1,
+TO_DATE('2021-06-20', 'YYYY-MM-DD'),
+TO_DATE('2021-07-20', 'YYYY-MM-DD'),
+TO_DATE('2021-06-30', 'YYYY-MM-DD'),
+1
+);
+
+INSERT INTO loan VALUES(
+10,
+1,
+TO_DATE('2021-06-10', 'YYYY-MM-DD'),
+TO_DATE('2021-07-10', 'YYYY-MM-DD'),
+TO_DATE('2021-06-16', 'YYYY-MM-DD'),
+3
+);
+INSERT INTO loan VALUES(
+11,
+1,
+TO_DATE('2021-08-10', 'YYYY-MM-DD'),
+TO_DATE('2021-09-10', 'YYYY-MM-DD'),
+TO_DATE('2021-08-30', 'YYYY-MM-DD'),
+2
+);
+INSERT INTO loan VALUES(
+11,
+2,
+TO_DATE('2021-06-20', 'YYYY-MM-DD'),
+TO_DATE('2021-07-20', 'YYYY-MM-DD'),
+TO_DATE('2021-07-10', 'YYYY-MM-DD'),
+1
+);
+INSERT INTO loan VALUES(
+13,
+1,
+TO_DATE('2021-08-10', 'YYYY-MM-DD'),
+TO_DATE('2021-09-10', 'YYYY-MM-DD'),
+TO_DATE('2021-09-11', 'YYYY-MM-DD'),
+3
+);
+INSERT INTO loan VALUES(
+13,
+1,
+TO_DATE('2021-07-10', 'YYYY-MM-DD'),
+TO_DATE('2021-08-10', 'YYYY-MM-DD'),
+TO_DATE('2021-07-19', 'YYYY-MM-DD'),
+4
+);
+INSERT INTO loan VALUES(
+11,
+3,
+TO_DATE('2021-08-10', 'YYYY-MM-DD'),
+TO_DATE('2021-09-10', 'YYYY-MM-DD'),
+TO_DATE('2021-09-12', 'YYYY-MM-DD'),
+5
+);
+INSERT INTO loan VALUES(
+13,
+3,
+TO_DATE('2021-08-10', 'YYYY-MM-DD'),
+TO_DATE('2021-09-10', 'YYYY-MM-DD'),
+NULL,
+3
+);
+INSERT INTO loan VALUES(
+15,
+2,
+TO_DATE('2021-06-10', 'YYYY-MM-DD'),
+TO_DATE('2021-07-10', 'YYYY-MM-DD'),
+TO_DATE('2021-06-15', 'YYYY-MM-DD'),
+2
+);
+INSERT INTO loan VALUES(
+15,
+1,
+TO_DATE('2021-06-11', 'YYYY-MM-DD'),
+TO_DATE('2021-07-11', 'YYYY-MM-DD'),
+TO_DATE('2021-06-30', 'YYYY-MM-DD'),
+1
+);
+
+-- reserve
+INSERT INTO reserve VALUES(
+
+);
+
+INSERT INTO reserve VALUES(
+
+);
