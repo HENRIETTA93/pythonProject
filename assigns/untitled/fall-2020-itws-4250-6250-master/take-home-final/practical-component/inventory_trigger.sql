@@ -1,0 +1,1 @@
+-- Add your implementation for the Inventory Trigger component here

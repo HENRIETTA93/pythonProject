@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="servings">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="job">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="cook"/>
+            <xs:enumeration value="dishwasher"/>
+            <xs:enumeration value="server"/>
+            <xs:enumeration value="bartender"/>
+            <xs:enumeration value="manager"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="employee">
+        <xs:all>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="payrate" type="xs:float"/>
+            <xs:element name="job" type="job"/>
+        </xs:all>
+    </xs:complexType>
+    <xs:simpleType name="season">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Spring"/>
+            <xs:enumeration value="Summer"/>
+            <xs:enumeration value="Fall"/>
+            <xs:enumeration value="Winter"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="recipe">
+        <xs:all>
+            <xs:element name="ingredients">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ingredient" type="xs:string" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="instructions" type="xs:string"/>
+        </xs:all>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="season" type="season"/>
+        <xs:attribute name="serves" type="servings" use="required"/>
+    </xs:complexType>
+
+    <xs:element name="restaurant">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="menu">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="recipes">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="recipe" type="recipe" maxOccurs="unbounded"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="employees">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="employee" type="employee" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

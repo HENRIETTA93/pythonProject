@@ -1,0 +1,77 @@
+<mediawiki xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.5/.xsd" version="0.5" xml:lang="en">
+  <siteinfo>
+    <sitename>IMSLP</sitename>
+    <base>http://imslp.org/wiki/Main_Page</base>
+    <generator>MediaWiki 1.18.1</generator>
+    <case>first-letter</case>
+    <namespaces>
+      <namespace key="-2" case="first-letter">Media</namespace>
+      <namespace key="-1" case="first-letter">Special</namespace>
+      <namespace key="0" case="first-letter" />
+      <namespace key="1" case="first-letter">Talk</namespace>
+      <namespace key="2" case="first-letter">User</namespace>
+      <namespace key="3" case="first-letter">User talk</namespace>
+      <namespace key="4" case="first-letter">IMSLP</namespace>
+      <namespace key="5" case="first-letter">IMSLP talk</namespace>
+      <namespace key="6" case="first-letter">File</namespace>
+      <namespace key="7" case="first-letter">File talk</namespace>
+      <namespace key="8" case="first-letter">MediaWiki</namespace>
+      <namespace key="9" case="first-letter">MediaWiki talk</namespace>
+      <namespace key="10" case="first-letter">Template</namespace>
+      <namespace key="11" case="first-letter">Template talk</namespace>
+      <namespace key="12" case="first-letter">Help</namespace>
+      <namespace key="13" case="first-letter">Help talk</namespace>
+      <namespace key="14" case="first-letter">Category</namespace>
+      <namespace key="15" case="first-letter">Category talk</namespace>
+    </namespaces>
+  </siteinfo>
+  <page>
+    <title>Toccata quasi Fantasia con Fuga, BWV Anh.178 (Bach, Johann Sebastian)</title>
+    <id>182135</id>
+    <redirect />
+    <revision>
+      <id>1635964</id>
+      <timestamp>2014-08-17T18:40:02Z</timestamp>
+      <contributor>
+        <username>P.davydov</username>
+        <id>5557</id>
+      </contributor>
+      <text xml:space="preserve" bytes="139">#REDIRECT [[Toccata quasi Fantasia con Fuga (Purcell, Henry)]]
+
+[[Category:Bach, Johann Sebastian]]
+[[Category:Doubtful or Spurious works]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Fugue in G major, BWV 581 (Bach, Johann Sebastian)</title>
+    <id>182171</id>
+    <redirect />
+    <revision>
+      <id>608391</id>
+      <timestamp>2010-12-31T21:23:58Z</timestamp>
+      <contributor>
+        <username>P.davydov</username>
+        <id>5558</id>
+      </contributor>
+      <text xml:space="preserve" bytes="96">#REDIRECT [[Fugue in G major (Homilius, Gottfried August)]]
+
+[[Category:Bach, Johann Sebastian]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Das ist je gewisslich wahr, BWV 141 (Bach, Johann Sebastian)</title>
+    <id>149945</id>
+    <redirect />
+    <revision>
+      <id>608767</id>
+      <timestamp>2011-01-01T10:09:06Z</timestamp>
+      <contributor>
+        <username>P.davydov</username>
+        <id>5558</id>
+      </contributor>
+      <text xml:space="preserve" bytes="114">#REDIRECT [[Das ist je gewisslich wahr, TWV 1:183 (Telemann, Georg Philipp)]]
+
+[[Category:Bach, Johann Sebastian]]</text>
+    </revision>
+  </page>
+</mediawiki>

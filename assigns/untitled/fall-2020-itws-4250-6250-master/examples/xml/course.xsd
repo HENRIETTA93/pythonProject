@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="capacity">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1"/>
+            <xs:maxExclusive value="1000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="course-type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="lecture"/>
+            <xs:enumeration value="lab"/>
+            <xs:enumeration value="seminar"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="course">
+        <xs:sequence>
+            <xs:element name="time" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="location" type="xs:string"/>
+            <xs:element name="capacity" type="capacity"/>
+            <xs:element name="type" type="course-type"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="semester" type="xs:string"/>
+    </xs:complexType>
+    <xs:element name="course-data">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="courses">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="course" type="course" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="school-name" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

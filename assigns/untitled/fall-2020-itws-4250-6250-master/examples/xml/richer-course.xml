@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<course-data >
+    <courses>
+        <course name="Database Applications and Systems" semester="F20">
+            <capacity>30</capacity>
+            <time>W4-7</time>
+        </course>
+        <course name="Database Systems" semester="F19">
+            <capacity>30</capacity>
+            <time>W6-9</time>
+        </course>
+        <course name="Operating Systems" semester="F19">
+            <time>TF10-12</time>
+            <location>DCC 308</location>
+            <capacity>300</capacity>
+        </course>
+        <course>
+            <time>MR8-10</time>
+        </course>
+        <course name="Database Systems" semester="S19">
+            <time>MR4-6</time>
+            <location>DCC 318</location>
+            <students>
+                <student id="alice1">alice</student>
+            </students>
+            <capacity>150</capacity>
+        </course>
+        <course name="Database Systems" semester="F18" capacity="25">
+            <time>W6-9</time>
+            <location>Low 3039</location>
+        </course>
+        <course name="Operating Systems" semester="S19">
+            <time>MR10-12</time>
+            <location>DCC 308</location>
+            <students>
+                <student id="alice3">alice</student>
+            </students>
+        </course>
+    </courses>
+    <students>
+        <student name="alice" id="alice1">
+            <email>alice@example.com</email>
+            <courses-attended>
+                <course name="Database Applications and Systems" semester="F20"/>
+                <course name="Operating Systems" semester="F19"/>
+            </courses-attended>
+        </student>
+        <student name="bob" id="bob1">
+            <email>bob@example.com</email>
+            <courses-attended>
+                <course name="Operating Systems" semester="F19"/>
+                <course name="Database Systems" semester="F18"/>
+                <course name="Database Systems" semester="F19"/>
+            </courses-attended>
+        </student>
+    </students>
+</course-data>

@@ -1,0 +1,9 @@
+# Python Artifacts
+**/__pycache__
+
+# Java Artifacts
+out
+
+# IntelliJ Artifacts
+*.iml
+.idea

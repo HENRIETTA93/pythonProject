@@ -1,0 +1,262 @@
+September 2:
+  topics:
+    - Overview of Database Systems
+    - Relational Model:
+      - Keys
+      - Relational Algebra
+    - SQL Data Definition Language
+  reading:
+    - DSTCB:
+        - Chapter 1
+        - Chapter 2.1-2.3
+  technology:
+    - Postgres
+  lecture:
+    - https://rpi.box.com/s/4uubedqefczts7dqbkr3myn71uqiw5sm
+    - https://rpi.box.com/s/bwnda2hleq03wcnt8gcohwsc4hhca6xs
+    - https://rpi.box.com/s/he84bod959nn8m4an9yhkreixmh7077r
+  assignments:
+    - Homework 1 (Relational Model and SQL DDL) assigned
+September 9:
+  topics:
+    - Relational Algebra
+    - Data Normalization:
+      - Functional Dependecies
+  reading:
+    - DSTCB:
+      - Chapter 2.4-2.6
+      - Chapter 3.1-3.2
+  lecture:
+    - https://lms.rpi.edu/bbcswebdav/pid-200943-dt-content-rid-1973300_1/xid-1973300_1
+  assignments:
+    - Lab (Relational Algebra and Functional Dependencies)
+    - Homework 1 due on Friday September 11
+September 16:
+  topics:
+    - Data Normalization:
+      - BCNF
+      - 3NF
+    - Data modeling:
+      - E/R Diagrams
+  reading:
+    - DSTCB:
+      - Chapter 3.3-3.5
+      - Chapter 4.1-4.6
+  lecture:
+    - https://rpi.box.com/s/cn60a6fdmoxfydd1gyyp0fcr9qkzpz00
+    - https://rpi.box.com/s/bocrzmzfwg84zhevyrrhqki2y6r1qepc
+    - https://rpi.box.com/s/c352gcmw6nj15hr95qtaoyjl5s4b0tg9
+  assignments:
+    - Homework 2 (Data Modeling) assigned
+September 23:
+  announcement: Lecture was cancelled. See README for details.
+  topics:
+    - Algebraic Query Languages
+    - SQL:
+      - Basic Queries
+      - Nested Queries
+  reading:
+    - DSTCB:
+      - Chapter 5
+      - Chapter 6.1, 6.2
+  lecture:
+    - https://rpi.box.com/s/6osh0bo5dekqo1nyy7qvgkbc35rkb85i
+  assignments:
+September 30:
+  topics:
+    - SQL:
+      - Joins
+      - Grouping (aggregate functions)
+      - Modifying data
+      - Inserts/Updates/Deletes
+  reading:
+    - DSTCB:
+      - Chapter 6.2-6.5
+  technology:
+    - MariaDB/MySQL
+  lecture:
+    - https://rpi.box.com/s/m3dz7xltunfsmi20ylz9fvlftx069dd8
+    - https://rpi.box.com/s/bf7o9bffl0mj3lic6jpnsslrwq2jrxby
+    - https://rpi.box.com/s/20qb58e67mm1brbcl959te6y6nzjrt0o
+    - https://rpi.box.com/s/lwgwiphbtcuj6pegokmul0jm9r6yrcua
+  assignments:
+    - Homework 2 due Wednesday September 30 (before class)
+    - Final Project assigned
+    - Homework 3 (SQL Queries) assigned
+    - Lab (Basic SQL)
+October 7:
+  topics:
+    - SQL:
+      - Transactions
+      - Constraints
+      - Keys
+  reading:
+    - DSTCB:
+      - Chapter 6.6
+      - Chapter 7.1-7.4
+  technology:
+    - Python virtual environments
+  lecture:
+    - https://rpi.box.com/s/hacxutr2ym96c4a8zod6vimsgd9frws9
+    - https://rpi.box.com/s/qy33zlrn20whlc0sxi9x9h89ejaog3fg
+  assignments:
+    - Final Project topic memos due Friday October 9
+October 14:
+  topics:
+    - SQL:
+      - Views
+      - Indexes
+      - Triggers
+      - Stored Procedures
+  reading:
+    - DSTCB:
+      - Chapter 7.5
+      - Chapter 8
+      - Chapter 9.4
+  lecture:
+    - https://rpi.box.com/s/enlihvziwyxpzha3m5bzb15uxnk88c93
+    - https://rpi.box.com/s/5w71akdanafcgaa2hq8i5xlawiw1ojwl
+    - https://rpi.box.com/s/oa71wxcti996u4pjolq2th8530q1umq9
+    - https://rpi.box.com/s/esusaxxqq00lahtx4zkxxm17unrmmlar
+  assignments:
+    - Homework 4 (PL/SQL) assigned
+    - Homework 3 due Friday October 16
+October 21:
+  topics:
+    - SQL in applications:
+      - Architectures
+      - N-Tier Systems
+      - Microservice Architectures
+      - JDBC
+      - PHP
+      - Python
+      - ORM Frameworks
+  reading:
+    - DSTCB:
+      - Chapter 9.1-9.2, 9.6-9.7
+    - Microservices Architecture:
+      url: http://martinfowler.com/articles/microservices.html
+    - Working with SQL in Python:
+      url: http://www.python-course.eu/sql_python.php
+    - SQLAlchemy (Python ORM):
+      url: http://www.sqlalchemy.org
+    - Hibernate (Java ORM):
+      url: http://hibernate.org/orm/
+  lecture:
+    - https://rpi.box.com/s/lngpur0dmc8j7b3wityv1cbxbl35q49u
+    - https://rpi.box.com/s/46iv7bql4hwmhu9ubcpo7rd8png7nxiw
+  assignments:
+    - Lab (Connecting to SQL from Python)
+    - Homework 5 (SQL in Applications) assigned
+    - Homework 4 due October 23 (Friday)
+October 28:
+  topics:
+    - Security
+      - SQL Injection
+      - Storage of sensitive data
+      - Hash + Salt
+      - 2-way encryption
+      - User Privileges
+  reading:
+    - DSTCB
+    - Chapter 10.1
+    - Salted Password Hashing
+      url: https://www.codeproject.com/Articles/704865/Salted-Password-Hashing-Doing-it-Right
+    - SQL Injection
+      url: https://www.owasp.org/index.php/SQL_Injection
+    - Postgres pgcrypto module
+      url: https://www.postgresql.org/docs/9.5/static/pgcrypto.html
+    - Password Storage
+      url: https://www.owasp.org/index.php/Password_Storage_Cheat_Sheet
+  technology:
+    - lxml python package
+  lecture:
+    - https://rpi.box.com/s/58hzs717rogbtopbe2c05ijq614klwvz
+    - https://rpi.box.com/s/x4e6l7baqp1ie0v70kwqwln2f03klycu
+    - https://rpi.box.com/s/q7jfbfslo0fq50wufioqlkmcanrocwwr
+    - https://rpi.box.com/s/xn8j35tmayt4m6cioef3b1gfjbi0ely1
+    - https://rpi.box.com/s/ltklqtwvirvftz7s95y0kd6gt8feqpva
+  assignments:
+    - Lab (SQL Injection)
+    - Homework 5 due October 30 (Friday)
+    - Final Project Data Schemas due October 26 (Monday)
+November 4:
+  topics:
+    - Semi-structured Data
+      - XML
+  reading:
+    - DSTCB
+      - Chapter 11
+      - Chapter 12.1-12.3
+  lecture:
+    - https://rpi.box.com/s/rxvpdtywfyl7zhafo59qr20q6pyfjruo
+    - https://rpi.box.com/s/n749u8vspkaozppwtvmcu17zptzo5cqy
+  assignments:
+    - Lab (XML Schemas)
+    - Homework 6 (XML) assigned
+November 11:
+  topics:
+    - NoSQL
+      - Document Databases (MongoDB)
+      - Graph Databases (Neo4J)
+      - Object Storage (OpenStack Swift)
+    - Storing Data on Disk
+  reading:
+    - DSTCB:
+      - Chapter 13
+    - OpenStack Swift:
+      url: https://docs.openstack.org/swift/latest/admin/index.html
+  lecture:
+    - https://rpi.box.com/s/pzgo5vnqem2jyfrp9w9w7sg5rtfthj1m
+  assignments:
+    - Homework 6 due November 13 (Friday)
+November 18:
+  topics:
+    - Indexes
+      - Data structures
+      - B-Trees
+      - Hash Tables
+    - Query Optimization
+  reading:
+    - DSTCB:
+      - Chapter 14 (focus on 14.1-14.3)
+      - Chapter 15
+      - Chapter 16.1-16.3
+  lecture:
+    - https://rpi.box.com/s/ok0vbjwxuio6g4zb8quhem59de2j86ak
+    - https://rpi.box.com/s/nblzo2j1ob1f7s88mi4e07mwtz2w5x7k
+    - https://rpi.box.com/s/hngtxdstgn5qo3hn70jzrcug35giwla7
+  assignments:
+    - Final Project data should be loaded (no formal deadline for this deliverable)
+November 25 (Thanksgiving Week):
+  topics: No class this week
+December 2:
+  topics:
+    - Logging
+    - Parallel and Distributed Databases:
+      - Map/Reduce
+      - Amazon Aurora
+      - Hadoop
+    - Blockchain?
+  reading:
+    - DSTCB:
+      - Chapter 17
+      - Chapter 20.1-20.5
+    - Blockchain Demo:
+      url: https://blockchaindemo.io/
+  lecture:
+    - https://rpi.box.com/s/qrfybt1ie0qshtzvy2phuhe4cz8cxg8z
+    - https://rpi.box.com/s/gllwwwnvfa9px0kha39l53rv0o9bvn8v
+    - https://rpi.box.com/s/rbd59fm8iwibnfq6ny7o8rkyifr936p6
+    - https://rpi.box.com/s/2yh9jv5xytv9jy0t8od0ouqtqw6qjdaa
+    - https://rpi.box.com/s/hvbh0xcacxp3kflfl3nc4vclokjuzvzn
+  assignments:
+    - Final Project code due December 6 (Sunday)
+December 9:
+  topics:
+    - Final Project Presentations
+  assignments:
+    - Take-home final assigned
+December 15-21:
+  assignments:
+    - Take-home final due at the end of the scheduled exam period. (TBD)

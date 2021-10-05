@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<course-data xmlns:generic-course="http://example/generic-course">
+    <courses xmlns:rpi-course="http://example.com/rpi-course">
+        <rpi-course:course name="Database Applications and Systems" semester="F20">
+            <time>W4-7</time>
+            <location>Remote</location>
+        </rpi-course:course>
+        <rpi-course:course name="Data Science" semester="F20">
+            <time>MR10-12</time>
+            <location>Lally 102</location>
+        </rpi-course:course>
+        <generic-course:course semester="F20">
+            Egyptian Archeology
+            <field-work>...</field-work>
+        </generic-course:course>
+    </courses>
+    <students>
+        <student name="alice">
+            <courses>
+                <course name="Database Applications and Systems" semester="F20"/>
+                <course name="Data Science" semester="F20"/>
+            </courses>
+        </student>
+        <student name="bob">
+            <courses>
+                <course name="Data Science" semester="F20"/>
+            </courses>
+        </student>
+    </students>
+</course-data>
