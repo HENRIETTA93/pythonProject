@@ -1,0 +1,32 @@
+create table cfpcount(
+type varchar(100) primary key,
+cfp_count int
+);
+
+delimiter $
+
+create trigger trg_cfpcount after insert on researchtopic
+for each row 
+begin
+declare total int;
+select count(type) into total from cfpcount where type=new.area;
+if total>0 then
+update cfpcount set cfp_count=cfp_count+1 where type=new.area;
+else
+insert into cfpcount values(new.area,1);
+end if;
+end $
+
+
+delimiter $
+create trigger trg_cfpcount1 after delete on researchtopic
+for each row 
+begin
+declare total int;
+select count(type) into total from cfpcount where type=old.area;
+if total>0 then
+update cfpcount set cfp_count=cfp_count-1 where type=old.area;
+else
+delete from cfpcount where type=old.area;
+end if;
+end $

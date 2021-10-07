@@ -1,0 +1,67 @@
+CREATE TABLE Event (
+Name VARCHAR(100) NOT NULL,
+EventWebLink VARCHAR(100) NOT NULL,
+CFPText VARCHAR(1000) NOT NULL,
+PRIMARY KEY (Name)
+);
+
+CREATE TABLE EventConference (
+EventName VARCHAR(100) NOT NULL,
+City VARCHAR(100) NOT NULL,
+Country VARCHAR(100) NOT NULL,
+Date DATE NOT NULL,
+PRIMARY KEY (EventName),
+FOREIGN KEY (EventName) REFERENCES Event(Name)
+);
+
+CREATE TABLE EventJournal (
+EventName VARCHAR(100) NOT NULL,
+JournalName VARCHAR(100) NOT NULL,
+Publisher VARCHAR(100) NOT NULL,
+PRIMARY KEY (EventName),
+FOREIGN KEY (EventName) REFERENCES Event(Name)
+);
+
+CREATE TABLE EventBook (
+EventName VARCHAR(100) NOT NULL,
+Publisher VARCHAR(100) NOT NULL,
+PRIMARY KEY (EventName),
+FOREIGN KEY (EventName) REFERENCES Event(Name)
+);
+
+CREATE TABLE ActivityHappens(
+EventName VARCHAR(100) NOT NULL,
+ActivityName VARCHAR(100) NOT NULL,
+ActivityDate DATE NOT NULL,
+PRIMARY KEY (EventName, ActivityName),
+FOREIGN KEY (EventName) REFERENCES Event(Name)
+);
+
+CREATE TABLE ResearchTopic (
+Name VARCHAR(100) NOT NULL,
+Area VARCHAR(100) NOT NULL,
+PRIMARY KEY (Name)
+);
+
+CREATE TABLE People (
+Name VARCHAR(100) NOT NULL,
+Affilliation VARCHAR(100),
+PRIMARY KEY (Name)
+);
+
+CREATE TABLE Covers (
+EventName VARCHAR(100) NOT NULL,
+TopicName VARCHAR(100) NOT NULL,
+PRIMARY KEY (EventName, TopicName),
+FOREIGN KEY (EventName) REFERENCES Event(Name),
+FOREIGN KEY (TopicName) REFERENCES ResearchTopic(Name)
+);
+
+CREATE TABLE Organizes (
+EventName VARCHAR(100) NOT NULL,
+PeopleName VARCHAR(100) NOT NULL,
+Role VARCHAR(100) NOT NULL,
+PRIMARY KEY (EventName, PeopleName),
+FOREIGN KEY (EventName) REFERENCES Event(Name),
+FOREIGN KEY (PeopleName) REFERENCES People(Name)
+);

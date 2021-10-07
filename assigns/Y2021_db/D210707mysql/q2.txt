@@ -1,0 +1,52 @@
+set @EventName='The WFCS workshop';
+insert into event values(@EventName,
+' http://wfcs2019.com',
+'The WFCS workshop is the largest IEEE technical event specially dedicated to industrial communication systems. The 
+aim of this workshop is to provide a forum for researchers, practitioners and developers to review current trends in this 
+area and to present and discuss new ideas and new research directions.');
+
+insert into eventjournal values(@EventName,'IEEE Communications Society Tech','IEEE');
+
+insert into eventconference values(@EventName,'Sundsvall', 'Sweden','2019-05-27');
+
+insert into activityhappens values(@EventName, 'Submission deadline', '2019-04-01'),
+(@EventName, 'Notification for acceptance', '2019-04-30'),
+(@EventName, 'Deadline for final manuscript', '2019-05-06'),
+(@EventName, 'Conference', '2019-05-27');
+
+set @Topic1='INDUSTRIAL COMMUNICATION SYSTEMS AND SOLUTIONS';
+set @Area1='Ethernet';
+
+set @Topic2='INDUSTRIAL CYBER-PHYSICAL SYSTEMS (ICPS)';
+set @Area2='ICPS communication architectures';
+
+set @Topic3='INDUSTRIAL NETWORK PERFORMANCE EVALUATION';
+set @Area3='network';
+
+insert into researchtopic values(@Topic1,@Area1),(@Topic2,@Area2),(@Topic3,@Area3);
+
+insert into covers values(@EventName,@Topic1),(@EventName,@Topic2),(@EventName,@Topic3);
+
+
+set @Person1='Emiliano Sisinni';
+set @Aff1='University of Brescia, Italy';
+
+set @Person2='Gerhard P. Hancke Jr';
+set @Aff2='City University of Hong Kong, Hong Kong';
+
+set @Person3='Nuno Pereira';
+set @Aff3='Polytechnic Institute of Porto, Portugal';
+
+set @Person4='Tomas Lennvall';
+set @Aff4='Örebro University, Sweden';
+
+set @Role1='PROGRAM CO-CHAIRS';
+set @Role2='WORK-IN-PROGRESS CHAIRS';
+insert into People values (@Person1,@Aff1),(@Person2,@Aff2),(@Person3,@Aff3),(@Person4,@Aff4);
+
+insert into Organizes values 
+  (@EventName, @Person1, @Role1),
+	(@EventName, @Person2, @Role1),
+	(@EventName, @Person3, @Role2),
+	(@EventName, @Person4, @Role2);
+

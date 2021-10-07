@@ -1,0 +1,259 @@
+SET @EventName = 'Design and Analysis of Communication Interfaces for Industry 4.0';
+INSERT INTO Event VALUES
+	(@EventName, 
+	'https://tccc.committees.comsoc.org/', 
+    'The fourth industrial revolution also referred to as Industry 4.0 aims to integrate advanced manufacturing techniques
+	with the Internet-of-Things (IoT) to create an agile digital manufacturing ecosystem. The key idea is to provide a higher
+	level of automation by combining technologies such as Industrial IoT (IIoT), cloud computing, machine learning (ML) and
+	advanced roboticsactivityhappens to enable the creation of interconnected, responsive, intelligent and self-optimizing manufacturing
+	processes and systems.');
+INSERT INTO EventJournal VALUES(@EventName, 'JSAC', 'IEEE');
+
+INSERT INTO ActivityHappens VALUES
+	(@EventName, 'Manuscript Due', '2019-07-01'),
+	(@EventName, 'Acceptance Notification', '2019-09-30'),
+	(@EventName, 'Final Manuscript Due', '2019-11-15');
+
+SET @TopicName1 = 'Ultra-reliable Low-Latency Connectivity Interfaces for IIoT Networks';
+SET @TopicName2 = 'Spectrum Management and Coexistence Issues for IIoT Networks';
+SET @TopicName3 = 'Architecture and Protocols for IIoT Networks';
+INSERT INTO ResearchTopic VALUES
+	(@TopicName1, @TopicName1),
+	(@TopicName2, @TopicName2),
+	(@TopicName3, @TopicName3);
+INSERT INTO Covers VALUES
+	(@EventName, @TopicName1),
+	(@EventName, @TopicName2),
+	(@EventName, @TopicName3);
+
+SET @Person1 = 'Syed A. R. Zaidi';
+SET @Person2 = 'Muhammad Zeeshan Shakir';
+SET @Person3 = 'Antonio J.Jara';
+SET @GuestEditors = 'Guest Editors';
+INSERT INTO People VALUES
+	(@Person1, 'University of Leeds, UK'),
+	(@Person2, 'The University of West of Scotland, UK'),
+	(@Person3, 'University of Applied Sciences Western Switzerland');
+INSERT INTO Organizes VALUES
+	(@EventName, @Person1, @GuestEditors),
+	(@EventName, @Person2, @GuestEditors),
+	(@EventName, @Person3, @GuestEditors);
+	
+	
+INSERT INTO Event
+VALUES(
+'IoTI4 2019 in conjunction with DCOSS 2019', 
+'http://ioti4.citycollege.sheffield.eu/index.html',
+'Prospective authors are invited to submit high-quality original technical papers reporting original research of theoretical or applied nature for presentation at the workshop and publication in the IoTI4 2019 Proceedings. All papers will be reviewed and evaluated by independent experts and selected based on their originality, merit, and relevance to the workshop. Accepted and presented papers will be published as part of the IEEE DCOSS 2019 conference proceedings and submitted to IEEE Xplore.');
+
+INSERT INTO EventConference
+VALUES(
+'IoTI4 2019 in conjunction with DCOSS 2019',
+'Santorini Island', 
+'Greece', 
+'2019-05-31');
+
+INSERT INTO ActivityHappens
+VALUES('IoTI4 2019 in conjunction with DCOSS 2019',
+'Paper Submission',
+'2019-03-15'), 
+('IoTI4 2019 in conjunction with DCOSS 2019',
+'Acceptance Notification', 
+'2019-04-01'),
+('IoTI4 2019 in conjunction with DCOSS 2019',
+'Camera Ready', 
+'2019-04-15'),
+('IoTI4 2019 in conjunction with DCOSS 2019',
+'Early Registration', 
+'2019-04-10');
+
+INSERT INTO ResearchTopic
+VALUES('Sensor Network', 'Networking'),
+('Framework for Convergence of IT and OT Security', 'Security');
+
+INSERT INTO People
+VALUES('Panagiotis Sarigiannidis', 'University of Western Macedonia'),
+('Paolo Bellavista', 'University of Bologna');
+
+INSERT INTO Covers
+VALUES('IoTI4 2019 in conjunction with DCOSS 2019', 'Sensor Network'),
+('IoTI4 2019 in conjunction with DCOSS 2019', 'Framework for Convergence of IT and OT Security');
+
+INSERT INTO Organizes
+VALUES('IoTI4 2019 in conjunction with DCOSS 2019', 'Panagiotis Sarigiannidis', 'Organizing Committtee'),
+('IoTI4 2019 in conjunction with DCOSS 2019', 'Paolo Bellavista', 'Technical Program Committee');
+
+---------------
+
+INSERT INTO event(Name, EventWebLink, CFPText) VALUES ('1st International Workshop on Intelligent Systems for the Internet of Things','https://sites.google.com/view/ISIoT2019', 'The Internet of Things is a paradigm that assumes a pervasive presence in the environment of many smart things,
+including sensors, actuators, embedded systems and other similar devices. The development of IoT, however, has
+reached a crossroads, which means that without intelligence, an IoT system will act as an ordinary information transfer
+system. Emerging IoT applications in various fields, including smart city, smart home, smart grid, e-health, intelligent
+transportation systems, etc., require trustworthy networking solutions that are resilient against high mobility, high
+density, disasters, infrastructure failures, cyberattacks, and other disruptions.');
+
+
+INSERT INTO People(Name, Affilliation) VALUES('Dr. Vasos Vassiliou', 'University of Cyprus');
+INSERT INTO People(Name, Affilliation) VALUES('Dr. Stelios Timotheou', 'University of Cyprus');
+INSERT INTO People(Name, Affilliation) VALUES('Dr. Loizos Michael', 'Neapolis University of Paphos');
+
+INSERT INTO organizes(EventName, PeopleName, Role) VALUES('1st International Workshop on Intelligent Systems for the Internet of Things', 'Dr. Vasos Vassiliou', 'Program Chair');
+INSERT INTO organizes(EventName, PeopleName, Role) VALUES('1st International Workshop on Intelligent Systems for the Internet of Things', 'Dr. Stelios Timotheou', 'Program Chair');
+INSERT INTO organizes(EventName, PeopleName, Role) VALUES('1st International Workshop on Intelligent Systems for the Internet of Things', 'Dr. Loizos Michael', 'Program Chair');
+
+INSERT INTO activityhappens(EventName, ActivityName, ActivityDate) VALUES ('1st International Workshop on Intelligent Systems for the Internet of Things', 'Paper Submission', DATE('2019-03-18'));
+INSERT INTO activityhappens(EventName, ActivityName, ActivityDate) VALUES ('1st International Workshop on Intelligent Systems for the Internet of Things', 'Acceptance Notification', DATE('2019-05-05'));
+INSERT INTO activityhappens(EventName, ActivityName, ActivityDate) VALUES ('1st International Workshop on Intelligent Systems for the Internet of Things', 'Camera-Ready', DATE('2019-04-10'));
+
+INSERT INTO researchtopic(Name, Area) VALUES('Computational Intelligence for the IoT', 'Internet of Things');
+INSERT INTO researchtopic(Name, Area) VALUES('Performance evaluation for the IoT', 'Internet of Things');
+INSERT INTO researchtopic(Name, Area) VALUES('Machine Learning in IoT', 'Internet of Things');
+
+INSERT INTO eventconference(EventName, City, Country, Date) VALUES ('1st International Workshop on Intelligent Systems for the Internet of Things', 'Santorini Island', 'Greece', DATE('2019-05-29'));
+
+INSERT INTO covers(EventName, TopicName) VALUES('1st International Workshop on Intelligent Systems for the Internet of Things', 'Computational Intelligence for the IoT');
+INSERT INTO covers(EventName, TopicName) VALUES('1st International Workshop on Intelligent Systems for the Internet of Things', 'Performance evaluation for the IoT');
+INSERT INTO covers(EventName, TopicName) VALUES('1st International Workshop on Intelligent Systems for the Internet of Things', 'Machine Learning in IoT');
+
+
+-----------------
+
+
+INSERT INTO event 
+VALUES ('SpaCCS 2019',
+'http://cse.stfx.ca/~cybermatics/2019/spaccs/',
+'The 2019 International Conference on Security, Privacy and Anonymity in Computation, Communication and Storage (SpaCCS 2019) is the 12th event in the series of conferences which are devoted to security, privacy and anonymity in computation, communication and storage. SpaCCS is now recognized as the main regular event of the world that is covering many dimensions including security algorithms and architectures, privacy-aware policies, regulations and techniques, anonymous computation and communication, encompassing fundamental theoretical approaches, practical experimental projects, and commercial application systems for computation, communication and storage. As applications of computer systems and networks have permeated in every aspect of our daily life, the issues of security, privacy, and anonymity have become increasingly critical.');
+
+INSERT INTO eventconference
+VALUES ('SpaCCS 2019', 'Atlanta', 'USA', '2019-07-14');
+
+INSERT INTO activityhappens
+VALUES ('SpaCCS 2019', 'Workshop/Special Session Proposal', '2019-01-15'),
+('SpaCCS 2019', 'Paper Submission', '2019-03-15'),
+('SpaCCS 2019', 'Authors Notification', '2019-04-15'),
+('SpaCCS 2019', 'Final Manuscript', '2019-05-15');
+
+INSERT INTO people
+VALUES('Kim-Kwang Raymond Choo', 'University of Texas at San Antonio'),
+('Md Zakirul Alam Bhuiyan', 'Fordham University'),
+('Wm. Bradley Glisson', 'Sam Houston State University'),
+('Peter Mueller','IBM Zurich Research Laboratory');
+
+INSERT INTO organizes
+VALUES('SpaCCS 2019', 'Kim-Kwang Raymond Choo', 'General Chairs'),
+('SpaCCS 2019', 'Md Zakirul Alam Bhuiyan', 'Program Chairs'),
+('SpaCCS 2019', 'Wm. Bradley Glisson', 'Workshop Chair'),
+('SpaCCS 2019', 'Peter Mueller', 'Publicity Chairs');
+
+INSERT INTO researchtopic
+VALUES('Security Model and Architecture', 'Security in Computation, Communication and Storage'),
+('Measuring and Quantifying Privacy', 'Privacy in Computation, Communication and Storage'),
+('Anonymous Data Mining and Data Sharing', 'Anonymity in Computation, Communication and Storage');
+
+INSERT INTO covers
+VALUES('SpaCCS 2019', 'Security Model and Architecture'),
+('SpaCCS 2019', 'Measuring and Quantifying Privacy'),
+('SpaCCS 2019', 'Anonymous Data Mining and Data Sharing');
+
+
+------
+
+INSERT INTO Event VALUES ('The 6th International Conference on Internet of Vehicles' ,
+'http://www.cs.ccu.edu.tw/~conference/iov2019/' ,
+'Internet of Vehicle (IOV) as an importatnt part of the wisdom city is a complex integrated
+network system, which connects different people within automotives, different automotives
+and different environment entries in cities. IOV is different from Telematics, Vehicle Ad hoc
+Networks, and Intelligent Transportation, in which vehicles like phones can run within the whole
+network, and obtain various services by swarm intelligent computing with people, vehicle, and 
+environments.');
+
+INSERT INTO EventConference VALUES ('The 6th International Conference on Internet of Vehicles',
+'Kaohsiung',
+'Taiwan', 
+'2019-11-18');
+
+INSERT INTO ActivityHappens VALUES ('The 6th International Conference on Internet of Vehicles',
+'Paper Subnmission',
+'2019-05-30'),
+ ('The 6th International Conference on Internet of Vehicles',
+'Author Notification',
+'2019-06-15'),
+('The 6th International Conference on Internet of Vehicles',
+'Registration Due',
+'2019-10-10'),
+ ('The 6th International Conference on Internet of Vehicles',
+'Camera ready submission',
+'2019-10-20');
+
+INSERT INTO People VALUES ('Chung-Ming Huang', 'National Cheng Kung University, Taiwan'),
+('Andrzej M.J. Skulimowski', 'AGH University of Science and Technology, Poland'),
+('Kun-Chan Lan', 'National Cheng Kung University, Taiwan'),
+('Lyes Khoukhi', 'Univeristy of technology of Troyes, France'),
+('Li Liu', 'Chongqing University, China'),
+('Kuan-Chou Lai', 'National Taichung University, Taiwan'),
+('Sondes Khemiri-Kallel', 'Universite de Versailles St Quentin, France)'),
+('Hui-Huang Hsu', 'Tamkang Unviersity, Taiwan'),
+('Daxin Tian', 'Beihang University, China'),
+('William Liu', 'Auckland University of Technology, New Zealand'),
+('Carson Leung', 'University of Manitoba, Canada'),
+('Mohammed Obaidat', 'Monmouth University, USA'),
+('Reinhard Klette', 'Auckland University of Technology, New Zealand');
+
+
+INSERT INTO Organizes VALUES ('The 6th International Conference on Internet of Vehicles',
+'Chung-Ming Huang', 'General Chair'),
+('The 6th International Conference on Internet of Vehicles',
+'Andrzej M.J. Skulimowski', 'General Chair'),
+('The 6th International Conference on Internet of Vehicles',
+'Kun-Chan Lan', 'Program Chair'),
+('The 6th International Conference on Internet of Vehicles',
+'Lyes Khoukhi', 'Program Chair'),
+('The 6th International Conference on Internet of Vehicles',
+'Li Liu', 'Workshop Chair'),
+('The 6th International Conference on Internet of Vehicles',
+'Kuan-Chou Lai', 'Demo & Poster Chair'),
+('The 6th International Conference on Internet of Vehicles',
+'Sondes Khemiri-Kallel', 'Publication Chair'),
+('The 6th International Conference on Internet of Vehicles',
+'Hui-Huang Hsu', 'Award Chair'),
+('The 6th International Conference on Internet of Vehicles',
+'Daxin Tian', 'Publicity Chair'),
+('The 6th International Conference on Internet of Vehicles',
+'William Liu', 'Publicity Chair'),
+('The 6th International Conference on Internet of Vehicles',
+'Carson Leung', 'Publicity Chair'),
+('The 6th International Conference on Internet of Vehicles',
+'Mohammed Obaidat', 'Advisory Committee'),
+('The 6th International Conference on Internet of Vehicles',
+'Reinhard Klette', 'Steering Committee');
+
+INSERT INTO ResearchTopic VALUES
+('Vehicle Behavior Model and Environment Awareness',
+'Internet of Vehicles (IOV)'),
+('Cooperative Drriving, Intelligent and Autonomous Vehicles',
+'Internet of Vehicles (IOV)'),
+('Telematics, Wireless Communication Networks for IOV',
+'Internet of Vehicles (IOV)'),
+('Services and applications of IOV',
+'Intenet of Vehicles (IOV)'),
+('Complex systems and systems-of-systems for IOV',
+'Internet of Vehicles (IOV)');
+
+INSERT INTO Covers VALUES
+('The 6th International Conference on Internet of Vehicles',
+'Vehicle Behavior Model and Environment Awareness'),
+('The 6th International Conference on Internet of Vehicles',
+'Cooperative Drriving, Intelligent and Autonomous Vehicles'),
+('The 6th International Conference on Internet of Vehicles',
+'Telematics, Wireless Communication Networks for IOV'),
+('The 6th International Conference on Internet of Vehicles',
+'Services and applications of IOV'),
+('The 6th International Conference on Internet of Vehicles',
+'Complex systems and systems-of-systems for IOV');
+
+
+
+
+
+
+

@@ -1,0 +1,21 @@
+-- 1
+select DATE_FORMAT(ec.`Date`,'%Y-%m') as months,count(distinct ec.EventName) as count_event_type,
+count(ah.ActivityName) as activity_count
+from eventconference ec join activityhappens ah on DATE_FORMAT(ec.Date,'%Y-%m')=DATE_FORMAT(ah.ActivityDate,'%Y-%m')
+group by DATE_FORMAT(ec.Date,'%Y-%m');
+
+
+
+-- 2
+select t2.EventName, t1.ActivityName
+from
+(
+select e.`Name`, ah.ActivityName, ah.ActivityDate
+from event e join activityhappens ah on e.`Name`=ah.EventName
+) t1,
+(
+select EventName,min(ActivityDate) as min_activity_date
+from activityhappens
+group by EventName
+) t2
+where t1.`Name`=t2.EventName and t1.ActivityDate=t2.min_activity_date;
