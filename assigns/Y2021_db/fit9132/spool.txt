@@ -3,35 +3,35 @@ SQL> set echo off
 SQL> spool output.txt
 SQL> drop table ClassStaff;
 
-Table CLASSSTAFF已删除。
+Table CLASSSTAFF deleted.
 
 SQL> drop table MemberAttend;
 
-Table MEMBERATTEND已删除。
+Table MEMBERATTEND deleted.
 
 SQL> drop table ClassMember;
 
-Table CLASSMEMBER已删除。
+Table CLASSMEMBER deleted.
 
 SQL> drop table CentreClass;
 
-Table CENTRECLASS已删除。
+Table CENTRECLASS deleted.
 
 SQL> drop table Class;
 
-Table CLASS已删除。
+Table CLASS deleted.
 
 SQL> drop table Centre;
 
-Table CENTRE已删除。
+Table CENTRE deleted.
 
 SQL> drop table StaffMember;
 
-Table STAFFMEMBER已删除。
+Table STAFFMEMBER deleted.
 
 SQL> drop table Address;
 
-Table ADDRESS已删除。
+Table ADDRESS deleted.
 
 SQL> create table Address(
 Postcode varchar2(20) primary key,
@@ -39,7 +39,7 @@ Town varchar2(50),
 Street varchar2(50)
 );
 
-Table ADDRESS 已创建。
+Table ADDRESS created.
 
 SQL> create table Centre(
 CentreID Number(5) primary key,
@@ -48,7 +48,7 @@ Postcode varchar2(20),
 foreign key(Postcode) references Address(Postcode)
 );
 
-Table CENTRE 已创建。
+Table CENTRE created.
 
 SQL> create table Class(
 ClassNumber Number(5) primary key,
@@ -60,7 +60,7 @@ StartTime Timestamp,
 NoofSessions Number(5)
 );
 
-Table CLASS 已创建。
+Table CLASS created.
 
 SQL> create table CentreClass(
 CentreID Number(5),
@@ -70,7 +70,7 @@ foreign key(CentreID) references Centre(CentreID),
 foreign key(ClassNumber) references Class(ClassNumber)
 );
 
-Table CENTRECLASS 已创建。
+Table CENTRECLASS created.
 
 SQL> create table ClassMember(
 ClassNumber Number(5),
@@ -81,7 +81,7 @@ primary key(ClassNumber,MemberNo),
 foreign key(ClassNumber) references Class(ClassNumber)
 );
 
-Table CLASSMEMBER 已创建。
+Table CLASSMEMBER created.
 
 SQL> create table MemberAttend(
 ClassNumber Number(5),
@@ -92,7 +92,7 @@ primary key(ClassNumber,MemberNo,SessionDate),
 foreign key(ClassNumber,MemberNo) references ClassMember(ClassNumber,MemberNo)
 );
 
-Table MEMBERATTEND 已创建。
+Table MEMBERATTEND created.
 
 SQL> create table StaffMember(
 StaffID Number(5) primary key,
@@ -101,7 +101,7 @@ ClassLeader varchar2(5),
 FirstAidCertified varchar2(5)
 );
 
-Table STAFFMEMBER 已创建。
+Table STAFFMEMBER created.
 
 SQL> create table ClassStaff(
 ClassNumber Number(5),
@@ -111,7 +111,7 @@ foreign key(ClassNumber) references Class(ClassNumber),
 foreign key(StaffID) references StaffMember(StaffID)
 );
 
-Table CLASSSTAFF 已创建。
+Table CLASSSTAFF created.
 
 SQL> spool off;
 SQL> set echo off
