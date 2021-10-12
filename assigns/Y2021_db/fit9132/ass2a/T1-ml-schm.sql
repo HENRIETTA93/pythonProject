@@ -1,23 +1,4 @@
---****PLEASE ENTER YOUR DETAILS BELOW****
---T1-ml-schm.sql
-
---Student ID:
---Student Name:
---Tutorial No:
-
-/* Comments for your marker:
-
-
-
-
-*/
-
--- 1.1 Add Create table statments for the Missing TABLES below
--- Ensure all column comments, and constraints (other than FK's)
--- are included. FK constraints are to be added at the end of this script
-
--- BOOK_COPY
-CREAT TABLE book_copy (
+CREATE TABLE book_copy (
 branch_code NUMBER(2) NOT NULL,
 bc_id NUMBER(2) NOT NULL,
 bc_purchase_price NUMBER(7,2) NOT NULL,
@@ -113,4 +94,4 @@ ALTER TABLE reserve
     ADD CONSTRAINT bor_reserve FOREIGN KEY ( bor_no )
         REFERENCES borrower ( bor_no );
 
-
+commit;
