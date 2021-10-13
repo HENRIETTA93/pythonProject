@@ -63,12 +63,12 @@ Meal VARCHAR2(6),
 PRIMARY KEY(Flight_ID,Flight_Date, Passenger_ID),
 CONSTRAINT Flight_FK FOREIGN KEY (Flight_ID) REFERENCES Flight(Flight_ID),
 CONSTRAINT Passenger_FK FOREIGN KEY (Passenger_ID) REFERENCES Passenger(Passenger_ID),
-CONSTRAINT Meal_FK FOREIGN KEY (Meal) REFERENCES MEAL(Meal);
+CONSTRAINT Meal_FK FOREIGN KEY (Meal) REFERENCES MEAL(Meal)
 );
 
 -- 2 Q2. Write a SQL statement to add a new column, P_DOB to the PASSENGER table for storing their birth dates. (1 mark)
 
-ALTER TABLE PASSENGER ADD COLUMN P_DOB DATE;
+ALTER TABLE PASSENGER ADD (P_DOB DATE);
 
 
 
@@ -81,7 +81,7 @@ ALTER TABLE AIRPORT DROP COLUMN Region;
 
 -- Q5. Write a SQL statement to remove the FLIGHT table. (1 mark)
 
-DROP TABLE FLIGHT;
+DROP TABLE FLIGHT cascade constraints;
 
 
 -- Q6. Write a SQL statement to insert a new record to the PASSENGER table, with ID ‘P6000’, name ‘Samuel Lai’ and Date of Birth 2 September 2000. (1 mark)
