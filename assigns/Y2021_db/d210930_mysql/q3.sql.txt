@@ -1,0 +1,89 @@
+# q3
+create table cfpcount(
+cfp_type varchar(100) primary key,
+cfp_count int
+);
+
+
+delimiter $
+
+drop trigger if exists trg_cfp_conf;
+create trigger trg_cfp_conf after insert on eventconference
+for each row
+begin
+declare total int;
+select count(1) into total from cfpcount where cfp_type='Conference';
+if total>0 then
+update cfpcount set cfp_count=cfp_count+1 where cfp_type='Conference';
+else
+insert into cfpcount values('Conference',1);
+end if;
+end $
+
+delimiter $
+drop trigger if exists trg_cfp_conf2;
+create trigger trg_cfp_conf2 after delete on eventconference
+for each row
+begin
+declare total int;
+select count(1) into total from cfpcount where cfp_type='Conference';
+if total>=1 then
+update cfpcount set cfp_count=cfp_count-1 where cfp_type='Conference';
+end if;
+end $
+
+
+
+delimiter $
+drop trigger if exists trg_cfp_jou;
+create trigger trg_cfp_jou after insert on eventjournal
+for each row
+begin
+declare total int;
+select count(1) into total from cfpcount where cfp_type='Journal';
+if total>0 then
+update cfpcount set cfp_count=cfp_count+1 where cfp_type='Journal';
+else
+insert into cfpcount values('Journal',1);
+end if;
+end $
+
+delimiter $
+drop trigger if exists trg_cfp_jou2;
+create trigger trg_cfp_jou2 after delete on eventjournal
+for each row
+begin
+declare total int;
+select count(1) into total from cfpcount where cfp_type='Journal';
+if total>=1 then
+update cfpcount set cfp_count=cfp_count-1 where cfp_type='Journal';
+end if;
+end $
+
+
+
+delimiter $
+drop trigger if exists trg_cfp_book;
+create trigger trg_cfp_book after insert on eventbook
+for each row
+begin
+declare total int;
+select count(1) into total from cfpcount where cfp_type='Book';
+if total>0 then
+update cfpcount set cfp_count=cfp_count+1 where cfp_type='Book';
+else
+insert into cfpcount values('Book',1);
+end if;
+end $
+
+delimiter $
+drop trigger if exists trg_cfp_book2;
+create trigger trg_cfp_book2 after delete on eventbook
+for each row
+begin
+declare total int;
+select count(1) into total from cfpcount where cfp_type='Book';
+if total>=1 then
+update cfpcount set cfp_count=cfp_count-1 where cfp_type='Book';
+end if;
+end $

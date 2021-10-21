@@ -1,0 +1,33 @@
+# q4
+set @ID=1;
+set @EventName='SpaCCS 2019';
+set @EventWebLink='http://cse.stfx.ca/~cybermatics/2019/spaccs/';
+
+set @PerID=1;
+
+set @Role='General Chairs';
+
+set @Area='Security';
+set @TopicName='Security Model and Architecture';
+
+insert into event values(@ID,@EventName,@EventWebLink,'The 12th International Conference on Security, Privacy and Anonymity in Computation, Communication and Storage
+(SpaCCS 2019) July 14-July 17, 2019, Atlanta, USA');
+
+
+insert into eventbook values(@ID,'IET');
+
+insert into eventjournal values(@ID, 'EURASIP Journal on Wireless Communications and Networking Special Issue','Springer, IF = 2.407');
+
+insert into eventconference values(@ID, 'Atlanta','USA','2019-07-14');
+
+
+
+insert into people values(@PerID,'Kim-Kwang Raymond Choo','University of Texas at San Antonio, USA');
+insert into organizes values(@ID,@PerID, @Role);
+
+
+insert into researchtopic values(@TopicName,@Area);
+
+insert into covers values(@ID,@TopicName);
+
+insert into activityhappens values(@ID,'Workshop/Special Session Proposal','2019-01-15');

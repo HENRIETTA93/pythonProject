@@ -1,0 +1,62 @@
+insert into Accommodation values('jayChou@gmail.com','location 101');
+insert into Accommodation values('colinMorgan@gmail.com', 'location 101');
+insert into Accommodation values('danWang@gmail.com','location 102');
+insert into Accommodation values('lucyRoss@gmail.com', 'location 101');
+insert into Accommodation values('joeySpectre@gmail.com', 'location 103');
+
+
+insert into Athlete values('jayChou@gmail.com');
+insert into Athlete values('colinMorgan@gmail.com');
+insert into Athlete values('danWang@gmail.com');
+insert into Athlete values('lucyRoss@gmail.com');
+insert into Athlete values('joeySpectre@gmail.com');
+
+
+
+insert into Official values('jayChou@gmail.com');
+insert into Official values('colinMorgan@gmail.com');
+insert into Official values('danWang@gmail.com');
+insert into Official values('lucyRoss@gmail.com');
+insert into Official values('joeySpectre@gmail.com');
+
+
+insert into Event values(101, 'event 101', '200 m', null, null, '2021/09/11 08:40:14', 'location 101');
+insert into Event values(102, 'event 102', '400 m', null, null, '2021/09/09 08:54:16', 'location 102');
+insert into Event values(103, 'event 103', 'baseball', null, null, '2021/10/05 17:38:01', 'location 101');
+insert into Event values(104, 'event 104', 'basketball', null, null, '2021/08/25 16:35:12', 'location 102');
+insert into Event values(105, 'event 105', 'basketball', null, null, '2021/06/03 12:10:00', 'location 101');
+
+
+insert into OfficialRole values(101,'jayChou@gmail.com','role 1');
+insert into OfficialRole values(102,'colinMorgan@gmail.com','role 2');
+insert into OfficialRole values(101,'danWang@gmail.com','role 3');
+insert into OfficialRole values(102,'lucyRoss@gmail.com','role 3');
+insert into OfficialRole values(105,'joeySpectre@gmail.com','role 1');
+
+
+insert into Participate values('jayChou@gmail.com',101);
+insert into Participate values('colinMorgan@gmail.com',102);
+insert into Participate values('danWang@gmail.com',103);
+insert into Participate values('lucyRoss@gmail.com',101);
+insert into Participate values('joeySpectre@gmail.com',102);
+
+
+insert into Vehicle values(101, 'car', 4);
+insert into Vehicle values(102, 'bus', 10);
+insert into Vehicle values(103, 'bike', 1);
+insert into Vehicle values(104, 'van', 3);
+insert into Vehicle values(105, 'minibus', 5);
+
+
+insert into Schedule values(201, 101, '2021/07/29', 'location 103', '2021/07/30 08:34:13', 'location 101', '2021/07/30 09:34:13');
+insert into Schedule values(201, 102, '2021/07/29', 'location 104', '2021/08/03 17:40:41', 'location 102', '2021/08/03 19:40:41');
+insert into Schedule values(201,103, '2021/08/20', 'location 102', '2021/08/25 09:00:33', 'location 101', '2021/09/25 12:00:33');
+insert into Schedule values(201,104, '2021/08/25', 'location 103', '2021/08/30 11:12:26', 'location 101', '2021/09/30 11:12:26');
+insert into Schedule values(201,105, '2021/08/28', 'location 105', '2021/08/31 13:29:32', 'location 102', '2021/08/31 14:24:32');
+
+
+insert into Book values(201, 101,'jayChou@gmail.com');
+insert into Book values(201, 102,'colinMorgan@gmail.com');
+insert into Book values(201,103, 'danWang@gmail.com');
+insert into Book values(201,104, 'lucyRoss@gmail.com');
+insert into Book values(201,105, 'joeySpectre@gmail.com');
