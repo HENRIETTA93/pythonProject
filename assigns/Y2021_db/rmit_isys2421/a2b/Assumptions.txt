@@ -1,0 +1,6 @@
+
+A customer can make muliple orders. And an order may have many TShirts.
+A customer can have many pay accounts, and a pay account is identified by PayerID.
+A pay account only have a credit card and a deposit bank accounts, and a paypal.
+An extras can appear in many custom-made TShirts.
+An order is only be paid by one payment way.
