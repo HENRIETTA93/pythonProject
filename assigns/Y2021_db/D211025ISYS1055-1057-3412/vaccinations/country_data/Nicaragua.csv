@@ -1,0 +1,17 @@
+location,date,vaccine,source_url,total_vaccinations,people_vaccinated,people_fully_vaccinated,total_boosters
+Nicaragua,2021-03-01,"Oxford/AstraZeneca, Sputnik V",https://www.confidencial.com.ni/nacion/gobierno-de-nicaragua-informa-avances-vacunacion-contra-la-covid-19-con-44-dias-de-retraso/,0,0,,
+Nicaragua,2021-04-14,"Oxford/AstraZeneca, Sputnik V",https://www.confidencial.com.ni/nacion/gobierno-de-nicaragua-informa-avances-vacunacion-contra-la-covid-19-con-44-dias-de-retraso/,61625,61625,,
+Nicaragua,2021-04-24,"Oxford/AstraZeneca, Sputnik V",https://www.confidencial.com.ni/nacion/mas-de-132-000-personas-ya-recibieron-la-primera-dosis-de-la-vacuna-covishield/,135130,135130,,
+Nicaragua,2021-05-07,"Oxford/AstraZeneca, Sputnik V",https://covid19.who.int/,166350,166350,0,
+Nicaragua,2021-05-21,"Oxford/AstraZeneca, Sputnik V",https://covid19.who.int/,167500,167500,0,
+Nicaragua,2021-07-16,"Oxford/AstraZeneca, Sputnik V",https://covid19.who.int/,415640,252766,162874,
+Nicaragua,2021-08-17,"Oxford/AstraZeneca, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,580127,382519,197608,
+Nicaragua,2021-08-20,"Oxford/AstraZeneca, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,612799,412029,200770,0
+Nicaragua,2021-08-27,"Oxford/AstraZeneca, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,645733,443053,202680,0
+Nicaragua,2021-09-03,"Oxford/AstraZeneca, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,669904,463656,206248,0
+Nicaragua,2021-09-10,"Oxford/AstraZeneca, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,735252,476308,258944,0
+Nicaragua,2021-09-17,"Oxford/AstraZeneca, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,769105,490472,278633,0
+Nicaragua,2021-09-25,"Oxford/AstraZeneca, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,788502,502324,286178,0
+Nicaragua,2021-10-01,"Oxford/AstraZeneca, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,861807,556589,305218,0
+Nicaragua,2021-10-08,"Oxford/AstraZeneca, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,999990,671784,328206,0
+Nicaragua,2021-10-22,"Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,1306694,944476,362357,0

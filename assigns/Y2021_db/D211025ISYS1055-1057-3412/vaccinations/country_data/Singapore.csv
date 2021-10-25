@@ -1,0 +1,121 @@
+location,date,vaccine,total_vaccinations,people_vaccinated,people_fully_vaccinated,source_url,total_boosters
+Singapore,2021-01-11,Pfizer/BioNTech,3400,3400,0,https://www.moh.gov.sg/news-highlights/details/covid-19-vaccination-centres-set-up-to-support-singapore's-vaccination-programme,
+Singapore,2021-01-12,Pfizer/BioNTech,6200,6200,0,https://www.moh.gov.sg/news-highlights/details/covid-19-vaccination-centres-set-up-to-support-singapore's-vaccination-programme,
+Singapore,2021-01-22,Pfizer/BioNTech,60000,60000,0,https://www.moh.gov.sg/news-highlights/details/tightening-safe-management-measures-and-update-on-vaccination-plans,
+Singapore,2021-01-27,Pfizer/BioNTech,113050,113000,50,https://www.moh.gov.sg/news-highlights/details/update-on-covid-19-vaccination-programme,
+Singapore,2021-01-31,Pfizer/BioNTech,155050,155000,50,https://www.moh.gov.sg/news-highlights/details/the-progress-of-our-covid-19-vaccination-programme-and-adverse-events,
+Singapore,2021-02-02,Pfizer/BioNTech,181000,175000,6000,https://www.moh.gov.sg/news-highlights/details/second-covid-19-vaccine-authorised-for-use-in-singapore,
+Singapore,2021-02-10,Pfizer/BioNTech,256000,250000,6000,https://www.pmo.gov.sg/Newsroom/Chinese-New-Year-Message-2021-by-PM-Lee-Hsien-Loong,
+Singapore,2021-02-18,Pfizer/BioNTech,360000,250000,110000,https://www.moh.gov.sg/news-highlights/details/start-of-covid-19-vaccination-for-seniors,
+Singapore,2021-03-01,Pfizer/BioNTech,525039,317715,207324,https://www.moh.gov.sg/covid-19,
+Singapore,2021-03-04,Pfizer/BioNTech,565000,350000,215000,https://www.straitstimes.com/singapore/politics/budget-debate-more-than-350000-singapore-residents-have-received-their-first,
+Singapore,2021-03-07,Pfizer/BioNTech,596000,379000,217000,https://www.moh.gov.sg/news-highlights/details/covid-19-vaccination-brought-forward-for-all-seniors-extended-to-essential-services-personnel-and-higher-risk-groups,
+Singapore,2021-03-08,Pfizer/BioNTech,611314,392620,218694,https://www.moh.gov.sg/covid-19,
+Singapore,2021-03-15,"Moderna, Pfizer/BioNTech",792423,549254,243169,https://www.moh.gov.sg/covid-19,
+Singapore,2021-03-22,"Moderna, Pfizer/BioNTech",1071908,771297,300611,https://www.moh.gov.sg/covid-19,
+Singapore,2021-03-23,"Moderna, Pfizer/BioNTech",1109000,799000,310000,https://www.moh.gov.sg/news-highlights/details/expansion-of-vaccination-programme-further-easing-of-community-measures,
+Singapore,2021-03-29,"Moderna, Pfizer/BioNTech",1318912,943307,375605,https://www.moh.gov.sg/covid-19,
+Singapore,2021-04-03,"Moderna, Pfizer/BioNTech",1518000,1050000,468000,https://www.straitstimes.com/singapore/those-aged-below-45-will-be-invited-to-book-covid-19-vaccination-appointments-from-june,
+Singapore,2021-04-06,"Moderna, Pfizer/BioNTech",1667522,1131658,535864,https://www.moh.gov.sg/covid-19,
+Singapore,2021-04-18,"Moderna, Pfizer/BioNTech",2213888,1364124,849764,https://www.moh.gov.sg/covid-19,
+Singapore,2021-05-10,"Moderna, Pfizer/BioNTech",3137330,1852684,1284646,https://www.moh.gov.sg/covid-19,
+Singapore,2021-05-13,"Moderna, Pfizer/BioNTech",3200000,1900000,1300000,https://www.moh.gov.sg/news-highlights/details/updates-on-local-situation-and-heightened-alert-to-minimise-transmission-14May,
+Singapore,2021-05-17,"Moderna, Pfizer/BioNTech",3407068,1966524,1440544,https://www.moh.gov.sg/covid-19,
+Singapore,2021-05-24,"Moderna, Pfizer/BioNTech",3728869,2112450,1616419,https://www.moh.gov.sg/covid-19,
+Singapore,2021-05-31,"Moderna, Pfizer/BioNTech",4047651,2281154,1766497,https://www.moh.gov.sg/covid-19,
+Singapore,2021-06-07,"Moderna, Pfizer/BioNTech",4392067,2503814,1888253,https://www.moh.gov.sg/covid-19,
+Singapore,2021-06-14,"Moderna, Pfizer/BioNTech",4691386,2700446,1990940,https://www.moh.gov.sg/covid-19,
+Singapore,2021-06-21,"Moderna, Pfizer/BioNTech",5029006,2971570,2057436,https://www.moh.gov.sg/covid-19,
+Singapore,2021-06-28,"Moderna, Pfizer/BioNTech, Sinovac",5365803,3271610,2094193,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-02,"Moderna, Pfizer/BioNTech, Sinovac",5551613,3426468,2125145,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-03,"Moderna, Pfizer/BioNTech, Sinovac",5706932,3550181,2156751,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-04,"Moderna, Pfizer/BioNTech, Sinovac",5780703,3608688,2172015,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-05,"Moderna, Pfizer/BioNTech, Sinovac",5858571,3670862,2187709,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-06,"Moderna, Pfizer/BioNTech, Sinovac",5933179,3729907,2203272,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-09,"Moderna, Pfizer/BioNTech, Sinovac",6163124,3895149,2267975,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-12,"Moderna, Pfizer/BioNTech, Sinovac",6378063,4022809,2367424,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-13,"Moderna, Pfizer/BioNTech, Sinovac",6440735,4052434,2420824,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-16,"Moderna, Pfizer/BioNTech, Sinovac",6650677,4118334,2609367,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-17,"Moderna, Pfizer/BioNTech, Sinovac",6726540,4136551,2676171,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-18,"Moderna, Pfizer/BioNTech, Sinovac",6794394,4153143,2747489,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-19,"Moderna, Pfizer/BioNTech, Sinovac",6837200,4164922,2792430,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-20,"Moderna, Pfizer/BioNTech, Sinovac",6837539,4165024,2792667,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-22,"Moderna, Pfizer/BioNTech, Sinovac",6978317,4201110,2897480,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-23,"Moderna, Pfizer/BioNTech, Sinovac",7060589,4217627,2963275,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-24,"Moderna, Pfizer/BioNTech, Sinovac",7130781,4230379,3020766,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-25,"Moderna, Pfizer/BioNTech, Sinovac",7192180,4242505,3070092,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-26,"Moderna, Pfizer/BioNTech, Sinovac",7256331,4254789,3122180,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-27,"Moderna, Pfizer/BioNTech, Sinovac",7305300,4267577,3158737,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-29,"Moderna, Pfizer/BioNTech",7429918,4290278,3261603,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-30,"Moderna, Pfizer/BioNTech",7504554,4299667,3327272,https://www.moh.gov.sg/covid-19,
+Singapore,2021-07-31,"Moderna, Pfizer/BioNTech",7576612,4307602,3391799,https://www.moh.gov.sg/covid-19,
+Singapore,2021-08-01,"Moderna, Pfizer/BioNTech",7638279,4313182,3448193,https://www.moh.gov.sg/covid-19,
+Singapore,2021-08-02,"Moderna, Pfizer/BioNTech",7703746,4321223,3505975,https://www.moh.gov.sg/covid-19,
+Singapore,2021-08-03,"Moderna, Pfizer/BioNTech",7767442,4329956,3561452,https://www.moh.gov.sg/covid-19,
+Singapore,2021-08-04,"Moderna, Pfizer/BioNTech",7831520,4337397,3618488,https://www.moh.gov.sg/covid-19/vaccination,
+Singapore,2021-08-06,"Moderna, Pfizer/BioNTech",7971889,4351541,3744802,https://www.moh.gov.sg/covid-19/vaccination,
+Singapore,2021-08-07,"Moderna, Pfizer/BioNTech",8042596,4359495,3807652,https://www.moh.gov.sg/covid-19/vaccination,
+Singapore,2021-08-08,"Moderna, Pfizer/BioNTech",8103735,4367061,3862510,https://www.moh.gov.sg/covid-19/vaccination,
+Singapore,2021-08-09,"Moderna, Pfizer/BioNTech",8145237,4373550,3897650,https://www.moh.gov.sg/covid-19/vaccination,
+Singapore,2021-08-11,"Moderna, Pfizer/BioNTech",8332030,4466037,3992931,https://www.moh.gov.sg/covid-19/vaccination,
+Singapore,2021-08-12,"Moderna, Pfizer/BioNTech",8429249,4485559,4071978,https://www.moh.gov.sg/covid-19/vaccination,
+Singapore,2021-08-14,"Moderna, Pfizer/BioNTech",8547113,4507848,4169030,https://www.moh.gov.sg/covid-19/vaccination,
+Singapore,2021-08-19,"Moderna, Pfizer/BioNTech, Sinovac",8681501,4543481,4266439,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress-(20-august-2021)/,
+Singapore,2021-08-20,"Moderna, Pfizer/BioNTech, Sinovac",8709548,4551878,4329835,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress_21_August_2021/,
+Singapore,2021-08-21,"Moderna, Pfizer/BioNTech, Sinovac",8734812,4559744,4337317,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress-(22-aug-2021)/,
+Singapore,2021-08-22,"Moderna, Pfizer/BioNTech, Sinovac",8747449,4562947,4340364,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress_23_August_2021/,
+Singapore,2021-08-23,"Moderna, Pfizer/BioNTech, Sinovac",8765866,4567396,4344596,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress-(24-august-2021)/,
+Singapore,2021-08-24,"Moderna, Pfizer/BioNTech, Sinovac",8781330,4571609,4348604,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress-(25-aug-2021)/,
+Singapore,2021-08-25,"Moderna, Pfizer/BioNTech, Sinovac",8796076,4576105,4355570,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress-(26-august-2021)/,
+Singapore,2021-08-26,"Moderna, Pfizer/BioNTech, Sinovac",8810574,4580071,4359345,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress-(27-august-2021)/,
+Singapore,2021-08-27,"Moderna, Pfizer/BioNTech, Sinovac",8831614,4585919,4364911,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress-(28-aug)/,
+Singapore,2021-08-28,"Moderna, Pfizer/BioNTech, Sinovac",8850465,4590629,4424703,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress-(29-aug-2021)/,
+Singapore,2021-08-29,"Moderna, Pfizer/BioNTech, Sinovac",8861176,4593269,4427247,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress-(30-august-2021)/,
+Singapore,2021-08-30,"Moderna, Pfizer/BioNTech, Sinovac",8876002,4597435,4431263,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress-(31-aug)/,
+Singapore,2021-08-31,"Moderna, Pfizer/BioNTech, Sinovac",8890717,4601255,4434945,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress-(1-sep-2021)/,
+Singapore,2021-09-01,"Moderna, Pfizer/BioNTech, Sinovac",8903991,4604828,4438388,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress_2_September_2021/,
+Singapore,2021-09-02,"Moderna, Pfizer/BioNTech, Sinovac",8917120,4608483,4441911,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress-(3-sep-2021)/,
+Singapore,2021-09-04,"Moderna, Pfizer/BioNTech, Sinovac",8953688,,,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress_5_September_2021/,
+Singapore,2021-09-05,"Moderna, Pfizer/BioNTech, Sinovac",8965092,,,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress-(6-sep-2021)/,
+Singapore,2021-09-06,"Moderna, Pfizer/BioNTech, Sinovac",8976698,,,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-and-vaccination-progress-(7-sep)/,
+Singapore,2021-09-11,"Moderna, Pfizer/BioNTech, Sinovac",9035988,4641315,4475554,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(12-sep-2021)/,
+Singapore,2021-09-12,"Moderna, Pfizer/BioNTech, Sinovac",9044030,4642991,4477170,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(13-sep-2021)/,
+Singapore,2021-09-13,"Moderna, Pfizer/BioNTech, Sinovac",9052702,4645522,4479610,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(14-sep)/,
+Singapore,2021-09-14,"Moderna, Pfizer/BioNTech, Sinovac",9060157,4648305,4482294,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation_15_September_2021/,
+Singapore,2021-09-15,"Moderna, Pfizer/BioNTech, Sinovac",9072802,4651489,,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(16-sep-2021)/,
+Singapore,2021-09-16,"Moderna, Pfizer/BioNTech, Sinovac",9084721,4654992,,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(17-sep-2021)/,
+Singapore,2021-09-17,"Moderna, Pfizer/BioNTech, Sinovac",9104751,4658907,,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(18-sep-2021)/,
+Singapore,2021-09-18,"Moderna, Pfizer/BioNTech, Sinovac",9127262,4661576,,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(19-sep-2021)/,
+Singapore,2021-09-19,"Moderna, Pfizer/BioNTech, Sinovac",9140736,4662940,,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(20-sep-2021)/,
+Singapore,2021-09-20,"Moderna, Pfizer/BioNTech, Sinovac",9160874,4665829,,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(21-sep-2021)/,
+Singapore,2021-09-21,"Moderna, Pfizer/BioNTech, Sinovac",9176863,4669197,,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(22-sep)/,
+Singapore,2021-09-22,"Moderna, Pfizer/BioNTech, Sinovac",9199565,4671857,,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(23-sep-2021)/,
+Singapore,2021-09-23,"Moderna, Pfizer/BioNTech, Sinovac",9223226,4674211,,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(24-september-2021)/,
+Singapore,2021-09-24,"Moderna, Pfizer/BioNTech, Sinovac",9256975,4677703,,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation_25_September_2021/,
+Singapore,2021-09-25,"Moderna, Pfizer/BioNTech, Sinovac",9286999,4680148,4514966,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(26-sep-2021)/,
+Singapore,2021-09-26,"Moderna, Pfizer/BioNTech, Sinovac",9306870,4681517,4516287,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation_27_September_2021/,
+Singapore,2021-09-28,"Moderna, Pfizer/BioNTech, Sinovac",9353320,4692489,4526872,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(29-sep-2021)/,196211
+Singapore,2021-09-29,"Moderna, Pfizer/BioNTech, Sinovac",9380231,4693813,4528149,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(30-sep-2021)/,215729
+Singapore,2021-09-30,"Moderna, Pfizer/BioNTech, Sinovac",9403389,4695781,4530048,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(1-oct-2021)/,236849
+Singapore,2021-10-01,"Moderna, Pfizer/BioNTech, Sinovac",9436348,4697603,4531805,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(2-oct-2021)/,258043
+Singapore,2021-10-02,"Moderna, Pfizer/BioNTech, Sinovac",9463581,4698535,4532704,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation_3_October_2021/,279787
+Singapore,2021-10-03,"Moderna, Pfizer/BioNTech, Sinovac",9486020,4699026,4533178,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(4-oct-2021)/,299155
+Singapore,2021-10-04,"Moderna, Pfizer/BioNTech, Sinovac",9513470,4700524,4589923,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation_5_October_2021/,321228
+Singapore,2021-10-05,"Moderna, Pfizer/BioNTech, Sinovac",9540497,4702719,4592067,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(6-oct-2021)/,341427
+Singapore,2021-10-06,"Moderna, Pfizer/BioNTech, Sinovac",9562777,4704285,4593596,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(7-oct-2021)/,357247
+Singapore,2021-10-07,"Moderna, Pfizer/BioNTech, Sinovac",9583761,4707177,4596420,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(8-oct-2021)/,371953
+Singapore,2021-10-08,"Moderna, Pfizer/BioNTech, Sinovac",9613475,4711200,4600348,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(9-oct-2021)/,392555
+Singapore,2021-10-09,"Moderna, Pfizer/BioNTech, Sinovac",9639518,4714069,4603150,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(10-oct-2021)/,411447
+Singapore,2021-10-10,"Moderna, Pfizer/BioNTech, Sinovac",9670942,4716546,4605568,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(11-oct-2021)/,438493
+Singapore,2021-10-11,"Moderna, Pfizer/BioNTech, Sinovac",9706124,4720530,4609459,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(12-oct-2021)/,465204
+Singapore,2021-10-12,"Moderna, Pfizer/BioNTech, Sinovac",9736175,4724247,4668668,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation_13_October_2021/,487673
+Singapore,2021-10-13,"Moderna, Pfizer/BioNTech, Sinovac",9762128,4727310,4671695,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(14-oct-2021)/,506552
+Singapore,2021-10-14,"Moderna, Pfizer/BioNTech, Sinovac",9787176,4730374,4674723,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(15-oct-2021)/,525212
+Singapore,2021-10-15,"Moderna, Pfizer/BioNTech, Sinovac",9823374,4733819,4678127,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation_16_October_2021/,554004
+Singapore,2021-10-16,"Moderna, Pfizer/BioNTech, Sinovac",9852025,4736518,4680794,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(17-oct-2021)/,577069
+Singapore,2021-10-17,"Moderna, Pfizer/BioNTech, Sinovac",9867512,4738426,4682680,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(18-oct-2021)/,588596
+Singapore,2021-10-18,"Moderna, Pfizer/BioNTech, Sinovac",9889827,4741030,4685253,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(19-oct-2021)/,604552
+Singapore,2021-10-19,"Moderna, Pfizer/BioNTech, Sinovac",9912343,4742997,4687197,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(20-oct-2021)/,622452
+Singapore,2021-10-20,"Moderna, Pfizer/BioNTech, Sinovac",9931980,4745078,4689254,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation_21_October_2021/,637326
+Singapore,2021-10-21,"Moderna, Pfizer/BioNTech, Sinovac",9956488,4747381,4691529,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(22-oct-2021)/,655029
+Singapore,2021-10-22,"Moderna, Pfizer/BioNTech, Sinovac",9989540,4749876,4693995,https://www.moh.gov.sg/news-highlights/details/update-on-local-covid-19-situation-(23-oct-2021)/,680979

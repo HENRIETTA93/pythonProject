@@ -1,0 +1,47 @@
+location,date,vaccine,source_url,total_vaccinations,people_vaccinated,people_fully_vaccinated,total_boosters
+Honduras,2021-02-28,"Moderna, Oxford/AstraZeneca",https://www.elheraldo.hn/sucesos/1446200-466/honduras-vacuna-coronavirus-salud-israel,2684,2684,0,
+Honduras,2021-03-16,"Moderna, Oxford/AstraZeneca",https://user-images.githubusercontent.com/79803615/111423040-4c2aad80-86b5-11eb-9e66-18c00bfc9d86.png,7100,7100,0,
+Honduras,2021-03-17,"Moderna, Oxford/AstraZeneca",https://twitter.com/saludhn/status/1372661671156719618,28570,28570,0,
+Honduras,2021-03-19,"Moderna, Oxford/AstraZeneca",https://www.tunota.com/cuatro-casos-graves-entre-mas-de-37-mil-empleados-de-salud-vacunados-contra-el-covid-19-reporta-honduras,37317,37317,0,
+Honduras,2021-03-21,"Moderna, Oxford/AstraZeneca",https://www.laprensa.hn/honduras/1451346-410/honduras-cobertura-segunda-jornada-vacunacion-personal-salud-pandemia-covid,43073,43073,0,
+Honduras,2021-04-03,"Moderna, Oxford/AstraZeneca",https://www.elheraldo.hn/pais/1454094-466/honduras-continua-rezagada-vacunas-anticovid-salud-,52772,52772,0,
+Honduras,2021-04-09,"Moderna, Oxford/AstraZeneca",https://proceso.hn/honduras-a-la-zaga-en-vacunacion-en-ca/,57639,55000,2639,
+Honduras,2021-05-15,"Moderna, Oxford/AstraZeneca",https://www.laprensa.hn/honduras/1464590-410/ya-van-mas-de-114000-personas-vacunadas-contra-el-covid-19-honduras-coronavirus-salud,114225,108538,5687,
+Honduras,2021-05-21,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,163858,136476,27585,
+Honduras,2021-05-25,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://www.facebook.com/saludhn/photos/a.433930676775387/1819615874873520/,208843,,,
+Honduras,2021-05-28,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://covid19.who.int/,253832,209704,,
+Honduras,2021-05-31,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://www.facebook.com/saludhn/posts/1824415681060206,317257,,,
+Honduras,2021-06-01,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://www.facebook.com/saludhn/posts/1824415681060206,352252,,,
+Honduras,2021-06-02,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://www.facebook.com/saludhn/posts/1826477720854002,377593,320832,56761,
+Honduras,2021-06-06,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://www.facebook.com/saludhn/posts/1828117260690048,420531,369571,56960,
+Honduras,2021-06-10,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://www.facebook.com/saludhn/posts/1831645783670529,447023,390063,56960,
+Honduras,2021-06-11,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://www.facebook.com/saludhn/photos/a.433930676775387/1831985196969921,460245,402319,57926,
+Honduras,2021-06-13,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://www.facebook.com/saludhn/posts/1834285010073273,479851,421925,57926,
+Honduras,2021-06-16,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://www.facebook.com/saludhn/posts/1835566419945132,488859,430859,58000,
+Honduras,2021-06-17,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://www.facebook.com/saludhn/posts/1836183229883451,497563,439563,58000,
+Honduras,2021-06-18,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://covid19.who.int/,541792,484018,,
+Honduras,2021-06-22,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://www.facebook.com/saludhn/posts/1839837469518027,591888,533888,58000,
+Honduras,2021-06-24,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Sputnik V",https://twitter.com/saludhn/status/1409342533642211330,684035,625910,58125,
+Honduras,2021-07-02,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://covid19.who.int/,822516,761715,,
+Honduras,2021-07-03,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://twitter.com/JuanOrlandoH/status/1412060051850809344,903581,845456,58125,
+Honduras,2021-07-07,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",http://www.salud.gob.hn/site/,980363,912814,67549,
+Honduras,2021-07-09,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",http://www.salud.gob.hn/site/,1095232,1020739,74493,
+Honduras,2021-07-12,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",http://www.salud.gob.hn/site/index.php/component/edocman/informacion-avances-vacunacion-1207,1172830,1093093,79737,
+Honduras,2021-07-16,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://covid19.who.int/,1235812,1138154,,
+Honduras,2021-07-19,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://user-images.githubusercontent.com/79803615/126812039-64b8f208-cbde-4e83-a04c-49b70ad7b480.png,1474737,1355746,118991,
+Honduras,2021-07-23,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,1578725,1405676,173364,
+Honduras,2021-07-26,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://www.facebook.com/saludhn/photos/a.433930676775387/1865800906921683/,1705994,1511974,194020,
+Honduras,2021-07-30,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,1912232,,,
+Honduras,2021-08-03,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",http://www.salud.gob.hn/site/,2146403,1813072,333273,
+Honduras,2021-08-25,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://twitter.com/Covid19Honduras/status/1431394095675711494,3774621,2694923,1079698,0
+Honduras,2021-08-29,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://twitter.com/Covid19Honduras/status/1432538769488551938,4077054,2768918,1308136,0
+Honduras,2021-09-06,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://twitter.com/Covid19Honduras/status/1435075425483513862,4526090,2896759,1629331,0
+Honduras,2021-09-09,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://twitter.com/Covid19Honduras/status/1437624723265970184,4637151,2947650,1689501,0
+Honduras,2021-09-20,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://twitter.com/Covid19Honduras/status/1440516586310279169,5034639,,,0
+Honduras,2021-09-22,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",http://www.salud.gob.hn/site/,5034639,,,0
+Honduras,2021-09-24,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,5196072,3207579,1988868,0
+Honduras,2021-10-01,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,5761882,3331191,2431066,0
+Honduras,2021-10-08,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,5817602,3336972,2481005,0
+Honduras,2021-10-15,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,6058428,3520903,2537900,0
+Honduras,2021-10-19,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,6339514,,,0
+Honduras,2021-10-22,"Johnson&Johnson, Moderna, Oxford/AstraZeneca, Pfizer/BioNTech, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,6605470,3841202,2764643,0

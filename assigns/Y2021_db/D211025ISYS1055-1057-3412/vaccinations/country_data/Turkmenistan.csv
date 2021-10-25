@@ -1,0 +1,3 @@
+location,date,vaccine,source_url,total_vaccinations,people_vaccinated,people_fully_vaccinated,total_boosters
+Turkmenistan,2021-02-28,"EpiVacCorona, Oxford/AstraZeneca, Sinopharm/Beijing, Sputnik V",https://who.maps.arcgis.com/apps/dashboards/ead3c6475654481ca51c248d52ab9c61,51746,32240,19506,
+Turkmenistan,2021-08-29,"EpiVacCorona, Oxford/AstraZeneca, Sinopharm/Beijing, Sputnik V",https://who.maps.arcgis.com/apps/dashboards/ead3c6475654481ca51c248d52ab9c61,7580976,4374694,3206282,

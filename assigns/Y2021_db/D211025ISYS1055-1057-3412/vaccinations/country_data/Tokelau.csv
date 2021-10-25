@@ -1,0 +1,5 @@
+date,people_vaccinated,people_fully_vaccinated,total_vaccinations,location,source_url,vaccine,total_boosters
+2021-06-21,0,,0,Tokelau,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Pfizer/BioNTech,
+2021-08-02,953,0,953,Tokelau,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Pfizer/BioNTech,
+2021-08-16,968,0,968,Tokelau,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Pfizer/BioNTech,
+2021-10-12,968,968,1936,Tokelau,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Pfizer/BioNTech,

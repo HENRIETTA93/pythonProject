@@ -1,0 +1,3 @@
+location,date,vaccine,source_url,total_vaccinations,people_vaccinated,people_fully_vaccinated,total_boosters
+Burundi,2021-10-19,Sinopharm/Beijing,https://reliefweb.int/sites/reliefweb.int/files/resources/burundi_covid-19_rapport_de_situation_2021-10-19.pdf,81,81,0,0
+Burundi,2021-10-20,Sinopharm/Beijing,https://reliefweb.int/sites/reliefweb.int/files/resources/burundi_covid-19_rapport_de_situation_2021-10-20.pdf,175,175,0,0

@@ -1,0 +1,46 @@
+location,date,vaccine,source_url,total_vaccinations,people_vaccinated,people_fully_vaccinated,total_boosters
+Bermuda,2021-01-10,Pfizer/BioNTech,https://www.gov.bm/articles/covid-19-update-minister-health%E2%80%99s-remarks-19-january-2021,0,0,0,
+Bermuda,2021-01-16,Pfizer/BioNTech,https://www.gov.bm/articles/covid-19-update-minister-health%E2%80%99s-remarks-19-january-2021,1665,1665,0,
+Bermuda,2021-01-23,Pfizer/BioNTech,https://www.gov.bm/articles/covid-19-update-minister-health-remarks-26-january-2021,2932,2932,0,
+Bermuda,2021-01-30,Pfizer/BioNTech,https://www.gov.bm/sites/default/files/COVID-19%20Vaccination%20Updates.pdf,4897,4897,0,
+Bermuda,2021-02-06,Pfizer/BioNTech,https://www.gov.bm/articles/covid-19-update-minister-health-remarks-9-february,9095,7504,1591,
+Bermuda,2021-02-09,Pfizer/BioNTech,https://www.gov.bm/articles/covid-19-update-premiers-remarks-9-february-2021,10000,8400,1600,
+Bermuda,2021-02-15,Pfizer/BioNTech,https://www.gov.bm/articles/covid-19-update-premiers-remarks-16-february-2021,13155,,,
+Bermuda,2021-02-22,Pfizer/BioNTech,https://bernews.com/2021/02/video-govt-press-conference-no-new-cases/,17073,12304,4769,
+Bermuda,2021-02-27,Pfizer/BioNTech,https://www.gov.bm/articles/covid-19-update-minister-health-remarks-2-march-2021,20705,13659,7046,
+Bermuda,2021-03-01,Pfizer/BioNTech,https://www.gov.bm/articles/covid-19-update-premier%E2%80%99s-remarks-2-march-2021,21387,,,
+Bermuda,2021-03-03,Pfizer/BioNTech,https://bernews.com/2021/03/minister-covid-19-vaccine-bermuda/,23939,15294,8645,
+Bermuda,2021-03-10,Pfizer/BioNTech,https://bernews.com/2021/03/27727-total-vaccinations-administered/,27727,17395,10332,
+Bermuda,2021-03-15,Pfizer/BioNTech,https://bernews.com/2021/03/29-of-population-had-one-dose-18-had-two/,30481,18807,11674,
+Bermuda,2021-03-22,Pfizer/BioNTech,https://bernews.com/2021/03/video-govt-press-conference-10-new-cases/,34204,21049,13155,
+Bermuda,2021-03-27,Pfizer/BioNTech,https://www.royalgazette.com/health/news/article/20210330/covid-press-conference-at-5-30pm/,37788,22417,15371,
+Bermuda,2021-04-04,Pfizer/BioNTech,https://bernews.com/2021/04/evening-video-govt-covid-19-press-conference-3/,41152,23791,17361,
+Bermuda,2021-04-10,Pfizer/BioNTech,https://www.royalgazette.com/health/news/article/20210413/live-at-5-30pm-covid-19-press-conference/,45761,25781,19980,
+Bermuda,2021-04-19,Pfizer/BioNTech,https://www.royalgazette.com/health/news/article/20210420/live-government-press-conference-on-covid-19-at-5-30pm/,52337,30094,22243,
+Bermuda,2021-04-26,Pfizer/BioNTech,https://www.royalgazette.com/health/news/article/20210427/live-covid-press-conference-5-30pm/,55904,32129,23775,
+Bermuda,2021-05-02,Pfizer/BioNTech,https://www.royalgazette.com/health/news/article/20210506/live-covid-19-press-conference-at-5-30pm/,58193,32877,25216,
+Bermuda,2021-05-12,Pfizer/BioNTech,https://bernews.com/2021/05/62161-total-covid-19-vaccinations-administered/,63994,34966,29028,
+Bermuda,2021-05-17,Pfizer/BioNTech,https://bernews.com/2021/05/may1820215-30pm-video-govt-covid-19-press-conference/,66564,35313,31251,
+Bermuda,2021-05-24,Pfizer/BioNTech,https://bernews.com/2021/05/68103-total-covid-19-vaccinations-administered/,68822,36096,32726,
+Bermuda,2021-05-31,Pfizer/BioNTech,https://bernews.com/2021/06/70731-total-vaccinations-administered/,71114,37554,33560,
+Bermuda,2021-06-05,Pfizer/BioNTech,https://bernews.com/2021/06/73702-total-covid-19-vaccinations-given/,73702,39252,34450,
+Bermuda,2021-06-07,Pfizer/BioNTech,https://bernews.com/2021/06/73702-total-covid-19-vaccinations-given/,74852,39865,34987,
+Bermuda,2021-06-14,Pfizer/BioNTech,https://bernews.com/2021/06/june1520215-30pm-video-govt-covid-19-press-conference/,76860,41198,35662,
+Bermuda,2021-06-25,Pfizer/BioNTech,https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,78413,,,
+Bermuda,2021-06-29,Pfizer/BioNTech,https://www.royalgazette.com/health/news/article/20210629/covid-19-press-conference-to-be-held-today/,80722,,,
+Bermuda,2021-07-03,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,81845,,,
+Bermuda,2021-07-16,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,82050,41505,40545,
+Bermuda,2021-07-23,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,82468,41651,40817,
+Bermuda,2021-07-30,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,82870,41873,40997,
+Bermuda,2021-08-06,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,82976,41917,41059,
+Bermuda,2021-08-13,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,83297,42074,41223,
+Bermuda,2021-08-20,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,84022,42430,41592,0
+Bermuda,2021-08-27,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,84748,42826,41922,0
+Bermuda,2021-09-03,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,85415,43128,42287,0
+Bermuda,2021-09-10,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,85914,43377,42537,0
+Bermuda,2021-09-17,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,86194,43549,42645,0
+Bermuda,2021-09-24,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,86676,43855,42821,0
+Bermuda,2021-10-01,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,87215,44190,43025,0
+Bermuda,2021-10-08,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,87723,44573,43150,0
+Bermuda,2021-10-15,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,88417,45017,43400,0
+Bermuda,2021-10-22,"Oxford/AstraZeneca, Pfizer/BioNTech",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,89029,45291,43738,0

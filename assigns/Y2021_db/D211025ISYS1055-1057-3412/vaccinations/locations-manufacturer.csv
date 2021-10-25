@@ -1,0 +1,33 @@
+location,last_observation_date,source_name,source_url
+Austria,2021-06-22,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Belgium,2021-06-22,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Bulgaria,2021-06-22,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Chile,2021-06-22,"Ministerio de Ciencia, Tecnología, Conocimiento e Innovación",https://www.gob.cl/yomevacuno/
+Croatia,2021-06-18,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Cyprus,2021-06-22,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Czechia,2021-06-24 00:00:00,Ministry of Health,https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/ockovani.csv
+Denmark,2021-06-18,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Estonia,2021-06-18,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Finland,2021-06-22,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+France,2021-06-21,Public Health France,https://www.data.gouv.fr/fr/datasets/r/b273cf3b-e9de-437c-af55-eda5979e92fc
+Germany,2021-06-24,Robert Koch Institut,https://impfdashboard.de/
+Hungary,2021-06-22,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Iceland,2021-06-24 00:00:00,Ministry of Health,https://e.infogram.com/c3bc3569-c86d-48a7-9d4c-377928f102bf
+Ireland,2021-06-22,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Italy,2021-06-24,Extraordinary commissioner for the Covid-19 emergency,https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/somministrazioni-vaccini-latest.csv
+Latvia,2021-06-24 00:00:00,National Health Service,https://data.gov.lv/dati/eng/dataset/covid19-vakcinacijas
+Liechtenstein,2021-06-18,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Lithuania,2021-06-24 00:00:00,Ministry of Health,https://services3.arcgis.com/MF53hRPmwfLccHCj/arcgis/rest/services/covid_vaccinations_by_drug_name_new/FeatureServer/0/query
+Luxembourg,2021-06-22,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Malta,2021-06-18,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Netherlands,2021-06-22,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Poland,2021-06-22,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Portugal,2021-06-18,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Romania,2021-06-24,Government of Romania via datelazi.ro,https://d35p9e4fm9h3wo.cloudfront.net/latestData.json
+Slovakia,2021-06-22,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Slovenia,2021-06-18,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Spain,2021-06-22,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Sweden,2021-06-22,European Centre for Disease Prevention and Control (ECDC),https://www.ecdc.europa.eu/en/publications-data/data-covid-19-vaccination-eu-eea
+Switzerland,2021-06-23,Federal Office of Public Health,https://www.covid19.admin.ch/en/epidemiologic/vacc-doses
+United States,2021-06-24,Centers for Disease Control and Prevention,https://covid.cdc.gov/covid-data-tracker/COVIDData/getAjaxData?id=vaccination_data
+Uruguay,2021-06-25,Ministry of Health via vacuna.uy,https://raw.githubusercontent.com/3dgiordano/covid-19-uy-vacc-data/main/data/Uruguay.csv

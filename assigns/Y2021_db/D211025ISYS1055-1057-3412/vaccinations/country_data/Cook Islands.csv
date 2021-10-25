@@ -1,0 +1,11 @@
+date,people_vaccinated,people_fully_vaccinated,total_vaccinations,location,source_url,vaccine,total_boosters
+2021-05-25,4363,,4363,Cook Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Pfizer/BioNTech,
+2021-06-01,8291,0,8291,Cook Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Pfizer/BioNTech,
+2021-06-08,9535,29,9564,Cook Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Pfizer/BioNTech,
+2021-06-15,9589,2665,12254,Cook Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Pfizer/BioNTech,
+2021-06-21,9613,7943,17556,Cook Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Pfizer/BioNTech,
+2021-06-29,9755,9187,18942,Cook Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Pfizer/BioNTech,
+2021-07-20,10931,9578,20509,Cook Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Pfizer/BioNTech,
+2021-08-31,11404,11040,22444,Cook Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Pfizer/BioNTech,
+2021-10-05,11404,11132,22536,Cook Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Pfizer/BioNTech,
+2021-10-18,12297,11192,23489,Cook Islands,https://stats.pacificdata.org/vis?tm=covid&pg=0&df[ds]=SPC2&df[id]=DF_COVID_VACCINATION&df[ag]=SPC&df[vs]=1.0,Pfizer/BioNTech,

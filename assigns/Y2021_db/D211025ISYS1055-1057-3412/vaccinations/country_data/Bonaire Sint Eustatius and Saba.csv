@@ -1,0 +1,3 @@
+location,date,vaccine,total_vaccinations,source_url,people_vaccinated,people_fully_vaccinated,total_boosters
+Bonaire Sint Eustatius and Saba,2021-04-09,"Moderna, Pfizer/BioNTech",7391,https://covid19.who.int/,5726,1665,
+Bonaire Sint Eustatius and Saba,2021-09-01,"Moderna, Pfizer/BioNTech",35845,https://www.rivm.nl/sites/default/files/2021-09/COVID-19_website_rapport_eilanden_engels_35_20210902_1409.pdf,19109,16736,

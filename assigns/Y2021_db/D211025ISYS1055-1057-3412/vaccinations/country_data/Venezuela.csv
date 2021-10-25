@@ -1,0 +1,19 @@
+location,date,vaccine,source_url,total_vaccinations,people_vaccinated,people_fully_vaccinated,total_boosters
+Venezuela,2021-02-17,Sputnik V,https://www.france24.com/en/live-news/20210218-venezuela-kicks-off-covid-vaccine-program,0,0,,
+Venezuela,2021-02-22,Sputnik V,https://www.reuters.com/article/us-health-coronavirus-venezuela-vaccine/venezuela-inoculates-health-workers-in-caracas-hospital-idUSKBN2AM2FR,157,157,,
+Venezuela,2021-03-04,Sputnik V,https://www.semana.com/mundo/articulo/y-el-carvativir-venezuela-solo-ha-vacunado-a-unas-12000-personas-contra-el-coronavirus/202126/,12194,12194,,
+Venezuela,2021-03-26,Sputnik V,https://cronica.uno/cinco-semanas-de-vacunacion-contra-la-covid-19-transcurrieron-en-medio-de-gran-desinformacion/,14223,14223,,
+Venezuela,2021-04-02,Sputnik V,https://www.rfi.fr/es/am%C3%A9ricas/20210402-la-disputa-pol%C3%ADtica-entre-maduro-y-guaid%C3%B3-retrasa-la-vacunaci%C3%B3n-en-venezuela,98000,98000,,
+Venezuela,2021-04-12,Sputnik V,https://www.swissinfo.ch/spa/coronavirus-venezuela_la-vacunaci%C3%B3n-en-venezuela--entre-dudas-y-certezas/46524144,250000,250000,,
+Venezuela,2021-05-19,Sputnik V,https://curadas.com/2021/05/19/ops-en-venezuela-solo-se-han-aplicado-316-000-dosis-de-vacunas-contra-el-coronavirus/,316000,316000,,
+Venezuela,2021-06-11,"Sinopharm/Beijing, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,739962,588066,151896,
+Venezuela,2021-06-18,"Sinopharm/Beijing, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,1302992,1079134,223858,
+Venezuela,2021-06-25,"Sinopharm/Beijing, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,1466988,1223130,223858,
+Venezuela,2021-07-05,"Sinopharm/Beijing, Sputnik V",https://www.swissinfo.ch/spa/coronavirus-venezuela_maduro-dice-que-venezuela-tiene-vacunas-anticovid-para-20---de-la-poblaci%C3%B3n/46759382,2508201,2284343,223858,
+Venezuela,2021-07-12,"Sinopharm/Beijing, Sputnik V",http://www.correodelorinoco.gob.ve/ministro-de-salud-casi-3-millones-de-venezolanos-han-recibido-primera-dosis-de-vacuna-contra-covid-19/,4000000,2900000,1100000,
+Venezuela,2021-08-17,"Sinopharm/Beijing, Sputnik V",https://elpitazo.net/alianzas/vacunometro-21-de-los-venezolanos-tienen-al-menos-la-primera-dosis-contra-el-covid-19/,4678086,,,
+Venezuela,2021-08-27,"Sinopharm/Beijing, Sinopharm/Wuhan, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,9342817,6006270,3336547,0
+Venezuela,2021-09-10,"Sinopharm/Beijing, Sinopharm/Wuhan, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,11094206,6822809,4271397,0
+Venezuela,2021-09-21,"Sinopharm/Beijing, Sinopharm/Wuhan, Sputnik V",https://www.elnacional.com/venezuela/el-chavismo-asegura-que-81-de-los-maestros-se-han-vacunado-contra-el-covid-19/,14050000,8800000,5250000,
+Venezuela,2021-09-27,"Sinopharm/Beijing, Sinopharm/Wuhan, Sputnik V",https://twitter.com/luchaalmada/status/1442699666144075776,15714857,9731808,5983049,
+Venezuela,2021-10-08,"Abdala, Sinopharm/Beijing, Sinopharm/Wuhan, Sputnik V",https://ais.paho.org/imm/IM_DosisAdmin-Vacunacion.asp,16127242,9926613,6190629,0

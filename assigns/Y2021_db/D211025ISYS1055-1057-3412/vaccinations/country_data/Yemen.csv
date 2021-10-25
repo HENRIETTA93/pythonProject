@@ -1,0 +1,12 @@
+location,date,vaccine,total_vaccinations,source_url,people_vaccinated,people_fully_vaccinated,total_boosters
+Yemen,2021-05-09,Oxford/AstraZeneca,18555,https://covid19.who.int/,18555,0,
+Yemen,2021-05-29,Oxford/AstraZeneca,104070,https://covid19.who.int/,104070,0,
+Yemen,2021-06-07,Oxford/AstraZeneca,196234,https://covid19.who.int/,196234,0,
+Yemen,2021-06-10,Oxford/AstraZeneca,221380,https://covid19.who.int/,221380,0,
+Yemen,2021-06-16,Oxford/AstraZeneca,235855,https://covid19.who.int/,235855,0,
+Yemen,2021-06-20,Oxford/AstraZeneca,251385,https://covid19.who.int/,251385,0,
+Yemen,2021-06-27,Oxford/AstraZeneca,268753,https://covid19.who.int/,268753,0,
+Yemen,2021-07-12,Oxford/AstraZeneca,297405,https://covid19.who.int/,288828,8577,
+Yemen,2021-07-27,Oxford/AstraZeneca,311483,https://covid19.who.int/,298161,13322,
+Yemen,2021-09-12,"Johnson&Johnson, Oxford/AstraZeneca",322934,https://covid19.who.int/,308025,14909,
+Yemen,2021-09-27,"Johnson&Johnson, Oxford/AstraZeneca, Sinovac",356173,https://covid19.who.int/,308025,48148,
