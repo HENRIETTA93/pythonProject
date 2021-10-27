@@ -4,7 +4,47 @@ ALTER TABLE actor ADD CONSTRAINT PK_ACTORID PRIMARY KEY (actor_id);
 /*
 Question: Which constraints in Table 1 have been created on these six tables?
 */
- primary key
+ primary key and foreign key
 
 
 -- Task1.2
+
+
+ALTER TABLE actor ADD CONSTRAINT PK_ACTORID PRIMARY KEY (actor_id);
+ALTER TABLE film ADD CONSTRAINT PK_FILMID PRIMARY KEY (film_id);
+ALTER TABLE film_actor ADD CONSTRAINT FK_FILMID1 FOREIGN KEY (film_id) REFERENCES film;
+
+ALTER TABLE category ADD CONSTRAINT PK_CATEGORYID PRIMARY KEY (category_id );
+
+ALTER TABLE language ADD CONSTRAINT PK_LANGUAGEID PRIMARY KEY (language_id );
+
+ALTER TABLE film ADD CONSTRAINT UN_DESCRIPTION  UNIQUE(description);
+
+ALTER TABLE actor ADD CONSTRAINT CK_FNAME CHECK (first_name IS NOT NULL);
+
+ALTER TABLE actor ADD CONSTRAINT CK_LNAME CHECK (last_name IS NOT NULL);
+
+ALTER TABLE category ADD CONSTRAINT CK_CATNAME CHECK (name IS NOT NULL);
+
+ALTER TABLE language ADD CONSTRAINT CK_LANNAME CHECK (name IS NOT NULL);
+
+ALTER TABLE film ADD CONSTRAINT CK_TITLE CHECK (title IS NOT NULL);
+
+ALTER TABLE film ADD CONSTRAINT CK_RELEASEYR CHECK (release_year<=2020);
+
+ALTER TABLE film ADD CONSTRAINT CK_RATING CHECK (rating IN('G', 'PG', 'PG-13', 'R', 'NC-17'));
+
+ALTER TABLE film ADD CONSTRAINT CK_SPLFEATURES CHECK (special_features IN(null, 'Trailers',
+'Commentaries', 'Deleted
+Scenes', 'Behind the Scenes'));
+
+ALTER TABLE film ADD CONSTRAINT FK_LANGUAGEID FOREIGN KEY (language_id) REFERENCES language(language_id);
+ALTER TABLE film ADD CONSTRAINT FK_ORLANGUAGEID FOREIGN KEY (original_language_id ) REFERENCES language(language_id);
+
+ALTER TABLE film_actor ADD CONSTRAINT FK_ACTORID FOREIGN KEY (actor_id ) REFERENCES actor(actor_id);
+
+ALTER TABLE film_category ADD CONSTRAINT FK_CATEGORYID FOREIGN KEY (category_id ) REFERENCES category(category_id);
+
+ALTER TABLE film_category ADD CONSTRAINT FK_FILMID2 FOREIGN KEY (film_id ) REFERENCES film(film_id);
+
+

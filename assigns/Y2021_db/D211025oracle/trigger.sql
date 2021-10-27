@@ -22,8 +22,22 @@ end;
 
 
 -- 3
+-- drop trigger BI_FILM_DESP;
+
 create trigger BI_FILM_DESP
-
+before insert on film for each row
 begin
-
+select :new.rating||'-'||(select count(*)+1 from film where rating=:new.rating)||': '||'Originally in '|| (select name
+from language where language_id=:new.original_language_id)
+||'.'||'Re-released in '||(select name
+from language where language_id=:New.language_id) ||'.'
+into :new.description from dual;
 end;
+
+/*
+test:
+INSERT INTO film (title, description, language_id, original_language_id, rating)
+VALUES ('B Movie', 'Movie about wasps.', 1, 2, 'PG');
+ SELECT description FROM film WHERE film_id = 20010;
+*/
+
