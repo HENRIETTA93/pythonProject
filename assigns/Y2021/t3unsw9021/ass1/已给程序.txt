@@ -1,0 +1,16 @@
+# COMP9021 21T3
+# Assignment 1 *** Due Monday 25 October (Week 7) @ 9.00am
+
+# DO *NOT* WRITE YOUR NAME TO MAINTAIN ANONYMITY FOR PLAGIARISM DETECTION
+
+
+
+def please_convert():
+    input('How can I help you? ')
+    print("I'll think about it...")
+    # EDIT AND COMPLETE THE CODE ABOVE
+
+
+# DEFINE OTHER FUNCTIONS
+
+please_convert()
