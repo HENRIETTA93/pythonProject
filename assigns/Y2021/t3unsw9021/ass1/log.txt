@@ -1,0 +1,74 @@
+E:\99_PythonProjects\pythonProject\venv\Scripts\python.exe E:/99_PythonProjects/pythonProject/assigns/Y2021/t3unsw9021/roman_arabic.py
+How can I help you? Please do my assignment...
+I don't get what you want, sorry mate!
+How can I help you? please convert 35
+I don't get what you want, sorry mate!
+How can I help you? Please convert 035
+Hey, ask me something that's not impossible to do!
+How can I help you? Please convert 4000
+Hey, ask me something that's not impossible to do!
+How can I help you? Please convert IIII
+Hey, ask me something that's not impossible to do!
+How can I help you? Please convert IXI
+Hey, ask me something that's not impossible to do!
+How can I help you? Please convert 35
+Sure! It is XXXV
+How can I help you? Please convert 1982
+Sure! It is MCMLXXXII
+How can I help you? Please convert 3007
+Sure! It is MMMVII
+How can I help you? Please convert MCMLXXXII
+Sure! It is 1982
+How can I help you? Please convert MMMVII
+Sure! It is 3007
+How can I help you? Please convert 123 by using ABC
+I don't get what you want, sorry mate!
+How can I help you? Please convert 123 ussing ABC
+I don't get what you want, sorry mate!
+How can I help you? Please convert XXXVI using VI
+Hey, ask me something that's not impossible to do!
+How can I help you? Please convert XXXVI using IVX
+Hey, ask me something that's not impossible to do!
+How can I help you? Please convert XXXVI using XWVI
+Hey, ask me something that's not impossible to do!
+How can I help you? Please convert I using II
+Hey, ask me something that's not impossible to do!
+How can I help you? Please convert _ using _
+Hey, ask me something that's not impossible to do!
+How can I help you? Please convert XXXVI using XVI
+Sure! It is 36
+How can I help you? Please convert XXXVI using XABVI
+Sure! It is 306
+How can I help you? Please convert EeDEBBBaA using fFeEdDcCbBaA
+Sure! It is 49036
+How can I help you? Please convert 49036 using fFeEdDcCbBaA
+Sure! It is EeDEBBBaA
+How can I help you? Please convert 899999999999 using AaBbCcDdEeFfGgHhIiJjKkLl
+Sure! It is Aaaabacbdcedfegfhgihjikjlk
+How can I help you? Please convert ABCDEFGHIJKLMNOPQRST using AbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStT
+Sure! It is 11111111111111111111
+How can I help you? Please convert 1900604 using LAQMPVXYZIRSGN
+Sure! It is AMAZING
+How can I help you? Please convert ABCD minimally using ABCDE
+I don't get what you want, sorry mate!
+How can I help you? Please convert ABCD minimaly
+I don't get what you want, sorry mate!
+How can I help you? Please convert 0I minimally
+Hey, ask me something that's not impossible to do!
+How can I help you? Please convert ABAA minimally
+Hey, ask me something that's not impossible to do!
+How can I help you? Please convert ABCDEFA minimally
+Hey, ask me something that's not impossible to do!
+How can I help you? Please convert MDCCLXXXVII minimally
+Sure! It is 1787 using MDCLXVI
+How can I help you? Please convert MDCCLXXXIX minimally
+Sure! It is 1789 using MDCLX_I
+How can I help you? Please convert MMMVII minimally
+Sure! It is 37 using MVI
+How can I help you? Please convert VI minimally
+Sure! It is 4 using IV
+How can I help you? Please convert ABCADDEFGF minimally
+Sure! It is 49269 using BA_C_DEF_G
+How can I help you? Please convert ABCCDED minimally
+Sure! It is 1719 using ABC_D_E
+Process finished with exit code -1

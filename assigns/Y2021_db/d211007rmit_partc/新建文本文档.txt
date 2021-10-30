@@ -1,0 +1,12 @@
+Traditional relational database 和 非关系型数据库是两种不同类型的数据存储方式。在当前的IT技术发展过程中，二者均扮演了相当重要的角色。
+关系型数据库以表格的形式存储数据比如Oracle、MySQL、SQL Server等，存储在在数据表的行和列中。在上述的业务场景中，需要对web系统中用户的个人信息及相关生理信息、疫苗接种信息、计划接种信息等内容进行存储。存储的数据具有结构化的特点.
+以下是使用关系型数据库对上述业务场景的解决方案：
+
+No-SQL database 通常用来存储半结构化或非结构化的数据。以MongoDB为例，MongoDB是一种面向文档的数据存储产品，支持的数据结构是类似json格式的数据，不需要先设计表结构，容易扩展。
+Traditional relational database systems and no-SQL database systems 主要区别在于数据的存储方式。关系型数据存储在以二维表格为基础的行和列中。数据表之间彼此关联协作存储，容易提取数据。
+与之相反，No-SQL数据库存储数据的方式不是二维表，而是半结构化的，并且格式较为灵活，数据结构不是固定不变的，容易对数据的结构进行修改。
+
+综合上述讨论并结合COVID-19 vaccine online booking system的业务场景，关系型数据库具有存储相关业务数据的能力并能为booking system的web展示提供良好的支持。因此建议选择使用traditional relational database.
+
+针对上述场景，COVID-19 vaccine online booking system records data 通过web页面以表单的形式展示，属于结构化数据，且这些数据的存储结构是事先定义好的，因此使用关系型数据库更为合适。另外，通过web页面展示的数据是通过查询数据库得到的，相较于No-SQL数据库，关系型数据库对查询数据的支持更为友好，因此也更倾向于使用关系型数据库。
+此外，由于关系型数据库对事务的支持，COVID-19 vaccine online booking system中，更适合使用关系型数据库。
