@@ -1,0 +1,43 @@
+
+Header description
+
+The data in the data file appear in the order shown below. Therefore, the first data column is the ID and the last column in the data file is the Spending Score. 
+
+Attribute:                     Attribute Type and Descriptions
+------------------           -----------------------------------------------
+1. CustomerID	       		Numerical
+				Instance or record ID of customer, from 1 to 1000
+        
+2. Age	  	       		Numerical
+				Age for the customer ID, Maximum = 70, Minimum = 18
+
+4. Married			Binary
+				1 refers to customer is married or in a de facto relationship, 
+				0 refers to customer is not married or is not in a de facto relationship
+
+3. Annual Income     		Numerical
+				Annual income of in $K dollar for the customer ID, Maximum = 137K, Minimum = 15K	
+	     
+5. Subscription	       		Binary
+				1 refers to customer has subscribed to promotional email, 
+				0 refers to customer has not subscribed to promotional email
+			      
+6. Satisfaction			Categorical 
+				L refers to low level of customer satisfaction towards the service provided at the store,
+				M refers to medium level of customer satisfaction towards the service provided at the store,
+				H refers to high level of customer satisfaction towards the service provided at the store
+
+7. Frequency			Categorical
+				L refers to low level of average frequency in purchase at the store,
+				M refers to medium level of average frequency in purchase at the store,
+				H refers to high level of average frequency in purchase at the store
+
+8. Mobile Payment		Binary
+				1 refers to customer used mobile payment for the purchase,
+				0 refers to customer did not use mobile payment for the purchase
+
+
+9. Spending Score   		Numerical
+				Score (from 1 to 100) given to the customer ID based on the money spent and the behaviour of the customer. 
+				The more the customer spends, the higher the score, Maximum = 99, Minimum = 1
+
