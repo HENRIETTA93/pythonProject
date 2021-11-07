@@ -1,0 +1,645 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2021-11-04 FLUX FIT5202 2021 Sem 2 Printable.html</title>
+    <style>
+        body {
+            max-width: 600px;
+            margin: 0 auto;
+            font-family: Roboto, Helvetica Neue, sans-serif;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .card {
+            box-shadow: 0 0px 10px 0px #eee;
+            border-radius: 16px;
+            overflow: hidden;
+            padding: 16px;
+            margin: 32px 0 64px;
+        }
+
+        h2 {
+            font-weight: normal;
+            margin: 0 0 20px 0;
+            font-size: 1.3rem;
+        }
+
+        .option {
+            margin: 16px 0;
+        }
+
+        @media print {
+            .card {
+                page-break-inside: avoid;
+            }
+
+            h1 {
+                page-break-after: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Flux Quiz 01</h1>
+    <div class="card">1 Petabyte is equivalent to _______ Bytes<div class="option">A) 10 to power 9</div>
+        <div class="option">B) 10 to power 12</div>
+        <div class="option">C) 10 to power 15</div>
+        <div class="option">D) 10 to power 18</div><br>
+        <div>Correct Answer: C</div>
+    </div>
+    <div class="card">What type of computer do you have?<div class="option">A) Dual Core i5 with 4 GB RAM or Equivalent
+        </div>
+        <div class="option">B) Quad Core i5 with 8 GB RAM or Equivalent</div>
+        <div class="option">C) Quad Core i5 with 16 GB RAM or Equivalent</div>
+        <div class="option">D) Quad Core i7 with 8 GB RAM or Equivalent</div>
+        <div class="option">E) Quad Core i7 with 16 GB RAM or Equivalent</div><br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <div class="card">Using the freeway analogy, number of cars that can pass through the freeway (M1: Monash Freeway)
+        during the morning peak hour from 7 to 9am is called:<div class="option">A) Throughput</div>
+        <div class="option">B) Response Time</div>
+        <div class="option">C) None of the above</div>
+        <div class="option">D) A and B</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">Using the freeway analogy, the duration I take to drive my car to go to work on a freeway (say M1
+        Monash Freeway) from the Burke Road entrance to the Blackburn Road exit is called:<div class="option">A)
+            Throughput</div>
+        <div class="option">B) Response Time</div>
+        <div class="option">C) None of the above</div>
+        <div class="option">D) A and B</div><br>
+        <div>Correct Answer: B</div>
+    </div>
+    <div class="card">Using the current processing resources, we can finish processing 1TB (one terabyte) of data in 1
+        hour. Recently the volume of data has increased to 2TB and the management has decided to double up the
+        processing resources. Using the new processing resources, we can finish processing the 2TB in 60 minutes. Is
+        this speed up or scale up?<div class="option">A) Scale Up</div>
+        <div class="option">B) Speed Up</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">If you have any question that you want the lecturer to answer in the online lecture, please feel
+        free to share your question here. Note: the questions will be kept anonymous.<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <h1>Flux Quiz 02</h1>
+    <div class="card">There is a job that will take 1 hour to complete, if this is done by 1 processor. The serial part
+        of this job is 10%. There are 4 processors to use in this job, but each processor will have an overhead of 20%
+        due to waiting time, communication time, etc. What type of speed up do we get?<div class="option">A) Linear
+            Speed Up</div>
+        <div class="option">B) Super-Linear Speed Up</div>
+        <div class="option">C) Sub-Linear Speed Up</div>
+        <div class="option">D) We will have Scale Up not Speed Up</div><br>
+        <div>Correct Answer: C</div>
+    </div>
+    <div class="card">There are 100,000 records in the table to be distributed to 32 processors. Assuming that the
+        skewness degree is high (q = 1), what is the estimated number of records in the heaviest processor?<div
+            class="option">A) 48,000 records</div>
+        <div class="option">B) 29,000 records</div>
+        <div class="option">C) 24,000 records</div>
+        <div class="option">D) 3,125 records</div><br>
+        <div>Correct Answer: C</div>
+    </div>
+    <div class="card">If a query runs on a multi-core machine (e.g. Windows server with 16 cores), it is called parallel
+        query processing. How about if multiple different queries run at the same time in a multi-core machine?<div
+            class="option">A) Intra-query parallelism</div>
+        <div class="option">B) Inter-query parallelism</div>
+        <div class="option">C) Intra-operation parallelism</div>
+        <div class="option">D) Inter-operation parallelism</div><br>
+        <div>Correct Answer: B</div>
+    </div>
+    <div class="card">If a hash data partitioning is used to store the data, and the query is a discrete range search,
+        how many processors need to be used to process such a query efficiently in order to get the query results?<div
+            class="option">A) 1 Processor</div>
+        <div class="option">B) Selected Processor</div>
+        <div class="option">C) All Processors</div><br>
+        <div>Correct Answers: B, C</div>
+    </div>
+    <div class="card">If you have any question that you want the lecturer to answer in the online lecture, please feel
+        free to share your question here. Note: the questions will be kept anonymous.<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <h1>Flux Quiz 03</h1>
+    <div class="card">|S| = 600 records, each record has the length of 100 bytes, and N=3.<div class="option">A) Si =
+            200 records</div>
+        <div class="option">B) Si = 20,000 bytes</div>
+        <div class="option">C) |Si| = 20,000 bytes</div>
+        <div class="option">D) |Si| = 200 records</div>
+        <div class="option">E) A and C</div>
+        <div class="option">F) B and D</div>
+        <div class="option">G) All of the above</div><br>
+        <div>Correct Answer: F</div>
+    </div>
+    <div class="card">The cost (the time taken) to read data from disk is called…<div class="option">A) Scan Cost</div>
+        <div class="option">B) Select Cost</div>
+        <div class="option">C) Both A and B</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">Parallel Join algorithms for Inner Join consists of two major phases: Data Partitioning, and Local
+        Join.<div class="option">A) True</div>
+        <div class="option">B) False</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">Parallel Join algorithms for Outer Join queries are:<div class="option">A) ROJA and DOJA</div>
+        <div class="option">B) DER</div>
+        <div class="option">C) OJSO</div>
+        <div class="option">D) only A and B</div>
+        <div class="option">E) A, B and C are correct</div><br>
+        <div>Correct Answer: E</div>
+    </div>
+    <div class="card">If you have any question that you want the lecturer to answer in the online lecture, please feel
+        free to share your question here. Note: the questions will be kept anonymous.<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <div class="card">If a query runs on a multi-core machine(e.g. Windows server with 16 cores), it is called parallel
+        query processing. How about if multiple different queries run at the same time in a multi-core machine?<div
+            class="option">A) Intra-query parallelism</div>
+        <div class="option">B) Inter-query parallelism</div>
+        <div class="option">C) Intra-operation parallelism</div>
+        <div class="option">D) Inter-operation parallelism</div><br>
+        <div>Correct Answer: B</div>
+    </div>
+    <div class="card">If a hash data partitioning is used to store the data, and the query is a discrete range search,
+        how many processors need to be used to process such a query efficiently in order to get the query results?<div
+            class="option">A) 1 processor</div>
+        <div class="option">B) Selected processors</div>
+        <div class="option">C) All processors</div><br>
+        <div>Correct Answers: B, C</div>
+    </div>
+    <div class="card">In the previous example (R outer join S outer join T), which parallel outer join method was used?
+        <div class="option">A) ROJA</div>
+        <div class="option">B) DOJA</div>
+        <div class="option">C) DER</div>
+        <div class="option">D) None of the above</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <h1>Flux Quiz 04</h1>
+    <div class="card">Parallel Join algorithms for Inner Join consists of two major phases: Data Partitioning, and Local
+        Join.<div class="option">A) True</div>
+        <div class="option">B) False</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">Parallel Join algorithms for Outer Join queries are:<div class="option">A) ROJA and DOJA</div>
+        <div class="option">B) DER</div>
+        <div class="option">C) OJSO</div>
+        <div class="option">D) only A and B</div>
+        <div class="option">E) A, B and C are correct</div><br>
+        <div>Correct Answer: E</div>
+    </div>
+    <div class="card">There are 150 data pages to be sorted. The machine that we have has a limited memory, and can only
+        take 8 pages at a time. How many passes will it take to sort the 150 data pages?<div class="option">A) 2</div>
+        <div class="option">B) 3</div>
+        <div class="option">C) 4</div>
+        <div class="option">D) 5</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">The limitations of the Traditional Approach (Merge All) to process a Group By query are:<div
+            class="option">A) Global aggregation is carried out by one processor</div>
+        <div class="option">B) Network bottleneck when sending the local aggregation results to the coordinator</div>
+        <div class="option">C) No parallelism in the global aggregation phase</div>
+        <div class="option">D) All of the above</div>
+        <div class="option">E) Some of the above</div><br>
+        <div>Correct Answer: D</div>
+    </div>
+    <div class="card">The Redistribution Method has a load balancing option, through the Task Stealing method. The
+        Two-Phase Method does not have a load balancing problem.<div class="option">A) TRUE</div>
+        <div class="option">B) FALSE</div><br>
+        <div>Correct Answer: B</div>
+    </div>
+    <div class="card">If you have any question that you want the lecturer to answer in the online lecture, please feel
+        free to share your question here. Note: the questions will be kept anonymous.<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <h1>Flux Quiz 05</h1>
+    <div class="card">If you have any question that you want the lecturer to answer in the online lecture, please feel
+        free to share your question here. Note: the questions will be kept anonymous.<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <div class="card">"FIT5202 involves a lot of Apache Spark programming". Which word in this sentence is a stop word?
+        <div class="option">A) a</div>
+        <div class="option">B) lot</div>
+        <div class="option">C) Spark</div>
+        <div class="option">D) involves</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">Which of the following is a technique frequently used in machine learning?<div class="option">A)
+            Identifying relationships between events to predict when one will follow the other.</div>
+        <div class="option">B) Grouping similar objects into clusters of related events.</div>
+        <div class="option">C) Classification of data into categories based on attributes.</div>
+        <div class="option">D) All of the mentioned are common machine learning techniques.</div><br>
+        <div>Correct Answer: D</div>
+    </div>
+    <div class="card">In a classification problem, our main aim is to separate the inputs into a discrete set of classes
+        or labels.<div class="option">A) True</div>
+        <div class="option">B) False</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">In a product recommendation task, simply adding another feature (e.g., realizing that which book
+        you should recommend to a user might also depend on which movies she’s watched) could give a large improvement
+        in results.<div class="option">A) True</div>
+        <div class="option">B) False</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">Which of the following is true about "Dense Vectors" in Machine Learning?<div class="option">A)
+            Dense vectors store all their entries in an array of floating-point numbers.</div>
+        <div class="option">B) Dense vectors store only the nonzero values and their indices.</div>
+        <div class="option">C) If our data has a lot of zero values, using dense vectors are considered efficient both
+            in terms of speed and memory use.</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">Suppose that we have term count tables of a corpus consisting of only two documents, as shown
+        below.
+
+        Calculate TF-IDF for the term "example”.
+
+        <img src="https://cdn.flux.qa/polls/cb7638d2b75dc98fd773b6101e3467d3.png">
+        <div class="option">A) 0</div>
+        <div class="option">B) 0.429</div>
+        <div class="option">C) 0.2385</div>
+        <div class="option">D) 0.102</div><br>
+        <div>Correct Answer: D</div>
+    </div>
+    <h1>Flux Quiz 06</h1>
+    <div class="card">Which of the following is NOT a classification algorithm?<div class="option">A) Decision Trees
+        </div>
+        <div class="option">B) Random Forest</div>
+        <div class="option">C) kNN</div>
+        <div class="option">D) k-Means</div><br>
+        <div>Correct Answer: D</div>
+    </div>
+    <div class="card">Entropy is the measure of the amount of uncertainty or randomness in data.<div class="option">A)
+            True</div>
+        <div class="option">B) False</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">What is the entropy for the training data set in the table below?
+
+        <img src="https://cdn.flux.qa/polls/7292ecf72574589ab1459f37bbc2463f.png">
+        <div class="option">A) 0.2966</div>
+        <div class="option">B) 0.2442</div>
+        <div class="option">C) 0.2764</div>
+        <div class="option">D) 0.0729</div><br>
+        <div>Correct Answer: C</div>
+    </div>
+    <div class="card">Which of the following statement(s) is/are TRUE?<div class="option">A) Vertical data partitioning
+            in a decision tree is necessary so that each processor may focus on different feature attributes of the
+            training data set.</div>
+        <div class="option">B) Result parallelism in a decision tree is based on tree partitioning.</div>
+        <div class="option">C) Both of them are TRUE.</div><br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <div class="card">Decision Trees might suffer from over-fitting. Which of the following best describes over-fitting?
+        <div class="option">A) high variance, low bias</div>
+        <div class="option">B) low variance, high bias</div>
+        <div class="option">C) low variance, low bias</div>
+        <div class="option">D) high variance, high bias</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">If you have any question that you want the lecturer to answer in the online lecture, please feel
+        free to share your question here. Note: the questions will be kept anonymous.<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <h1>Flux Quiz 07</h1>
+    <div class="card">If you have any question that you want the lecturer to answer in the online lecture, please feel
+        free to share your question here. Note: the questions will be kept anonymous.<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <div class="card">Clustering is an unsupervised learning method.<div class="option">A) True</div>
+        <div class="option">B) False</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">K-means is a partitional clustering algorithm. The k-means algorithm partitions the given data
+        into k clusters.
+        - Each cluster has a cluster centre and
+        - k is specified by the user. What is the centre called?<div class="option">A) centroid</div>
+        <div class="option">B) instance</div>
+        <div class="option">C) attribute</div>
+        <div class="option">D) vector</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">Data D = {5, 19, 25, 21, 4, 1, 17, 23, 8, 7, 6, 10, 2, 20, 14, 11, 27, 9, 3, 16}
+        Number of clusters: k = 3
+        Initial centroids: m1=6, m2=7, and m3=8. Which of the following grouping is correct after applying K-Means
+        algorithm?<div class="option">A) C1={1, 2, 3, 4, 5, 6} C2={7} C3={8, 9, 10, 11, 14, 16, 17, 19, 20, 21, 23, 25,
+            27}</div>
+        <div class="option">B) C1={1, 2, 3, 4, 5} C2={6, 7, 8, 9, 10, 11} C3={14, 16, 17, 19, 20, 21, 23, 25, 27}</div>
+        <div class="option">C) C1={1, 2, 3, 4, 5} C2={6, 7, 8, 9, 10, 11, 14} C3={16, 17, 19, 20, 21, 23, 25, 27}</div>
+        <div class="option">D) C1={1, 2, 3, 4, 5} C2={6, 7, 8, 9, 10, 11, 14} C3={16, 17, 19, 20, 21, 23, 25, 27}</div>
+        <div class="option">E) C1={1, 2, 3, 4, 5, 6} C2={7, 8, 9, 10, 11, 14} C3={16, 17, 19, 20, 21, 23, 25, 27}</div>
+        <br>
+        <div>Correct Answer: E</div>
+    </div>
+    <div class="card">Data parallelism in clustering is based on data partitioning whereby each processor builds local
+        clusters based on its data partition, whereas result parallelism in clustering is based on allocating different
+        final clusters into different processors to construct them. True or False?<div class="option">A) True</div>
+        <div class="option">B) False</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <h1>Flux Quiz 08</h1>
+    <div class="card">Which of the following is an example of Collaborative Filtering?<div class="option">A) Amazon
+            telling what to buy</div>
+        <div class="option">B) Netflix suggesting which movies to watch</div>
+        <div class="option">C) Facebook suggesting whom to be friends with</div>
+        <div class="option">D) Spotify recommending which songs to listen.</div>
+        <div class="option">E) All of the above.</div><br>
+        <div>Correct Answer: E</div>
+    </div>
+    <div class="card">Collaborative filtering algorithms often require (1) users' active participation, (2) an easy way
+        to represent users' interests, and (3) algorithms that are able to match people with similar interests. True or
+        False?<div class="option">A) True</div>
+        <div class="option">B) False</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">Although collaborative Filtering is very commonly used in recommendation systems, some of the
+        challenges that are faced while using it are:<div class="option">A) Collaborative filtering can lead to some
+            problems like cold start for new items that are added to the list. Until someone rates them, they don’t get
+            recommended.</div>
+        <div class="option">B) Data sparsity can affect the quality of user-based recommenders and also add to the cold
+            start problem mentioned above.</div>
+        <div class="option">C) Scaling can be a challenge for growing datasets as the complexity can become too large.
+            Item-based recommenders are faster than user-based when the dataset is large.</div>
+        <div class="option">D) With a straightforward implementation, you might observe that the recommendations tend to
+            be already popular, and the items from the long tail section might get ignored.</div>
+        <div class="option">E) All of the above.</div><br>
+        <div>Correct Answer: E</div>
+    </div>
+    <div class="card">What is the rating of movie Superman for Harry? Please use user based method for calculation.
+
+        <img src="https://cdn.flux.qa/polls/da9b86c1e021675ec893215659ec11ac.png">
+        <div class="option">A) 5</div>
+        <div class="option">B) 4</div>
+        <div class="option">C) 3</div>
+        <div class="option">D) 3.5</div><br>
+        <div>Correct Answer: B</div>
+    </div>
+    <div class="card">If you have any question that you want the lecturer to answer in the online lecture, please feel
+        free to share your question here. Note: the questions will be kept anonymous.<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <h1>Flux Quiz 09</h1>
+    <div class="card">List some of the applications of Data Streams.<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <div class="card">A data stream application processes incoming data from a data source. The data source emits a
+        single tuple per second (constant rate). The data are received by the data stream application in the format of
+        (eventTime, value). Once it arrives in the server, the processing timestamp is added to the tuple. The final
+        tuple format after the addition of the processing timestamp is (eventTimestamp, value, processingTimestamp).
+        Examples of tuples are as followed:
+        {1,a,1}
+        {2,b,3}
+        {3,c,3}
+        {5,e,5}
+        {6,f,7}
+        {7,g,7}
+        {8,h,9}
+        {9,i,10}
+        {10,j,11}
+        Let's say we follow a time-based windowing mechanism. The window size is three seconds and the slide is two
+        seconds. Assume the timing start at processing timestamp 1. What will be the content of the third window?<div
+            class="option">A) {1,a,1}, {2,b,3}, {3,c,3}</div>
+        <div class="option">B) {2,b,3}, {3,c,3}, {5,e,5}</div>
+        <div class="option">C) {5,e,5}, {6,f,7}, {7,g,7}</div>
+        <div class="option">D) {3,c,3}, {5,e,5}, {6,f,7}</div><br>
+        <div>Correct Answer: C</div>
+    </div>
+    <div class="card">Which of the following is NOT true about Processing Time in data streams?<div class="option">A)
+            Processing time is the time when the data is produced by the source</div>
+        <div class="option">B) Processing time is the time when data is arrived at the receiving server.</div>
+        <div class="option">C) In real world event time is earlier than the processing time due to network delay.</div>
+        <br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">What are the advantages of using Apache Kafka?<div class="option">A) Handles large volume of data,
+            reliable, fault tolerant and scalable system.</div>
+        <div class="option">B) Handles high-velocity real-time data.</div>
+        <div class="option">C) Highly durable system as data is persistent.</div>
+        <div class="option">D) Handles messages with very low latency.</div>
+        <div class="option">E) All of the above.</div><br>
+        <div>Correct Answer: E</div>
+    </div>
+    <div class="card">If you have any question that you want the lecturer to answer in the online lecture, please feel
+        free to share your question here. Note: the questions will be kept anonymous.<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <h1>Flux Quiz 10</h1>
+    <div class="card">What is the difference between time slide and tuple slide in window based streaming?<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <div class="card">When joining two streams, symmetric hash join overcome the problem of traditional hash join by
+        having two hash tables each for each stream. TRUE or FALSE?<div class="option">A) True</div>
+        <div class="option">B) False</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">For each record of table R, it goes through all records of table S. Which serial join algorithm is
+        this?<div class="option">A) Nested Loop Join</div>
+        <div class="option">B) Sort-Merge Join</div>
+        <div class="option">C) Hash Join</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">Can we use existing join methods to join two streams?<div class="option">A) Yes</div>
+        <div class="option">B) No</div><br>
+        <div>Correct Answer: B</div>
+    </div>
+    <div class="card">Can you think of any solution to Missing Handshake Problem in Handshake Join?<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <div class="card">AM Join is faster than M Join. TRUE or FALSE?<div class="option">A) TRUE</div>
+        <div class="option">B) FALSE</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">No windowing is needed for bounded stream join. TRUE or FALSE?<div class="option">A) True</div>
+        <div class="option">B) False</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">If you have any question that you want the lecturer to answer in the online lecture, please feel
+        free to share your question here. Note: the questions will be kept anonymous.<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <h1>Flux Quiz 11</h1>
+    <div class="card">If you have any question that you want the lecturer to answer in the online lecture, please feel
+        free to share your question here. Note: the questions will be kept anonymous.<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <div class="card">Granularity is not only for efficient retrieval of data but also for managing complexity. True or
+        False?<div class="option">A) True</div>
+        <div class="option">B) False</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">In fixed sized windows of K unit, we will have _________________ when the slide time is less than
+        the window size.<div class="option">A) Overlapped Windows</div>
+        <div class="option">B) Non-Overlapped Windows</div>
+        <div class="option">C) Transformed Windows</div>
+        <div class="option">D) Dynamic Windows</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">In a sales scenario, if one record is a one-month sales amount, a window of 6 months is used to
+        calculate the running 6-month average sales amount. In this case, the window size is 6 records, and the slide is
+        every record. The number of records in the moving average will be the same as the original number of records. If
+        one year has 12 records of sales, the moving average will also contain 12 records. Hence, no reduction in terms
+        of the number of records. This is a pure moving average (also known as rolling mean).
+        The above-mentioned case is an example of:<div class="option">A) Overlapped Windows - No granularity reduction
+        </div>
+        <div class="option">B) Overlapped Windows - With granularity reduction</div>
+        <div class="option">C) Non-Overlapped Windows - Granularity reduction</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">Different levels of granularity maybe combined into one level – that becomes a mixed level of
+        granularity.
+
+        The granularity can be based on<div class="option">A) Time</div>
+        <div class="option">B) Space</div>
+        <div class="option">C) Both A and B</div>
+        <div class="option">D) None of the above</div><br>
+        <div>Correct Answer: C</div>
+    </div>
+    <div class="card">Sensors arrays can be a collection of sensors measuring different things within the same
+        environment.
+        Which of the following is the method to lower the granularity of the sensor arrays that measure different
+        things?<div class="option">A) Reduce, Normalize, and then Merge</div>
+        <div class="option">B) Normalize, Merge and then Reduce</div>
+        <div class="option">C) Reduce and then Merge</div>
+        <div class="option">D) Merge and then Reduce</div><br>
+        <div>Correct Answers: A, B</div>
+    </div>
+    <h1>Flux Quiz 12</h1>
+    <div class="card">Any particular topic from Week 1 to 11 that you not clear about and want the lecturer do the
+        revision on?<br>
+        <div>Correct Answer: N/A</div>
+    </div>
+    <div class="card">Using the current processing resources, we can finish processing 1TB (one terabyte) of data in 1
+        hour. Recently the volume of data has increased to 2TB and the management has decided to double up the
+        processing resources. Using the new processing resources, we can finish processing the 2TB in 60 minutes. Is
+        this speed up or scale up?<div class="option">A) Scale Up</div>
+        <div class="option">B) Speed Up</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">There is a job that will take 1 hour to complete, if this is done by 1 processor. The serial part
+        of this job is 10%. There are 4 processors to use in this job, but each processor will have an overhead of 20%
+        due to waiting time, communication time, etc. What type of speed up do we get?<div class="option">A) Linear
+            Speed Up</div>
+        <div class="option">B) Super-Linear Speed Up</div>
+        <div class="option">C) Sub-Linear Speed Up</div>
+        <div class="option">D) We will have Scale Up not Speed Up</div><br>
+        <div>Correct Answer: C</div>
+    </div>
+    <div class="card">There 100,000 records in the table to be distributed to 32 processors. Assuming that the skewness
+        degree is high (q = 1), what is the estimated number of records in the heaviest processor?<div class="option">A)
+            48,000 records</div>
+        <div class="option">B) 29,000 records</div>
+        <div class="option">C) 24,000 records</div>
+        <div class="option">D) 3,125 records</div><br>
+        <div>Correct Answer: C</div>
+    </div>
+    <div class="card">|S| = 600 records, each record has the length of 100 bytes, and N=3.<div class="option">A) Si =
+            200 records</div>
+        <div class="option">B) Si = 20,000 bytes</div>
+        <div class="option">C) |Si| = 20,000 bytes</div>
+        <div class="option">D) |Si| = 200 records</div>
+        <div class="option">E) A and C</div>
+        <div class="option">F) B and D</div>
+        <div class="option">G) All of the above</div><br>
+        <div>Correct Answer: F</div>
+    </div>
+    <div class="card">There are 150 data pages to be sorted. The machine that we have has a limited memory, and can only
+        take 8 pages at a time. How many passes will it take to sort the 150 data pages?<div class="option">A) 2</div>
+        <div class="option">B) 3</div>
+        <div class="option">C) 4</div>
+        <div class="option">D) 5</div><br>
+        <div>Correct Answer: B</div>
+    </div>
+    <div class="card">The Redistribution Method has a load balancing option, through the Task Stealing method. The
+        Two-Phase Method does not have a load balancing problem.<div class="option">A) TRUE</div>
+        <div class="option">B) FALSE</div><br>
+        <div>Correct Answer: B</div>
+    </div>
+    <div class="card">In a product recommendation task, simply adding another feature (e.g., realizing that which book
+        you should recommend to a user might also depend on which movies she’s watched) could give a large improvement
+        in results.<div class="option">A) True</div>
+        <div class="option">B) False</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">What is the entropy for the training data set in the table below?
+
+        <img src="https://cdn.flux.qa/polls/7292ecf72574589ab1459f37bbc2463f.png">
+        <div class="option">A) 0.2966</div>
+        <div class="option">B) 0.2442</div>
+        <div class="option">C) 0.2764</div>
+        <div class="option">D) 0.0729</div><br>
+        <div>Correct Answer: C</div>
+    </div>
+    <div class="card">Data D = {5, 19, 25, 21, 4, 1, 17, 23, 8, 7, 6, 10, 2, 20, 14, 11, 27, 9, 3, 16}
+        Number of clusters: k = 3
+        Initial centroids: m1=6, m2=7, and m3=8. Which of the following grouping is correct after applying K-Means
+        algorithm?<div class="option">A) C1={1, 2, 3, 4, 5, 6} C2={7} C3={8, 9, 10, 11, 14, 16, 17, 19, 20, 21, 23, 25,
+            27}</div>
+        <div class="option">B) C1={1, 2, 3, 4, 5} C2={6, 7, 8, 9, 10, 11} C3={14, 16, 17, 19, 20, 21, 23, 25, 27}</div>
+        <div class="option">C) C1={1, 2, 3, 4, 5} C2={6, 7, 8, 9, 10, 11, 14} C3={16, 17, 19, 20, 21, 23, 25, 27}</div>
+        <div class="option">D) C1={1, 2, 3, 4, 5} C2={6, 7, 8, 9, 10, 11, 14} C3={16, 17, 19, 20, 21, 23, 25, 27}</div>
+        <div class="option">E) C1={1, 2, 3, 4, 5, 6} C2={7, 8, 9, 10, 11, 14} C3={16, 17, 19, 20, 21, 23, 25, 27}</div>
+        <br>
+        <div>Correct Answer: E</div>
+    </div>
+    <div class="card">What is the rating of movie Superman for Harry? Please use user based method for calculation.
+
+        <img src="https://cdn.flux.qa/polls/da9b86c1e021675ec893215659ec11ac.png">
+        <div class="option">A) 5</div>
+        <div class="option">B) 4</div>
+        <div class="option">C) 3</div>
+        <div class="option">D) 3.5</div><br>
+        <div>Correct Answer: B</div>
+    </div>
+    <div class="card">A data stream application processes incoming data from a data source. The data source emits a
+        single tuple per second (constant rate). The data are received by the data stream application in the format of
+        (eventTime, value). Once it arrives in the server, the processing timestamp is added to the tuple. The final
+        tuple format after the addition of the processing timestamp is (eventTimestamp, value, processingTimestamp).
+        Examples of tuples are as followed:
+        {1,a,1}
+        {2,b,4}
+        {3,c,4}
+        {5,e,6}
+        {6,f,8}
+        {7,g,8}
+        {8,h,9}
+        {9,i,10}
+        {10,j,11}
+        Let's say we follow a time-based windowing mechanism. The window size is three seconds and the slide is two
+        seconds. Assume the timing start at processing timestamp 1. What will be the content of the third window?<div
+            class="option">A) {1,a,1}, {2,b,4}, {3,c,4}</div>
+        <div class="option">B) {2,b,4}, {3,c,4}, {5,e,6}</div>
+        <div class="option">C) {5,e,6}, {6,f,8}, {7,g,8}</div>
+        <div class="option">D) {3,c,4}, {5,e,6}, {6,f,8}</div><br>
+        <div>Correct Answer: C</div>
+    </div>
+    <div class="card">AM Join is faster than M Join. TRUE or FALSE?<div class="option">A) TRUE</div>
+        <div class="option">B) FALSE</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">In a sales scenario, if one record is a one-month sales amount, a window of 6 months is used to
+        calculate the running 6-month average sales amount. In this case, the window size is 6 records, and the slide is
+        every record. The number of records in the moving average will be the same as the original number of records. If
+        one year has 12 records of sales, the moving average will also contain 12 records. Hence, no reduction in terms
+        of the number of records. This is a pure moving average (also known as rolling mean).
+        The above-mentioned case is an example of:<div class="option">A) Overlapped Windows - No granularity reduction
+        </div>
+        <div class="option">B) Overlapped Windows - With granularity reduction</div>
+        <div class="option">C) Non-Overlapped Windows - Granularity reduction</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+    <div class="card">Sensors arrays can be a collection of sensors measuring different things within the same
+        environment.
+        Which of the following is the method to lower the granularity of the sensor arrays that measure different
+        things?<div class="option">A) Reduce, Normalize, and then Merge</div>
+        <div class="option">B) Normalize, Merge and then Reduce</div>
+        <div class="option">C) Reduce and then Merge</div>
+        <div class="option">D) Merge and then Reduce</div><br>
+        <div>Correct Answer: A</div>
+    </div>
+</body>
+
+</html>
