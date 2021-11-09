@@ -1,0 +1,38 @@
+-- 根据Q2 扇形图所示，在下班后预约后并且在7天内继续电话预约的patient占比约为3.78%
+
+-- Q3
+-- 分析
+-- 查询出第一次预约后没有checkin的人数为43人
+-- 查询出第二次预约没有checkin的人数为32 人，根据Q2的165人进行了复约， 提出为了降低复约人数，建议如果初次预约不赴约者排期将延后到一月之后
+
+select
+sum(case when checkin_date is null then 1 else 0 end) as first_notshow_appointment,
+sum(case when checkin_again_date is null then 1 else 0 end) as notshow_appointment_again
+from
+(
+select distinct t1.patient_id, t1.appointment_date, t1.appointment_time,
+t2.appointment_date as appointment_again_date, t2.appointment_time as appointment_again_time,
+t1.checkin_date, t1.checkin_time,
+t2.checkin_date as checkin_again_date, t2.checkin_time as checkin_again_time
+from
+(
+select patient_id, appointment_date, appointment_time, checkin_date, checkin_time
+from appointmentdata
+where appointment_type='Telephone Visit'
+and appointment_time>='17:30:00'
+) t1
+join
+(
+select patient_id, appointment_date, appointment_time, checkin_date, checkin_time
+from appointmentdata
+where appointment_type='Telephone Visit'
+) t2
+on t1.patient_id= t2.patient_id
+where (t2.appointment_date=t1.appointment_date and t2.appointment_time>t1.appointment_time
+or
+t2.appointment_date>t1.appointment_date
+and t2.appointment_date<date_add(t1.appointment_date,interval 7 day)
+)
+) tt;
+
+
