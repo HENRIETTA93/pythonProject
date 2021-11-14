@@ -1,0 +1,57 @@
+-- a)
+
+select 'Conferences' as EventType,concat(monthname(ec.EvDate),', ', year(ec.EvDate)) as Month, count(e.ID) as count
+from Event e join EventConference ec on e.ID=ec.EventID
+group by EventType,concat(monthname(ec.EvDate), ', ',year(ec.EvDate))
+union
+select 'Journal' as EventType, concat(monthname(t.minDate),', ', year(t.minDate)) as Month, count(t.ID) as count
+from EventJournal ej
+join
+(
+select e.ID, min(ah.ActivityDate) as minDate
+from Event e
+join ActivityHappens ah on ah.EventID=e.ID
+group by e.ID
+) t on ej.EventID=t.ID
+group by EventType, concat(monthname(t.minDate),', ', year(t.minDate))
+
+union
+select 'Book' as EventType, concat(monthname(t.minDate),', ', year(t.minDate)) as Month, count(t.ID) as count
+from EventBook eb
+join
+(
+select e.ID, min(ah.ActivityDate) as minDate
+from Event e
+join ActivityHappens ah on ah.EventID=e.ID
+group by e.ID
+) t on eb.EventID=t.ID
+group by EventType, concat(monthname(t.minDate),', ', year(t.minDate))
+;
+
+
+
+-- b)
+select 'Conferences' as EventType,concat(monthname(ec.EvDate),' ',day(ec.EvDate),', ', year(ec.EvDate)) as Date
+from Event e join EventConference ec on e.ID=ec.EventID
+where ec.EvDate=(select min(EvDate) from EventConference where EvDate>'2017-01-01')
+union
+select 'Journal' as EventType, concat(monthname(t.minDate),' ',day(t.minDate),', ', year(t.minDate)) as Date
+from
+(
+select min(ah.ActivityDate) as minDate
+from EventJournal ej
+join Event e on e.ID=ej.EventID
+join ActivityHappens ah on ah.EventID=e.ID
+where ah.ActivityDate>'2017-01-01'
+) t
+union
+select 'Book' as EventType, concat(monthname(t.minDate),' ',day(t.minDate),', ', year(t.minDate)) as Date
+from
+(
+select min(ah.ActivityDate) as minDate
+from EventBook eb
+join Event e on e.ID=eb.EventID
+join ActivityHappens ah on ah.EventID=e.ID
+where ah.ActivityDate>'2017-01-01'
+) t
+;
