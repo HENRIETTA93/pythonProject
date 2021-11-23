@@ -56,15 +56,15 @@ drop table Department;
 
 create table Department(
 DepartmentID char(3) not null primary key,
-DepartmentName char(20) not null,
+DepartmentName char(20 char) not null,
 Note varchar2(100)
 );
 create table Employees(
 EmployeeID char(6) not null primary key,
-Name char(10) not null,
+Name char(10 char) not null,
 Birthday Date not null,
 Sex Number(1) not null,
-Address char(20),
+Address char(20 char),
 Zip Char(6),
 PhoneNumber char(12),
 DepartmentID Char(3) not null,
@@ -145,7 +145,7 @@ commit;
 insert into teacher values ('t001', '刘阳');
 insert into teacher values ('t002', '谌燕');
 insert into teacher values ('t003', '胡明星');
-commit; );
+commit;
 /***************初始化课程表****************************/
 insert into course values ('c001','J2SE','t002');
 insert into course values ('c002','Java Web','t002');
@@ -154,7 +154,7 @@ insert into course values ('c004','Oracle','t001');
 insert into course values ('c005','SQL SERVER 2005','t003');
 insert into course values ('c006','C#','t003');
 insert into course values ('c007','JavaScript','t002');
-insert into course values ('c008','DIV+CSS','t001'); );
+insert into course values ('c008','DIV+CSS','t001');
 insert into course values ('c009','PHP','t003');
 insert into course values ('c010','EJB3.0','t002');
 commit;
@@ -311,31 +311,44 @@ insert into employees values(5,'王五五','男', '主任', 2500,12345678901,5);
 insert into employees values(6,'王六六','女', '文员', 2500,12345678901,3);
 commit;
 -- 2
-
+create or replace procedure pr_find_emp_wage
+is
+ewage number;
+begin
+select wage into ewage from employees where emp_id=5;
+if ewage <3000 then
+update employees set wage=wage+200 where emp_id=5;
+dbms_output.put_line('5号员工工资已更新');
+else
+dbms_output.put_line('5号员工工资为XXX，已达到规定标准');
+end if;
+end;
 -- 3
-create or replace function fn_salary_level(emp_id number)
-return varchar2(5)
+create or replace function fn_salary_level(e_id number)
+return varchar2
 is
 salary_level varchar2(5);
 begin
     select case when wage<=3000 then '低'
     when wage>3000 and wage<5000 then '中'
     when wage>=5000 then '高' end into salary_level
-    from employees;
+    from employees where emp_id=e_id;
     return salary_level;
 end;
+select fn_salary_level(1) from dual;
 
 -- 4
-create or replace procedure pr_dept_find()
-is begin
+create or replace procedure pr_dept_find
+is
 dept_num number;
 dept_name varchar2(20);
+begin
 select count(1) into dept_num from departments where dep_id=6;
 select dep_name into dept_name from departments where dep_id=6;
 if dept_num =0 then
 insert into departments values(6,'后勤部');
 else
-dbms_output.put_line(dep_name);
+dbms_output.put_line(dept_name);
 end if;
 end;
 

@@ -1,0 +1,71 @@
+
+
+drop materialized view mv_action_actors_2012;
+select owner,constraint_name,constraint_type,table_name from user_constraints;
+select table_name from user_tables;
+
+
+SQL> select userenv('language') from dual;
+
+USERENV('LANGUAGE')
+----------------------------------------------------
+AMERICAN_AMERICA.AL32UTF8
+
+
+
+SQL>
+SQL> select userenv('language') from dual;
+
+USERENV('LANGUAGE')
+--------------------------------------------------------------------------------
+AMERICAN_AMERICA.AL32UTF8
+
+SQL> shutdown immediate;
+Database closed.
+Database dismounted.
+ORACLE instance shut down.
+SQL> startup mount;
+ORACLE instance started.
+
+Total System Global Area 1073741824 bytes
+Fixed Size                  8801008 bytes
+Variable Size             725615888 bytes
+Database Buffers          331350016 bytes
+Redo Buffers                7974912 bytes
+Database mounted.
+SQL> alter system enable restricted session;
+
+System altered.
+
+SQL> alter system set job_queue_processes=0;
+
+System altered.
+
+SQL> alter database open;
+
+Database altered.
+
+SQL> alter database character set internal_use AL32UTF8;
+
+Database altered.
+
+SQL> shutdown immediate;
+Database closed.
+Database dismounted.
+ORACLE instance shut down.
+SQL>  startup
+ORACLE instance started.
+
+Total System Global Area 1073741824 bytes
+Fixed Size                  8801008 bytes
+Variable Size             725615888 bytes
+Database Buffers          331350016 bytes
+Redo Buffers                7974912 bytes
+Database mounted.
+Database opened.
+SQL> alter system disable restricted session;
+
+System altered.
+
+
+
