@@ -361,6 +361,82 @@ end;
 (3)	创建触发器MyTrigger，它的作用是当表DEPT中的记录被删除后，自动删除表EMP中的对应的员工记录，从而保证数据的完整性。
 */
 
+create table name(
+emp_name varchar2(20),
+super_name varchar2(20)
+);
+
+--declare
+--e_name emp.name%type;
+--s_name emp.name%type;
+--begin
+--for rec in (select e1.ename, e2.ename into v_name
+--from emp e1, emp e2
+--where e1.job='CLERK' and e1.mgr=e2.empno
+--and e1.hiredate<e2.hiredate
+--loop
+--    insert into name values(v_name);
+--end loop;
+--end;
+
+declare
+    cursor cur1 is select ename, mgr, hiredate
+    from emp where job='CLERK';
+    edate date;
+    mgrname emp.ename%TYPE;
+    emp_rec cur1%rowtype;
+begin
+    open cur1;
+    fetch cur1 into emp_rec;
+    while cur1%found loop
+        select ename, hiredate into mgrname, edate
+        from emp where empno=emp_rec.mgr;
+       if edate>emp_rec.hiredate then
+        insert into name values(emp_rec.ename, mgrname);
+        end if;
+        fetch cur1 into emp_rec;
+       end loop;
+       close cur1;
+       end;
+
+      --2)
+      declare
+        cursor c1 is select ename, mgr, hiredate from emp where JOB='CLERK' order by hiderdate;
+        cursor c2 is select ename,empno, hiredate from emp;
+       begin
+        for r1 in c1
+            loop
+               for r2 in c2
+                   loop
+                      if (r1.mgr=r2.empno) and (r1.hiredate<r2.hiredate) then
+                        insert into name values(r1.ename, r2.ename);
+                      end if;
+                   end loop;
+            end loop;
+       end;
+end;
+
+create or replace procedure raise_wage (dept_id emp.deptno%type,
+increase real)
+is
+begin
+    if(dept_id=0) then
+        update emp set sal=sal+increase;
+    else
+        update emp set sal=sal+increase where deptno=dept_id;
+    end if;
+end;
+
+/// execute raise_wage(20,100);
+/// execute raise_wage(0,100)
+
+-- 3)
+create trigger mytrigger after delete on dept
+begin
+delete from emp where deptno=:old.deptno;
+end;
+
+
 ### 5
 /*
 在SQL/PLUS环境下完成以下操作：
