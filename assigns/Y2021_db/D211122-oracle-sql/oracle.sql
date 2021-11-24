@@ -397,11 +397,12 @@ begin
         fetch cur1 into emp_rec;
        end loop;
        close cur1;
-       end;
+end;
 
-      --2)
-      declare
-        cursor c1 is select ename, mgr, hiredate from emp where JOB='CLERK' order by hiderdate;
+
+--2)
+declare
+        cursor c1 is select ename, mgr, hiredate from emp where JOB='CLERK' order by hiredate;
         cursor c2 is select ename,empno, hiredate from emp;
        begin
         for r1 in c1
@@ -413,7 +414,7 @@ begin
                       end if;
                    end loop;
             end loop;
-       end;
+
 end;
 
 create or replace procedure raise_wage (dept_id emp.deptno%type,
@@ -431,9 +432,9 @@ end;
 /// execute raise_wage(0,100)
 
 -- 3)
-create trigger mytrigger after delete on dept
+create trigger mytrigger after delete on dept for each row
 begin
-delete from emp where deptno=:old.deptno;
+delete from emp where emp.deptno=:old.deptno;
 end;
 
 
@@ -478,8 +479,51 @@ CONTAINER = ALL;
 3.创建一个角色myrole，具有连接到数据库以及创建表，视图的权限，并把这个角色赋给用户student
 */
 
+ */
 
-CREATE USER c##student
+create temporary tablespace mytemp
+tempfile '/home/oracle/oradata/mytemp.dbf'
+size 1024m
+autoextend on next 16m
+maxsize 2048m
+extent management local;
+
+create tablespace myspace
+logging
+datafile '/home/oracle/oradata/myspace.dbf'
+size 1024m
+autoextend on next 16m
+maxsize unlimited
+extent management local autoallocate
+segment space management auto;
+
+create user c##student identified by m1234 default tablespace myspace
+temporary tablespace mytemp;
+
+alter user c##student account lock;
+
+
+create profile c##myprofile limit
+failed_login_attempts 5
+password_life_time 6;
+
+password_verify_function;
+
+alter user c##student profile c##myprofile;
+
+create role c##myrole;
+grant create session, create table, create view to c##myrole;
+grant c##myrole to c##student;
+
+
+SQL> alter user c##student account unlock;
+
+User altered.
+
+SQL> conn c##student/m1234;
+
+
+CREATE USER student
 IDENTIFIED BY m1234
 DEFAULT TABLESPACE myspace
 QUOTA 100M ON test_ts
