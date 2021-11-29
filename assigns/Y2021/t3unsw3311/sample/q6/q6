@@ -1,0 +1,119 @@
+#!/usr/bin/python3
+# COMP3311 20T2 Final Exam
+# Q6: print match reports for a specified team in a given year
+
+import sys
+import psycopg2
+
+# ... put helper functions here ...
+
+db = None
+cur = None
+
+if len(sys.argv) < 3:
+   print(f"Usage: {sys.argv[0]} TeamName Year")
+   exit(1)
+team = sys.argv[1]
+year = sys.argv[2]
+if not year.isnumeric():
+   print(f"Invalid year {year}")
+   exit(1)
+
+try:
+   # db = psycopg2.connect("dbname=footy")
+   # ... your code goes here ...
+   db = psycopg2.connect("dbname=footy host=127.0.0.1 port=5433 user=postgres password=psql")
+   query1="""
+   select distinct t.*,count(g.rating)
+from
+(
+select t1.id as tid, t1.country, t2.id as cid, t2.country as component, m.id as mid, m.city, m.playedon
+from teams t1 join involves i1 on i1.team=t1.id
+join involves i2 on i2."match"=i1."match" and i1.team!=i2.team
+join teams t2 on t2.id=i2.team
+join matches m on i1."match"=m.id
+where extract (year from m.playedon)=%s
+and t1.country=%s
+order by m.playedon
+) t 
+left join 
+players p on t.tid=p.memberof 
+left join goals g on g.scoredby=p.id and g.scoredin=t.mid
+group by t.tid, t.country, t.cid, t.component, t.mid, t.city, t.playedon
+order by t.playedon
+   """
+
+   query2="""
+   select distinct t.*,count(g.rating)
+from
+(
+select t1.id as tid, t1.country, t2.id as cid, t2.country as component, m.id as mid, m.city, m.playedon
+from teams t1 join involves i1 on i1.team=t1.id
+join involves i2 on i2."match"=i1."match" and i1.team!=i2.team
+join teams t2 on t2.id=i2.team
+join matches m on i1."match"=m.id
+where extract (year from m.playedon)=%s
+and t1.country=%s
+order by m.playedon
+) t 
+left join 
+players p on t.cid=p.memberof 
+left join goals g on g.scoredby=p.id and g.scoredin=t.mid
+group by t.tid, t.country, t.cid, t.component, t.mid, t.city, t.playedon
+order by t.playedon
+   """
+
+   curs=db.cursor()
+   curs.execute(query1,[year,team])
+   result1=curs.fetchall()
+   curs.execute(query2,[year,team])
+   result2=curs.fetchall()
+
+   if result1 is None or len(result1)==0:
+      print("No matches")
+      sys.exit(1)
+   team1_info=[]
+   for r in result1:
+      team1=r[1]
+      comp=r[3]
+      city=r[5]
+      playon=r[6]
+      scores=r[7]
+      team1_info.append((team1,comp,city,playon,scores))
+
+   team2_info=[]
+   for r in result2:
+      team1=r[1]
+      comp=r[3]
+      city=r[5]
+      playon=r[6]
+      scores=r[7]
+      team2_info.append((team1,comp,city,playon,scores))
+
+   for t1 in team1_info:
+      for t2 in team2_info:
+         if t1[0]!=t2[0] or t1[1]!=t2[1] or t1[3]!=t2[3]:
+            continue
+         else:
+            res=''
+            score1=int(t1[4])
+            score2=int(t2[4])
+            if score1>score2:
+               res='won'
+            elif score1==score2:
+               res='drew'
+            else:
+               res='lost'
+            print('played',t1[1],'in',t2[2],'on',t1[3], 'and', res,str(t1[4])+'-'+str(t2[4]))
+
+
+
+
+except psycopg2.Error as err:
+	print("DB error: ", err)
+finally:
+   if db:
+      db.close()
+   if cur:
+       cur.close()
+       
