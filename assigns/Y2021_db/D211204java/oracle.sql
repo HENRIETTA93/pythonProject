@@ -42,7 +42,7 @@ foreign key (dept_id) references department(dept_id)
 
 create table users(
 user_id number(10) not null primary key,
-fisrt_name varchar2(20),
+first_name varchar2(20),
 last_name varchar2(20)
 );
 
@@ -88,8 +88,8 @@ appoint_id number(10) primary key,
 service_type varchar2(20) not null,
 user_id number(10),
 appointment_date date,
-begin_time date,
-end_time date,
+begin_time timestamp,
+end_time timestamp,
 foreign key (service_type) references services(service_type),
 foreign key (user_id) references users(user_id)
 );
@@ -129,3 +129,58 @@ insert into services values ('Permit',4,7);
 
 insert into users values (1,'Ruby','Green');
 insert into users values (2,'William','Smith');
+
+insert into appointment values(1,'State ID',1,to_date('2021-09-01','YYYY-MM-DD'), to_date('15:20:30','hh24:mi:ss'),null);
+
+insert into stateid values (1,to_date('2021-09-01','YYYY-MM-DD'),null,1);
+insert into transactions values (1,1,12);
+commit;
+
+-- query1
+
+select state_id as id, date_issued,date_expired, user_id
+from stateid
+where to_char(date_expired,'MM/DD/YYYY')='12/06/2021'
+union
+select permit_id as id, date_issued,date_expired, user_id
+from permit
+where to_char(date_expired,'MM/DD/YYYY')='12/06/2021'
+union
+select registration_id as id, date_issued,date_expired, user_id
+from registration
+where to_char(date_expired,'MM/DD/YYYY')='12/06/2021'
+union
+select license_id as id, date_issued,date_expired, user_id
+from license
+where to_char(date_expired,'MM/DD/YYYY')='12/06/2021';
+
+-- query2
+
+select 'stateid', count(*) as idnum
+from stateid
+where to_char(date_issued,'YYYY-MM')='2021-12'
+union
+select 'registration', count(*) as idnum
+from registration
+where to_char(date_issued,'YYYY-MM')='2021-12'
+union
+select 'permit', count(*) as idnum
+from permit
+where to_char(date_issued,'YYYY-MM')='2021-12'
+union
+select 'license', count(*) as idnum
+from license
+where to_char(date_issued,'YYYY-MM')='2021-12';
+
+-- query3
+select d.dept_name, sum(s.service_price) as total_fee
+from department d join services s on s.dept_id=d.dept_id
+join appointment a on a.service_type=s.service_type
+join transactions t on t.appoint_id=a.appoint_id
+group by d.dept_name;
+
+-- query4
+select u.user_id, u.first_name ||' '||u.last_name
+from users u join stateid s on u.user_id=s.user_id
+group by u.user_id,u.first_name ||' '||u.last_name
+having count(s.state_id)>=2;
