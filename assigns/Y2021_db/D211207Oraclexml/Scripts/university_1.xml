@@ -1,0 +1,34 @@
+<university>
+    <department>
+        <dept_name> Comp.Sci. </dept_name>
+        <buliding> Taylor </buliding>
+        <budget> 100000 </budget>
+        <course>
+            <course_id> CS-101 </course_id>
+            <title> Intro. to Computer Science </title>
+            <credits> 4 </credits>
+        </course>
+        <course>
+            <course_id> CS-347 </course_id>
+            <title> Database System Concepts </title>
+            <credits> 3 </credits>
+        </course>
+    </department>
+    <department>
+        <dept_name> Biology </dept_name>
+        <buliding> Watson </buliding>
+        <budget> 90000 </budget>
+        <course>
+            <course_id> BIO-301 </course_id>
+            <title> Genetics </title>
+            <credits> 4 </credits>
+        </course>
+    </department>
+    <instructor>
+        <IID> 10101 </IID>
+        <name> Srinivasan </name>
+        <dept_name> Comp. Sci. </dept_name>
+        <salary> 65000. </salary>
+        <course_id> CS-101 </course_id>
+    </instructor>
+</university>
