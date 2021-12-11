@@ -4,7 +4,9 @@ drop table if exists viewing_episode;
 drop table if exists audience;
 drop table if exists work_for_cases;
 drop table if exists acting;
+drop table if exists role_relationship;
 drop table if exists roles;
+drop table if exists relationship_type;
 drop table if exists advert_for_season;
 drop table if exists advertisement;
 drop table if exists actor;
@@ -22,6 +24,8 @@ series_desc text
 create table cases(
 case_ID int primary key,
 case_name varchar(100) not null,
+murder_intent varchar(30),
+weapon varchar(20),
 case_desc text,
 series_ID int,
 foreign key (series_ID) references series(series_ID)
@@ -79,6 +83,11 @@ foreign key (season_ID) references seasons(season_ID),
 unique(advert_ID,season_ID)
 );
 
+create table relationship_type(
+type_ID char(5) primary key,
+type_name varchar(30) not null,
+type_desc text
+);
 
 
 create table roles(
@@ -89,6 +98,17 @@ identity varchar(30) not null,
 episode_ID char(6),
 foreign key (episode_ID) references episodes(episode_ID)
 );
+
+create table role_relationship(
+relation_ID int primary key,
+role_ID char(6) not null,
+relation_role_ID char(6) not null,
+type_ID char(5),
+foreign key (role_ID) references roles(role_ID),
+foreign key (relation_role_ID) references roles(role_ID),
+foreign key (type_ID) references relationship_type(type_ID)
+);
+
 
 create table acting(
 acting_ID int primary key,
