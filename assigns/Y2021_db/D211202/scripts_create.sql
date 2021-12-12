@@ -28,7 +28,7 @@ murder_intent varchar(30),
 weapon varchar(20),
 case_desc text,
 series_ID int,
-foreign key (series_ID) references series(series_ID)
+foreign key (series_ID) references series(series_ID) on delete cascade on update cascade
 );
 
 create table seasons(
@@ -44,8 +44,8 @@ episode_desc text,
 episode_case int,
 season_ID char(5),
 `range` int,
-foreign key (episode_case) references cases(case_ID),
-foreign key (season_ID) references seasons(season_ID)
+foreign key (episode_case) references cases(case_ID) on delete cascade on update cascade,
+foreign key (season_ID) references seasons(season_ID) on delete cascade on update cascade
 );
 create table crew(
 crew_ID int primary key,
@@ -78,8 +78,8 @@ advert_ID char(5) not null,
 season_ID char(5) not null,
 advert_price decimal(10,2),
 advert_times int,
-foreign key (advert_ID) references advertisement(advert_ID),
-foreign key (season_ID) references seasons(season_ID),
+foreign key (advert_ID) references advertisement(advert_ID) on delete cascade on update cascade,
+foreign key (season_ID) references seasons(season_ID) on delete cascade on update cascade,
 unique(advert_ID,season_ID)
 );
 
@@ -96,7 +96,7 @@ role_name varchar(50) not null,
 role_desc text,
 identity varchar(30) not null,
 episode_ID char(6),
-foreign key (episode_ID) references episodes(episode_ID)
+foreign key (episode_ID) references episodes(episode_ID) on delete cascade on update cascade
 );
 
 create table role_relationship(
@@ -104,9 +104,9 @@ relation_ID int primary key,
 role_ID char(6) not null,
 relation_role_ID char(6) not null,
 type_ID char(5),
-foreign key (role_ID) references roles(role_ID),
-foreign key (relation_role_ID) references roles(role_ID),
-foreign key (type_ID) references relationship_type(type_ID)
+foreign key (role_ID) references roles(role_ID) on delete cascade on update cascade,
+foreign key (relation_role_ID) references roles(role_ID) on delete cascade on update cascade,
+foreign key (type_ID) references relationship_type(type_ID) on delete cascade on update cascade
 );
 
 
@@ -114,8 +114,8 @@ create table acting(
 acting_ID int primary key,
 actor_ID int,
 role_ID char(6),
-foreign key (actor_ID) references actor(actor_ID),
-foreign key (role_ID) references roles(role_ID),
+foreign key (actor_ID) references actor(actor_ID) on delete cascade on update cascade,
+foreign key (role_ID) references roles(role_ID) on delete cascade on update cascade,
 unique(actor_ID,role_ID)
 );
 
@@ -123,8 +123,8 @@ create table work_for_cases(
 working_ID int primary key,
 crew_ID	int,
 case_ID int,
-foreign key (crew_ID) references crew(crew_ID),
-foreign key (case_ID) references cases(case_ID),
+foreign key (crew_ID) references crew(crew_ID) on delete cascade on update cascade,
+foreign key (case_ID) references cases(case_ID) on delete cascade on update cascade,
 unique(crew_ID,case_ID)
 );
 
@@ -144,8 +144,8 @@ from_mins int,
 to_mins int,
 comment text,
 rating int,
-foreign key (audience_ID) references audience(audience_ID),
-foreign key (episode_ID) references episodes(episode_ID)
+foreign key (audience_ID) references audience(audience_ID) on delete cascade on update cascade,
+foreign key (episode_ID) references episodes(episode_ID) on delete cascade on update cascade
 );
 create table member_policy(
 policy_ID char(5) primary key,
@@ -158,7 +158,7 @@ audience_ID char(10),
 policy_ID char(5),
 from_date date,
 to_date date,
-foreign key (audience_ID) references audience(audience_ID),
-foreign key (policy_ID) references member_policy(policy_ID),
+foreign key (audience_ID) references audience(audience_ID) on delete cascade on update cascade,
+foreign key (policy_ID) references member_policy(policy_ID) on delete cascade on update cascade,
 unique(audience_ID, from_date)
 );
