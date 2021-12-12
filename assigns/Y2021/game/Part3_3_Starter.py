@@ -6,15 +6,66 @@ Created on Mon Dec  6 19:56:11 2021
 """
 
 class BankTransaction:
-    pass     
+    Date = ''
+    Description = ''
+    amount=0
+    def __init__(self,Date,Description,amount):
+        self.Date=Date
+        self.Description=Description
+        self.amount=amount
+
         
-class Deposit:
-    pass
+class Deposit(BankTransaction):
 
-class Withdrawal:
-    pass      
+    def broughtForward(self,carriedForwardAmount):
+        carriedForwardAmount+=self.amount
+        return carriedForwardAmount
+    # def __str__(self):
+    #     return f'{self.Date:16s}{self.Description:24s}{self.amount:>16f}{" ":15s}{self.amount:15f}'
 
+
+
+class Withdrawal(BankTransaction):
+
+    def broughtForward(self,carriedForwardAmount):
+        carriedForwardAmount-=self.amount
+        return carriedForwardAmount
+
+    # def __str__(self):
+    #     return f'{self.Date:16s}{self.Description:24s}{" ":>16s}{self.amount:15f}{self.amount:15f}'
 class BankStatement:
+    opening=None
+    tx=[]
+    def __init__(self,opening):
+        self.opening=opening
+
+    def deposit(self,date,description,amount):
+        dpst=Deposit(date,description,amount)
+        self.tx.append(dpst)
+
+    def withdrawal(self,date,description,amount):
+        self.tx.append(Withdrawal(date,description,amount))
+
+
+    def __str__(self):
+        bank_statement=f'Opening Amount: ${self.opening:,.2f} \n'
+        title=f'{"Date":16s}{"Description":24s}{"Deposit":>16s}{"Withdrawal":>15s}{"Balance":>15s}\n'
+        balance=self.opening
+        transaction_list=''
+        for tr in self.tx:
+            if type(tr) is Deposit:
+                balance=tr.broughtForward(balance)
+                tstr=f'{tr.Date:16s}{tr.Description:24s}{tr.amount:>16,.2f}{" ":15s}{balance:15,.2f}\n'
+                transaction_list+=tstr
+            if type(tr) is Withdrawal:
+                balance=tr.broughtForward(balance)
+                tstr = f'{tr.Date:16s}{tr.Description:24s}{" ":>16s}{tr.amount:15,.2f}{balance:15,.2f}\n'
+                transaction_list += tstr
+        closing=f'Closing Balance Amount :${balance:,.2f}'
+
+        return bank_statement+title+transaction_list+closing
+
+
     pass
     
 if __name__ == "__main__":

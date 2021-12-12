@@ -33,3 +33,6 @@ print('my name is', '%20s,'% name, 'my phone is', '%-15d'%phone)
 print(f'{" ":8s}' + 'The whole group')
 print('{:8s}{}'.format('','The whole group'))
 print('%7s'%' ','The whole group')
+
+## amount format
+print(f'{100000:>12,.2f}')
