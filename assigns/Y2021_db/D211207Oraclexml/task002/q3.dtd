@@ -1,0 +1,24 @@
+<!DOCTYPE university[
+        <!ELEMENT university (STUDENT*, COURSE*, SECTION*)>
+        <!ELEMENT STUDENT EMPTY>
+        <!ELEMENT COURSE EMPTY>
+        <!ELEMENT SECTION EMPTY>
+        <!ATTLIST STUDENT Ssn Name Class Grade #REQUIRED>
+        <!ATTLIST COURSE Course_number Course_name #REQUIRED>
+        <!ATTLIST SECTION Number Year Qtr Course_number Course_name #REQUIRED>
+]>
+
+
+<!DOCTYPE university[
+        <!ELEMENT university (SECTION*)>
+        <!ELEMENT SECTION (COURSE,STUDENT+)>
+        <!ELEMENT COURSE (Course_number,Course_name)>
+        <!ELEMENT STUDENT (Ssn,Name,Class,Grade)>
+        <!ELEMENT Course_number (#PCDATA)>
+        <!ELEMENT Course_name (#PCDATA)>
+        <!ELEMENT Ssn (#PCDATA)>
+        <!ELEMENT Name (#PCDATA)>
+        <!ELEMENT Class (#PCDATA)>
+        <!ELEMENT Grade (#PCDATA)>
+        <!ATTLIST SECTION Number CDATA #REQUIRED Year CDATA #REQUIRED Qtr CDATA #REQUIRED>
+]>
