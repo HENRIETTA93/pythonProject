@@ -127,3 +127,99 @@ from school_salary
 where concat(round((mid_career_median-starting_median)/starting_median*100),'%')=
 (select max(concat(round((mid_career_median-starting_median)/starting_median*100),'%')) from school_salary)
 ;
+
+
+
+-- a new
+drop table if exists degree_salary;
+drop table if exists schools;
+drop table if exists school_salary;
+
+drop table if exists school_salary_src;
+drop table if exists degree_salary_src;
+drop table if exists schools_src;
+
+create table schools_src(
+school varchar(100) primary key,
+conference varchar(20)
+);
+
+create table school_salary_src(
+school varchar(100) primary key,
+region varchar(20),
+starting_median text,
+mid_career_median text,
+mid_career_90 text
+);
+
+
+create table degree_salary_src(
+degree varchar(50) primary key,
+starting_median_salary text,
+mid_career_median text,
+mid_career_90th_percentile_salary text
+);
+
+
+create table schools(
+school varchar(100) primary key,
+conference varchar(20)
+);
+
+create table school_salary(
+school varchar(100) primary key,
+region varchar(20),
+starting_median text,
+mid_career_median text,
+mid_career_90 text
+);
+
+
+create table degree_salary(
+degree varchar(50) primary key,
+starting_median text,
+mid_career_median text,
+mid_career_90 text
+);
+
+insert into school_salary select * from school_salary_src;
+
+insert into schools select * from schools_src;
+
+insert into degree_salary select * from degree_salary;
+
+
+update school_salary set starting_median=null where starting_median='';
+update school_salary set mid_career_median=null where mid_career_median='';
+update school_salary set mid_career_90=null where mid_career_90='';
+
+update school_salary set starting_median=replace(substring(starting_median,2),',',''),
+mid_career_median=replace(substring(mid_career_median,2),',',''),
+mid_career_90=replace(substring(mid_career_90,2),',','');
+
+alter table school_salary modify starting_median decimal(20,2);
+alter table school_salary modify mid_career_median decimal(20,2);
+alter table school_salary modify mid_career_90 decimal(20,2);
+
+update degree_salary set starting_median=null where starting_median='';
+update degree_salary set mid_career_median=null where mid_career_median='';
+update degree_salary set mid_career_90=null where mid_career_90='';
+
+update degree_salary set starting_median=replace(substring(starting_median,2),',',''),
+mid_career_median=replace(substring(mid_career_median,2),',',''),
+mid_career_90=replace(substring(mid_career_90,2),',','');
+
+alter table degree_salary modify starting_median decimal(20,2);
+alter table degree_salary modify mid_career_median decimal(20,2);
+alter table degree_salary modify mid_career_90 decimal(20,2);
+
+
+select * from school_salary where school not in (select school from schools)
+;
+
+select * from schools where school not in (select school from school_salary)
+;
+
+delete from schools where school not in (select school from school_salary);
+
+alter table schools add constraint fk_school foreign key (school) references school_salary (school);
