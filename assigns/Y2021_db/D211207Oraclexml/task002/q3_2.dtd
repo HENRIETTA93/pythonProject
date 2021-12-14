@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--被XMLSpy vDTD产生的2012 (http://www.altova.com)-->
+<!ELEMENT university ((SECITON+))>
+<!ELEMENT Ssn (#PCDATA)>
+<!ELEMENT STUDENT ((Ssn, Name, Class, Grade))>
+<!ELEMENT SECITON ((COURSE, STUDENT))>
+<!ATTLIST SECITON
+	Number (S2 | S1) #REQUIRED
+	Qtr CDATA #FIXED "4"
+	Year CDATA #FIXED "2021"
+>
+<!ELEMENT Name (#PCDATA)>
+<!ELEMENT Grade (#PCDATA)>
+<!ELEMENT Course_number (#PCDATA)>
+<!ELEMENT Course_name (#PCDATA)>
+<!ELEMENT Class (#PCDATA)>
+<!ELEMENT COURSE ((Course_number, Course_name))>

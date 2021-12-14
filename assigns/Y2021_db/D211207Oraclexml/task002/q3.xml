@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <university>
-    <SECITON Number="S1" Year="2021" Qtr="4">
-        <COURSE>
-            <Course_number>COMP9021</Course_number>
-            <Course_name>Database Concept</Course_name>
-        </COURSE>
-        <STUDENT>
-            <Ssn>1001</Ssn>
-            <Name>EV</Name>
-            <Class>Class 5</Class>
-            <Grade>98</Grade>
-        </STUDENT>
-    </SECITON>
+	<SECITON Number="S1" Year="2021" Qtr="4">
+		<COURSE>
+			<Course_number>COMP9021</Course_number>
+			<Course_name>Database Concept</Course_name>
+		</COURSE>
+		<STUDENT>
+			<Ssn>1001</Ssn>
+			<Name>EV</Name>
+			<Class>Class 5</Class>
+			<Grade>98</Grade>
+		</STUDENT>
+		<STUDENT>
+			<Ssn>1002</Ssn>
+			<Name>John</Name>
+			<Class>Class 5</Class>
+			<Grade>78</Grade>
+		</STUDENT>
+	</SECITON>
+	<SECITON Number="S2" Year="2021" Qtr="4">
+		<COURSE>
+			<Course_number>COMP9021</Course_number>
+			<Course_name>Database Concept</Course_name>
+		</COURSE>
+		<STUDENT>
+			<Ssn>1001</Ssn>
+			<Name>EV</Name>
+			<Class>Class 5</Class>
+			<Grade>98</Grade>
+		</STUDENT>
+	</SECITON>
 </university>
