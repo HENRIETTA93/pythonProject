@@ -21,6 +21,13 @@
   查找职称为副教授不讲授英语课的教师号。
 
 
+
+（3）用SQL实现下列操作：
+      ①将教师“廖亚平”的职称改为教授。
+      ②将所有年龄为20岁的学生年龄改为21岁。
+      ③将值（0110，王晓，22，上海）加到STUDENT中。
+      ④删除所有年龄为24岁的学生的数据。
+
 create table STUDENT(
 SNO varchar(20) primary key,
 SNAME varchar(20),
@@ -36,7 +43,7 @@ AGE int
 );
 
 create table COURSE(
-CNO int primary key,
+CNO  varchar(5) primary key,
 CNAME varchar(40),
 TNUM int
 );
@@ -44,7 +51,7 @@ TNUM int
 create table STC (
 SNO varchar(20),
 TNO int,
-CNO int,
+CNO  varchar(5),
 primary key (SNO,TNO, CNO),
 foreign key (SNO) references STUDENT(SNO),
 foreign key (TNO) references TEACHER(TNO),
@@ -86,11 +93,7 @@ from TEACHER t join STC st on t.TNO=st.TNO
 join COURSE c on c.CNO=st.CNO
 where c.CNAME='英语' and TITILE='副教授'
 );
-（3）用SQL实现下列操作：
-      ①将教师“廖亚平”的职称改为教授。
-      ②将所有年龄为20岁的学生年龄改为21岁。
-      ③将值（0110，王晓，22，上海）加到STUDENT中。
-      ④删除所有年龄为24岁的学生的数据。
+
 
 update TEACHER set  TITILE='教授' where TNAME='廖亚平';
 
