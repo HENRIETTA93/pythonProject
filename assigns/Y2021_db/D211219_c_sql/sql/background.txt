@@ -1,0 +1,100 @@
+设有如下关系模式；
+学生：STUDENT (SNO, SNAME, AGE, CITY)
+教师：TEACHER (TNO, TNAME, TITILE, AGE)
+课程：COURSE (CNO, CNAME, TNUM)
+联系关系：STC (SNO, TNO, CNO)
+其中，TNUM为该课程的任课教师数。
+一个学生可以选修多门课程，一门课程可由多位老师讲授。
+
+
+
+要求：
+（1）定义上述关系模式组成的数据库模式。
+（2）用SQL分别表示下列查询：
+①  查找所有教师的全部数据。
+②  查找职称为教授的教师的全部数据。
+  查找由3位以上任课教师教授的课程名称。
+  查找修读“操作系统”课程的学生人数。
+  查询选修两门以上课程的学生学号，姓名和选课门数。
+  查找选修课程号“C1”和“C2”的学生学号。
+  查找给学生“刘芳”上“操作系统”课程的教师姓名。
+  查找职称为副教授不讲授英语课的教师号。
+
+
+create table STUDENT(
+SNO varchar(20) primary key,
+SNAME varchar(20),
+AGE int,
+CITY varchar(40)
+);
+
+create table TEACHER(
+TNO int primary key,
+TNAME varchar(20),
+TITILE varchar(50),
+AGE int
+);
+
+create table COURSE(
+CNO int primary key,
+CNAME varchar(40),
+TNUM int
+);
+
+create table STC (
+SNO varchar(20),
+TNO int,
+CNO int,
+primary key (SNO,TNO, CNO),
+foreign key (SNO) references STUDENT(SNO),
+foreign key (TNO) references TEACHER(TNO),
+foreign key (CNO) references COURSE(CNO)
+);
+
+select * from TEACHER;
+
+select * from TEACHER where TITILE='教授';
+
+select CNAME from COURSE where TNUM>3;
+
+
+select count(st.SNO)
+from COURSE c join STC st on c.CNO=st.CNO
+where c.CNAME='操作系统';
+
+select s.SNO, s.SNAME, count(st.CNO)
+from STUDENT s join STC st on s.SNO=st.SNO
+group by s.SNO, s.SNAME
+having count(st.CNO)>2;
+
+select s.SNO
+from STUDENT s join STC st on s.SNO=st.SNO
+where st.CNO in ('C1', 'C2');
+
+select t.TNAME
+from STUDENT s join STC st on s.SNO=st.SNO
+join COURSE c on c.CNO=st.CNO
+join TEACHER t on t.TNO=st.TNO
+where s.SNAME='刘芳' and c.CNAME='操作系统';
+
+select TNO
+from TEACHER
+where TNO
+not in (
+select t.TNO
+from TEACHER t join STC st on t.TNO=st.TNO
+join COURSE c on c.CNO=st.CNO
+where c.CNAME='英语' and TITILE='副教授'
+);
+（3）用SQL实现下列操作：
+      ①将教师“廖亚平”的职称改为教授。
+      ②将所有年龄为20岁的学生年龄改为21岁。
+      ③将值（0110，王晓，22，上海）加到STUDENT中。
+      ④删除所有年龄为24岁的学生的数据。
+
+update TEACHER set  TITILE='教授' where TNAME='廖亚平';
+
+update STUDENT set AGE=21 where AGE=20;
+
+insert into STUDENT values ('0110', '王晓',22, '上海');
+delete from STUDENT where AGE=24;
