@@ -1,0 +1,106 @@
+
+Q1
+(a)
+from FD1: AC->BDEFG, FD2: B->C, FD3: D->C
+there's no partial functional dependencies and no transitive functional dependencies,
+so R is in 3NF.
+
+(b)
+from FD1: AC->BDEFG, FD2: B->CD
+FD2: (1) B->C (2) B->D
+so from FD2(2) it's a transitive dependency because B is not primary attribute.
+
+(c)
+FD1: A → C
+FD2: C → D
+FD3: E → F
+FD4: {A, E} → G
+FD5: B → C
+FD6: {B, E} → G
+
+A+=ACD
+C+=CD
+E+=EF
+AE+=ACDEGF
+B+=BC
+BE+=BCEGF
+
+ABE+=ABCDEFG
+so the candidate key of R is {A,B,E}
+because A->CD, A is partial primary attributes, so it is violates 2NF. it is 1NF.
+
+
+Q2
+(a)
+select avg(ee.Salary)
+from
+(
+select e.SSN
+from EMPLOYEE e join DEPENDANT d on e.SSN=d.E_SSN
+group by SSN having count(DNAME)>=2
+) t, EMPLOYEE ee where t.SSN=ee.SSN;
+
+(b)
+select DNO
+from EMPLOYEE
+group by DNO
+order by count(SSN) desc limit 1;
+
+select DNO, count(SSN)
+from EMPLOYEE
+group by DNO
+order by count(SSN) desc limit 1;
+
+
+
+(c)
+select count(e.SSN)
+from
+(
+select DNO
+from EMPLOYEE
+group by DNO
+having count(SSN)>100
+) t join EMPLOYEE e on t.DNO=e.DNO
+where e.Salary>40000;
+
+select count(e1.SSN)
+from EMPLOYEE e1 join
+(
+select DNO, count(SSN)
+from EMPLOYEE
+group by DNO
+having count(SSN)>100
+) tmp on tmp.DNO=e1.DNO
+where e1.Salary>40000;
+
+(d)
+返回最低工资大于5000的员工 且其亲属是其supervisor 的，supervior的人数
+
+Q3
+(1) the number of supervisors is 10, and the number of all employees is 10*20=200.
+and 10% of employees are greater than 50000, so there's about 200*10%=20 employees.
+
+
+EMPLOYEE X EMPLOYEE will get 200*200=4000 tuples
+σE.SUPER_SSN = S.SSN AND S.Salary >= 50,000 can get at most 10 tuples
+
+(2)
+
+πE.SSN,S.SSN (σS.Salary >= 50,000 (ρ(E)EMPLOYEE ⋈(E.SUPER_SSN = S.SSN)  ρ(S)EMPLOYEE))
+
+
+(3)
+from (a), use X will get a mid results which contains 200*200=40000 tuples
+and step2 will get 10 tuples from 40000 tuples.
+
+from (b) use ⋈ will get join results which contains 10 tuples
+ρ(E)EMPLOYEE ⋈(E.SUPER_SSN = S.SSN)  ρ(S)EMPLOYEE  will get 10 tuples
+
+
+
+
+
+
+
+
