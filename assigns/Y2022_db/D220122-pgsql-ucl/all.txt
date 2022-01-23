@@ -1,0 +1,20 @@
+Step 1 - Topic Pre-Selection/Declaration (online form)
+public amenities - playgrounds
+activity_towers
+equipment_areas
+playground
+
+Step 2 - Decisions (online form)
+
+Step 3 – Pyramid (turnitin upload)
+
+
+Step 4 - Database creation (5 script files, online form)
+
+createtable_ucfsxxx.txt
+createconstraints_ucfsxxx.txt
+insertdata_ucfsxxx.txt
+createviews_ucfsxxx.txt
+decisions_ucfsxxx.txt
+
+Step 5 – Map and 3D visualisation and queries (one PDF via Turnitin)
