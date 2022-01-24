@@ -1,0 +1,120 @@
+drop schema if exists ucbqfx1 cascade;
+create schema ucbqfx1;
+drop table if exists ucbqfx1.subway_station;
+create table ucbqfx1.subway_station(
+subway_id serial,
+subway_name character varying(100) not null,
+subway_year integer
+);
+
+
+alter table ucbqfx1.subway_station drop column if exists location;
+select AddGeometryColumn('ucbqfx1','subway_station','location',27700, 'geometry',2);
+
+
+
+
+drop table if exists ucbqfx1.waiting_hall;
+create table ucbqfx1.waiting_hall(
+waitinghall_id serial,
+subway_id integer,
+waitinghall_no character varying(20) not null,
+capacity integer
+);
+
+alter table ucbqfx1.waiting_hall drop column if exists location;
+select AddGeometryColumn('ucbqfx1', 'waiting_hall', 'location',27700, 'geometry', 3);
+
+
+
+
+drop table if exists ucbqfx1.turnstile;
+create table ucbqfx1.turnstile(
+turnstile_id serial,
+turnstile_no character varying(20) not null,
+color character varying(50),
+direction character varying(20),
+waitinghall_id integer
+);
+
+alter table ucbqfx1.turnstile drop column if exists location;
+select AddGeometryColumn('ucbqfx1','turnstile','location',0, 'polygon', 3);
+
+
+
+drop table if exists ucbqfx1.pm_sensor;
+create table ucbqfx1.pm_sensor(
+pm_sensor_id serial,
+pm_sensor_name character varying (50) not null,
+pm_sensor_make character varying (100) not null,
+pm_sensor_use_date date,
+waitinghall_id integer
+);
+
+alter table ucbqfx1.pm_sensor drop column if exists location;
+select AddGeometryColumn('ucbqfx1','pm_sensor','location',0, 'geometry',3);
+
+
+
+
+
+/* create the pm_values table */
+drop table if exists ucbqfx1.pm_values;
+create table ucbqfx1.pm_values(
+pm_value_id serial,
+pm_sensor_id integer,
+output_time timestamp,
+pm_value double precision
+);
+
+
+
+
+
+drop table if exists ucbqfx1.waitinghall_condition;
+create table ucbqfx1.waitinghall_condition(
+waitinghall_condition_id serial,
+waitinghall_id integer not null,
+light_condition integer not null,
+floor_condition integer not null,
+report_date date default current_date,
+user_id integer
+);
+
+drop table if exists ucbqfx1.turnstile_condition;
+create table ucbqfx1.turnstile_condition(
+turnstile_condition_id serial,
+turnstile_id integer,
+sensitivity_condition integer not null,
+display_screen_condition integer not null,
+report_date date default current_date,
+user_id integer
+);
+
+
+drop table if exists ucbqfx1.asset_health_indicator;
+create table ucbqfx1.asset_health_indicator (
+asset_health_indicator_id serial not null,
+asset_health_indicator_description character varying(500)
+);
+
+
+/* parameters */
+drop table if exists ucbqfx1.parameters;
+create table ucbqfx1.parameters(
+parameter_id serial,
+parameter_type character varying (100),
+parameter_name character varying (100),
+parameter_subname character varying (100),
+parameter_value double precision,
+parameter_units character varying (100),
+date_created date default CURRENT_DATE
+);
+
+
+/* users */
+drop table if exists ucbqfx1.users;
+create table ucbqfx1.users(
+user_id serial not null,
+user_name character varying(100) not null
+);

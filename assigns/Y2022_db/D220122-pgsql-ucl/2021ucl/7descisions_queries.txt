@@ -1,0 +1,213 @@
+/*
+Descision 1:
+
+What % of the waiting halls of all subway stations is this year for the floor is too old to make people feel uncomfortable?
+
+
+ucbqfx1.waiting_hall; ucbqfx1.waitinghall_condition; ucbqfx1.asset_health_indicator
+
+top
+*/
+
+with old_waiting_hall
+as
+(
+select count(distinct a.waitinghall_id) as old_waitinghall_number
+from ucbqfx1.waiting_hall a join ucbqfx1.waitinghall_condition b on a.waitinghall_id=b.waitinghall_id
+where (b.floor_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='Use more than 6 years，Lack of service capacity')
+or b.floor_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='Almost unusable')
+)
+and extract(year from b.report_date)=extract(year from CURRENT_DATE)
+)
+select c.old_waitinghall_number/cast(count(d.waitinghall_id) as numeric) as old_percent
+from old_waiting_hall c, ucbqfx1.waiting_hall d
+group by c.old_waitinghall_number;
+
+/*
+Descision 2:
+
+What % of the turnstiles are most sensitive and least insensitive in all subway stations this year?
+
+ucbqfx1.turnstile;ucbqfx1.turnstile_condition;ucbqfx1.asset_health_indicator
+
+top
+*/
+
+
+with least_sensitive_turnstile
+as
+(
+select count(distinct a.turnstile_id) as unusable_number
+from ucbqfx1.turnstile a join ucbqfx1.turnstile_condition b on a.turnstile_id=b.turnstile_id 
+where b.sensitivity_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='Almost unusable')
+and extract(year from b.report_date)=extract(year from CURRENT_DATE)
+),
+most_sensitive_turnstile
+as
+(
+select count(distinct a.turnstile_id) as new_number
+from ucbqfx1.turnstile a join ucbqfx1.turnstile_condition b on a.turnstile_id=b.turnstile_id 
+where b.sensitivity_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description like '%new%')
+and extract(year from b.report_date)=extract(year from CURRENT_DATE)
+),
+total_turnstile 
+as
+(
+select count(turnstile_id) as total_turnstile from ucbqfx1.turnstile
+)
+select round(a.new_number/cast(c.total_turnstile as numeric),2) as most_sensitive_percent, round(b.unusable_number/cast(c.total_turnstile as numeric),2) as least_sensitive_percent
+from most_sensitive_turnstile a, least_sensitive_turnstile b, total_turnstile c;
+
+/*
+Descision 3:
+
+Which waiting halls at which days the pm concentration exceeds the average of the day, list the information of these waiting halls and the pm concentration of the corresponding time, and the average pm concentration of the day in all subway stations？
+
+ucbqfx1.pm_values; ucbqfx1.waiting_hall; ucbqfx1.pm_sensor
+
+middle
+*/
+
+with avg_pm_value
+as
+(
+select to_char(output_time,'yyyy-mm-dd') as days,avg(pm_value) as avg_value
+from ucbqfx1.pm_values
+group by to_char(output_time,'yyyy-mm-dd') 
+),
+waitinghall_pm
+as
+(
+select to_char(c.output_time,'yyyy-mm-dd') as days, a.waitinghall_id, c.pm_value
+from ucbqfx1.waiting_hall a join ucbqfx1.pm_sensor b on a.waitinghall_id=b.waitinghall_id
+join ucbqfx1.pm_values c on b.pm_sensor_id=c.pm_sensor_id
+)
+select a.days,c.*, b.pm_value, a.avg_value
+from avg_pm_value a join waitinghall_pm b on a.days=b.days
+join ucbqfx1.waiting_hall c on b.waitinghall_id=c.waitinghall_id
+where b.pm_value>a.avg_value;
+
+/*
+Descision 4:
+
+which subway station has the largest waiting hall? list all the information of the waiting hall and the subway station's name.
+
+ucbqfx1.waiting_hall; ucbqfx1.subway_station
+
+top
+*/
+with largest_waitinghall
+as
+(
+select waitinghall_id, st_area2d(location) as area
+from ucbqfx1.waiting_hall
+order by area desc limit 1
+)
+select a.*,b.subway_name
+from ucbqfx1.waiting_hall a join ucbqfx1.subway_station b on a.subway_id=b.subway_id
+join largest_waitinghall c on a.waitinghall_id=c.waitinghall_id;
+
+
+/*
+Descision 5:
+
+The total amount of money will be spent on updating the older floor(means the floor can not work well) and order light for every waiting hall?
+
+ucbqfx1.waiting_hall; ucbqfx1.waitinghall_condition; ucbqfx1.asset_health_indicator; ucbqfx1.parameters
+
+middle
+*/
+
+with total_floor_area
+as
+(
+select sum(st_area2d(a.location)) as total_floor_area
+from ucbqfx1.waiting_hall a join ucbqfx1.waitinghall_condition b on a.waitinghall_id=b.waitinghall_id
+where b.floor_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='Use more than 6 years，Lack of service capacity')
+or b.floor_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='Almost unusable')
+),
+total_light_number
+as
+(
+select count(a.waitinghall_id) as total_light_number
+from ucbqfx1.waiting_hall a join ucbqfx1.waitinghall_condition b on a.waitinghall_id=b.waitinghall_id
+where b.light_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='Use more than 6 years，Lack of service capacity')
+or b.light_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='Almost unusable')
+),
+floor_update_value
+as
+(
+select parameter_value
+from ucbqfx1.parameters where parameter_name='waitinghall' and parameter_subname='floor cost'
+)
+,
+light_update_value
+as
+(
+select parameter_value
+from ucbqfx1.parameters where parameter_name='waitinghall' and parameter_subname='light cost'
+)
+select a.total_floor_area*c.parameter_value + b.total_light_number*d.parameter_value as total_cost
+from total_floor_area a, total_light_number b, floor_update_value c, light_update_value d;
+
+
+/*
+Descision 6:
+which waiting hall's turnstile need to be replaced this year and 
+how much money will spend in updating the display screen ?
+
+ucbqfx1.parameters; ucbqfx1.turnstile; ucbqfx1.turnstile_condition; ucbqfx1.waiting_hall; ucbqfx1.asset_health_indicator
+
+bottom
+*/
+
+with display_update_value
+as 
+(
+select parameter_value
+from ucbqfx1.parameters where parameter_name='turnstile' and parameter_subname='display screen cost'
+),
+turnstile_report
+as
+(
+select a.*, c.waitinghall_no
+from ucbqfx1.turnstile a join ucbqfx1.turnstile_condition b on a.turnstile_id=b.turnstile_id 
+join ucbqfx1.waiting_hall c on a.waitinghall_id=c.waitinghall_id
+where (b.display_screen_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='Use more than 6 years，Lack of service capacity')
+or b.display_screen_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='Almost unusable')
+)
+and extract(year from b.report_date)=extract(year from CURRENT_DATE)
+)
+select a.*, b.parameter_value as update_spend
+from turnstile_report a, display_update_value b;
+
+
+
+
+/*
+Descision 7:
+
+which waiting hall has the most comfortable enviornment or has the best turnstile(with most sensitive and best display screen)? list the information of waiting hall and turnstile.
+
+ucbqfx1.waiting_hall; ucbqfx1.turnstile; ucbqfx1.waitinghall_condition; ucbqfx1.turnstile_condition; ucbqfx1.asset_health_indicator
+
+bottom
+*/
+
+select a.*, b.*
+from ucbqfx1.waiting_hall a join ucbqfx1.turnstile b on a.waitinghall_id=b.waitinghall_id
+join ucbqfx1.waitinghall_condition c on a.waitinghall_id=c.waitinghall_id
+join ucbqfx1.turnstile_condition d on b.turnstile_id=d.turnstile_id
+where (c.floor_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description like '%new%')
+or c.floor_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description like '%good%')
+)
+and (c.light_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description like '%new%')
+or c.light_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description like '%good%')
+)
+or (d.sensitivity_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description like '%new%')
+or d.sensitivity_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description like '%good%')
+)
+and (d.display_screen_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description like '%new%')
+or d.display_screen_condition=(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description like '%good%')
+)
+;

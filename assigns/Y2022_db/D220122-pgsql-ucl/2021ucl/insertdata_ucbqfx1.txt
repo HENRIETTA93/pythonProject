@@ -1,0 +1,262 @@
+insert into ucbqfx1.users (user_name)
+values
+('user1'),
+('user2'),
+('user3');
+
+
+insert into ucbqfx1.asset_health_indicator(asset_health_indicator_id, asset_health_indicator_description)
+values
+(1, 'new, with strong usability and convenience'),
+(2, 'use soon，Still provide good service'),
+(3, 'use 3-5 years, Still work(Can also use)'),
+(4, 'Use more than 6 years，Lack of service capacity'),
+(5, 'Almost unusable');
+
+
+
+insert into ucbqfx1.subway_station(subway_name,subway_year,location)
+values('LuJiaZui subway',1998,st_geomfromtext('POLYGON ((200 200 ,4200  200, 4200 4200, 200 4200, 200 200 ))',27700));
+insert into ucbqfx1.subway_station(subway_name,subway_year,location)
+values('BeiJing University subway',2003,st_geomfromtext('POLYGON ((5000 200 ,9000 200, 9000 4200, 5000 4200, 5000 200 ))',27700));
+insert into ucbqfx1.subway_station(subway_name,subway_year,location)
+values('XuJingDong subway',1999,st_geomfromtext('POLYGON ((10000 200 ,18000  200, 18000 4200, 10000 4200, 10000 200 ))',27700));
+
+
+
+/* waiting hall 1 */
+
+insert into ucbqfx1.waiting_hall(waitinghall_no, capacity,location,subway_id)
+values('WH013',300,
+st_extrude(st_geomfromtext('POLYGON((1200 400 0, 4000 400 0, 4000 3400 0, 1200 3400 0, 1200 400 0))',27700),0,0,800),
+(select subway_id from ucbqfx1.subway_station where st_intersects(location, 
+st_geomfromtext('POLYGON((1200 400 0, 4000 400 0, 4000 3400 0, 1200 3400 0, 1200 400 0))',27700)))
+);
+
+/* waiting hall 2 */
+insert into ucbqfx1.waiting_hall(waitinghall_no, capacity,location,subway_id)
+values('WH014',300,
+st_extrude(st_geomfromtext('POLYGON((5200 600 0, 8700 600 0, 8700 3600 0, 5200 3600 0, 5200 600 0))',27700),0,0,800),
+(select subway_id from ucbqfx1.subway_station where st_intersects(location, 
+st_geomfromtext('POLYGON((5200 600 0, 8700 600 0, 8700 3600 0, 5200 3600 0, 5200 600 0))',27700)))
+);
+
+/* waiting hall 3 */
+insert into ucbqfx1.waiting_hall(waitinghall_no, capacity,location,subway_id)
+values('WH015',300,
+st_extrude(st_geomfromtext('POLYGON((10400 500 0, 13400 500 0, 13400 3500 0, 10400 3500 0, 10400 500 0))',27700),0,0,800),
+(select subway_id from ucbqfx1.subway_station where st_intersects(location, 
+st_geomfromtext('POLYGON((10400 500 0, 13400 500 0, 13400 3500 0, 10400 3500 0, 10400 500 0))',27700)))
+);
+
+
+
+
+/* turnstiles in waiting hall 1 */
+insert into ucbqfx1.turnstile(turnstile_no,color,direction,location)
+values('T001','red','out',
+st_geomfromtext('POLYGON((1800 600 0, 2100 600 0, 2100 1600 0, 1800 1600 0, 1800 600 0))',27700)
+);
+
+
+insert into ucbqfx1.turnstile(turnstile_no,color,direction,location)
+values('T002','green','in',
+st_geomfromtext('POLYGON((3600 600 0, 3900 600 0, 3900 1600 0, 3600 1600 0, 3600 600 0))',27700)
+);
+
+
+/* turnstiles in waiting hall 2 */
+
+insert into ucbqfx1.turnstile(turnstile_no,color,direction,location)
+values('T003','red','out',
+st_geomfromtext('POLYGON((5500 1000 0, 5800 1000 0, 5800 2000 0, 5500 2000 0, 5500 1000 0))',27700)
+);
+
+
+insert into ucbqfx1.turnstile(turnstile_no,color,direction,location)
+values('T004','green','in',
+st_geomfromtext('POLYGON((8200 1000 0, 8500 1000 0, 8500 2000 0, 8200 2000 0, 8200 1000 0))',27700)
+);
+
+
+
+/* turnstiles in waiting hall 3 */
+
+insert into ucbqfx1.turnstile(turnstile_no,color,direction,location)
+values('T005','red','out',
+st_geomfromtext('POLYGON((10800 800 0, 12800 800 0, 12800 1000 0, 10800 1000 0, 10800 800 0))',27700)
+);
+
+
+insert into ucbqfx1.turnstile(turnstile_no,color,direction,location)
+values('T006','green','in',
+st_geomfromtext('POLYGON((10800 2800 0, 12800 2800 0, 12800 3000 0, 10800 3000 0, 10800 2800 0))',27700)
+);
+
+update ucbqfx1.turnstile a set waitinghall_id =(select b.waitinghall_id from ucbqfx1.waiting_hall b where st_3dintersects(a."location", b."location"));
+
+
+
+insert into ucbqfx1.pm_sensor(pm_sensor_name,pm_sensor_make,pm_sensor_use_date,location,waitinghall_id)
+values('PM 0901','ABA make','2020-09-01',
+st_extrude(st_geomfromtext('POLYGON((3000 500 0, 3100 500 0, 3100 600 0, 3000 600 0, 3000 500 0))',27700),0,0,800),
+(select subway_id from ucbqfx1.subway_station where st_intersects(location, 
+st_geomfromtext('POLYGON((3000 500 0, 3100 500 0, 3100 600 0, 3000 600 0, 3000 500 0))',27700)))
+);
+
+insert into ucbqfx1.pm_sensor(pm_sensor_name,pm_sensor_make,pm_sensor_use_date,location,waitinghall_id)
+values('PM 0902','ABA make','2020-09-01',
+st_extrude(st_geomfromtext('POLYGON((6000 700 0, 6100 700 0, 6100 800 0, 6000 800 0, 6000 700 0))',27700),0,0,800),
+(select subway_id from ucbqfx1.subway_station where st_intersects(location, 
+st_geomfromtext('POLYGON((6000 700 0, 6100 700 0, 6100 800 0, 6000 800 0, 6000 700 0))',27700)))
+);
+
+
+insert into ucbqfx1.pm_sensor(pm_sensor_name,pm_sensor_make,pm_sensor_use_date,location,waitinghall_id)
+values('PM 0903','ABA make','2020-09-01',
+st_extrude(st_geomfromtext('POLYGON((13000 1000 0, 13100 1000 0, 13100 1100 0, 13000 1100 0, 13000 1000 0))',27700),0,0,800),
+(select subway_id from ucbqfx1.subway_station where st_intersects(location, 
+st_geomfromtext('POLYGON((13000 1000 0, 13100 1000 0, 13100 1100 0, 13000 1100 0, 13000 1000 0))',27700)))
+);
+
+/* pm_values */
+
+insert into ucbqfx1.pm_values(pm_sensor_id,output_time, pm_value)
+values
+(
+(select pm_sensor_id from ucbqfx1.pm_sensor where pm_sensor_name='PM 0901'),
+current_date,
+20.0
+);
+
+
+insert into ucbqfx1.pm_values(pm_sensor_id,output_time, pm_value)
+values
+(
+(select pm_sensor_id from ucbqfx1.pm_sensor where pm_sensor_name='PM 0901'),
+'2021-01-01',
+10.0
+);
+
+
+insert into ucbqfx1.pm_values(pm_sensor_id,output_time, pm_value)
+values
+(
+(select pm_sensor_id from ucbqfx1.pm_sensor where pm_sensor_name='PM 0902'),
+current_date,
+28.0
+);
+
+insert into ucbqfx1.pm_values(pm_sensor_id,output_time, pm_value)
+values
+(
+(select pm_sensor_id from ucbqfx1.pm_sensor where pm_sensor_name='PM 0903'),
+current_date,
+11.0
+);
+
+/* waitinghall_condition */
+
+insert into ucbqfx1.waitinghall_condition(waitinghall_id,light_condition,floor_condition,report_date,user_id)
+values
+(
+(select waitinghall_id from ucbqfx1.waiting_hall where waitinghall_no='WH013'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='new, with strong usability and convenience'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='use soon，Still provide good service'),
+current_date,
+(select user_id from ucbqfx1.users where user_name ='user1')
+);
+
+insert into ucbqfx1.waitinghall_condition(waitinghall_id,light_condition,floor_condition,report_date,user_id)
+values
+(
+(select waitinghall_id from ucbqfx1.waiting_hall where waitinghall_no='WH014'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='new, with strong usability and convenience'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='use 3-5 years, Still work(Can also use)'),
+current_date,
+(select user_id from ucbqfx1.users where user_name ='user2')
+);
+
+insert into ucbqfx1.waitinghall_condition(waitinghall_id,light_condition,floor_condition,report_date,user_id)
+values
+(
+(select waitinghall_id from ucbqfx1.waiting_hall where waitinghall_no='WH015'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='use 3-5 years, Still work(Can also use)'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='Almost unusable'),
+current_date,
+(select user_id from ucbqfx1.users where user_name ='user1')
+);
+
+/* turnstile_condition */
+insert into ucbqfx1.turnstile_condition(turnstile_id,sensitivity_condition,display_screen_condition,report_date,user_id)
+values
+(
+(select turnstile_id from ucbqfx1.turnstile where turnstile_no='T001'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='use 3-5 years, Still work(Can also use)'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='use soon，Still provide good service'),
+current_date,
+(select user_id from ucbqfx1.users where user_name ='user1')
+);
+insert into ucbqfx1.turnstile_condition(turnstile_id,sensitivity_condition,display_screen_condition,report_date,user_id)
+values
+(
+(select turnstile_id from ucbqfx1.turnstile where turnstile_no='T002'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='use soon，Still provide good service'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='Almost unusable'),
+current_date,
+(select user_id from ucbqfx1.users where user_name ='user1')
+);
+
+insert into ucbqfx1.turnstile_condition(turnstile_id,sensitivity_condition,display_screen_condition,report_date,user_id)
+values
+(
+(select turnstile_id from ucbqfx1.turnstile where turnstile_no='T003'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='use 3-5 years, Still work(Can also use)'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='new, with strong usability and convenience'),
+current_date,
+(select user_id from ucbqfx1.users where user_name ='user1')
+);
+
+insert into ucbqfx1.turnstile_condition(turnstile_id,sensitivity_condition,display_screen_condition,report_date,user_id)
+values
+(
+(select turnstile_id from ucbqfx1.turnstile where turnstile_no='T004'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='use 3-5 years, Still work(Can also use)'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='new, with strong usability and convenience'),
+current_date,
+(select user_id from ucbqfx1.users where user_name ='user1')
+);
+
+insert into ucbqfx1.turnstile_condition(turnstile_id,sensitivity_condition,display_screen_condition,report_date,user_id)
+values
+(
+(select turnstile_id from ucbqfx1.turnstile where turnstile_no='T005'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='Use more than 6 years，Lack of service capacity'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='use 3-5 years, Still work(Can also use)'),
+current_date,
+(select user_id from ucbqfx1.users where user_name ='user1')
+);
+
+insert into ucbqfx1.turnstile_condition(turnstile_id,sensitivity_condition,display_screen_condition,report_date,user_id)
+values
+(
+(select turnstile_id from ucbqfx1.turnstile where turnstile_no='T006'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='new, with strong usability and convenience'),
+(select asset_health_indicator_id from ucbqfx1.asset_health_indicator where asset_health_indicator_description='use soon，Still provide good service'),
+current_date,
+(select user_id from ucbqfx1.users where user_name ='user2')
+);
+
+
+insert into ucbqfx1.parameters(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('cost price','waitinghall','floor cost', 1500, '£ per sqm');
+insert into ucbqfx1.parameters(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('cost price','waitinghall','light cost', 500, '£ per');
+insert into ucbqfx1.parameters(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('cost price','turnstile','display screen cost', 800, '£ per');
+insert into ucbqfx1.parameters(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('cost price','turnstile','sensitivity cost', 1000, '£ per');

@@ -1,0 +1,92 @@
+/* primary key constraints */
+alter table ucbqfx1.subway_station add constraint pk_subway primary key(subway_id);
+
+alter table ucbqfx1.waiting_hall add constraint pk_waiting_hall primary key(waitinghall_id);
+
+alter table ucbqfx1.turnstile add constraint pk_turnstile primary key(turnstile_id);
+
+alter table ucbqfx1.pm_sensor add constraint pk_pmsensor primary key(pm_sensor_id);
+
+alter table ucbqfx1.pm_values add constraint pk_pmvalues primary key(pm_value_id);
+
+alter table ucbqfx1.waitinghall_condition add constraint pk_waitinghall_condition primary key (waitinghall_condition_id);
+
+alter table ucbqfx1.turnstile_condition add constraint pk_turnstile_condition 
+primary key(turnstile_condition_id);
+
+alter table ucbqfx1.asset_health_indicator add constraint pk_asset_health_indicator
+primary key (asset_health_indicator_id);
+
+alter table ucbqfx1.parameters add constraint pk_parameters 
+primary key(parameter_id);
+
+alter table ucbqfx1.users add constraint pk_users
+primary key(user_id);
+
+/* foreign key constraints */
+
+alter table ucbqfx1.waiting_hall add constraint fk_subway_waiting_hall 
+foreign key(subway_id) references ucbqfx1.subway_station(subway_id);
+
+alter table ucbqfx1.turnstile add constraint fk_waiting_hall_turnstile
+foreign key(waitinghall_id) references ucbqfx1.waiting_hall(waitinghall_id);
+
+alter table ucbqfx1.pm_sensor add constraint fk_waiting_hall_pmsensor 
+foreign key(waitinghall_id) references ucbqfx1.waiting_hall(waitinghall_id);
+
+alter table ucbqfx1.pm_values add constraint fk_sensor_values 
+foreign key(pm_sensor_id) references ucbqfx1.pm_sensor(pm_sensor_id);
+
+alter table ucbqfx1.waitinghall_condition add constraint fk_waitinghall_condition_waitinghall
+foreign key(waitinghall_id) references ucbqfx1.waiting_hall(waitinghall_id);
+
+
+alter table ucbqfx1.waitinghall_condition add constraint fk_waitinghall_condition_light
+foreign key(light_condition) references ucbqfx1.asset_health_indicator(asset_health_indicator_id);
+
+alter table ucbqfx1.waitinghall_condition add constraint fk_waitinghall_condition_floor
+foreign key(floor_condition) references ucbqfx1.asset_health_indicator(asset_health_indicator_id);
+
+alter table ucbqfx1.waitinghall_condition add constraint fk_waitinghall_condition_user
+foreign key(user_id) references ucbqfx1.users(user_id);
+
+alter table ucbqfx1.turnstile_condition add constraint fk_turnstile_condition_turnstile
+foreign key(turnstile_id) references ucbqfx1.turnstile(turnstile_id);
+
+
+alter table ucbqfx1.turnstile_condition add constraint fk_turnstile_condition_sensitivity
+foreign key(sensitivity_condition) references ucbqfx1.asset_health_indicator(asset_health_indicator_id);
+
+alter table ucbqfx1.turnstile_condition add constraint fk_turnstile_condition_screen
+foreign key(display_screen_condition) references ucbqfx1.asset_health_indicator(asset_health_indicator_id);
+
+alter table ucbqfx1.turnstile_condition add constraint fk_turnstile_condition_user
+foreign key(user_id) references ucbqfx1.users(user_id);
+
+
+
+
+/* unique constraints */
+
+alter table ucbqfx1.subway_station add constraint uniq_subway_name unique(subway_name);
+alter table ucbqfx1.waiting_hall add constraint uniq_waitinghall_no unique(waitinghall_no);
+
+alter table ucbqfx1.turnstile add constraint uniq_turnstile_no unique(turnstile_no);
+
+alter table ucbqfx1.subway_station add constraint uniq_subwaylocation unique(location);
+
+alter table ucbqfx1.waiting_hall add constraint uniq_wh_location unique(location);
+
+alter table ucbqfx1.turnstile add constraint uniq_turnstile_location unique(location);
+
+alter table ucbqfx1.pm_sensor add constraint uniq_pmsensor_location unique(location);
+
+alter table ucbqfx1.waitinghall_condition add constraint uniq_waitinghall_report unique(waitinghall_id, report_date,user_id);
+
+alter table ucbqfx1.turnstile_condition add constraint uniq_turnstile_report unique(turnstile_id, report_date,user_id);
+
+/* check constraints */
+
+alter table ucbqfx1.turnstile add constraint chk_turnstile_color check( color in ('red','green'));
+
+alter table ucbqfx1.turnstile add constraint chk_turnstile_direction check( direction in('in','out'));
