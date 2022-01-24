@@ -1,0 +1,756 @@
+--========================================================
+/* INSERT DATA SCRIPTS
+*  for data insert, you MUST create the values in the primary key (parent) tables first
+*  so that you can reference them when creating the values in the foreign key (child) tables
+*  in other words - to create a window you first need the window cost
+*  to create a condition survey on the window, you need to have the window first 
+*  so before writing insert scripts it is useful to have a sketched out ER diagram
+*  so that you can see the order in which to insert data
+* 
+*  when you are then creating the 'child' record you can refer to the parent record using a nested insert to get the ID of the reuqired parent
+*  to do that you need to know the exact row of the parent table
+*  note that ID values (from serial) can't be relied on - if you make an insert mistake it doesn't reuse the ID values
+*  for the parent there must only be ONE record
+*  so you need to know the real identifier in the parent table to get hold of the right record 
+*  you can find this by looking at the unique constraints for the table
+*  
+*/
+
+
+--========================================================
+/*  START WITH THE PARAMETERS TABLES 
+*
+*
+* insert the different parameters that are needed by the system
+* use the default date
+*/
+
+--~~~~~~~~~~~~~~~~~~~
+/*  windows parameters */
+insert into ucfscde.parameters
+(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('cost', 'windows','single glazed',1050.2,'£ per sq m'),
+('cost','windows', 'double glazed',1770.0,'£ per sq m'),
+('cost','windows','triple glazed',3050.3,'£ per sq m'),
+('energy saving','windows','triple over double', 50,'kwH per sqm per year'),
+('energy saving','windows','triple over single', 148,'kwH per sqm per year');
+
+
+--~~~~~~~~~~~~~~~~~~~
+
+/*  room parameters */
+insert into ucfscde.parameters
+(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('cost', 'rooms','total refurbishment',20000,'£ per room'),
+('cost', 'rooms','annual update - computer lab',10000,'£ per room'),
+('cost', 'rooms','annual update - classroom',3500,'£ per room'),
+('cost', 'rooms','annual update - kitchen',7500,'£ per room'),
+('cost', 'rooms','annual update - other',1000,'£ per room'),
+('cost', 'rooms','annual update - engineering lab',25000,'£ per room'),
+('energy consumption','rooms','energy consumption', 350,'kwh per sqm per year');
+
+
+
+
+
+--~~~~~~~~~~~~~~~~~~~
+
+/*  temperature sensor parameters */
+insert into ucfscde.parameters
+(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('fault', 'temperature_sensor','min temperature value',15,'degrees c'),
+('fault', 'temperature_sensor','max temperature value',30,'degrees c'),
+('comfort', 'temperature_sensor','min temperature value',20,'degrees c'),
+('comfort', 'temperature_sensor','max temperature value',22,'degrees c'),
+('fault','temperature_sensor','replacement age', 5,'years'),
+('cost','temperature_sensor','replacement cost',1500,'each');
+
+
+--~~~~~~~~~~~~~~~~~~~
+
+/*  fire safety  */
+insert into ucfscde.parameters
+(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('safety', 'building','fire buffer distance from building',10,'m'),
+('safety', 'university','fire safety zone person density',1.5,'m2');
+
+
+
+--~~~~~~~~~~~~~~~~~~~
+
+/*  ethernet  */
+insert into ucfscde.parameters
+(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('cost', 'ethernet_cables','indoor install cost',2000,'m'),
+('cost', 'ethernet_cables','outdoor install cost',4000,'m'),
+('install', 'ethernet_cables','buffer distance for install',5,'m');
+
+
+--~~~~~~~~~~~~~~~~~~
+/* cladding parameters */
+
+insert into ucfscde.parameters
+(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('cost', 'buildings','cladding cost',500,'m2 of exposed surface'),
+('cost saving','buildings', 'cladding cost saving',5,'cubic m per year'),
+('energy saving','buildings', 'cladding energy saving',300,'kwh per cubic m of buildng per year');
+
+
+--~~~~~~~~~~~~~~~~~~
+/* solar panel parameters */
+
+insert into ucfscde.parameters
+(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('cost', 'buildings','solar cost',800,'m2'),
+('energy saving','buildings','solar energy saving per sq m of panel', 100,'kwH per cubic m of building space per year');
+
+
+
+--~~~~~~~~~~~~~~~~~~
+/* comfort parameters */
+
+insert into ucfscde.parameters
+(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('comfort', 'university','indoor space requirements per person',3,'sq m'),
+('comfort', 'university','outdoor space requirements per person',5,'sq m');
+
+
+
+
+--~~~~~~~~~~~~~~~~~~~
+
+/*  relative weightings  */
+insert into ucfscde.parameters
+(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('weighting', 'buildings','rooms',3,'times as important'),
+('weighting', 'rooms','windows',5,'times as important'),
+('weighting', 'rooms','temperature sensors',5,'times as important');
+
+
+--~~~~~
+/* relative weightings for the different components of the room assessment*/
+insert into ucfscde.parameters
+(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('weighting', 'rooms','ceiling_condition',1,''),
+('weighting', 'rooms','wall_condition',1,''),
+('weighting', 'rooms','doors_condition',2,''),
+('weighting', 'rooms','windows_condition',1,''),
+('weighting', 'rooms','furniture_equipment_condition',4,''),
+('weighting', 'rooms','heating_system_condition',3,''),
+('weighting', 'rooms','air_conditioning_condition',3,''),
+('weighting', 'rooms','sockets_condition',1,''),
+('weighting', 'rooms','lighting_and_switches_condition',1,'');
+
+
+--~~-------
+/* relative weightings for the different components of the building assessment */
+insert into ucfscde.parameters
+(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('weighting', 'buildings','roof_condition',1,''),
+('weighting', 'buildings','opaque_facade_condition',1,''),
+('weighting', 'buildings','transparent_facade_condition',2,''),
+('weighting', 'buildings','doors_gates_condition',1,''),
+('weighting', 'buildings','elevators_condition',4,''),
+('weighting', 'buildings','stairs_condition',3,''),
+('weighting', 'buildings','disabled_access_condition',3,'');
+
+
+--~~~~~
+/* student and staff numbers on campus*/
+insert into ucfscde.parameters
+(parameter_type, parameter_name, parameter_subname, parameter_value, parameter_units)
+values
+('population', 'university','students',15000,'people'),
+('population', 'university','staff',250,'people'),
+('population', 'university','administrators',300,'people');
+
+
+
+--=====================================================================
+/*  create all the data for the lookup tables as this is also needed when you insert data into the condition tables .. */
+
+
+/* 
+*  Create the asset health indicator data 
+*  fixed ID values here will override SERIAL 
+*  we need them as they are the weightings for each health status
+* 
+*/
+insert into ucfscde.asset_health_indicator(asset_health_indicator_id, asset_health_indicator_description)
+values
+(1, 'As new or in good serviceable condition'),
+(2, 'Deteriorating, evidence of high usage, age, additional maintenance costs and inefficiency'),
+(3, 'Requires replacement within 5 years'),
+(4, 'In poor condition, overdue for replacement'),
+(5, 'Unable to determine condition (e.g. as item is hidden)'),
+(6, 'Item does not exist');
+
+--~~==============================
+
+/* 
+*  Create the criticality data 
+*  fixed ID values here will override SERIAL 
+*  we need them fixed as they are the weightings for criticality status
+* 
+*/
+
+
+insert into ucfscde.criticality (criticality_id, criticality)
+values
+(1, 'Insignificant consequences if it fails'),
+(2, 'Minor consequences (e.g. to a few people or a small part of the business) if it fails'),
+(3, 'Serious consequences if it fails – i.e. to a large number of people or a key component of the business'),
+(4, 'Critical – the organisation cannot operate if this fails');
+
+
+
+--========================================================
+/* create all the data for the users
+*  in reality we would have name, surname, date of birth and so forth for this dataset
+*  so the incrementing approach using the generate_series that we show here wouldn't be used 
+*
+*/
+
+insert into ucfscde.users (user_name)
+values
+('user1'),
+('user2'),
+('user3'),
+('user4'),
+('user5'),
+('user6'),
+('user7'),
+('user8'),
+('user9'),
+('user10'),
+('user11'),
+('user12'),
+('user13'),
+('user14'),
+('user15'),
+('user16'),
+('user17'),
+('user18'),
+('user19'),
+('user20');
+
+--~~=======================================
+
+/*
+*  this can be boring though and difficult to write if you have 1000s 
+*  of users so we can also do this 
+*  starting from user21 as we did 1-20 manually
+*  the concat word is how PostgreSQL stitches text together to make one long string
+*  the generate_series statement generates an incrementing range of numbers - from 21 to 400 in our case
+*  
+*/
+
+INSERT INTO ucfscde.users (user_name) 
+SELECT concat('user',g.id) 
+FROM generate_series(21, 400) AS g (id) ;
+
+--==========================================================
+/* INSERT DATA INTO THE ASSET TABLES
+* 
+*  be careful about the order here - start with the top of the chain and follow the foreign keys
+*  i.e. the university has to exist before we can create the building
+*  the building has to exist before we create the room etc
+*
+*/
+
+--~~======================================
+/* Insert the university data */
+
+insert into ucfscde.university(university_name,year_founded,founders_name, location, criticality)
+values ('Centennial University','1826','Claire Ellul', st_geomfromtext('POLYGON ((0 0 ,3000 0 , 3000 3000 , 0 3000 , 0 0 ))',27700),(select criticality_id from ucfscde.criticality where criticality like  '%Critical%'));
+
+
+
+--~~====================================
+/* Insert the building data */
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* Building 1 */
+insert into ucfscde.buildings
+(building_name, university_id,criticality, location)
+values
+('Building 1',(select university_id from ucfscde.university b where 
+			   st_intersects(b.location, st_geomfromtext('POLYGON((300 200 0, 300 2200 0, 1600 2200 0, 1600 200 0, 300 200 0))',27700))),(select criticality_id from ucfscde.criticality where criticality like  '%Serious%'),
+st_extrude(st_geomfromtext('POLYGON((300 200 0, 300 2200 0, 1600 2200 0, 1600 200 0, 300 200 0))',27700),0,0,600));
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* Building 2 */
+insert into ucfscde.buildings
+(building_name,university_id,  criticality,location)
+values
+('Building 2',
+(select university_id from ucfscde.university b where st_intersects(b.location, 
+st_geomfromtext('POLYGON((2000 1200 0, 2000 2700 0, 2800 2700 0, 2800 1200 0, 2000 1200 0))',27700))),(select criticality_id from ucfscde.criticality where criticality like  '%Serious%'),
+st_extrude(st_geomfromtext('POLYGON    ((2000 1200 0, 2000 2700 0, 2800 2700 0, 2800 1200 0, 2000 1200 0))',27700),0,0,600)
+);
+
+--~~======================================
+
+/* Insert the rooms data 
+*
+* classroom failure is minor, kitchin failure is serious due to the need to access fresh water, 
+* other spaces are insignificant in terms of failure
+*
+*/
+
+--~~======================================
+/* ROOMS FOR Building 1 */
+insert into ucfscde.rooms (floor, room_number, location, criticality, room_use)
+values 
+(0, 'G.01',st_geomfromtext('POLYGON((300 200 0, 800 200 0, 800 1200 0, 300 1200 0, 300 200 0))',27700),
+(select criticality_id from ucfscde.criticality where criticality like '%Minor%'),
+'classroom');
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* more rooms for building 1 */
+insert into ucfscde.rooms (floor, room_number, location, criticality, room_use)
+values 
+(0, 'G.02',st_geomfromtext('POLYGON((300 1200 0, 800 1200 0, 800 2200 0, 300 2200 0, 300 1200 0))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Minor%'),'classroom'),
+(0, 'Corridor 1',st_geomfromtext('POLYGON((800 200 0, 1000 200 0, 1000 2200 0, 800 2200 0, 800 200 0))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Insignificant%'),'other'),
+(0, 'G.06',st_geomfromtext('POLYGON((1000 200 0, 1600 200 0, 1600 2200 0, 1000 2200 0, 1000 200 0))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Minor%'),'computer lab'),
+-- first floor
+(1, '1.01',st_geomfromtext('POLYGON((300 200 300, 1000 200 300, 1000 2200 300, 300 2200 300, 300 200 300))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Minor%'),'computer lab'),
+(1, '1.03',st_geomfromtext('POLYGON((1000 200 300, 1600 200 300, 1600 2200 300, 1000 2200 300, 1000 200 300))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Minor%'),'engineering lab'),
+
+--~~======================================
+/* ROOMS FOR Building 2 ground floor */
+(0, 'G.02',st_geomfromtext('POLYGON((2000 1200 0, 2800 1200 0, 2800 1600 0, 2000 1600 0, 2000 1200 0))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Minor%'),'classroom'),
+(0, 'G.03',st_geomfromtext('POLYGON((2000 1800 0, 2800 1800 0, 2800 2700 0, 2000 2700 0, 2000 1800 0))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Serious%'),'kitchen'),
+(0, 'Corridor 1',st_geomfromtext('POLYGON((2000 1600 0, 2800 1600 0, 2800 1800 0, 2000 1800 0, 2000 1600 0))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Insignificant%'),'other'); 
+
+--~~======================================
+/* ROOMS FOR Building 2 first floor */
+insert into ucfscde.rooms (floor, room_number, location, criticality, room_use)
+values 
+(1, '1.02',st_geomfromtext('POLYGON((2000 1200 300, 2800 1200 300, 2800 1600 300, 2000 1600 300, 2000 1200 300))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Minor%'),'classroom'),
+(1, '1.03',st_geomfromtext('POLYGON((2000 1800 300, 2800 1800 300, 2800 2700 300, 2000 2700 300, 2000 1800 300))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Insignificant%'),'other'),
+(1, 'Corridor 1',st_geomfromtext('POLYGON((2000 1600 300, 2800 1600 300, 2800 1800 300, 2000 1800 300, 2000 1600 300))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Insignificant%'),'other'); 
+
+
+--===============================
+/*
+* insert the ethernet cable location
+* all ethernet cables have criticality of serious as the university can't work without internet
+*/
+
+insert into ucfscde.ethernet_cables(installation_date, floor, location, criticality)
+values
+('12-May-2013',0,st_geomfromtext('LINESTRING(0 200 0, 800 600 0, 1400 600 0, 1400 1000 0, 500 1000 0, 500 1900 0, 1400 1900 0)',27700),(select criticality_id from ucfscde.criticality where criticality like '%Serious%')),
+('12-May-2013',1,st_geomfromtext('LINESTRING(1300 500 300, 500 500 300, 500 900 300, 900 900 300, 900 2100 300, 1400 2100 300)',27700),(select criticality_id from ucfscde.criticality where criticality like '%Serious%')),
+('12-May-2013',0,st_geomfromtext('LINESTRING(1800 600 000, 1800 2000 0, 2400 2000 0, 2400 2900 0)',27700),(select criticality_id from ucfscde.criticality where criticality like '%Serious%'));
+
+insert into ucfscde.ethernet_cables(installation_date, floor, location, criticality)
+values
+('12-May-2013',0,st_geomfromtext('LINESTRING(0 2 0, 13 5 3)',27700), (select criticality_id from ucfscde.criticality where criticality like '%Minor%'));
+
+
+--==========================================
+/* Insert temperature sensors 
+*
+*  Note that temperature_sensor has a foreign key
+*  referencing the ROOMS table
+*  so rooms data needs to be populated
+*  however one of the sensors is outside the building and hence does not reference a room
+*  in that case you can use NULL for the room_id
+*  as the room_id can be null, we will populate the
+*  room_id later 
+*
+*/
+insert into ucfscde.temperature_sensors (sensor_make, sensor_name, sensor_installation_date, location)
+values ('Siemens','Sensor 1', '24-May-2015',st_geomfromtext('POINT(250 250 250)',27700)),
+('Siemens','Sensor 2','24-May-2015',st_geomfromtext('POINT(600 1600 250)',27700)),
+('Siemens','Sensor 3','24-May-2015',st_geomfromtext('POINT(1200 1600 250)',27700)),
+('Siemens','Sensor 4', '24-May-2015',st_geomfromtext('POINT(2400 1300 250)',27700)),
+('Siemens','Sensor 5','24-May-2015',st_geomfromtext('POINT(2200 2400 250)',27700)),
+('Siemens','Sensor 6','24-May-2015',st_geomfromtext('POINT(400 600 550)',27700)),
+('Siemens','Sensor 7','24-May-2015',st_geomfromtext('POINT(2200 2200 550)',27700));
+
+--==================================
+/* 
+* create the windows 
+* most windows are not critical to operations but one is
+* in reality this would be location dependant (e.g. if the window was in a lab)
+* 
+*/
+
+insert into ucfscde.windows(window_type, window_installation_date, room_id, floor,location, criticality)
+values
+( 'double glazed','23-May-2014',null,0,st_geomfromtext('POLYHEDRALSURFACE (((400 200 100,600 200 100, 600 200 200, 400 200 200, 400 200 100)))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Insignificant%')),
+( 'double glazed','23-May-2014',null,0,st_geomfromtext('POLYHEDRALSURFACE (((400 2200 100,600 2200 100, 600 2200 200, 400 2200 200, 400 2200 100)))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Critical%')),
+( 'double glazed','23-May-2017',null,0,st_geomfromtext('POLYHEDRALSURFACE (((1200 2200 100,1400 2200 100, 1400 2200 200, 1200 2200 200, 1200 2200 100)))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Insignificant%')),
+( 'single glazed','23-May-2014',null,0,st_geomfromtext('POLYHEDRALSURFACE (((2100 1200 100,2300 1200 100, 2300 1200 200, 2100 1200 200, 2100 1200 100)))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Insignificant%')),
+( 'single glazed','23-May-2014',null,1,st_geomfromtext('POLYHEDRALSURFACE (((1600 700 400,1600 900 400, 1600 900 500, 1600 700 500, 1600 700 400)))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Insignificant%')),
+( 'single glazed','23-Sep-1974',null,1,st_geomfromtext('POLYHEDRALSURFACE (((2500 1200 400,2700 1200 400, 2700 1200 500, 2500 1200 500, 2500 1200 400)))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Insignificant%')),
+('single glazed','2-Feb-1944',null,1,st_geomfromtext('POLYHEDRALSURFACE (((2500 2700 400,2700 2700 400, 2700 2700 500, 2500 2700 500, 2500 2700 400)))',27700),(select criticality_id from ucfscde.criticality where criticality like '%Critical%'));
+
+
+
+--==================================
+/*
+*
+*  Run a number of update statements to make sure that the parent/child, primary key/foreign key relationships are correct 
+*  These could be part of the insert statements but are listed here for clarity
+*  Note that many of these statements rely on the spatial relationship - e.g. temperature sensors contained in rooms
+*  rooms contained in (intersecting with) buildings, windows intersecting rooms
+*  in reality to ensure that these values are always up to date even if the data changes
+*  you might put a trigger on the table so that if the locaiton of a room is edited as a mistake was made the
+*  related windows and also the building_id would be checked again
+*
+*/
+
+--~~=======================
+/* 
+*  update the room_id values for the temperature_sensors
+* we need to do this separately for each floor
+* as for the sensors we calculate the floor from the z-value
+* NB - ST_3DDistance would be ideal here but we can't
+* use it as it doesn't work for enclosed polyhedral surfcaes
+* however, we know that all the sensors are 250m above the floor
+*
+*/
+
+update ucfscde.temperature_sensors b
+set room_id = 
+(select room_id from 
+ucfscde.rooms a
+where st_zmin(b.location) - st_zmin(a.location) = 250
+and st_contains(a.location, b.location));
+
+
+--~~===============================
+/*
+* update the rooms to include the building id
+* we use a spatial interesction query to find out which room intersects which building
+* note: we can only do this as the building id does not have a not-null constraint in the rooms table
+* a risk fo doing it this way is that we could have rooms without buildings so in reality you would
+* either include this spatial SQL in the insert table for the rooms
+* or put a trigger so that when a room is inserted the building is identified automatically
+*/
+update ucfscde.rooms a
+set building_id = 
+(select b.building_id from ucfscde.buildings b
+where st_3dintersects(a.location, b.location));
+
+
+
+--~~=============================
+/*
+* update the windows to include the room id
+* we use a spatial interesction query to find out which room intersects which building
+* note: we can only do this as the building id does not have a not-null constraint in the rooms table
+* a risk fo doing it this way is that we could have rooms without buildings so in reality you would
+* either include this spatial SQL in the insert table for the rooms
+* or put a trigger so that when a room is inserted the building is identified automatically
+*
+*/
+
+update ucfscde.windows c set room_id = 
+(select room_id from 
+(with rooms3d as 
+(select room_id, st_extrude(location,0,0,300) as location
+				 from ucfscde.rooms)
+select a.room_id, b.window_id from rooms3d a right join ucfscde.windows b
+on st_3dintersects (a.location, b.location)) d 
+where c.window_id = d.window_id);
+
+
+
+
+
+
+--=======================
+/* 
+*  Insert values for the sensors
+*  normally the sensor would be set up to feed directly into the database as soon as a reading is taken
+*
+*/
+
+insert into ucfscde.temperature_values(temperature_sensor_id, reading_timestamp, value_degrees_c)
+values
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 1'),'2018-02-02 10:05:00', 43.5),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 1'),'2018-02-02 11:05:00', 21.5),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 1'),'2018-02-02 12:05:00', 23.5),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 2'),'2018-02-02 10:05:00', 20.0),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 3'),'2018-02-02 10:05:00', 18.8),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 4'),'2018-02-02 11:05:00', 16.5),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 5'),'2018-02-02 04:05:00', 18.8),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 5'),'2018-02-02 11:25:00', 17.6),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 5'),'2018-02-02 16:25:00', 23.4),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 5'),'2018-02-02 12:25:00', 27.3),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 6'),'2018-02-02 14:25:00', 19.7),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 6'),'2018-02-02 15:25:00', 16.3),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 6'),'2018-02-02 16:25:00', 22.9),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 6'),'2018-02-02 16:35:00', 22.9),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 6'),'2018-02-02 16:45:00', 22.9),
+((select sensor_id from ucfscde.temperature_sensors where sensor_name = 'Sensor 6'),'2018-02-02 16:55:00', 22.9);
+
+--==========================================================
+/* FINALLY INSERT THE CONDITION INFORMATION
+* 
+*  this can be quite complex as for each column with condition information we need to check that we have valid values
+*  and we also need to make sure that we are referencing the correct building, room and window
+*  while buildings and rooms have names that can be used
+*  windows don't - so in this case we find the window by its location
+*
+*/
+
+--============================================================
+
+/* INSERT WINDOW CONDITION INFORMATION
+* 
+* for the windows, there isn't an easy way to identify them from the ID values so we can use the coordinates 
+* this assumes that we have a GPS-enabled tablet that we're using for our condition survey
+* and that we can get a good positonal reading from this device (i.e. accurate enough to only be close to one window)
+* in reality this is often not the case and for this module what we have is a map with the IDs of the windows showing
+* that allows us to link the unique location of each window to the arbitrary ID value that we have in our system
+* 
+* using the location below is therefore indirect and would usually only be possible if there is a good indoor positioning solution
+* in place
+*/
+
+insert into ucfscde.window_condition
+(window_id, condition, user_id)
+values
+((select window_id from ucfscde.windows where st_astext(location) = 'POLYHEDRALSURFACE Z (((400 200 100,600 200 100,600 200 200,400 200 200,400 200 100)))'), (select asset_health_indicator_id from ucfscde.asset_health_indicator where 
+asset_health_indicator_description like '%new%'),(select user_id from ucfscde.users where user_name = 'user1')),
+((select window_id from ucfscde.windows where st_astext(location) = 'POLYHEDRALSURFACE Z (((400 2200 100,600 2200 100, 600 2200 200, 400 2200 200, 400 2200 100)))'), (select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%poor%'),(select user_id from ucfscde.users where user_name = 'user1')),
+((select window_id from ucfscde.windows where st_astext(location) = 'POLYHEDRALSURFACE Z (((400 2200 100,600 2200 100,600 2200 200,400 2200 200,400 2200 100)))'), (select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%5 years%'),(select user_id from ucfscde.users where user_name = 'user1')),
+((select window_id from ucfscde.windows where st_astext(location) = 'POLYHEDRALSURFACE Z (((1200 2200 100,1400 2200 100,1400 2200 200,1200 2200 200,1200 2200 100)))'), (select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%poor%'),(select user_id from ucfscde.users where user_name = 'user1')),
+((select window_id from ucfscde.windows where st_astext(location) = 'POLYHEDRALSURFACE Z (((2100 1200 100,2300 1200 100,2300 1200 200,2100 1200 200,2100 1200 100)))'), (select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%Deteriorating%'),(select user_id from ucfscde.users where user_name = 'user1')),
+((select window_id from ucfscde.windows where st_astext(location) = 'POLYHEDRALSURFACE Z (((1600 700 400,1600 900 400,1600 900 500,1600 700 500,1600 700 400)))'), (select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%poor%'),(select user_id from ucfscde.users where user_name = 'user1')),
+((select window_id from ucfscde.windows where st_astext(location) = 'POLYHEDRALSURFACE Z (((2500 1200 400,2700 1200 400,2700 1200 500,2500 1200 500,2500 1200 400)))'), (select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%poor%'),(select user_id from ucfscde.users where user_name = 'user1'));
+
+
+
+--============================================================
+
+/* INSERT BUILDING CONDITION INFORMATION
+* 
+* for building condition information we don't need to use the location of the building to link the condition information
+* as the buildings all have a name that is human-friendly
+* (we could use location if necessary, assuming that our condition surveys are taken using a GPS-enabled device)
+*
+*
+*/
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* Building 1 */
+
+ insert into ucfscde.building_condition
+ (building_id, roof_condition, opaque_facade_condition, transparent_facade_condition, doors_gates_condition, elevators_condition, stairs_condition, disabled_access_condition, user_id)
+ values
+ ((select building_id from ucfscde.buildings where building_name like '%Building 1%'),
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'),  -- roof
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- opaque
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%5 years%'), -- transparent
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%Unable%'), -- door gates
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%does not%'), -- elevators
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- stairs
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- disabled
+(select user_id from ucfscde.users where user_name = 'user1'));
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+/* Building 2 */
+ insert into ucfscde.building_condition
+ (building_id, roof_condition, opaque_facade_condition, transparent_facade_condition, doors_gates_condition, elevators_condition, stairs_condition, disabled_access_condition, user_id)
+ values
+ ((select building_id from ucfscde.buildings where building_name like '%Building 2%'),
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%5 years%'),  -- roof
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%5 years%'), -- opaque
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%5 years%'), -- transparent
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- door gates
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- elevators
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- stairs
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%does not%'), -- disabled
+(select user_id from ucfscde.users where user_name = 'user1'));
+
+
+--============================================================
+
+
+/* INSERT ROOM CONDITION INFORMATION
+* 
+* for room identification we can use a combination of room number and floor (just in case there are two rooms with the same number on different floors)
+* we also need the building name as there are multiple rooms with the same name in different buildings
+*  
+* location could be used here as well provided there is a good indoor positioning solution
+*
+*/
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* Room G.01, floor 0, Building 1, user1 */
+insert into ucfscde.room_condition
+(room_id, ceiling_condition, wall_condition, doors_condition, windows_condition, furniture_equipment_condition, heating_system_condition,
+air_conditioning_condition, sockets_condition, lighting_and_switches_condition,user_id)
+values
+((select room_id from ucfscde.rooms where room_number ='G.01' and floor = '0' and building_id = (select building_id from ucfscde.buildings where building_name like '%Building 1')), 
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'),  -- ceiling
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- wall
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- floor
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%Unable%'), -- windows
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%does not%'), -- furniture
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- heating
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- air
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- sockets
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- lighting
+(select user_id from ucfscde.users where user_name = 'user1'));
+
+--~~====================
+/* Room G.01, floor 0, Building 1, user 3 */
+insert into ucfscde.room_condition
+(room_id, ceiling_condition, wall_condition, doors_condition, windows_condition, furniture_equipment_condition, heating_system_condition,
+air_conditioning_condition, sockets_condition, lighting_and_switches_condition,user_id, report_date)
+values
+((select room_id from ucfscde.rooms where room_number ='G.01' and floor = '0' and building_id = (select building_id from ucfscde.buildings where building_name like '%Building 1')), 
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'),  -- ceiling
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- wall
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- floor
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- windows
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- furniture
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- heating
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- air
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- sockets
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- lighting
+(select user_id from ucfscde.users where user_name = 'user3'), '2020-09-22');
+
+
+--~~====================
+/* Room G.02, floor 0, Building 1, user1 */
+insert into ucfscde.room_condition
+(room_id, ceiling_condition, wall_condition, doors_condition, windows_condition, furniture_equipment_condition, heating_system_condition,
+air_conditioning_condition, sockets_condition, lighting_and_switches_condition,user_id)
+values
+((select room_id from ucfscde.rooms where room_number ='G.02' and floor = '0' and building_id = (select building_id from ucfscde.buildings where building_name like '%Building 1')), 
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'),  -- ceiling
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%5 years%'), -- wall
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%5 years%'), -- floor
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%Unable%'), -- windows
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%does not%'), -- furniture
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%5 years%'), -- heating
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- air
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- sockets
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- lighting
+(select user_id from ucfscde.users where user_name = 'user1')),
+
+--~~====================
+/* Room G.02, floor 0, Building 1, user1 - insert continues from previous as one long statement*/
+((select room_id from ucfscde.rooms where room_number ='Corridor 1' and floor = '0' and building_id = (select building_id from ucfscde.buildings where building_name like '%Building 1')), 
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'),  -- ceiling
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- wall
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- floor
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%Unable%'), -- windows
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%does not%'), -- furniture
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%Unable%'), -- heating
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%Unable%'), -- air
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- sockets
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- lighting
+(select user_id from ucfscde.users where user_name = 'user1')),
+
+--~~====================
+/* Room G.06, floor 0, Building 1, user1 - insert continues from previous as one long statement*/
+((select room_id from ucfscde.rooms where room_number ='G.06' and floor = '0' and building_id = (select building_id from ucfscde.buildings where building_name like '%Building 1')), 
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'),  -- ceiling
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- wall
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- floor
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%Unable%'), -- windows
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%does not%'), -- furniture
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%Unable%'), -- heating
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%Unable%'), -- air
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- sockets
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- lighting
+(select user_id from ucfscde.users where user_name = 'user1')),
+
+--~~====================
+/* Room G.06, floor 1, Building 1, user1 - insert continues from previous as one long statement*/
+((select room_id from ucfscde.rooms where room_number ='1.01' and floor = '1' and building_id = (select building_id from ucfscde.buildings where building_name like '%Building 1')), 
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'),  -- ceiling
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- wall
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- floor
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- windows
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- furniture
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- heating
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- air
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- sockets
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- lighting
+(select user_id from ucfscde.users where user_name = 'user1')),
+
+
+--~~====================
+/* Room 1.03, floor 1, Building 1, user1 - insert continues from previous as one long statement*/
+((select room_id from ucfscde.rooms where room_number ='1.03' and floor = '1' and building_id = (select building_id from ucfscde.buildings where building_name like '%Building 1')), 
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high usage%'),  -- ceiling
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- wall
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- floor
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%Unable%'), -- windows
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%does not%'), -- furniture
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%Unable%'), -- heating
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%5 years%'), -- air
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- sockets
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- lighting
+(select user_id from ucfscde.users where user_name = 'user1')),
+
+
+--~~====================
+/* Room G.02, Building 2, user1 - insert continues from previous as one long statement*/
+((select room_id from ucfscde.rooms where room_number ='G.02' and floor = '0' and building_id = (select building_id from ucfscde.buildings where building_name like '%Building 2')), 
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high usage%'),  -- ceiling
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- wall
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- floor
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%Unable%'), -- windows
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%does not%'), -- furniture
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%Unable%'), -- heating
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%overdue%'), -- air
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%5 years%'), -- sockets
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- lighting
+(select user_id from ucfscde.users where user_name = 'user1')),
+
+--~~====================
+/* Room G.03, floor 0, Building 2, user1 - insert continues from previous as one long statement*/
+((select room_id from ucfscde.rooms where room_number ='G.03' and floor = '0' and building_id = (select building_id from ucfscde.buildings where building_name like '%Building 2')), 
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high usage%'),  -- ceiling
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high%'), -- wall
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high%'), -- floor
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high%'), -- windows
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high%'), -- furniture
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high%'), -- heating
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high%'), -- air
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high%'), -- sockets
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- lighting
+(select user_id from ucfscde.users where user_name = 'user1')),
+
+--~~====================
+/* Corridor 1, floor 0, Building 2, user1 - insert continues from previous as one long statement*/
+((select room_id from ucfscde.rooms where room_number ='Corridor 1' and floor = '0' and building_id = (select building_id from ucfscde.buildings where building_name like '%Building 2')), 
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high usage%'),  -- ceiling
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high%'), -- wall
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high%'), -- floor
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high%'), -- windows
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high%'), -- furniture
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high%'), -- heating
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high%'), -- air
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%high%'), -- sockets
+(select asset_health_indicator_id from ucfscde.asset_health_indicator where asset_health_indicator_description like '%new%'), -- lighting
+(select user_id from ucfscde.users where user_name = 'user1'));
+
+
+
+
+
+

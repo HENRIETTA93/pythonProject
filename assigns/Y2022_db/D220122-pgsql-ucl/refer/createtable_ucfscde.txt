@@ -1,0 +1,239 @@
+--================================================================
+/* DDL process is as follows
+* 1. drop and recreate the schema - remember this drops all the data too
+* 2. then create the tables -
+* 2a. make sure that you create the table within the schema - i.e. schema_name.table_name
+* 2b. make sure to create any geometry (location) columns separately
+* 2c. use a serial data type for the ID column if you need it to increment automatically
+*
+* 3. in the script below I have also included some drop table and drop column statements - these are useful for when you are just testing one table 
+* 4. tables do not need to be created in any particular order
+* 5. remember the not null constraints
+* 6. in the example here I haven't always constrained the geometry to a specific type - but that might be useful too
+* 7. We have a parameters table in this model - this is useful to store different reference values needed by the system)  
+*
+*/
+--================================================================
+/* ================================================================
+* Start off any DDL script by dropping the schema
+* and then recreating it
+* DROPPING THE SCHEMA REMOVES ANY DATA THAT IS IN THE SCHEMA!
+* alternatively you can back up the schema using
+* alter schema ucfscde rename to ucfscde_backup;
+*/
+
+drop schema if exists ucfscde cascade;
+create schema ucfscde;
+--================================================================
+
+--================================================================
+/* create the university table */
+drop table if exists ucfscde.university;
+create table ucfscde.university (
+	university_id serial,
+	university_name character varying (100) not null,
+	year_founded integer,
+	founders_name character varying (100),
+	criticality integer not null);
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* add the geometry column - 2D in this case  */
+select AddGeometryColumn('ucfscde','university','location',27700, 'geometry',2);
+
+--================================================================
+/* create the buildings table */
+drop table if exists ucfscde.buildings;
+create table ucfscde.buildings (
+	building_id serial,
+	building_name character varying (200) not null,
+	university_id integer not null,
+	criticality integer not null
+);
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+/* add the geometry columns - 3D in this case  */
+select AddGeometryColumn('ucfscde','buildings','location',27700, 'geometry',3);
+
+--================================================================
+
+/* create the rooms table */
+
+drop table if exists ucfscde.rooms;
+create table ucfscde.rooms (
+	room_id serial,
+	floor integer not null,
+	building_id integer,
+	room_use character varying(50) not null,
+	room_number character varying (50) not null,
+	criticality integer not null
+);
+
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+/* add the geometry column - 3D in this case, must be a polygon  */
+
+alter table ucfscde.rooms drop column if exists location;
+select AddGeometryColumn('ucfscde','rooms','location',0, 'polygon',3);
+
+
+--================================================================
+
+/* create the temperature_sensors table */
+-- NB the room id for the temperature sensor can be
+-- null as sometimes the sensor is not in a room
+-- installation date may not be known
+drop table if exists ucfscde.temperature_sensors;
+create table ucfscde.temperature_sensors (
+	sensor_id serial,
+	sensor_name character varying (50) not null,
+	sensor_make character varying (200) not null,
+	sensor_installation_date date,
+	room_id integer 
+);
+
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* add the geometry columns - 3D point in this case  */
+select AddGeometryColumn('ucfscde','temperature_sensors','location',0, 'point',3);
+
+
+--================================================================
+/* create the ethernet_cables table */
+drop table if exists ucfscde.ethernet_cables;
+create table ucfscde.ethernet_cables (
+	ethernet_id serial,
+	installation_date date,
+	floor integer,
+	criticality integer not null
+);
+
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* add the geometry column- 3D geometry, could also have been set as a linestring */
+select AddGeometryColumn('ucfscde','ethernet_cables','location',27700, 'geometry',3);
+
+
+
+--================================================================
+/* create the windows table */
+
+drop table if exists ucfscde.windows;
+create table ucfscde.windows (
+	window_id serial,
+	window_type character varying(100) not null,
+	window_installation_date date not null,
+	room_id integer,
+	floor integer not null,
+	criticality integer not null
+);
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+/* add the geometry column - 3D geometry, could also have been set as a polygon if necessary */
+select AddGeometryColumn('ucfscde','windows','location',27700, 'geometry',3);
+--================================================================
+
+--================================================================
+/* create the temperature_values table */
+drop table if exists ucfscde.temperature_values;
+create table ucfscde.temperature_values (
+temperature_value_id serial,
+temperature_sensor_id integer,
+reading_timestamp timestamp,
+value_degrees_c double precision);
+
+
+--================================================================
+/* create the window_condition table 
+*  note that we have a default date of CURRENT_DATE - so if the user doens't insert a date the
+*  report is assumed to refer to the date it is inserted
+*/
+drop table if exists ucfscde.window_condition;
+create table ucfscde.window_condition
+(window_condition_id serial not null,
+window_id integer,
+condition integer,
+report_date date default CURRENT_DATE,
+user_id integer);
+
+--================================================================
+/* create the users table */
+drop table if exists ucfscde.users;
+create table ucfscde.users
+(user_id serial not null,
+user_name character varying(100) not null);
+
+--================================================================
+/* create the criticality table 
+* note that even though criticality_id is a serial we can override this later on
+* so that we can have criticality values of 1 to 4 as per the IAM guidance
+*/
+drop table if exists ucfscde.criticality;
+create table ucfscde.criticality
+(criticality_id serial not null,
+criticality character varying(500) not null);
+
+--================================================================
+/* create the assets_health_indicator table 
+* note that even though assets_health_indicator_id is a serial we can override this later on
+* so that we can have asset health values of 1 to 4 as per the IAM guidance
+*/
+drop table if exists ucfscde.asset_health_indicator;
+create table ucfscde.asset_health_indicator 
+(asset_health_indicator_id serial not null,
+asset_health_indicator_description character varying(500));
+--================================================================
+/* create the room_condition table 
+*  note that we have a default date of CURRENT_DATE - so if the user doens't insert a date the
+*  report is assumed to refer to the date it is inserted
+*/
+drop table if exists ucfscde.room_condition;
+create table ucfscde.room_condition
+(room_condition_id serial not null,
+ceiling_condition integer not null,
+wall_condition integer not null,
+doors_condition integer not null,
+windows_condition integer not null,
+furniture_equipment_condition integer not null,
+heating_system_condition integer not null,
+air_conditioning_condition integer not null,
+sockets_condition integer not null,
+lighting_and_switches_condition integer not null,
+room_id integer not null,
+report_date date not null default CURRENT_DATE,
+user_id integer not null
+);
+--================================================================
+/* create the building_condition table 
+*  note that we have a default date of CURRENT_DATE - so if the user doens't insert a date the
+*  report is assumed to refer to the date it is inserted
+*/
+drop table if exists ucfscde.building_condition;
+create table ucfscde.building_condition
+(building_condition_id serial not null,
+building_id integer not null,
+roof_condition integer not null,
+opaque_facade_condition integer not null,
+transparent_facade_condition integer not null,
+doors_gates_condition integer not null,
+elevators_condition integer not null,
+stairs_condition integer not null,
+disabled_access_condition integer not null,
+user_id integer not null,
+report_date date not null default CURRENT_DATE);
+
+--================================================================
+/* create the parameters table 
+*  note that we have a default date of CURRENT_DATE - so if the user doesn't insert a date the
+*  parameter is assumed to be valid from the date it is inserted
+*  (until a later parameter value comes along)
+*/
+drop table if exists ucfscde.parameters;
+create table ucfscde.parameters 
+(parameter_id serial,
+parameter_type character varying (100),
+parameter_name character varying (150),
+parameter_subname character varying (150),
+parameter_value double precision,
+parameter_units character varying (100),
+date_created date default CURRENT_DATE);

@@ -1,0 +1,581 @@
+--=====================
+/*   
+ * This file contains the constraints for the Centennial database
+ * where constraints are used to apply rules to any data that is entered, to ensure that
+ * there is no missing data and no duplicate data 
+ * i.e. we aim for 'one-fact-one-place'
+ *
+ * There are 4 types of constraints in this file
+ * 1. Primary keys
+ * 2. Foreign keys
+ * 3. Unique constraints
+ * 4. Check constraints
+ *
+*/
+
+
+
+--=====================
+/*   
+ * Primary Keys
+ * NB we use ID values (substitute primary keys) as these make joining tables easier 
+ * and comparing numbers when matching primary and foreign keys is quicker
+ * however UNIQUE constraints should also existing for every table
+ * to make sure that that the real primary key is unique - i.e.
+ * different in every row
+ *
+ * primary keys can be created in any order as they don't depend on other constraints in the way that
+ * foreign keys do
+*/
+
+--~~===================
+/* the buildings table */
+	alter table ucfscde.buildings add constraint buildings_pk primary key (building_id);
+
+--~~===================
+/* the rooms table */
+
+
+	alter table ucfscde.rooms add constraint
+	rooms_pk primary key (room_id);
+
+--~~===================
+/* the temperature sensors table table */
+
+	alter table ucfscde.temperature_sensors add constraint temperature_sensor_pk primary key (sensor_id);
+
+--~~===================
+/* the university table */
+
+	alter table ucfscde.university add constraint
+	university_pk primary key(university_id);
+
+--~~===================
+/* the ethernet_cables table */
+
+	alter table ucfscde.ethernet_cables add constraint
+	ethernet_cables_pk primary key(ethernet_id);
+
+--~~===================
+/* the windows table */
+
+	alter table ucfscde.windows add constraint
+	window_pk primary key(window_id);
+
+
+
+--~~===================
+/* the temperature_values table */
+	alter table ucfscde.temperature_values 
+	add constraint temperature_values_pk
+	primary key(temperature_value_id);
+
+	
+--~~===================
+/* the parameters table */
+
+
+	alter table ucfscde.parameters
+	add constraint parameters_pk
+	primary key (parameter_id);
+
+--~~===================
+/* the room_condition table */
+
+	alter table ucfscde.room_condition
+	add constraint room_condition_pk
+	primary key(room_condition_id);
+
+--~~===================
+/* the users table */
+
+	alter table ucfscde.users
+	add constraint user_pk
+	primary key(user_id);
+
+--~~===================
+/* the building_condition table */
+
+	alter table ucfscde.building_condition
+	add constraint building_condition_pk
+	primary key (building_condition_id);
+
+
+--~~===================
+/* the asset_health_indicator table */
+
+	alter table ucfscde.asset_health_indicator
+	add constraint health_pk
+	primary  key(asset_health_indicator_id);
+
+
+--~~===================
+/* the window_condition table */
+
+	alter table ucfscde.window_condition
+	add constraint window_condition_pk
+	primary key(window_condition_id);
+
+
+--~~===================
+/* the criticality table */
+
+	alter table ucfscde.criticality
+	add constraint criticality_pk
+	primary key (criticality_id);
+
+
+--=====================
+/*   
+ * Foreign Keys
+ * These reference the primary keys so that you can't get a 'child' created without a parent 
+ * e.g. no room without a building, no building without a university
+ * the corresponding primary key constraints must be created first
+ * Not all tables have a foregin key and some tables have 2 or more foreign keys
+ *
+*/
+
+--~~===================
+/* the rooms table - need the building first before creating a room */
+	alter table ucfscde.rooms 
+	add constraint rooms_buildings_fk 
+	foreign key (building_id)
+	references ucfscde.buildings(building_id);
+
+--~~===================
+/* the temperature values table  - need a temperature sensor for the value*/
+
+	alter table ucfscde.temperature_values
+	add constraint temperature_values_temperature_fk
+	foreign key(temperature_sensor_id) references
+	ucfscde.temperature_sensors(sensor_id);
+
+--~~===================
+/* the temperature_sensors - need a room - but NB this is optional as you can have a sensor outside a room */
+
+	alter table ucfscde.temperature_sensors
+	add constraint temperature_sensors_rooms_fk
+	foreign key(room_id) references
+	ucfscde.rooms(room_id);
+
+	
+--~~===================
+/* the buildings table - need the university to exist first */
+
+	alter table ucfscde.buildings
+	add constraint building_university_fk
+	foreign key(university_id) references
+	ucfscde.university(university_id);
+
+
+--~~===================
+/* the windows table - need the room to exist */
+
+	alter table ucfscde.windows
+	add constraint windows_rooms_fk
+	foreign key(room_id) references
+	ucfscde.rooms(room_id);
+
+
+	
+
+	
+--~~===================
+/* the university table - need to have a criticality value before creating the university */
+
+
+	alter table ucfscde.university add constraint
+	univsersity_criticality_fk
+	foreign key(criticality)
+	references ucfscde.criticality(criticality_id);
+
+--~~===================
+/* the windows table - need to have a criticality value before creating the window */
+
+	alter table ucfscde.windows add constraint
+	windows_criticality_fk
+	foreign key(criticality)
+	references ucfscde.criticality(criticality_id);
+
+
+--~~===================
+/* the rooms table - need to have a criticality value before creating the room */
+
+	alter table ucfscde.rooms add constraint
+	rooms_criticality_fk
+	foreign key(criticality)
+	references ucfscde.criticality(criticality_id);
+	
+--~~===================
+/* the buildings table - need to have a criticality value before creating the building */
+
+	alter table ucfscde.buildings add constraint
+	buildings_criticality_fk
+	foreign key(criticality)
+	references ucfscde.criticality(criticality_id);
+	
+
+--~~===================
+/* the ethernet table - need to have a criticality value before creating an ethernet cable */
+
+	alter table ucfscde.ethernet_cables add constraint
+	ethernet_cables_criticality_fk
+	foreign key(criticality)
+	references ucfscde.criticality(criticality_id);
+	
+--~~===================
+/* the building condition table  - the condition value must be associated with a building*/
+
+
+	alter table ucfscde.building_condition
+	add constraint building_condition_building_fk
+	foreign key(building_id)
+	references ucfscde.buildings (building_id);
+
+--~~===================
+/* the buildingcondition table need to have the valid list of conditions (asset health values) for the roof condition */
+
+	alter table ucfscde.building_condition
+	add constraint building_condition_roof_fk
+	foreign key(roof_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+
+--~~===================
+/* the buildingcondition table need to have the valid list of conditions (asset health values) for the opaque facade condition */
+
+	alter table ucfscde.building_condition
+	add constraint building_condition_opaque_fk
+	foreign key(opaque_facade_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+--~~===================
+/* the buildingcondition table need to have the valid list of conditions (asset health values) for the transparent facade condition */
+
+	alter table ucfscde.building_condition
+	add constraint building_condition_transparent_fk
+	foreign key(transparent_facade_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+--~~===================
+/* the buildingcondition table need to have the valid list of conditions (asset health values) for the doors and gates condition */
+
+alter table ucfscde.building_condition
+	add constraint building_condition_doors_gates_fk
+	foreign key(doors_gates_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+
+--~~===================
+/* the buildingcondition table need to have the valid list of conditions (asset health values) for the elevators condition */
+
+	alter table ucfscde.building_condition
+	add constraint building_condition_elevators_fk
+	foreign key(elevators_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+
+--~~===================
+/* the buildingcondition table need to have the valid list of conditions (asset health values) for the stairs condition */
+
+alter table ucfscde.building_condition
+	add constraint building_condition_stairs_fk
+	foreign key(stairs_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+--~~===================
+/* the buildingcondition table need to have the valid list of conditions (asset health values) for the diabled access condition */
+
+
+	alter table ucfscde.building_condition
+	add constraint building_condition_disabled_access_fk
+	foreign key (disabled_access_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+
+--~~===================
+/* the building condition table need to have  a valid user to create a building condition report */
+
+	alter table ucfscde.building_condition
+	add constraint building_condition_user_fk
+	foreign key(user_id)
+	references ucfscde.users (user_id);
+
+--~~===================
+/* the window condition table need to have  a valid condition to create a window condition report */
+
+
+		alter table ucfscde.window_condition
+		add constraint window_condition_fk
+		foreign key(condition)
+		references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+--~~===================
+/* the window condition table need to have  a valid user to create a window condition report */
+
+
+	alter table ucfscde.window_condition
+	add constraint window_condition_user_fk
+	foreign key(user_id)
+	references ucfscde.users (user_id);
+
+
+--~~===================
+/* the window condition table need to have  a valid window to create a window condition report */
+
+	alter table ucfscde.window_condition
+	add constraint window_condition_window_fk
+	foreign key(window_id)
+	references ucfscde.windows (window_id);
+
+--~~===================
+/* the room condition table need to have  a valid asset health value to create a ceiling condition report */
+
+	alter table ucfscde.room_condition
+	add constraint room_condition_ceiling_fk
+	foreign key (ceiling_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+--~~===================
+/* the room condition table need to have  a valid asset health value to create a wall condition report */
+
+alter table ucfscde.room_condition
+	add constraint room_condition_wall_fk
+	foreign key (wall_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+--~~===================
+/* the room condition table need to have  a valid asset health value to create a doors condition report */
+
+	alter table ucfscde.room_condition
+	add constraint room_condition_doors_fk
+	foreign key (doors_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+--~~===================
+/* the room condition table need to have  a valid asset health value to create a window condition report */
+
+	alter table ucfscde.room_condition
+	add constraint room_condition_windows_fk
+	foreign key (windows_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+--~~===================
+/* the room condition table need to have  a valid asset health value to create a furniture condition report */
+
+alter table ucfscde.room_condition
+	add constraint room_condition_furniture_fk
+	foreign key (furniture_equipment_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+--~~===================
+/* the room condition table need to have  a valid asset health value to create a heating condition report */
+
+alter table ucfscde.room_condition
+	add constraint room_condition_heating_fk
+	foreign key (heating_system_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+--~~===================
+/* the room condition table need to have  a valid asset health value to create a air conditioning condition report */
+
+
+alter table ucfscde.room_condition
+	add constraint room_condition_air_fk
+	foreign key (air_conditioning_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+--~~===================
+/* the room condition table need to have  a valid asset health value to create a sockets condition report */
+
+	alter table ucfscde.room_condition
+	add constraint room_condition_sockets_fk
+	foreign key (sockets_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+--~~===================
+/* the room condition table need to have  a valid asset health value to create a lighting condition report */
+
+alter table ucfscde.room_condition
+	add constraint room_condition_lighting_fk
+	foreign key (lighting_and_switches_condition)
+	references ucfscde.asset_health_indicator(asset_health_indicator_id);
+
+--~~===================
+/* the room condition table need to have  a valid room to create a room condition report */
+
+alter table ucfscde.room_condition
+	add constraint room_condition_room_fk
+	foreign key (room_id)
+	references ucfscde.rooms(room_id);
+
+--~~===================
+/* the room condition table need to have  a valid user to create a room condition report */
+
+	alter table ucfscde.room_condition
+	add constraint room_condition_user_fk
+	foreign key (user_id)
+	references ucfscde.users(user_id);
+
+
+
+
+
+
+--=====================
+/*   
+ * Unique Constraints
+ *
+ * NB we use ID values (substitute primary keys) as these make joining tables easier 
+ * and comparing numbers when matching primary and foreign keys is quicker
+ * however UNIQUE constraints should also existing for every table
+ * to make sure that that the real primary key is unique - i.e.
+ * different in every row
+ *
+ * unique constraints can be created in any order as they don't depend on other constraints in the way that
+ * foreign keys do
+ * 
+ * there should be as many unique constraints as there are tables
+*/
+
+
+--~~===================
+/* the temperature values table  - combination of the sensor and the reading timestamp is unique*/
+
+
+	alter table ucfscde.temperature_values
+	add constraint temperature_values_unique
+	unique(temperature_sensor_id, reading_timestamp);
+
+
+--~~===================
+/* the temperature sensors table- no two sensors in the exact same location  */
+
+
+	alter table ucfscde.temperature_sensors
+	add constraint temperature_sensors_unique
+	unique(location);
+
+
+--~~===================
+/* the rooms table - no two rooms in the same location on the same floor */
+
+
+	alter table ucfscde.rooms
+	add constraint rooms_unique
+	unique(location,floor);
+
+--~~===================
+/* the university table - no two universities have the same name (you could also use location for this) */
+
+
+
+	alter table ucfscde.university
+	add constraint university_unique
+	unique(university_name);
+
+--~~===================
+/* the buildings table - no two buildings have the same name ( you could also use location for this) */
+
+
+
+	alter table ucfscde.buildings
+	add constraint buildings_unique
+	unique(building_name);
+
+--~~===================
+/* the windows table - no two windows in the same location on the same floor
+	location might be enough here as it is 3D and you can't have two windows in the same 3D location */
+
+
+
+	alter table ucfscde.windows
+	add constraint windows_unique
+	unique(location,floor);
+
+--~~===================
+/* the ethernet_cables table - no two cables in the same location */
+
+
+	alter table ucfscde.ethernet_cables
+	add constraint ethernet_cables_unique
+	unique(location);
+
+
+
+
+--~~===================
+/* the asset_health_indicator table - the indicator text must be different from each other */
+
+	alter table ucfscde.asset_health_indicator
+	add constraint health_description_unique
+	unique(asset_health_indicator_description);
+
+
+--~~===================
+/* the window_condition table - can't have more than one report for the same window by the same person on the same day */
+
+	alter table ucfscde.window_condition
+	add constraint window_condition_unique
+	unique(report_date, user_id, window_id);
+
+--~~===================
+/* the users table - each user name needs to be unique */
+
+
+	alter table ucfscde.users
+	add constraint user_name_unique
+	unique(user_name);
+
+
+--~~===================
+/* the room condition table - you can't have the same user doing a report for the same room on the same date */
+
+	alter table ucfscde.room_condition
+	add constraint room_condition_unique 
+	unique(user_id, room_id, report_date);
+
+
+--~~===================
+/* the building condition table - can't have the same user doing a report for the same building on the same date */
+
+	alter table ucfscde.building_condition
+	add constraint building_condition_unique
+	unique(report_date, building_id, user_id);
+
+
+--~~===================
+/* the parameters table - combination of parameter name, subname and date must be unique */
+
+	alter table ucfscde.parameters
+	add constraint parameters_unique 
+	unique(parameter_type, parameter_name, parameter_subname, date_created);
+
+
+
+--=====================
+/*   
+ * Check Constraints
+ *
+ * These are used to make sure that values are restricted -e.g. so that users don't type in abbreviations that then aren't
+ * understooed by the system
+ *
+ * Using this type of constraint is only advised when you are 100% sure that you know all the possible values that could be used
+ * Otherwise use a lookup table
+ *
+*/
+
+
+--~~===================
+/* the rooms  table - rooms can only be of specific types */
+	alter table ucfscde.rooms add constraint room_use_check check (room_use in ('classroom','computer lab','kitchen','engineering lab','other'));
+
+
+--~~===================
+/* the windows  table - windows can only be of specific types */
+
+
+	alter table ucfscde.windows
+	add constraint window_type_check
+	check (window_type in ('single glazed','double glazed','triple glazed'));
+
+
