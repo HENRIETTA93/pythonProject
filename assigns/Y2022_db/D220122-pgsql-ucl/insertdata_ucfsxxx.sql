@@ -50,6 +50,22 @@ values
 
 
 
+create table ucbqcd3.asset_indicator(
+asset_indicator_id serial not null,
+asset_indicator_desc character varying(100) not null
+);
+
+insert into ucbqcd3.asset_indicator
+(asset_indicator_id, asset_indicator_desc)
+values
+(1, 'Very good condition'),
+(2, 'Good condition'),
+(3, 'Poor condition, can replacement'),
+(4, 'Very Poor condition, need replacement'),
+(5, 'Unknown condition');
+
+
+
 -- insert into playground
 insert into ucbqcd3.playground
 (playground_name,playground_built_year,location)
@@ -121,5 +137,33 @@ update ucbqcd3.activity_towers a
 set equipment_area_id =
 (select b.equipment_area_id from ucbqcd3.equipment_areas b
 where st_3dintersects(a.location, b.location));
+
+
+-- insert into activity_towers
+insert into ucbqcd3.lighting
+(lighting_name,lighting_brand,install_date,location)
+values
+('Lighting 1','Brand 1','2010-02-10',st_geomfromtext('POINT(500 400 280)',27700)),
+('Lighting 2','Brand 1','2011-02-10',st_geomfromtext('POINT(800 400 280)',27700)),
+('Lighting 3','Brand 2','2012-02-10',st_geomfromtext('POINT(700 400 280)',27700)),
+('Lighting 4','Brand 1','2010-02-10',st_geomfromtext('POINT(500 400 580)',27700)),
+('Lighting 5','Brand 1','2011-02-10',st_geomfromtext('POINT(800 400 580)',27700)),
+('Lighting 6','Brand 2','2012-02-10',st_geomfromtext('POINT(700 400 580)',27700)),
+('Lighting 7','Brand 2','2010-02-10',st_geomfromtext('POINT(2200 400 280)',27700))
+('Lighting 8','Brand 3','2013-02-10',st_geomfromtext('POINT(2200 400 580)',27700)),
+('Lighting 9','Brand 2','2010-02-10',st_geomfromtext('POINT(2200 1400 280)',27700)),
+('Lighting 10','Brand 2','2010-02-10',st_geomfromtext('POINT(2200 1400 580)',27700));
+
+
+update ucfscde.lighting b
+set activity_tower_id =
+(select activity_tower_id from
+ucfscde.activity_towers a
+where st_zmin(b.location) - st_zmin(a.location) = 280
+and st_contains(a.location, b.location));
+
+
+
+
 
 

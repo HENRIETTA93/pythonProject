@@ -44,6 +44,7 @@ create table ucbqcd3.lighting(
     lighting_id serial,
     lighting_name character varying(50) not null,
     lighting_brand character varying(50) not null,
+    install_date date,
     activity_tower_id integer
 );
 
