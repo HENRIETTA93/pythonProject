@@ -1,0 +1,190 @@
+#!/usr/bin/python3
+# COMP3311 21T3 Ass2 ... progression check for a given student
+
+import sys
+import psycopg2
+import re
+from helpers import getStudent, getProgram, getStream, getLatestProgStrm, getStuCourse
+
+# define any local helper functions here
+
+### set up some globals
+
+usage = f"Usage: {sys.argv[0]} zID [Program Stream]"
+db = None
+
+### process command-line args
+
+argc = len(sys.argv)
+if argc < 2:
+  print(usage)
+  exit(1)
+zid = sys.argv[1]
+if zid[0] == 'z':
+  zid = zid[1:8]
+digits = re.compile("^\d{7}$")
+if not digits.match(zid):
+  print("Invalid student ID")
+  exit(1)
+
+progCode = None
+strmCode = None
+
+if argc == 4:
+  progCode = sys.argv[2]
+  strmCode = sys.argv[3]
+
+# manipulate database
+
+try:
+  # db = psycopg2.connect("dbname=mymyunsw")
+  db = psycopg2.connect("host=192.168.7.100 dbname=mymyunsw user=postgres port=5432 password=1234")
+  stuInfo = getStudent(db,zid)
+
+  # print(stuInfo) # debug
+  if not stuInfo:
+    print(f"Invalid student id {zid}")
+    exit()
+
+  sid=stuInfo[0]
+  sname=stuInfo[1]+","+stuInfo[2]
+
+  if progCode:
+    progInfo = getProgram(db,progCode)
+    if not progInfo:
+      print(f"Invalid program code {progCode}")
+      exit()
+    # print(progInfo)  #debug
+    pcode=progInfo[1]
+    pname=progInfo[2]
+  else:
+    progStrmInfo=getLatestProgStrm(db,zid)
+    if not progStrmInfo:
+      print(f"Invalid program code {progCode}")
+      exit()
+    pcode=progStrmInfo[0]
+    pname=progStrmInfo[1]
+
+
+  if strmCode:
+    strmInfo = getStream(db,strmCode)
+    if not strmInfo:
+      print(f"Invalid program code {strmCode}")
+      exit()
+    # print(strmInfo)  #debug
+    scode = strmInfo[1]
+    strm_name = strmInfo[2]
+  else:
+    progStrmInfo=getLatestProgStrm(db,zid)
+    if not progStrmInfo:
+      print(f"Invalid program code {strmCode}")
+      exit()
+    scode=progStrmInfo[2]
+    strm_name=progStrmInfo[3]
+
+  print(sid,sname)
+  print(' ',pcode, pname)
+  print(' ', scode, strm_name)
+
+  # if have a program/stream
+  #   show progression check on supplied program/stream
+  # else
+  #   show progression check on most recent program/stream enrolment
+  # ... add your code here ...
+
+  cursor = db.cursor()
+
+  query_prog_subjects="select pr.program, r.id, r.name, aog.type, aog.defby, aog.definition, r.min_req,r.max_req \
+  from program_rules pr join rules r on pr.rule=r.id \
+  join academic_object_groups aog on aog.id=r.ao_group \
+  where aog.type='subject' and pr.program="+str(pcode)
+  cursor.execute(query_prog_subjects)
+  prog_results=cursor.fetchall()
+
+
+  query_strm_subjects="select s.code,sr.stream, r.id, r.name, aog.type, aog.defby, aog.definition, r.min_req, r.max_req \
+  from stream_rules sr join rules r on sr.rule=r.id \
+  join academic_object_groups aog on aog.id=r.ao_group \
+  join streams s on s.id=sr.stream \
+  where aog.type='subject' and s.code='"+str(scode)+"'"
+
+  cursor.execute(query_strm_subjects)
+  strm_results=cursor.fetchall()
+
+
+  all_subjects={}
+  all_pattern_subjects={}
+  for r in prog_results:
+    rule_name=r[2]
+    defby=r[4]
+    subjects=r[5]
+    min_req=r[6]
+    max_req=r[7]
+    print(rule_name)
+    if defby=='enumerated': #enumerated need to split
+      enumerate_sj=subjects.split(",")
+      for sj in enumerate_sj:
+        all_subjects[sj]=rule_name
+        # sj_dic={sj:rule_name}
+        # all_subjects.append(sj_dic)
+      # all_subjects.extend(enumerate_sj)
+    elif defby=='pattern':
+      all_pattern_subjects[subjects]=rule_name
+      # sj_dic={subjects:rule_name}
+      # all_pattern_subjects.append(sj_dic)
+      # all_pattern_subjects.append(subjects)
+  # print(all_subjects)
+  # print(all_pattern_subjects)
+
+  print("-----------")
+  for r in strm_results:
+    rule_name = r[3]
+    defby=r[5]
+    subjects=r[6]
+    min_req = r[7]
+    max_req = r[8]
+    if defby=='enumerated':
+      enumerate_sj=subjects.split(",")
+      for sj in enumerate_sj:
+        all_subjects[sj]=rule_name
+        # sj_dic={sj:rule_name}
+        # all_subjects.append(sj_dic)
+      # all_subjects.extend(enumerate_sj)
+    elif defby=='pattern':
+      all_pattern_subjects[subjects]=rule_name
+      # sj_dic={subjects:rule_name}
+      # all_pattern_subjects.append(sj_dic)
+      # all_pattern_subjects.append(subjects)
+  print(all_subjects)
+  print(all_pattern_subjects)
+
+  print("=======================")
+  # for sub_dic in all_subjects:
+  #   sub_key=sub_dic.keys()[0]
+  #   print(sub_key)
+  #   if ";" in sub_key:
+  #     sjs=sub_key[1:len(sub_key)-1].split(";")
+  #     for sj in sjs:
+  #       tmp=getStuCourse(db,zid,sj)
+  for sub in all_subjects.keys():
+    # print(sub)
+    # print(all_subjects[sub])
+    if ";" in sub:
+      sjs=sub[1:len(sub)-1].split(";")
+      # print(sjs)
+      for sj in sjs:
+        tmp=getStuCourse(db,zid,sj)
+        if tmp:
+          print(tmp)
+
+    else:
+      tmp=getStuCourse(db,zid,sub)
+    print(sub, tmp, all_subjects[sub])
+
+except Exception as err:
+  print(Exception)
+  print("DB error: ", err)
+finally:
+  if db:
+    db.close()
+

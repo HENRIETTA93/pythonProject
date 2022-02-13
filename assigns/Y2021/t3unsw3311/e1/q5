@@ -1,0 +1,89 @@
+#!/usr/bin/python3
+# COMP3311 21T3 exam ... property finder
+
+import sys
+import psycopg2
+import re
+
+# define any local helper functions here
+
+### set up some globals
+
+usage = f"Usage: {sys.argv[0]} type maxPrice #beds #baths #cars\n"\
+f"type is one of Apartment, House, Townhouse\n"\
+"maxPrice is upper bound; #x = exact match; 0 means don't care"
+
+types = ["Apartment", "House", "Townhouse"]
+db = None
+
+### process command-line args
+
+argc = len(sys.argv)
+if argc < 6:
+  print(usage)
+  exit(1)
+ptype = sys.argv[1]
+if not ptype in types:
+  print(usage)
+  exit(1)
+digits = re.compile("^\d+$")
+for arg in sys.argv[2:5]:
+  if not digits.match(arg):
+    print(usage)
+    exit(1)
+
+maxPrice = int(sys.argv[2])
+nbeds = int(sys.argv[3])
+nbaths = int(sys.argv[4])
+ncars = int(sys.argv[5])
+
+# manipulate database
+
+try:
+  # db = psycopg2.connect("dbname=property")
+  db = psycopg2.connect("host=192.168.7.100 dbname=property user=postgres port=5432 password=1234")
+
+  sql1="""
+  select id,address(id), list_price as price from properties where sold_price is null and sold_date is null and ptype=%s and list_price<=%s
+  order by list_price, id
+  """
+  sql2="""
+  select feature, number as fnum from features where property=%s
+  """
+  cur=db.cursor()
+  cur.execute(sql1,[ptype,maxPrice])
+  propertys=cur.fetchall()
+  # print(propertys)
+
+  for property in propertys:
+    id=property[0]
+    listprice=property[2]
+    addr=property[1]
+    br=None
+    ba=None
+    car=None
+    cur.execute(sql2,[id])
+    features=cur.fetchall()
+    for fea in features:
+      fname=fea[0]
+      fnum=fea[1]
+      if nbeds==0:
+        br='0br'
+      elif fnum==nbeds and fname=='bedrooms':
+        br=str(fnum)+'br'
+      if nbaths==0:
+        ba='0ba'
+      elif fnum==nbaths and fname=='bathrooms':
+        ba=str(fnum)+'ba'
+      if ncars==0:
+        car='0car'
+      elif fnum==ncars and fname=='carspaces':
+        car=str(fnum)+'car'
+    if br is not None and car is not None and ba is not None:
+      print('#'+str(id)+":", addr+",", br+',', ba+',', car+',', '$'+str(listprice))
+except Exception as err:
+  print("DB error: ", err)
+finally:
+  if db:
+    db.close()
+
