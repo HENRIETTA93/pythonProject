@@ -1,0 +1,96 @@
+>python trans.py 5124159
+5124159 Magia, Tristan
+COMP9318 17s1 Data Warehousing & Data Mining     65 CR                         6uoc
+COMP9319 17s1 Web Data Compression & Search      86 HD                         6uoc
+COMP9417 17s1 Machine Learning & Data Mining     78 DN                         6uoc
+COMP6714 17s2 Info Retrieval and Web Search      69 CR                         6uoc
+COMP9313 17s2 Big Data Management                77 DN                         6uoc
+COMP9444 17s2 Neural Networks, Deep Learning     88 HD                         6uoc
+UOC = 36, WAM = 2778/36 = 77.2
+
+>python trans.py 5123788
+5123788 Greenfield, Drew
+COMP9021 17s1 Principles of Programming         100 HD                         6uoc
+COMP9311 17s1 Database Systems                   63 PS                         6uoc
+COMP9024 17s2 Data Structures & Algorithms       86 HD                         6uoc
+COMP9331 17s2 Computer Networks&Applications     79 DN                         6uoc
+GSOE9820 17s2 Project Management                 94 HD                         6uoc
+COMP9020 18s1 Foundations of Comp. Science       85 HD                         6uoc
+COMP9414 18s1 Artificial Intelligence            91 HD                         6uoc
+COMP9315 18s2 Database Systems Implementat'n     76 DN                         6uoc
+COMP9444 18s2 Neural Networks, Deep Learning     63 PS                         6uoc
+COMP9417 19T2 Machine Learning & Data Mining     96 HD                         6uoc
+COMP9313 19T3 Big Data Management                76 DN                         6uoc
+MATH5846 20T1 Intro to Prob and Stoch Proc        - SY                         6uoc
+MATH5856 20T1 Intro to Stats and Stat Comput      - SY                         6uoc
+COMP9900 20T2 Info Tech Project                 100 HD                         6uoc
+MATH5855 20T3 Multivariate Analysis             100 HD                         6uoc
+UOC = 90, WAM = 6654/78 = 85.3
+
+>python trans.py 5143550
+5143550 Torrisi, Yen
+COMP2911 17s1 Eng. Design in Computing           36 FL                         fail
+COMP3141 17s1 Software Sys Des&Implementat'n      - AF                         fail
+COMP3231 17s1 Operating Systems                   - AW
+COMP3151 17s2 Foundations of Concurrency         41 FL                         fail
+COMP4336 17s2 Mobile Data Networking             30 FL                         fail
+UOC = 0, WAM = 642/24 = 26.8
+
+>python trans.py 5124862
+5124862 Wehbe, Ran
+COMP2121 17s1 Microprocessors & Interfacing      75 DN                         6uoc
+COMP2911 17s1 Eng. Design in Computing           68 CR                         6uoc
+COMP6443 17s1 Web Application Security           74 CR                         6uoc
+PSYC1023 17s1 Abnormal Psychology                66 CR                         6uoc
+COMP2041 17s2 Software Construction              61 PS                         6uoc
+COMP6445 17s2 Digital Forensics                  84 DN                         6uoc
+MATH1081 17s2 Discrete Mathematics               55 PS                         6uoc
+COMP3121 18s1 Algorithms & Programming Tech      61 PS                         6uoc
+COMP3231 18s1 Operating Systems                  64 PS                         6uoc
+COMP6841 18s1 Extended Security Engineering      73 CR                         6uoc
+COMP3161 18s2 Concepts of Programming Lang.      72 CR                         6uoc
+COMP6447 18s2 Security Assessment                51 PS                         6uoc
+COMP9444 18s2 Neural Networks, Deep Learning     51 PS                         6uoc
+COMP1531 19T1 Software Eng Fundamentals          59 PS                         6uoc
+COMP3900 19T1 Computer Science Project           60 PS                         6uoc
+COMP3141 19T2 Software Sys Des&Implementat'n     87 HD                         6uoc
+COMP3331 19T2 Computer Networks&Applications     54 PS                         6uoc
+COMP4920 19T3 Management and Ethics              80 DN                         6uoc
+UOC = 108, WAM = 7170/108 = 66.4
+
+>python trans.py 5146401
+5146401 KANG, Shuni
+COMP9020 17s1 Foundations of Comp. Science       46 FL                         fail
+COMP9021 17s1 Principles of Programming          33 FL                         fail
+COMP9311 17s1 Database Systems                    - AF                         fail
+GSOE9820 17s1 Project Management                 38 FL                         fail
+UOC = 0, WAM = 702/24 = 29.2
+
+>python trans.py 5159189
+5159189 Butturini Pajares, Diego
+ARTS1210 18s1 Concepts of Asia                   56 PS                         6uoc
+ARTS1570 18s1 Introductory Spanish A             84 DN                         6uoc
+INST1005 18s1 Key Debates in Intl Studies        63 PS                         6uoc
+MGMT1101 18s1 Global Business Environment        90 HD                         6uoc
+ARTS1571 18s2 Introductory Spanish B             86 HD                         6uoc
+ECON1101 18s2 Microeconomics 1                   81 DN                         6uoc
+INST1006 18s2 The World in Transition            94 HD                         6uoc
+MGMT3102 18s2 Asia-Pacific Business              79 DN                         6uoc
+ARTS2570 19T1 Intermediate Spanish A             79 DN                         6uoc
+INST2003 19T1 Research Methods                   87 HD                         6uoc
+MGMT2101 19T1 Int Bus & Multinat Operations      73 CR                         6uoc
+MGMT3721 19T1 Negotiation Skills                 72 CR                         6uoc
+ARTS1620 19T2 Introductory Italian A             72 CR                         6uoc
+FINS1613 19T2 Business Finance                   76 DN                         6uoc
+MGMT2102 19T2 Managing Across Cultures           64 PS                         6uoc
+MGMT3101 19T2 I'national Business Strategy      100 HD                         6uoc
+EXCH8010 19T3 BInst Exchange Program              - XE                        24uoc
+EXCH8035 20T1 BInst Exchange Program              - XE                        18uoc
+ARTS2457 20T2 China Imagined and Perceived       70 CR                         6uoc
+EXCH8033 20T2 BInst Exchange Program              - XE                         6uoc
+MGMT2725 20T2 Career Management                  72 CR                         6uoc
+MGMT3003 20T2 Global Entrepreneurship            80 DN                         6uoc
+ARTS2813 20T3 International Security             90 HD                         6uoc
+ARTS3570 20T3 Advanced Spanish A                 89 HD                         6uoc
+INST3900 20T3 Int Studies Advanced Seminar       74 CR                         6uoc
+UOC = 180, WAM = 10386/132 = 78.7
