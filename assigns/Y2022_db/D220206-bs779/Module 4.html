@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<!-- saved from url=(0123)https://learn.bu.edu/bbcswebdav/pid-9833813-dt-content-rid-61814506_1/courses/22sprgmetcs779_o1/course/module4/allpages.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Module 4</title>
+<link href="./Module 4_files/local.css" rel="stylesheet">
+<script src="./Module 4_files/getHeader.js.下载"></script>
+<script src="./Module 4_files/onlymet.js.下载"></script>
+</head>
+<body>
+
+<h1>Module 4</h1>
+
+<div class="importantcenter">
+<p>This is a single, concatenated file, suitable for printing or saving as a PDF for offline viewing. Please note that some animations or images may not work.</p></div>
+
+<div id="header" class="boxBlueCenter" style="visibility: visible;">
+<table class="arrange">
+<tbody><tr>
+<td colspan="2">
+<h4>Module 4 Study Guide and Deliverables</h4>
+</td>
+</tr>
+<tr>
+<td><strong>Readings:</strong></td>
+<td><p>Primary Reading: </p>
+  <ul>
+    <li>CB6 chapter 30<br>
+    </li>
+  </ul>
+  <p>Secondary Reading: </p>
+  <ul>
+    <li>Loney chapter 52</li>
+  </ul></td>
+</tr>
+<tr>
+  <td><strong>Assignments:</strong></td>
+	<td>Assignment 4 <span class="date">due Friday, February 11 at 6:00 AM ET</span></td>
+</tr>
+<tr>
+  <td><strong>Assessments:</strong></td>
+	<td>Quiz 4 <span class="date">due Friday, February 11 at 6:00 AM ET</span></td>
+</tr>
+<tr>
+<td><strong>Term Project Note:</strong></td>
+	<td><p>During this module you should complete much of the implementation of your project, including writing most of your research paper. You should provide evidence of progress to your instructor, who will review it and provide guidance. </p></td>
+</tr>
+<tr class="onlyode">
+  <td><strong>Live Classrooms:</strong></td>
+ <td><p>Supplementary Live Session<span class="date">, Wednesday, February 2, 8:00 PM - 10:00 PM ET</span></p>
+   <p>Current week's assignment review and examples<span class="date">, Saturday, February 5, 11:00 AM - 12:00 PM (noon) ET</span>   </p>
+   <p>Live office help<span class="date">, Monday, February 7, 8:00 PM - 9:00 PM ET</span></p>
+ </td>
+ </tr>
+</tbody></table>
+</div>
+<script>
+getHeader('header','../syllabus/metcs779_S05_studyGuide.html','mod4');
+</script>
+
+
+
+<header>Lecture 4A - Semistructured Data and XML</header>
+
+<div id="b1">
+
+
+<title>Data and Structure</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Data and Structure </h1>
+
+<p><em>Structured data</em> is data that conforms to a fixed schema.&nbsp; Data in a relational database is structured.&nbsp; For instance, in the hotel schema from your assignments, a hotel record is made up of a hotel number, a hotel name, a city, etc.</p>
+
+<blockquote>
+<pre class="code">HOTEL
+hotelno  Decimal(12)
+hotel    Name Varchar(30)
+city&nbsp;    Varchar(30)</pre>
+</blockquote>
+
+<p>If there is no value for an attribute, like city, a null value will “hold its place” in the structure.&nbsp; Every record in the hotel table has these same attributes in the same order.&nbsp; RDBMSes require a strict structure, and the data must conform to this structure. The hotel data in this example is structured.</p>
+
+<p>Semi-structured data is either irregular data, or data in which the structure can change.&nbsp; Semi-structured data has some structure, but the schema can change rapidly and may not be consistent between records.&nbsp; Semi-structured data is also sometimes called “self-describing” or “schema-less.”&nbsp;Big Data  models often assume the data or structure will vary constantly, and so they have this flexibility built into their product.&nbsp; MongoDB, for instance, has a flexible schema.&nbsp; XML is possibly the most common way to model semi-structured data.</p>
+
+<p>Unstructured data has no structure.&nbsp; It is data that can’t be structured in an RDBMS format or in a semi-structured format, something like a video or text blog.&nbsp; Hadoop is one way to process and analyze unstructured data. </p>
+
+
+</div>
+<script>
+getHeader('b1','../module4/metcs779_M4L2T01_DataandStructure.htm','body');
+</script>
+
+<div id="b2">
+
+
+<title>Extensible Markup Language (XML) and XQuery</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+<h1>Extensible Markup Language (XML) and XQuery</h1>
+<p>XML is a text-based meta-language that has become the standard way to transfer data between businesses over the internet, and modern DBMS such as Oracle have XML data types to facilitate the storage, query and retrieval of XML data. Both HTML and XML are based on the SGML (Standard Generalized Markup Language). XML allows the document to define tags, where HTML has a fixed set of tags, so XML is more flexible. HTML is designed to support the presentation of data such as web pages. XML is designed to facilitate the communication of data between different organizations. An XML document is self-describing, meaning that a user can tell what the format of an XML document is by examining the document. This is different than a binary or other opaque document format, where the recipient must know the encoding to parse the document. </p>
+<p>An XML document is organized as a tree data structure, with a single named node, or root, at the top and a hierarchy of named nodes beneath it - These named nodes can be either “elements” or “attributes”</p>
+<p> XML consists of tags, like HTML.&nbsp; But unlike HTML, which constrains the user to a set of known element names, an XML document can define its own names for elements.&nbsp; In this example, the element is named “student”:</p>
+<blockquote>
+<p class="code">&lt;student&gt;Harry Jones&lt;/student&gt;</p>
+</blockquote>
+<p> Each starting tag has a matching end tag and the tags are case sensitive.&nbsp; Tags define the elements. Key/value pairs define the attributes within the element.&nbsp; In this example, “student” is the name of the element, and “studentID” is an attribute.</p>
+<blockquote>
+<p class="code">&lt;student studentID="123"&gt;Harry Jones&lt;/student&gt;</p>
+</blockquote>
+<p> Data can be represented either as elements or as attributes.&nbsp; Best practices dictate that specifying an element is preferable if the data can be qualified further.&nbsp; For instance a “date” might be further broken down by month, day or year.&nbsp; In this case, it would be better to define date as an element.&nbsp; In the example given above, studentID will (probably) not be separated into different parts.&nbsp; If there’s any doubt about how the data will be used in the future, it’s best to define the data as an element.</p>
+<p>Tags can also be nested in a containing element as the “instructor” tag is nested within the “course” tag:</p>
+<blockquote>
+<p class="code">&lt;course&gt;<br>
+&lt;instructor&gt;Professor Schudy&lt;/instructor&gt;<br>
+&lt;/course&gt;</p>
+</blockquote>
+<p> The instructor tag starts and ends within the higher-level course tag. </p>
+<p>Repeating groups are valid in XML.&nbsp; For instance, in this example, there are multiple students listed for one course:</p>
+<blockquote>
+<p><span class="code">&lt;course&gt;<br>
+&lt;coursename&gt;CS779&lt;/coursename&gt;<br>
+&lt;instructor&gt;Professor Schudy&lt;/instructor&gt;<br>
+&lt;students&gt;<br>
+&lt;studentName&gt;Alice Brown&lt;/studentName&gt;<br>
+&lt;studentName&gt;Jane Jones&lt;/studentName&gt;<br>
+&lt;studentName&gt;John Q. Public&lt;/studentName&gt;<br>
+&lt;studentName&gt;Harry Smith&lt;/studentName&gt;<br>
+&lt;/students&gt;<br>
+&lt;/course&gt;</span><br>
+</p>
+</blockquote>
+<p>An XML document may refer to a Document Type Definition (DTD) document that defines the valid tags and the relationships between the data elements. A DTD is like a data dictionary or schema for the XML documents of its type. An XML Schema Document (XSD) is an alternative representation for the structure of a class of XML documents. XSD supports the definition of domain constraints and other features that are useful in data interchange, so XSD is replacing DTD.</p>
+<p>An XML document must be both well-formed and valid.&nbsp; </p>
+<ul>
+<li>To be well-formed, it must comply with certain rules, such as: The document starts with the XML declaration &lt;XML version=”1.0” encoding=”UTF8”</li>
+<li>There is a root element that contains all the other elements.&nbsp; In other words, the document starts with a tag for the root element, like &lt;course&gt; and ends with its ending tag, in this case, &lt;/course&gt;</li>
+<li>Elements cannot be overlapping.</li>
+<li>Attribute values must have quotes.&nbsp; They must be in the format name=”value”, like studentID=”123”.</li>
+<li>All start tags must have corresponding end tags.</li>
+</ul>
+<p>To be valid, the document also must conform to the structural rules of XML.&nbsp; In other words, it must conform to a DTD or to an XML Schema.&nbsp; These documents define the structures of an XML document in a similar way as the DDL defines the structure of an RDBMS table.<br>
+A DTD lists all the elements, and their structure, the attributes they contain, how they’re nested, etc.&nbsp; There are several different types of DTD declarations:</p>
+<ul>
+<li>Entity type declarations</li>
+<li>Attribute list declarations</li>
+<li>Entity declarations</li>
+</ul>
+<p>Element type declarations start with an exclamation mark and the keyword “ELEMENT”.&nbsp; The keyword #PCDATA indicates that the element contains text data that can be parsed.&nbsp; In other words, #PCDATA indicates that this is the text between the start and end tags.&nbsp; This is the way to declare an item element.</p>
+<blockquote>
+<p class="code">&lt;!ELEMENT ITEM #PCDATA&gt;</p>
+</blockquote>
+<p>Elements can be nested within an element group.&nbsp; If we want to say that there can be multiple item elements per order, we would use an asterisk to indicate the cardinality.&nbsp; The DTD declaration would look like this:</p>
+<blockquote>
+<p class="code">&lt;!ELEMENT ORDER (ITEM)*&gt;</p>
+</blockquote>
+<p>Note that ITEM would also be declared in the DTD as an element using PCDATA as above.</p>
+<p>Attribute type declarations are similar but start with an exclamation mark followed by the keyword “ATTLIST”.&nbsp; Attribute declarations have three main parts, a name, a type and possibly a default value. So an attribute declaration for “student” above would look like this:</p>
+<blockquote>
+<p class="code">&lt;!ATTLIST student studentID CDATA&gt;</p>
+</blockquote>
+<p>In this case, student is the element name, studentID is the attribute name, and CDATA is the attribute type.&nbsp; There are six different attribute types: CDATA, ID, IDREF, ENTITY, NMTOKEN or an enumerated type.&nbsp; The Connolly and Begg text describes these in more detail.&nbsp; </p>
+<p>A newer alternative to defining the structure of an XML document is called <em>XML Schema</em>. XML Schema has some advantages over DTDs. An XML schema is in XML syntax. Declarations in XML Schema require types, which can be predefined, like primitive types, or they can be user-defined custom types. XML Schema also allows for namespaces.</p>
+<p>An XML schema includes namespaces that identify the schema.&nbsp; &nbsp;The keywords, like “element” and “attribute” are defined in their own schema. The namespace definition starts with xmlns (xml namespace) followed by a prefix followed by the name of the namespace, like this:</p>
+<blockquote>
+<p class="code"> xmlns:xs="http://www.w3.org/2001/XMLSchema"</p>
+</blockquote>
+<p>Namespaces are in the same form as a URL or hyperlink, but namespaces don’t necessarily contain valid hyperlinks.&nbsp; The purpose of a namespace is to be able to qualify schema elements.</p>
+<p>More than one namespace can be included in the same XML schema.&nbsp; Using different namespaces allows the schema to access different or remote schemas. Each namespace has a different prefix so a type or element defined in one schema will not be confused with a type or element with the same name in the imported schema. In the examples below, the tags are prefixed with “xs” which is the standard prefix given above for the XML Schema.</p>
+<p>&nbsp;XML Schema has many built-in data types that resemble the primitive data types of other languages, like Java.&nbsp; These built-in types include boolean, string, decimal, float and date.&nbsp; The Connolly and Begg textbook describes these in more detail.</p>
+<p> An XML Schema can also include user-defined types, which can be either a “simpleType” or a “complexType”.</p>
+<p> A simpleType is based on either a built-in type with a restriction, or extension, or it can also be based on another simpleType.&nbsp; A restriction can be either a limit on the values or give a regular expression that the data must match.</p>
+<p>For instance, you’re the instructor and you want to record a student grade.&nbsp; You want the format to be something like 100.0, or 99.8.&nbsp; You can do this by restricting the decimal type with a pattern, like this:</p>
+<blockquote>
+<p class="code">&lt;xs:simpleType name=”grade”&gt;<br>
+&lt;xs:restriction base=”xs:decimal”&gt;<br>
+&lt;xs:pattern value=”[0-9]{3}.[0-9]”&gt;<br>
+&lt;/xs:restriction&gt;<br>
+&lt;/xs:simpleType&gt;</p>
+</blockquote>
+<p> In the example above, the “grade” must match the pattern of 3 integers, then a decimal point, followed by one number to the right of the decimal point.</p>
+<p>A complexType can be a collection of simpleTypes or elements or both.&nbsp; It is possible to define a specific sequence of elements.&nbsp; For instance, if you wanted&nbsp; to ensure that last name came before first name, you could create a nameType as a complexType and define it this way:</p>
+<blockquote>
+<p class="code">&lt;xs:complexType name="NameType"&gt;<br>
+&lt;xs:sequence&gt;<br>
+&lt;xs:element name="lastName" type="xs:string"/&gt;<br>
+&lt;xs:element name="firstName" type="xs:string"/&gt;<br>
+&lt;/xs:sequence&gt;<br>
+&lt;/xs:complexType&gt;</p> 
+</blockquote>
+<p>You could then use this NameType when you define other elements, like so:</p>
+<blockquote>
+
+<p class="code">&lt;xs:element name=”shipToName” type=”NameType”&gt;&lt;/xs:element&gt;<br>
+&lt;xs:element name=”billToName” type=”NameType”&gt;&lt;/xs:element&gt;</p>
+</blockquote>
+<p>While XML documents are readable and easily parsed, they are not exactly user friendly, so they are not normally presented to users as XML. The XML standards provide a separate way to define how XML data is to be presented, in the form of the Extensible Style Language (XSL). XSL includes the Extensible Style Language Transformations (XSLT) and XSL style sheets. XSLT is a flexible language for specifying transformations on XML documents, including data extraction and mapping to other documents, including HTML or XML. XSL style sheets specify the formatting to be applied to XML elements when they are presented to the user. XSLT documents thus specify XML processing operations and XSL style sheets specify how XML data is to be presented.</p>
+
+<div class="explorecenter">
+<h4>Note</h4>
+<p>In addition to our textbooks, MSDN has a very thorough and well-presented discussion of XML at <a href="http://msdn.microsoft.com/en-us/library/aa286548.aspx" target="_blank">http://msdn.microsoft.com/en-us/library/aa286548.aspx</a></p>
+</div>
+
+
+
+</div>
+<script>
+getHeader('b2','../module4/metcs779_M4L2T02_ExtensibleMarkupLanguageXMLandXQuery.htm','body');
+</script>
+
+<div id="b3">
+
+
+<title>Web Services</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Web Services</h1>
+
+<p>A web service is a communication between a client and server.&nbsp; It is comprised of reusable software components that are exchanged between client and server. Microsoft has an excellent definition of web services at <a href="http://msdn.microsoft.com/en-us/library/ms950421.aspx" target="_blank" title="http://msdn.microsoft.com/en-us/library/ms950421.aspx">http://msdn.microsoft.com/en-us/library/ms950421.aspx</a></p>
+
+<p>Web services extend the World Wide Web infrastructure to provide the means for software to connect to other software applications. Applications access Web services via ubiquitous Web protocols and data formats such as HTTP, XML, and SOAP, with no need to worry about how each Web service is implemented. Web services combine the best aspects of component-based development and the Web.</p>
+
+<p>XML is one of the most commonly used transfer mediums for these services. It is platform-independent and open standard, both of which make it ideal for using with web services.</p>
+
+<p>The Google Map API is one example of a web service. The client supplies a location to the service, and the Google map web service finds the latitude and longitude for that location, and returns a map.</p>
+
+<p> The server that makes the service available “publishes” the service, and the client application that accesses the service “consumes” the service.</p>
+
+
+</div>
+<script>
+getHeader('b3','../module4/metcs779_M4L2T03_WebServices.htm','body');
+</script>
+
+<div id="b4">
+
+
+<title>XPath and XQuery</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>XPath and XQuery</h1>
+
+<p>The World Wide Web Consortium (W3C) has defined two closely related query languages, XPath and XQuery, designed to operate against data represented in XML. The standards documents for these languages can be found at <a href="http://www.w3.org/TR/xquery/" target="_blank">http://www.w3.org/TR/xquery/</a>. To understand querying XML documents we first need to understand the structural relationship between relational tables and XML trees. XML documents are tree-structured, which is a generalization of relational data representation. This is illustrated in the following examples, where the structure of an XML document is represented first, and then a relational table storing the same data is represented.</p>
+<div class="image" style="width:650px" title="Copyright © Trustees of Boston University 2014. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders.">
+  <div class="title">Example XML to Represent Staff Information</div>
+  <p class="code">&lt;?xml version="1.0" encoding="UTF-8" standalone="no" ?&gt;<br>
+    &lt;?xml:stylesheet type="text/xsl" href="staff_list.xsl" ?&gt;<br>
+    &lt;!DOCTYPE STAFFLIST SYSTEM "staff_list.dtd"&gt;<br>
+    &lt;STAFFLIST&gt;<br>
+    &nbsp;&nbsp;&lt;STAFF branchNo="B005"&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;STAFFNO&gt;SL21&lt;/STAFFNO&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;NAME&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;FNAME&gt;John&lt;/FNAME&gt;&lt;LNAME&gt;White&lt;/LNAME&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/NAME&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;POSITION&gt;Manager&lt;/POSITION&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;DOB&gt;1945-10-01&lt;/DOB&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;SALARY&gt;30000&lt;/SALARY&gt;<br>
+    &nbsp;&nbsp;&lt;/STAFF&gt;<br>
+    &nbsp;&nbsp;&lt;STAFF branchNo="B003"&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;STAFFNO&gt;SG37&lt;/STAFFNO&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;NAME&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;FNAME&gt;Ann&lt;/FNAME&gt;&lt;LNAME&gt;Beech&lt;/LNAME&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/NAME&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;POSITION&gt;Assistant&lt;/POSITION&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;SALARY&gt;12000&lt;/SALARY&gt;<br>
+    &nbsp;&nbsp;&lt;/STAFF&gt;<br>
+    &lt;/STAFFLIST&gt;</p>
+  <div class="credit">After Connolly &amp; Begg (2015), p. 1092</div>
+</div>
+
+<table class="data">
+<caption>Nodes of the XML Document Represented as Tuples of a Relation (after Connolly &amp; Begg (2015), p. 1151)</caption>
+  <tbody><tr>
+    <th>nodeID</th>
+    <th>nodeType</th>
+    <th>nodeName</th>
+    <th>nodeData</th>
+    <th>parentID</th>
+    <th>rootID</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>Document</td>
+    <td>STAFFLIST</td>
+    <td></td>
+    <td></td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Element</td>
+    <td>STAFFLIST</td>
+    <td></td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Element</td>
+    <td>STAFF</td>
+    <td></td>
+    <td>1</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Element</td>
+    <td>STAFFNO</td>
+    <td></td>
+    <td>2</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Text</td>
+    <td></td>
+    <td>SL21</td>
+    <td>3</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Element</td>
+    <td>NAME</td>
+    <td></td>
+    <td>4</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Element</td>
+    <td>FNAME</td>
+    <td></td>
+    <td>5</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>Text</td>
+    <td></td>
+    <td>John</td>
+    <td>6</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>Element</td>
+    <td>LNAME</td>
+    <td></td>
+    <td>7</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>Text</td>
+    <td></td>
+    <td>White</td>
+    <td>8</td>
+    <td>0</td>
+  </tr>
+</tbody></table>
+
+<table class="data">
+<caption>Example Tuples in a (Denormalized) Index (after Connolly &amp; Begg (2015), p. 1151)</caption>
+  <tbody><tr>
+    <th>path</th>
+    <th>nodeID</th>
+    <th>parentID</th>
+  </tr>
+  <tr>
+    <td>/STAFFLIST</td>
+    <td>1</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>STAFFLIST</td>
+    <td>1</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>STAFFLIST/STAFF</td>
+    <td>2</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>STAFF</td>
+    <td>2</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>/STAFFLIST/STAFF/NAME</td>
+    <td>5</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>STAFFLIST/STAFF/NAME</td>
+    <td>5</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>STAFF/NAME</td>
+    <td>5</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>NAME</td>
+    <td>5</td>
+    <td>2</td>
+  </tr>
+</tbody></table>
+
+<p>XQuery is a generalization of SQL to tree-structured documents. XQuery is based on the W3C standard XPath, and the simplest kind of XQuery is an XPath expression such as.</p>
+
+<blockquote>
+<p class="code">document("family_recipes.xml")//recipe[title="Chard with garlic"]//ingredient[@amount]</p>
+</blockquote>
+
+<p>The result of this XQuery is a list of XML fragments, each rooted in an <span class="code">ingredient</span> element. The order in the list is the same as the order in the XML document family_recipies.xml. Recall that the order of the returned rows is indeterminate in SQL, so XQuery is different, because the XML specifies an order for child nodes in the tree, and XQuery respects this order.</p>
+
+<p>An XQuery may be an XML expression, in which case the expression evaluates to itself, so this is the way to specify XML literals in XQuery. XQuery's XML expressions may also include variables to be bound from the context, such as</p>
+
+<blockquote>
+<p class="code">&lt;facilitator empid="{$id}"&gt;<br>
+&lt;name&gt;{$name}&lt;/name&gt;<br>
+{$section}<br>
+&lt;deptno&gt;{$deptno}&lt;/deptno&gt;<br>
+&lt;/facilitator&gt;</p>
+</blockquote>
+
+<p>Here the variables <span class="code">$id, $name, $section,</span> and <span class="code">$deptno</span> must be bound to XML fragments. Between the braces can be any XQuery expression.</p>
+
+
+</div>
+<script>
+getHeader('b4','../module4/metcs779_M4L2T04_XPathandXQuery.htm','body');
+</script>
+
+<div id="b5">
+
+
+<title>FLWOR Expressions</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>FLWOR Expressions</h1>
+
+<p>The main syntax of XQuery is the FLWOR (pronounced “flower”) expression. FLWOR stands for “For-Let-Where-Order-Return.” FLWOR is a generalization of the Select-From-Where-Having syntax of SQL. Consider an example:</p>
+
+<blockquote>
+<p class="code">for $c in document("courses.xml")//coursecode<br>
+let $s:=document("sections.xml")//section[coursecode=$c]<br>
+where count($s) &gt;= 7<br>
+order by $c ascending<br>
+return<br>
+&lt;big-classes&gt;<br>
+{ $c,<br>
+&lt;numsections&gt;{count($s)}&lt;/numsections&gt;<br>
+}<br>
+&lt;/big-classes&gt;</p>
+</blockquote>
+<p>The following table describes what each of the FLWOR clauses does.</p>
+
+<table class="data">
+<tbody><tr>
+<th>Clause</th>
+<th>What it does</th>
+</tr>
+<tr>
+<td class="code">for</td>
+<td>Generates an ordered list of bindings of <span class="code">coursecode</span> values to <span class="code">$c</span>.</td>
+</tr>
+<tr>
+<td class="code">let</td>
+<td>Associates with each of these bindings a further binding of the list of sections elements with that course code to <span class="code">$s</span>. The result is an ordered list of duples of bindings of (<span class="code">$c,$s</span>).</td>
+</tr>
+<tr>
+<td class="code">where</td>
+<td>Filters that list to retain only the desired bindings where there are more than seven sections in the course.</td>
+</tr>
+<tr>
+<td class="code">order</td>
+<td>Sorts that list by the course name.</td>
+</tr>
+<tr>
+<td class="code">return</td>
+<td>Constructs for each tuple a resulting value consisting of the course code and the number of sections.</td>
+</tr>
+</tbody></table>
+
+<p>The result set of this query is a list of courses with at least 7 sections, sorted by course names. The <span class="code">for</span> and <span class="code">let</span> clauses may be used any number of times in any order, but only one <span class="code">where</span> clause is allowed, though that <span class="code">where</span> clause can have many conditions, as in SQL.</p>
+<p>The <span class="code">for</span> clause generates a list of bindings, while <span class="code">let</span> generates only a single binding. For example, the clause</p>
+<blockquote>
+<p class="code">for $c in /program/courses</p>
+</blockquote>
+<p>generates a list of bindings of $c to each course element in the program, but</p>
+<blockquote>
+<p class="code">let $c := /program/courses</p>
+</blockquote>
+<p>generates a single binding of $c to the list of courses in the program.</p>
+<p>XQuery is a full-featured request language that is more flexible than SQL. It allows joining of documents in the same way that SQL supports joining of tables using multiple for clauses and if-then-else in the return clause. XQuery has where clause constructs <em>some-in-satisfies</em>,  which is true if a predicate is true for any elements of the list, and <em>every-in-satisfies</em>, which is true if the predicate is true for all elements in the list. XQuery is a rather large language, with hundreds of built-in functions, which can be found at <a href="http://www.w3.org/TR/xpath-functions" target="_blank">http://www.w3.org/TR/xpath-functions</a>.</p>
+
+</div>
+<script>
+getHeader('b5','../module4/metcs779_M4L2T05_FLWORExpressions.htm','body');
+</script>
+
+<div id="b6">
+
+
+<title>XML Databases</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>XML Databases</h1>
+
+<p>There are two general kinds of databases that support XQuery</p>
+
+<ul>
+<li><strong><em>Native XML databases</em></strong> which are built from the ground up to support XML. These are generally startup efforts with weak security, transactions, scalability, recovery, etc., though they are maturing rapidly.<br></li>
+<li><strong><em>XML extensions to relational and object-relational databases</em></strong>. Most commercial RDBMS and ORDBMS support an XML data type and at least a subset of XQuery. Because these extensions combine relational technology they can be a little more complicated, but with care they can perform well, and they have all of the desirable properties of the mature databases of which they are extensions. The ability to support relational and XQuery operations in the same database improves flexibility and scalable performance.</li>
+</ul>
+
+<p>An XML document can be stored in a relational database by shredding it. In shredding there is one table for each element type, a unique id for each occurrence of each element with the ids of siblings ordered as in the XML document. There are explicit foreign key references from children to the parent elements to define the tree structure.</p>
+
+</div>
+<script>
+getHeader('b6','../module4/metcs779_M4L2T06_XMLDatabases.htm','body');
+</script>
+
+<div id="b7">
+
+
+<title>Native XML Databases</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Native XML Databases</h1>
+
+<p>XML databases can either be based on a <em>data-centric </em>or <em>document-centric</em> model.&nbsp; In a data-centric model, the data is extracted from the XML and stored in a structured format.&nbsp; XML is used as the transfer mechanism, but since the data has been extracted, any other form of transfer format could be used.</p>
+
+<p> In a document-centric model, or Native XML Database, the data is stored as an XML document.&nbsp; These databases retain the structure of the XML document.&nbsp;The document might be stored either as text, like in a BLOB in a relational database, or it could be stored in a “model-based format”.&nbsp;The model-based format might contain entities like “Elements”, “Attributes”, etc. that mimic the structure of the XML. The focus of the document-centric model is on the XML document itself, rather than on the business logic behind the data.</p>
+
+<p>An NXD is designed to store the document, and easily reconstruct the original document. These documents can be stored with any kind of underlying physical database, including relational or object-oriented databases, or its own proprietary structure. NXDs use XML commands, like XPath and XQuery. (Staken, 2001)</p>
+
+<p>Vendors of Native XML Databases include Oracle (Berkely DB XML), EMC (Documentum XDB), and there are some popular open-source versions as well, Sedna, and eXist. Check out <a href="http://www.rpbourret.com/xml/XMLDatabaseProds.htm#native" target="_blank">a more complete list of Native XML Databases</a>. (Bourret, 2010).</p>
+
+
+</div>
+<script>
+getHeader('b7','../module4/metcs779_M4L2T07_NativeXMLDatabases.htm','body');
+</script>
+
+<div id="b8">
+
+
+<title>XML APIs</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>XML APIs</h1>
+
+<p>To easily work with XML from programming languages we need support from portable Application Programming Interfaces (APIs) and libraries. The XML APIs <a href="http://www.w3.org/DOM/" target="_blank">DOM</a> and <a href="http://sax.sourceforge.net/" target="_blank">SAX</a> are supported by many programming languages. The DOM derivative <a href="http://www.jdom.org/" target="_blank">JDOM</a> is supported in Java.</p>
+
+<p>XML APIs provide interface programs and libraries to parse and process XML. They are based either on the document-object model (DOM), which builds a tree-based representation of the XML, or on the SAX (Simple API for XML) model, which is event-driven.&nbsp;DOM APIs are useful for manipulating the actual XML structure, while the SAX APIs are useful for parsing the data.</p>
+
+<p>A SAX model is event-driven, so as the program processes the document (reading from top to bottom), it handles each “event”.&nbsp; “START_DOCUMENT” is one event, for instance, that starts the parsing.&nbsp; The “START_ELEMENT” event causes the event handler to process an element, and to continue processing it until an “END_ELEMENT” event occurs when the closing tag is encountered&nbsp;&nbsp; &nbsp;In this example, for instance, the parser would record several events.</p>
+<blockquote>
+<p class="code">&lt;coursename&gt;CS779&lt;/coursename&gt;</p>
+</blockquote>
+
+<p>The events would include:</p>
+
+<ul>
+  <li><span class="code">START_ELEMENT</span> as the parser read <span class="code">&lt;coursename&gt;</span>. Getting the <em>Localname</em> value would return “coursename”.</li>
+  <li>  <span class="code">CHARACTERS</span> is the next event.&nbsp; This returns the text for that element.&nbsp; In this case “CS779”.</li>
+  <li>  <span class="code">END_ELEMENT</span> as the parser read <span class="code">&lt;/coursename&gt;</span>.&nbsp; Getting <em>Localname</em> here would again return the value “coursename”.</li>
+</ul>
+<p>SAX interfaces process the document from beginning to end and, as one event completes, it is no longer referenced by the parser.&nbsp; A DOM parser, on the other hand, recreates the structure of the XML “tree” starting at the root.&nbsp; So it is easier to reference other elements in the XML.</p>
+
+</div>
+<script>
+getHeader('b8','../module4/metcs779_M4L2T08_XMLAPIs.htm','body');
+</script>
+
+<div id="b9">
+
+
+<title>XML Services and Standards</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>XML Services and Standards</h1>
+
+<p>XML is the standard language for communications with and between web services. Most industries have published standard XML formats that are used by these services and by their clients. The machine and language independence of XML, and its self-describing character, its extensibility, its standardization, and other advantages have led to the rapid adoption of XML for data interchange between enterprises. Most industry standards bodies have now adopted XML standards for communication within their industries. The future promises additional support for XML in databases, and perhaps the emergence of new databases and database extensions that further extend the reach of XML and XQuery into databases.</p>
+
+
+</div>
+<script>
+getHeader('b9','../module4/metcs779_M4L2T09_XMLServicesandStandards.htm','body');
+</script>
+
+<header>Lecture 4B - Introduction to Business Intelligence</header>
+
+<div id="c1">
+
+
+<title>Business Intelligence Terminology</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Business Intelligence Terminology</h1>
+
+<p>The term <em>business intelligence</em> covers a range of information technology activities that support the understanding and management of the enterprise. Over the last forty years a substantial technology and vocabulary has developed for business intelligence. Many of the most important business intelligence terms are defined in the following table.</p>
+
+<table class="data">
+<tbody><tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+<tr>
+<td>DSS</td>
+<td>A <em>Decision Support System</em> is any system that is used to support management or operational decision-making, including a warehouse, mart, or data analysis system</td>
+</tr>
+<tr>
+<td>Data Warehouse</td>
+<td>An integrated, subject-oriented, time-variant, nonvolatile database that provides support for decision making</td>
+</tr>
+<tr>
+<td>Data Mart</td>
+<td>A DSS that supports a functional area, region or other part of an enterprise</td>
+</tr>
+<tr>
+<td>Business intelligence</td>
+<td>The technologies and their applications for decision support, including data warehousing and data mining</td>
+</tr>
+<tr>
+<td>ETL</td>
+<td><em>Extract, Transform and Load;</em> the processing that collects data from operational databases and other data sources, cleanses it, transforms it, summarizes it, and loads it into a data warehouse</td>
+</tr>
+<tr>
+<td>OLAP</td>
+<td><em>Online Analytic Processing;</em> any decision support processing that responds to the user on a time scale that permits timely repeated queries. OLAP is distinct from overnight and other offline analytic processing</td>
+</tr>
+<tr>
+<td>ROLAP</td>
+<td><em>Relational Online Analytic Processing;</em> an OLAP system built on a relational database management system</td>
+</tr>
+<tr>
+<td>Dimensional Schema</td>
+<td>A relational database design pattern with fact and dimension tables</td>
+</tr>
+<tr>
+<td>Star Schema</td>
+<td>Relational database design for data warehouses with one fact table and usually many dimension tables</td>
+</tr>
+<tr>
+<td>Snowflake Schema</td>
+<td>A star schema with additional tables supporting the dimensions, particularly scale hierarchies</td>
+</tr>
+<tr>
+<td>Constellation Schema</td>
+<td>A star or snowflake schema with multiple fact tables</td>
+</tr>
+<tr>
+<td>MOLAP</td>
+<td><em>Multidimensional Online Analytic Processing;</em> OLAP based on a multidimensional database management system</td>
+</tr>
+<tr>
+<td>Multidimensional DBMS (MDBMS)</td>
+<td>A DBMS based on techniques such as sparse array representations of data cubes. Distinct from RDBMS</td>
+</tr>
+<tr>
+<td>Trickle feed</td>
+<td>An emerging technique where DSS databases are updated nearly continuously from OLTP databases and other real-time data feeds</td>
+</tr>
+</tbody></table>
+
+
+</div>
+<script>
+getHeader('c1','../module4/metcs779_M4L3T01_BusinessIntelligenceTerminology.htm','body');
+</script>
+
+<div id="c2">
+
+
+<title>Differences between DSS Databases and OLTP Databases</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Differences between DSS Databases and OLTP Databases</h1>
+
+<p>The following table summarizes the many differences between online transaction processing databases and decision support databases.</p>
+
+<table class="data">
+<tbody><tr>
+<th>Characteristic</th>
+<th>Operational Databases</th>
+<th>DSS Databases</th>
+</tr>
+<tr>
+<td>Role in enterprise</td>
+<td>Value chain operations</td>
+<td>Decision support</td>
+</tr>
+<tr>
+<td>Organization</td>
+<td>Organized by application</td>
+<td>Organized by subject</td>
+</tr>
+<tr>
+<td>Request complexity</td>
+<td>Simple transactions</td>
+<td>Complex, free-form queries</td>
+</tr>
+<tr>
+<td>Request rate</td>
+<td>May be very high</td>
+<td>Relatively few</td>
+</tr>
+<tr>
+<td>DB rows accessed for each request</td>
+<td>Few rows accessed for each request</td>
+<td>Billions of rows may be accessed for each request</td>
+</tr>
+<tr>
+<td>Request latency</td>
+<td>Requests usually completed within milliseconds</td>
+<td>Requests may run for many minutes</td>
+</tr>
+<tr>
+<td>Data currency</td>
+<td>Dynamic, real-time data</td>
+<td>Usually data for pre-defined past periods such as days</td>
+</tr>
+<tr>
+<td>Optimization criteria</td>
+<td>Optimized for insert/update/delete</td>
+<td>Optimized for select</td>
+</tr>
+<tr>
+<td>Normalization</td>
+<td>Usually fully normalized</td>
+<td>Data may be stored redundantly at multiple levels of aggregation</td>
+</tr>
+<tr>
+<td>Time span</td>
+<td>Weeks to a year of data</td>
+<td>May have decades of data</td>
+</tr>
+<tr>
+<td>Database type</td>
+<td>Usually relational SQL databases</td>
+<td>May be relational, multidimensional, or both</td>
+</tr>
+<tr>
+<td>Indexing</td>
+<td>Lightly indexed to minimize update cost</td>
+<td>Heavily indexed to speed ad hoc queries</td>
+</tr>
+<tr>
+<td>Query types</td>
+<td>Transactional updates when in use</td>
+<td>Only queries when in use</td>
+</tr>
+<tr>
+<td>DB size</td>
+<td>Megabytes to a few gigabytes</td>
+<td>Gigabytes to hundreds of terabytes</td>
+</tr>
+<tr>
+<td>Data deletion</td>
+<td>Data have a finite lifetime</td>
+<td>Old data are never deleted</td>
+</tr>
+</tbody></table>
+
+<p>In the early days of databases decision support queries were run overnight against operational databases. These queries were usually crafted by the technical specialists in the nascent information technologies departments. To understand why these queries ran overnight, consider what a simple query might look like running against simple operational sales database.</p>
+
+<div class="examplecenter">
+<h4>Simple Operational Sales Database Query</h4>
+<blockquote>
+<pre>SELECT Category_Desc,
+DATEPART(year, oh.Order_Date) "Year",
+DATEPART(month,oh.Order_Date) "Month",
+sum(DISTINCT(1+Tax_Rate)*(Units_Sold*ol.Price)) TotSales
+FROM Order_Header oh, Order_Line ol,
+Store s, Product p, SubCategory sc,
+Category c
+WHERE oh.Order_Number = ol.Order_Number
+and oh.Store_Number = s.Store_Number
+and ol.product_ID = p.product_ID
+and p.product_ID = sc.product_ID
+and sc.subcategory_ID = c.subcategory_ID
+and Category_Desc = 'beverage'
+and DATEPART(year, oh.Order_Date) IN (2004, 2005)
+and DATEPART(month,oh.Order_Date) = 2
+GROUP BY Category_Desc, DATEPART(year,oh.Order_Date),
+DATEPART(month,oh.Order_Date)</pre>
+</blockquote>
+<strong>Note</strong>: This query uses SQL Server syntax.
+</div>
+
+<p>This query joins five tables, uses two function calls in the WHERE clause, and two in the GROUP BY clause. As we learned in week 2, without special features such as function indexes there is no efficient query plan for this query, and if the OLTP database against which it runs is of any size, it will take a long time to complete.</p>
+
+
+</div>
+<script>
+getHeader('c2','../module4/metcs779_M4L3T02_DifferencesbetweenDSSDatabasesandOLTPDatabases.htm','body');
+</script>
+
+<div id="c3">
+
+
+  <title>Dimensional Star Schema</title>
+  
+  <link href="./Module 4_files/local.css" rel="stylesheet" type="text/css">
+
+
+
+  <h1>Dimensional Star Schema</h1>
+  <p>Because management needed the ability to get the answers to questions more quickly, and because some queries just didn't run fast enough, people began looking for better database designs to support ad hoc decision support queries. Over time the dimensional design principles were developed that allow relational databases to efficiently support a wide range of ad hoc queries, even with very large databases. The following figure illustrates a dimensional star schema for the same problem.</p>
+  <table class="video">
+<tbody><tr><td><script src="./Module 4_files/2159741"></script>
+<div id="metcs779_W04_wrhs_sch" style="width: 525px; height: 331px;">metcs779_W04_wrhs_sch video cannot be displayed here</div>
+<script>
+kWidget.embed({
+"targetId": "metcs779_W04_wrhs_sch",
+"wid": "_2159741",
+"uiconf_id": 37822691,
+"flashvars": {
+"streamerType": "auto"
+},
+"cache_st": 1491572044,
+"entry_id": "1_ikrr5aso"
+});
+</script>
+<script>window.parent.document.querySelector('iframe').setAttribute('allowfullscreen',true);</script>
+<script src="./Module 4_files/embed.js.下载"></script>
+</td></tr>
+</tbody></table>
+
+
+  <p>Notice that there is one central <em>fact</em> table, and four <em>dimension</em> tables. The fact tables store data about business events, in this case sales line items. The dimension tables represent properties of those business events, in this case the time of the event, the location of the event, the customer, and the product. The fact table will have one row for each sales line item. If this is a table for the data warehouses of companies such as Sears Roebuck or McDonalds there are many billions of rows in these fact tables. There may be a row in the time dimension for each day for the last thirty years, but this is by comparison still a small table, with less than a million rows. Similarly there may be thousands of locations, which is by comparison a small number. There are also only thousands (not millions) of products offered by stores, so this dimension is also small compared to the sales line item fact. A large store may have millions of customers, but in a successful enterprise each customer has purchased many items, so this typically largest of dimensions is still small compared to the size of the fact tables.</p>
+  <p>Since typically 98% or more of the size of a star or other dimensional database is in the fact tables, there are major size, cost, and performance advantages in minimizing the size of the fact table by shortening the row length. That is part of what a good dimensional design does. The columns of the fact table that represent things such as the time of the sale, the store, the product, and the customer are represented as compact integers with foreign key references to the corresponding dimension tables. For example, instead of storing a long string such as a customer's name and address to identify the customer, we would typically store a three or four byte customer_id which references the appropriate row in the customer dimension table. Then the customer dimension table stores all of the attributes of the customer, such as their full name, address, phone number, credit card number, purchasing history, and demographics. Note that this is traditional normalization of the customer data from the fact table.</p>
+  <p>The fact table itself is not normalized in the way that an OLTP database is normalized. The fact table usually does have a primary key, which consists of the collection of dimension columns, which are colored in the figure above, so the fact table is usually in first normal form. But the non-key columns, which are uncolored in the figure above, are not normalized. There may be dependencies between the non-key columns, some of the non-key columns may depend on only part of the primary key, and in general there is no attempt to normalize the non-key columns. Dimensional schemas are optimized for query performance, and not for transaction performance. Dimensional schemas are not designed to enforce integrity constraints, so they are not used for OLTP operations.</p>
+  <p>The dimension tables in dimensional schemas are not normalized either. Dimensional tables typically include redundant information such as city, state, and postal code or date, day of week, month, quarter, and year. The attributes of the dimensions are designed to have the data that is needed to quickly identify the rows in the dimensions that are used in queries. The extra columns in the dimension tables does not have a significant effect on the size of the database, because the dimension tables are much smaller than the facts, and the extra columns in the dimension tables can substantially speed queries. For example, suppose that you are doing a marketing query against a 2 terabyte warehouse with 60 million customers, and you want to check how your sales on Tuesdays to male customers in New York compare to compare sales on Wednesdays, then it would speed your queries to have a day_of_week column in your time dimension, a state_code column in your location dimension, and a gender_code in your customer dimension.</p>
+  
+  
+<figure class="image" style="width:557px" title="Copyright © Trustees of Boston University 2014. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders.">
+<div class="title">OLTP Schema</div>
+<img src="./Module 4_files/metcs779_M5L3T03_OLTPSchema1.png" width="555" height="351" alt="">
+</figure>
+
+<p>Here is the same decision support query as earlier, against the dimensional schema:</p>
+
+<div class="examplecenter">
+<h4>Decision Support Query against the Dimensional Schema</h4>
+<pre>SELECT pd.Category_Desc, td.year, td.month, sum(sf.Total_Sale) TotSales
+FROM Sales_Fact sf, Product_Dim pd, Time_Dim td
+WHERE pd.Category_Desc = 'beverage'
+AND td.month = 12
+AND td.year IN(2004,2005)
+AND sf.Product_ID = pd.Product_ID
+AND sf.Time_ID = td.Time_ID
+GROUP BY pd.Category_Desc, td.year, td.month</pre>
+</div>
+
+ <p>Note that the query is much simpler, and that there are no function calls in the WHERE clauses. This query should complete within a few seconds against a well-implemented dimensional schema, even if the database is many terabytes in size.</p>
+ 
+ <div class="tipcenter">
+        <h4>Performance Tip</h4>
+      <p>The IN clause looks like a function call, but IN is part of SQL, so the optimizer understands it and doesn't need to treat it as a function call.</p></div>
+ 
+
+</div>
+<script>
+getHeader('c3','../module4/metcs779_M4L3T03_DimensionalStarSchema.htm','body');
+</script>
+
+<div id="c4">
+
+
+<title>Data Warehouses</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Data Warehouses</h1>
+
+<p>Data warehouses are part of a larger decision support infrastructure which is illustrated in the following figure.</p>
+
+<div class="image" style="width:535px" title="Copyright © Trustees of Boston University 2014. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders.">
+<div class="title">Data Warehouse Components</div>
+<img src="./Module 4_files/metcs779_M5L3T05_DataWarehouses1.png" width="533" height="345" alt="">
+</div>
+
+<p>From the figure you can see that data is loaded into data warehouses from operational (OLTP) databases and from other sources, which are often on the web. This processing to load the warehouses is usually referred to as Extract, Transform and Load, or ETL. ETL processing usually includes extracting the data from operational and other data sources, scrubbing to remove errors in the data, the computation and updating of aggregates such as daily and monthly summaries, transformation of the data into a dimensional or multidimensional form, and updating of the data warehouse database.</p>
+
+<p>The figure also shows how data marts are loaded from data warehouses. The data marts are often designed to support particular functional areas such as finance, marketing, production, or sales. One advantage of loading data marts from data warehouses are that this localizes in the warehouse ETL the often complex processing to extract, scrub and reorganize the data for decision support. The data is often loaded into the marts after the warehouse ETL cycle has finished for a day, using queries that fetch just the data needed by each mart. Data may also be loaded from the warehouse into the marts on demand in response to user requests. In this way the users of the marts have nearly interactive access to all of the data in the warehouses, without the costs of storing that data in the mart databases. When marts are fed from warehouses the marts do not each have to deal with the considerable complexity of extracting the data from diverse sources, scrubbing it, and transforming it into useful information.</p>
+
+
+</div>
+<script>
+getHeader('c4','../module4/metcs779_M4L3T04_DataWarehouses.htm','body');
+</script>
+
+<div id="c5">
+
+
+<title>Relational and Multidimensional Data Warehouses</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Relational and Multidimensional Data Warehouses</h1>
+
+<p>Data warehouses and data marts are implemented using both relational and multidimensional database technologies. We have discussed above the relational dimensional technology. There is also another set of related technologies which are termed <em>multidimensional</em>. Multidimensional databases are based on different ways of storing the information in a data cube. The following figure from the text illustrates a three-dimensional data cube for sales data. Most data cubes used in data analysis have more than three dimensions.</p>
+
+<div class="image" style="width:512px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 4_files/metcs779_W04L02_Fig12_13.gif" alt="" width="510" height="310"></div>
+
+<p>Presumably most products are not sold at most locations in most times, so that the data in the data cube is sparse; as the number of dimensions increases the sparsity increases. Early multidimensional databases used memory-resident sparse array techniques to store this data in main memory. This makes multidimensional databases very fast, because there is no I/O. It has also limited the size of multidimensional databases, and increased their RAM requirements. The following table compares relational and multidimensional databases.</p>
+
+<table class="data">
+<tbody><tr>
+<th>Characteristic</th>
+<th>Relational</th>
+<th>Multidimensional</th>
+</tr>
+<tr>
+<td>Storage</td>
+<td>Tables in a dimensional schema</td>
+<td>Data cubes</td>
+</tr>
+<tr>
+<td>Plasticity</td>
+<td>Dimensions and facts can be added at runtime</td>
+<td>Changes require rebuilding the cube</td>
+</tr>
+<tr>
+<td>Size scalability</td>
+<td>Up to hundreds of terabytes</td>
+<td>Small to medium only</td>
+</tr>
+<tr>
+<td>Standards</td>
+<td>Portability; ANSI/ISO standards</td>
+<td>Proprietary</td>
+</tr>
+<tr>
+<td>Ad hoc</td>
+<td>Supports ad hoc queries with any number of dimensions</td>
+<td>Predefined dimensions only</td>
+</tr>
+<tr>
+<td>Resources</td>
+<td>Runs well on symmetric multiprocessors</td>
+<td>Very high RAM requirements</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Good performance for all DB sizes, if well indexed</td>
+<td>Very fast for small databases that fit in RAM</td>
+</tr>
+</tbody></table>
+
+<div class="image" style="width:555px" title="Copyright © Trustees of Boston University 2014. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders.">
+<div class="title">The Common Criteria OLTP Database vs. Data Warehouse</div>
+<img src="./Module 4_files/metcs779_M5L3T06_RelationalandMultidimensionalDataWarehouses1.png" width="553" height="347" alt="">
+</div>
+
+
+</div>
+<script>
+getHeader('c5','../module4/metcs779_M4L3T05_RelationalandMultidimensionalDataWarehouses.htm','body');
+</script>
+
+<div id="c6">
+
+
+<title>How to Build a Data Warehouse</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>How to Build a Data Warehouse</h1>
+
+<div class="storycenter">
+<h4>Something to Keep in Mind</h4>
+<p>Most enterprises fail in their first attempt to build a data warehouse. If you are planning to build your first data warehouse follow the general guidance provided here, not the guidance in the text, and hire a consultant who is skilled in warehouse development. There are many technical and political challenges involved in building a data warehouse.</p>
+</div>
+
+<p>The basic steps for building a warehouse are to:</p>
+
+<ol>
+<li>Build the data warehouse as a sequence of snap-in data marts</li>
+<li>Learn the Business</li>
+<li>Design the Data Warehouse</li>
+<li>Design and Implement ETL Processes</li>
+<li>Choose User Tools for the marts</li>
+<li>Prototype using subsets of the data</li>
+</ol>
+
+<h2>Snap-in Data Marts</h2>
+
+<p>The best way to build a data warehouse is as a collection of “snap-in” data marts, rather than trying to build the data warehouse in one big project. This approach lets us start with the highest return on investment (ROI) functions. Do the ROI analysis and identify the best place to start.</p>
+
+<table class="data">
+<tbody><tr>
+<th colspan="2">The Process of Developing Snap-in Data Marts</th>
+</tr>
+<tr>
+<td>Define the Common Schema</td>
+<td>The process of developing snap-in data marts consists of defining common dimension tables and common time and other grains, and then defining the fact tables needed for the different marts. Then the process of adding a new mart only involves adding new columns to existing fact tables and/or adding new fact tables.</td>
+</tr>
+<tr>
+<td>Identify the Marts</td>
+<td>At this time it is good to identify the different snap-in marts that you plan to build, and to identify the facts and potentially additional dimensions or columns that those marts would require. This gives you a general design for the integrated data warehouse schema. You don't need to worry too much about the details of the fact tables, but you do need to identify their primary keys (to help identify duplicate fact tables). While you are doing this be careful to check that the time grain that you have chosen works for all of the potential marts. If the time grain that you choose for the data warehouse is smaller than some data marts require that will only cost a little processing. If some data marts later require a finer time grain than you chose for the data warehouse then to integrate the new marts you will need to reload all of the data in the data warehouse. Reloading a data warehouse from the raw data can take weeks, so it is best to avoid this.</td>
+</tr>
+</tbody></table>
+
+
+</div>
+<script>
+getHeader('c6','../module4/metcs779_M4L3T06_HowtoBuildaDataWarehouse.htm','body');
+</script>
+
+<div id="c7">
+
+
+<title>Learn the Business</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Learn the Business</h1>
+
+<p>Interview management and end users to determine what the real decision support requirements are. Be aware that sometimes the most important decision support needs or opportunities are not known to management. Choose the business processes (data marts). Start with the highest return on investment marts; when these marts are proven successful, you can then expand the warehouse to include other functional areas and marts. There is significant advantage in completing the warehouse to support cross-functional business intelligence, so try to keep working on the marts until the data required to make enterprise-level decisions is present in the emerging data warehouse.</p>
+
+<div class="storycenter">
+<h4>The Power of Data Warehouses</h4>
+<p>One of my clients was sure that they had no duplicates in their customer table, because they paid a firm each year to detect and remove any duplicates. The warehouse provided them with powerful means to identify duplicates, and they discovered that about twenty million of their sixty million customers were actually duplicates.</p>
+</div>
+
+<p>You should be aware of the business facts and dimensions as you learn the business, and should catalog and define them as you encounter them. Interview database and data administrators and learn the facts and dimensions that they use and all of the other things that they know about their data. Pay close attention to any known data problems, because you will need to cleanse the data of most problems before it enters the warehouse. Expect many more data problems than operational database people are aware of.</p>
+
+<p>You need to pay close attention to what users expect and need from the marts and warehouse. You also need to carefully set end-users' and management's expectations about what the marts and warehouse will accomplish, and how much effort it will require.</p>
+
+
+</div>
+<script>
+getHeader('c7','../module4/metcs779_M4L3T07_LearntheBusiness.htm','body');
+</script>
+
+<div id="c8">
+
+
+<title>Design the Data Warehouse</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Design the Data Warehouse</h1>
+
+<p>Now that we have learned the business, and identified the business facts and dimensions it is time to design, the data warehouse. From the business facts identify the facts that will go in the data warehouse. Determine the granularity of the business facts.</p>
+
+<p>From the business dimensions identify the dimensions that will go in the warehouse. Identify the dimension attributes and their descriptions. Identify the aggregations and any aggregation hierarchies such as a time hierarchy with days, months, and year aggregation scales.</p>
+
+<div class="tipcenter">
+<h4>On Weekly Time Grain</h4>
+<p>A one-week time grain is problematic in a time aggregation hierarchy, because weeks do not roll up cleanly into months. Hours roll up cleanly to days, days to months, and months to quarters and years. The scale ratio of about thirty between days and months is not usually a problem. Most operations on weeks are better met by a day of week column in a time dimension with a granularity of one day.</p>
+<h4>Choosing a time grain</h4>
+<p>Most businesses can function with a time grain of one day, but for businesses with important variations over time scales smaller than one day a finer time grain is required. For example, the warehouses for large restaurant chains such as MacDonald's may use a time grain as small as fifteen minutes, so that they can use the warehouse to accurately forecast the demand for their products through the day.</p>
+</div>
+
+<h2>Determine the Historical Duration of the Data Warehouse</h2>
+
+<p>The historical duration of a data warehouse is usually as long as there is data of useful quality available in computer-readable form. Sometimes it is worthwhile to add older paper records to the data warehouse by using optical character recognition and manual key-in.</p>
+
+<h2>Determine the Extract and Load Schedules</h2>
+
+<p>In earlier times the ETL was normally performed in the middle of the night, usually shortly after the OLTP systems had completed the last transactions for the previous day. With increasing competition and refinement of DSS systems the schedules are now often shorter, and may be as short as an hour or even nearly continuously, to capture the latest business trends and to support business processes such as real time supply chain management.</p>
+
+<p>As you are designing the schema you should be aware that industries have common facts and dimensions, so that your schema may be very similar to the schema of another enterprise in the same business area. Individual enterprises may have additional facts and dimensions that are not common within the industry, reflecting differentiating aspects of their business model. Individual users or uses of a mart or warehouse may require additional facts or dimensions, and it is common to add attributes to fact or dimension tables during the operational phase of a warehouse.</p>
+
+
+</div>
+<script>
+getHeader('c8','../module4/metcs779_M4L3T08_DesigntheDataWarehouse.htm','body');
+</script>
+
+<div id="c9">
+
+
+  <title>Example Star Schemas</title>
+  
+  <link href="./Module 4_files/local.css" rel="stylesheet" type="text/css">
+
+
+
+  <h1>Example Star Schemas</h1>
+  <p>In this section we illustrate the most basic fact and dimension tables found in warehouses and marts for some common business areas. Particular businesses in these business areas will usually have additional facts, dimensions and attributes.</p>
+<table class="video">
+<tbody><tr><td><script src="./Module 4_files/2159741"></script>
+<div id="metcs779_W04_groc_ex" style="width: 525px; height: 331px;">metcs779_W04_groc_ex video cannot be displayed here</div>
+<script>
+kWidget.embed({
+"targetId": "metcs779_W04_groc_ex",
+"wid": "_2159741",
+"uiconf_id": 37822691,
+"flashvars": {
+"streamerType": "auto"
+},
+"cache_st": 1491572044,
+"entry_id": "1_uiv745fz"
+});
+</script>
+<script>window.parent.document.querySelector('iframe').setAttribute('allowfullscreen',true);</script>
+<script src="./Module 4_files/embed.js(1).下载"></script></td></tr>
+</tbody></table>
+
+<p>Most of a typical retail dimensional schema is fairly obvious, but the promotion dimension may not be. Promotions of various kinds play a key role in the intensively competitive retail arenas. A promotion can increase the profits of a store not only by increasing the sales of the items that are being promoted, but also by attracting customers who buy other goods besides those which are being promoted. A promotion can also reduce profits, when a product on sale cannibalizes the sale of another more profitable product. Retail warehouses with a promotion dimension help managers determine how to best promote their businesses.</p>
+ <table class="video">
+<tbody><tr><td><script src="./Module 4_files/2159741"></script>
+<div id="metcs779_W04_ins_ex" style="width: 525px; height: 331px;">metcs779_W04_ins_ex video cannot be displayed here</div>
+<script>
+kWidget.embed({
+"targetId": "metcs779_W04_ins_ex",
+"wid": "_2159741",
+"uiconf_id": 37822691,
+"flashvars": {
+"streamerType": "auto"
+},
+"cache_st": 1491572044,
+"entry_id": "1_c1l3wr4p"
+});
+</script>
+<script>window.parent.document.querySelector('iframe').setAttribute('allowfullscreen',true);</script>
+<script src="./Module 4_files/embed.js(2).下载"></script></td></tr>
+</tbody></table>
+
+  <p>This schema for insurance businesses represents the basic business facts of operations on policies, with the ubiquitous time dimension, and dimensions for the policy and the item at risk such as a vehicle or life. The Name dimension can refer to the name of an individual such as someone covered by health insurance, or the name of a corporation or other legal entity.</p>
+
+
+</div>
+<script>
+getHeader('c9','../module4/metcs779_M4L3T09_ExampleStarSchemas.htm','body');
+</script>
+
+<div id="c10">
+
+
+<title>Design the ETL Processing</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Design the ETL Processing</h1>
+
+<p>During the interviews you have been identifying the data sources and any problems with the data that need to be cleansed. It is now time to design the processing that will extract that data from each of the sources, transform and scrub it, and load it into the mart or warehouse. Often 80 percent of all data warehouse effort occurs during this step of designing and debugging the ETL processing.</p>
+
+<p>It is important to realize that OLTP data must be cleansed before it is useful for decision support. In decision support we are often looking for ways to improve performance by a fraction of a percent, so small errors in the data can throw off the analysis and result in incorrect conclusions. For example, a source system may be missing a few percent of the data for a day; this can invalidate the results for any time periods that include that day, and any results that include that day in a baseline analysis.</p>
+
+<p>Plan the ETL processing carefully, taking into account the times when the data sources are available, the time required to extract the data, to transform it, and to load it. Consider carefully the relationships between the data mart and enterprise models. Develop a data dictionary that defines the identifiers for all entities, including facts, dimensions, and attributes in particular, and use those identifiers everywhere. Pay particular attention to cross-business boundaries, and the differences in the data formats, precision, and quality. In the mart or warehouse you will need to reconcile all of these differences. Investigate ETL tools such as Informatica, Platinum, Carleton, Prism, and Praxis.</p>
+
+<p>Finally, do a pilot with a representative subset of the data. Don't expect the pilot to work. There will be problems extracting the data. There will be problems with the data itself. When you have fixed the problems that you encountered with the small pilot, then try successively larger pilots until you have solved all of the problems and can ETL all of the data.</p>
+
+
+</div>
+<script>
+getHeader('c10','../module4/metcs779_M4L3T10_DesigntheETLProcessing.htm','body');
+</script>
+
+<div id="c11">
+
+
+<title>Select the End-user Tools for the Functional Area Marts</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Select the End-user Tools for the Functional Area Marts</h1>
+
+<p>There are many sophisticated end user tools for decision support for business functions such as finance, marketing, resource planning, sales, and production management. It is almost never cost effective to build this functionality, so it is usually best purchased in a tool. These tools have specific data requirements which must be considered in the schema and ETL designs. Therefore some of this end-user tool selection must be factored into the design of the schema.</p>
+
+<p>The development proceeds in phases, with the schema design and tool selections threading through the phases. The first phase is discovery, when you understand the business and document the facts, dimensions, and attributes. The data dictionary is one product of this phase. This phase usually produces a rough warehouse schema. The second phase is design, when the schema is defined to the create table level. During this phase the tools are also evaluated, and their fit to the schema, and the schema's fit to them, evaluated. The third phase is ETL design and piloting. During this phase more will be learned about the tools, and schema changes will occur. In the fourth phase the mart and emerging warehouse are loaded and the users begin to look at the data. In the fifth phase the mart or warehouse is used to verify the correctness of the data. This QA process continues through the life cycle of the DSS system, where we are always checking that anomalies are not due to incompletely scrubbed data.</p>
+
+
+</div>
+<script>
+getHeader('c11','../module4/metcs779_M4L3T11_SelecttheEnduserToolsfortheFunctionalAreaMarts.htm','body');
+</script>
+
+<div id="c12">
+
+
+<title>Prototype</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Prototype</h1>
+
+<p>It is important to try out your understanding and test the reality of the data by prototyping the data warehouse on subsets of the data. This is particularly important for the ETL. Prototyping gives you the opportunity to test the end-user tools on small subsets of the data early in the development, before the often lengthy process of loading all the data. Prototyping reduces risk by identifying problems as early as possible. Expect problems, and plan and budget for them, particularly in data cleansing.</p>
+
+
+</div>
+<script>
+getHeader('c12','../module4/metcs779_M4L3T12_Prototype.htm','body');
+</script>
+
+<div id="c13">
+
+
+<title>Summary of Data Warehouse Development</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Summary of Data Warehouse Development</h1>
+
+<p>The final figure summarizes the keys to successful Warehouse Development. Again, if this is your first warehouse, be sure to get help from someone who has been through this before.</p>
+
+<div class="image" style="width:502px" title="Copyright © Trustees of Boston University 2014. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders.">
+<div class="title">Keys to Successful Warehouse Development</div>
+<img src="./Module 4_files/metcs779_M5L3T14_SummaryofDataWarehouseDevelopment1.png" width="500" height="313" alt="">
+</div>
+
+
+</div>
+<script>
+getHeader('c13','../module4/metcs779_M4L3T13_SummaryofDataWarehouseDevelopment.htm','body');
+</script>
+
+<div id="c14">
+
+
+<title>Data Virtualization</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+<h1>Data Virtualization</h1> 
+  <p>A significant approach to  gathering data is rapidly emerging. The concept of Data Virtualization refers  to the use of a product or set of products to present data from disparate  sources as a unified collection. This basic idea is not especially new or  fresh; in loose terms, a data warehouse or mart could be considered a  virtualized solution. But the positioning of dedicated tools by major vendors  has given Data Virtualization a foothold in the information management  landscape, and its promise is a threat to traditional ETL workflows and data  warehouse approaches.</p>
+  
+  <h2>The Problem</h2>  
+  <p>In large measure, the  business value of data analytics has supplanted the technical value. This shift  has coincided with an enormous increase in data variety, volume and velocity,  and this growth will continue to skyrocket as we begin to embrace the "Internet  of Things". Another significant evolution has seen business intelligence usage  spread far beyond the highly trained and specialized "power users" of the past.  Instead, business users of all backgrounds, roles and skill sets have come to  leverage and expect business intelligence as a critical success factor. In the  recent past, this created a problematic gap between the rapidly changing needs  of business users and the ability for technical staff to prepare customized  data views and reports. To help bridge the gap, a proliferation of  user-friendly BI tool suites emerged in the 2000s that finally allowed business  users with limited technical or data skills to create self-service queries and  reports. But despite this step forward, a crucial problem remained unresolved:  data integration. The best and most efficient data warehouses still require  significant effort, expertise and expense to efficiently pull data from disparate  sources together. ETL processing, which is most often needed in data warehouse  workflows of even moderate complexity, is notoriously costly and difficult. In  many ways, the end users of the business data are still beholden to the  capability, expertise and capacity of technical staff just as they were when  custom reports had to be generated for them. It is in this environment that  Data Virtualization has emerged as a powerful solution to empower users while  reducing cost and complexity. </p>
+  
+  <h2>The Promise of Data  Virtualization</h2>
+  <p>Data Virtualization tools  are software products that run on dedicated servers. This technology presents  enormous potential by virtualizing both sources of data and the types of  sources of data. </p><p>
+  <u>Data Source Virtualization:</u> Data Virtualization tools to gather all disparate data and  present them in "virtualized" form, giving the end user the impression that all  of the data came from the same source. The underlying configuration of these  tools is typically the responsibility of BI data experts, as there is a great  deal of technical customization and tuning that can be done by those with  advanced knowledge of the product. Data owners and custodians can use the Data  Virtualization product to assemble, curate and package federated data views, though  the real power of Data Virtualization is that this responsibility is optional.  The end users of the data can choose to leverage curated data assemblies or  create their own views based on their individual needs and preferences. This  ability to create data "mashups" is an empowering, revolutionary advance that  fulfills the promise of shifting the value proposition of business intelligence  from the technical side to the business side. </p><p>
+  <u>Data Source Type  Virtualization:</u> Another challenge in  today's data economy is that data is much more than records in relational  databases. The "data lake" from which business users wish to transform data  into information is vast, and it includes not just RDBMS but NoSQL, Big Data  clusters, APIs, social media streams and more. It usually contains a mixture of  structured, semi-structured and unstructured data. A traditional data warehouse  is not well equipped to handle this diversity, but the prominent Data  Virtualization tools on the market can handle these various data sources with  relative ease. </p>
+  <h2>How Data Virtualization  Works</h2>
+ <p> Data Virtualization tools  use standards and widely accepted protocols. For example, an organization may  choose to expose its federated data via ODBC, JDBC, OData, web services, RSS  and more. This makes integration with popular BI tools easy and removes some of  the obstacles end users often face when attempting to hook their favorite BI  and data visualization tools up to external data sources. </p>
+<p>  Major vendors such as  Cisco, IBM and Informatica have significant investments in Data Virtualization  tools, and the technology is also the focus of Data Virtualization "pure play"  startups such as Denodo Technologies. </p><p>
+  Data Virtualization  products need not be considered as replacements for entrenched and functional  data warehouses, applications or tools. They can bring together these existing  systems without affecting the source systems in any way. But many organizations  will find that Data Virtualization may render legacy systems and processes  obsolete, with enormous cost-saving potential. For example, a large  organization that builds and maintains many ETL jobs to move data from source  systems into warehouses or other databases may discover that by pointing their  Data Virtualization software directly at the source systems, the need for ETL  processing is obviated because loading is no longer necessary. Extraction and  transformation can be handled by the Data Virtualization tool itself, or by end  users who wish to customize the transformation aspect of the target data. </p>
+<p>The following diagram from Denodo Technologies shows the role a Data  Virtualization product can fill:</p>
+
+<figure class="image" style="width:602px" title="Copyright © Trustees of Boston University 2015. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders.">
+<div class="title">Data Virtualization</div>
+<img src="./Module 4_files/metcs779_M5L3T14_DataVirtualization.png" width="600px" height="385px" alt="">
+<div class="credit">© Denodo Technologies,  http://www.denodo.com/sites/default/files/public/images/dv_architecture_design-time_simplified_0.png</div>
+</figure>
+
+</div>
+<script>
+getHeader('c14','../module4/metcs779_M4L3T14_DataVirtualization.htm','body');
+</script>
+
+<header>Extra Topic - Web Technology and DBMSs</header>
+
+<div id="a1">
+
+
+<title>Database Connectivity and Internet Databases</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Database Connectivity and Internet Databases</h1>
+<!--
+<table class="video">
+<tr><td><script src="https://cdnapisec.kaltura.com/p/2159741/sp/215974100/embedIframeJs/uiconf_id/37822691/partner_id/2159741"></script>
+<div id="metcs779_wk6" style="width: 525px; height: 331px;">metcs779_wk6 video cannot be displayed here</div>
+<script>
+kWidget.embed({
+"targetId": "metcs779_wk6",
+"wid": "_2159741",
+"uiconf_id": 37822691,
+"flashvars": {
+"streamerType": "auto"
+},
+"cache_st": 1491572044,
+"entry_id": "1_t9vk6boo"
+});
+</script>
+<script>window.parent.document.querySelector('iframe').setAttribute('allowfullscreen',true);</script>
+<script src="https://api.3playmedia.com/p/projects/10896/files/metcs779_wk6/embed.js?plugin=transcript&settings=height:300,width:525,skin:frost,can_collapse:true,can_print:true,can_download:true&player_type=kaltura&player_id=metcs779_wk6&usevideoid=1"></script></td></tr>
+</table>
+-->
+    
+<h2>Learning Outcomes</h2>
+<p>By reading this lesson, participating in discussions, and completing the assignments, you will be able to:</p>
+<ul>
+<li>Explain e-commerce and the effects of e-commerce on business<br></li>
+<li>Describe electronic commerce styles such as B2B and B2C<br></li>
+<li>Describe the architectural components required to conduct electronic commerce over the internet<br></li>
+<li>Describe database design and implementation issues for e-commerce applications<br></li>
+<li>Describe, read and produce Extensible Markup Language (XML) documents<br></li>
+<li>Describe the many roles of XML in modern e-business</li>
+<li>Understand different ways to create XML documents</li>
+<li>
+<p>Understand how to use XPATH and FLWOR to process XML documents in databases</p>
+</li>
+</ul>
+
+
+</div>
+<script>
+getHeader('a1','../module4/metcs779_M4L1T01_DatabaseConnectivityandInternetDatabases.htm','body');
+</script>
+
+<div id="a2">
+
+
+<title>Introduction to Internet Commerce</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Introduction to Internet Commerce</h1>
+
+<p>This material is provided for students who may not understand the technologies underlying internet business and internet databases.</p>
+
+<h2>What is internet commerce or e-commerce?</h2>
+
+<p><em><strong>Electronic commerce</strong></em> (also called <em>e-commerce</em> or <em>internet commerce</em>) is the use of electronic networked computer technology to market products and services and to improve the efficiency of business operations, including value chain integration. Most e-commerce transactions take place over the internet and between businesses, where they are used to automate and streamline business transactions. For example, many modern businesses automate their supply chains using e-commerce technology and the Internet. The many web-based retail businesses such as Amazon and EBay are based on electronic commerce technology. E-commerce is now a required part of essentially all competitive businesses, including retail, wholesale, manufacturing, and services.</p>
+
+
+</div>
+<script>
+getHeader('a2','../module4/metcs779_M4L1T02_IntroductiontoInternetCommerce.htm','body');
+</script>
+
+<div id="a3">
+
+
+<title>The History of E-Commerce</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>The History of E-Commerce</h1>
+
+<p>In the 1960s banks created private telephone networks for electronic funds transfer (EFT). In the late 1960s the ARPAnet was developed at Bolt Beranek and Newman, Inc. in Cambridge, Massachusetts under funding from the Advanced Research Projects Agency. This research produced the TCP (Transport Control Protocol) protocol suite. This was extended in a few years by the addition of the IP (Internet Protocols) protocols, which allow networks to communicate. The goal of this research was to develop a computer communications network that could survive nuclear attack. As it turned out those requirements are not far from what it takes today for a computer network to survive hackers and denial of service attacks, so it is not surprising that the TCP/IP protocols (commonly called the Internet protocols) became the de facto world standard for wide area communications.</p>
+
+<p>In the 1970s banks began to provide ATM services to their customers over their networks. In the late 1970s and early 1980s Electronic Data Interchange (EDI) emerged. EDI is a communications protocol that enabled companies to exchange business documents over telephone networks. This was a comparatively expensive technology so it has been largely replaced by Electronic Funds Transfer over the internet. In the early 1980s and through the 1990s business discovered the Internet and personal computers facilitated rapid expansion of the Internet. With the development of the World Wide Web the protocols were liberated from host-based addressing and liberated from the need to have specific applications on client machines. This led to very rapid growth of the internet and web. Internet technology advancement is continuing today with the emergence of improved security, sessions for the web, universal acceptance of XML and XML-based interchange standards, electronic retail and wholesale marketplaces, portal technology, and many other technologies that improve and extend the reach of the internet, web, and e-commerce.</p>
+
+
+</div>
+<script>
+getHeader('a3','../module4/metcs779_M4L1T03_TheHistoryofECommerce.htm','body');
+</script>
+
+<div id="a4">
+
+
+<title>The Impact of Internet Commerce</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>The Impact of Internet Commerce</h1>
+
+<p>The internet, web, and e-commerce have had a revolutionary effect on almost all enterprises. Most businesses that have survived the internet revolution have a web presence. The internet and web have reduced the barriers of geography and have created a highly competitive global market that has attracted and created millions of businesses and organizations.</p>
+
+<div class="summarycenter">
+<h4>Value Chain</h4>
+<p>The value chain of an enterprise is the sequence of steps from the inputs to the outputs that provide value to those whom the enterprise serves. For example the value chain of a grocery store extends from the ordering of the goods through to the checkout counter. The value chain does not include ancillary functions such as human resources, advertising, finance, or accounting.</p></div>
+
+<p>E-commerce and the internet not only link businesses with each other. For example, the internet is the normal way to implement near real time value chain integration.</p>
+
+<p>The Internet and web are mainly used within enterprises. For example a few years ago Ford Motor Company bought their employees personal computers so that they could access the company portal and so reduce the costs of things like mailing pay stubs, and improve employee integration into the business.</p>
+
+<h2>Intranets</h2>
+
+<p>Most internet use within enterprises is conducted over an intranet, which is an internet restricted to the enterprise. For example, as I write this I am at home, with my computer connected to the Boston University intranet using a virtual private network (VPN) connection that provides secure communication over the internet. What this means is that I have the same access to the University computer network and resources as if I were in my office.</p>
+
+<h2>Extranets</h2>
+
+<p>Extranets are intranets that allow access to other specific organizations. Extranets are frequently used in value chain integration between enterprises. For example, a manufacturer may allow their suppliers read-only access to their supplies inventory data so that the supplier can more efficiently implement just in time delivery. Similarly a manufacturer may allow their customers to read their production tracking data so that their customers can follow the progress of their orders. We will discuss the roles of the internet and databases in value chain integration in section.</p>
+
+
+</div>
+<script>
+getHeader('a4','../module4/metcs779_M4L1T04_TheImpactofInternetCommerce.htm','body');
+</script>
+
+<div id="a5">
+
+
+<title>Advantages, Disadvantages, and Risks</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Advantages, Disadvantages, and Risks</h1>
+
+<p>The internet and e-commerce have many advantages and a few disadvantages and risks. The Internet makes comparison shopping almost trivial, with websites that crawl for the best deals for us. This makes the internet a fiercely competitive marketplace. Because internet operations require none of the expensive real estate, buildings, or labor of traditional commerce, the costs of internet vendors are usually much lower, and prices on the internet are usually much less than from traditional suppliers. This has led to a situation where the internet vendors have become the low cost vendors in most markets where shipping is not a major cost. The head-to-head price competition has forced internet vendors to minimize all costs, so there is often essentially no support available from internet vendors. The internet marketplace is gradually maturing with different vendors providing different levels of price and support, but quality branding and market recognition are still in the early stages of development.</p>
+
+<p>The convenience and nonstop operation of most websites provide a significant advantage for most consumers. You can order from a web-based company from anyplace that has internet access, including aboard airliners, ships, and in many restaurants. This global access to a site, and the access of businesses to customers around the world, has made the Internet the largest marketplace the world has ever known. The size of this marketplace has been matched by a wealth of services that increase customer and vendor knowledge, and raise significant new issues of privacy.</p>
+<p>The internet and e-commerce pose significant, often hidden, risks for both the vendor and customer. One of these is hidden costs. It is not too difficult for a vendor to add up the costs of the goods, the cost of obtaining a customer, and the cost of delivering to a customer. Vendors can overlook their vulnerability to technical failures such as outages of their sites or the sites of their business partners. Vendors or their customers can be subject to attacks by hackers or infection by viruses, worms, or spyware. These can be very difficult and expensive to eradicate. Both vendor and customer must be aware of the security risks of internet business. Some of these risks are subtle, so both vendor and customer must pay a fairly high price to become sufficiently aware of the risks and how to avoid them. This makes internet-based business unsuitable for many customers. There are also genuine privacy issues in internet transactions, so both buyer and seller must be aware of these risks and how to minimize them. There are significant legal issues such as copyright and patent infringements in many internet transactions, and many of these legal issues have not been fully resolved in the courts. Finally, identity theft and fraud are growing e-commerce problems.</p>
+
+
+</div>
+<script>
+getHeader('a5','../module4/metcs779_M4L1T05_AdvantagesDisadvantagesandRisks.htm','body');
+</script>
+
+<div id="a6">
+
+
+<title>Internet Business Styles</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Internet Business Styles</h1>
+
+<p>Internet business transactions have been classified according to the kinds of entities that are parties to a transaction. This is summarized in the following table:</p>
+
+<table class="data">
+<tbody><tr>
+<th>Transaction Type</th>
+<th>Acronym</th>
+<th>Definition</th>
+</tr>
+<tr>
+<td>Business to business</td>
+<td>B2B</td>
+<td>Electronic commerce between businesses, sometimes over an extranet</td>
+</tr>
+<tr>
+<td>Business to consumer</td>
+<td>B2C</td>
+<td>E-commerce between business and consumers</td>
+</tr>
+<tr>
+<td>Consumer to business to consumer</td>
+<td>C2B2C</td>
+<td>Transactions between consumers mediated by a business such as eBay</td>
+</tr>
+<tr>
+<td>Business to business to consumer</td>
+<td>B2B2C</td>
+<td>Business conducted through a third-party business to a consumer.</td>
+</tr>
+<tr>
+<td>Intra-business</td>
+<td></td>
+<td>Internet activities within an enterprise, often over an intranet</td>
+</tr>
+<tr>
+<td>Government to consumer</td>
+<td>G2C</td>
+<td>Interchanges between government organizations and people</td>
+</tr>
+<tr>
+<td>Government to business</td>
+<td>G2B</td>
+<td>Interchanges between government organizations and businesses</td>
+</tr>
+</tbody></table>
+
+
+</div>
+<script>
+getHeader('a6','../module4/metcs779_M4L1T06_InternetBusinessStyles.htm','body');
+</script>
+
+<div id="a7">
+
+
+<title>Business to Business</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Business to Business</h1>
+
+<p>B2B transactions are the most common of the Internet business transactions.</p>
+
+<figure class="image" style="width:542px" title="Copyright © Trustees of Boston University 2015. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders.">
+<div class="title">E-Commerce Automation of Supply Chain</div>
+<img src="./Module 4_files/Week6Lecture1.gif" alt="" height="472" width="540"></figure>
+
+<p>The most successful businesses are closely coupled with their suppliers and customers using the internet. The consequences of a transaction such as a sale may ripple up the supply chain through several businesses, sometimes within a day. This close coupling reduces the capital and other costs of goods in the supply chain, the costs of unsold goods, the capital costs of goods, and the agility of the entire distributed enterprise. It also requires flexibility on the part of all partners. For example a customer may place a large order with the retailer in the figure. The retailer's computer systems place an order with their Distributor, who immediately informs the Manufacturer, who then immediately informs their suppliers of the additional materials required. The overall effects of this close integration are improving the responsiveness to consumer demand and minimizing the amount of raw material and manufactured goods in the supply chain. This allows the whole distributed enterprise to respond more quickly to changes in consumer demand and new products while minimizing the organizational lethargy and costs associated with the less responsive earlier approaches based on large inventories and paper-based order processing.</p>
+
+<p>Most B2B transactions are implemented over the internet using XML and related technologies, which we will study later in this chapter. XML technologies are directly supported in modern commercial DBMS such as Oracle, DB2, and Microsoft SQL Server.</p>
+
+
+</div>
+<script>
+getHeader('a7','../module4/metcs779_M4L1T07_BusinesstoBusiness.htm','body');
+</script>
+
+<div id="a8">
+
+
+<title>Business to Consumer</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Business to Consumer</h1>
+
+<p>You are all familiar with B2C websites that offer products, such as Amazon.com and Dell.com. There are also many B2C websites that offer services, such as Google.com and weather.com. The latter are usually free to the consumer, with the revenue provided through advertising, just as with commercial radio and television. Many service-oriented B2C sites, such as weather.com and Morningstar.com, also offer a premium subscription service.</p>
+
+
+</div>
+<script>
+getHeader('a8','../module4/metcs779_M4L1T08_BusinesstoConsumer.htm','body');
+</script>
+
+<div id="a9">
+
+
+<title>Consumer to Business to Consumer</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Consumer to Business to Consumer</h1>
+
+<p>There is a growing area where businesses and organizations provide services by connecting consumers or small businesses that wish to provide some product or service to consumers and small businesses that want that product or service. The pioneer and leading player in the C2B2C arena is eBay. There are many more markets in which this model has yet to expand. C2B2C has created new geographically large marketplaces in which almost anything can be traded efficiently between individuals and small businesses, with larger businesses and organizations as the low-cost intermediaries in the transactions. C2B2C has created the first reasonably efficient markets for uncommonly traded specialized items, so C2B2C has had a profound impact on tens of thousands of small markets. Today if someone wants to determine what something is worth and whether anyone wants to buy or sell something they commonly check on eBay or a more specialized C2B2C site. The economic, legal, regulatory and taxation implications of global C2B2C marketplaces are now being explored in society.</p>
+
+<p>C2B2C and its commercial and often overlapping cousin B2B2B are taking on the information aspects of traditional wholesale and retail distribution organizations. There are important differences between traditional. The overheads imposed by online C2B2C and B2B2B businesses are of the order of one percent of a transaction, where the overheads of traditional organizations that make matches between buyers and sellers include the 6% transaction overhead imposed by real estate agents and the more than 30% transaction overhead imposed by most traders in smaller markets such as antiques or collectables. The C2B2C revolution has just begun.</p>
+
+
+</div>
+<script>
+getHeader('a9','../module4/metcs779_M4L1T09_ConsumertoBusinesstoConsumer.htm','body');
+</script>
+
+<div id="a10">
+
+
+<title>Government, Education, and Other Organizations</title>
+
+<link href="./Module 4_files/local.css" rel="stylesheet">
+
+
+
+<h1>Government, Education, and Other Organizations</h1>
+
+<p>Organizations of all types have a web presence. The course, which you are now taking, is one example of the extent to which the internet and web have created new opportunities and made our lives better. As you have also undoubtedly noticed, the internet not only globalizes our activities, but also lets us work, trade, or study any hour of the day or night from anywhere that has internet access.</p>
+
+
+</div>
+<script>
+getHeader('a10','../module4/metcs779_M4L1T10_GovernmentEducationandOtherOrganizations.htm','body');
+</script>
+
+
+<div class="xl-chrome-ext-bar" id="xl_chrome_ext_{4DB361DE-01F7-4376-B494-639E489D19ED}" style="display: none;">
+      <div class="xl-chrome-ext-bar__logo"></div>
+
+      <a id="xl_chrome_ext_download" href="javascript:;" class="xl-chrome-ext-bar__option">下载视频</a>
+      <a id="xl_chrome_ext_close" href="javascript:;" class="xl-chrome-ext-bar__close"></a>
+    </div></body></html>
