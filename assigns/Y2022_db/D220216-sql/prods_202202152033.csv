@@ -1,0 +1,193 @@
+"prod_id","prod_cat","prod_grp","disp_size","chip","hd_storage","memory","price"
+aa01,Mac,MacBook Air,"13in",M1 8-Core,"256GB","8GB",899.00
+aa02,Mac,MacBook Air,"13in",M1 8-Core,"512GB","8GB",1079.00
+aa03,Mac,MacBook Air,"13in",M1 8-Core,"1TB","8GB",1259.00
+aa04,Mac,MacBook Air,"13in",M1 8-Core,"2TB","8GB",1819.00
+aa05,Mac,MacBook Air,"13in",M1 8-Core,"256GB","16GB",1079.00
+aa06,Mac,MacBook Air,"13in",M1 8-Core,"512GB","16GB",1259.00
+aa07,Mac,MacBook Air,"13in",M1 8-Core,"1TB","16GB",1439.00
+aa08,Mac,MacBook Air,"13in",M1 8-Core,"2TB","16GB",1999.00
+ab01,Mac,MacBook Pro,"13in",M1 8-Core,"256GB","8GB",1199.00
+ab02,Mac,MacBook Pro,"13in",M1 8-Core,"512GB","8GB",1399.00
+ab03,Mac,MacBook Pro,"13in",M1 8-Core,"1TB","8GB",1579.00
+ab04,Mac,MacBook Pro,"13in",M1 8-Core,"2TB","8GB",1939.00
+ab05,Mac,MacBook Pro,"13in",M1 8-Core,"256GB","16GB",1379.00
+ab06,Mac,MacBook Pro,"13in",M1 8-Core,"512GB","16GB",1579.00
+ab07,Mac,MacBook Pro,"13in",M1 8-Core,"1TB","16GB",1759.00
+ab08,Mac,MacBook Pro,"13in",M1 8-Core,"2TB","16GB",2119.00
+ab09,Mac,MacBook Pro,"14in",M1 Pro 8-Core,"512GB","16GB",1849.00
+ab10,Mac,MacBook Pro,"14in",M1 Pro 8-Core,"1TB","16GB",2029.00
+ab11,Mac,MacBook Pro,"14in",M1 Pro 8-Core,"2TB","16GB",2389.00
+ab12,Mac,MacBook Pro,"14in",M1 Pro 8-Core,"4TB","16GB",2929.00
+ab13,Mac,MacBook Pro,"14in",M1 Pro 8-Core,"8TB","16GB",4009.00
+ab14,Mac,MacBook Pro,"14in",M1 Pro 8-Core,"512GB","32GB",2209.00
+ab15,Mac,MacBook Pro,"14in",M1 Pro 8-Core,"1TB","32GB",2389.00
+ab16,Mac,MacBook Pro,"14in",M1 Pro 8-Core,"2TB","32GB",2749.00
+ab17,Mac,MacBook Pro,"14in",M1 Pro 8-Core,"4TB","32GB",3289.00
+ab18,Mac,MacBook Pro,"14in",M1 Pro 8-Core,"8TB","32GB",4369.00
+ab19,Mac,MacBook Pro,"14in",M1 Pro 10-Core,"512GB","16GB",2029.00
+ab20,Mac,MacBook Pro,"14in",M1 Pro 10-Core,"1TB","16GB",2209.00
+ab21,Mac,MacBook Pro,"14in",M1 Pro 10-Core,"2TB","16GB",2569.00
+ab22,Mac,MacBook Pro,"14in",M1 Pro 10-Core,"4TB","16GB",3109.00
+ab23,Mac,MacBook Pro,"14in",M1 Pro 10-Core,"8TB","16GB",4189.00
+ab24,Mac,MacBook Pro,"14in",M1 Pro 10-Core,"512GB","32GB",2389.00
+ab25,Mac,MacBook Pro,"14in",M1 Pro 10-Core,"1TB","32GB",2569.00
+ab26,Mac,MacBook Pro,"14in",M1 Pro 10-Core,"2TB","32GB",2929.00
+ab27,Mac,MacBook Pro,"14in",M1 Pro 10-Core,"4TB","32GB",3469.00
+ab28,Mac,MacBook Pro,"14in",M1 Pro 10-Core,"8TB","32GB",4549.00
+ab29,Mac,MacBook Pro,"14in",M1 Max 10-Core,"512GB","32GB",2659.00
+ab30,Mac,MacBook Pro,"14in",M1 Max 10-Core,"1TB","32GB",2839.00
+ab31,Mac,MacBook Pro,"14in",M1 Max 10-Core,"2TB","32GB",3199.00
+ab32,Mac,MacBook Pro,"14in",M1 Max 10-Core,"4TB","32GB",3739.00
+ab33,Mac,MacBook Pro,"14in",M1 Max 10-Core,"8TB","32GB",4819.00
+ab34,Mac,MacBook Pro,"14in",M1 Max 10-Core,"512GB","64GB",3019.00
+ab35,Mac,MacBook Pro,"14in",M1 Max 10-Core,"1TB","64GB",3199.00
+ab36,Mac,MacBook Pro,"14in",M1 Max 10-Core,"2TB","64GB",3559.00
+ab37,Mac,MacBook Pro,"14in",M1 Max 10-Core,"4TB","64GB",4099.00
+ab38,Mac,MacBook Pro,"14in",M1 Max 10-Core,"8TB","64GB",5179.00
+ab39,Mac,MacBook Pro,"16in",M1 Pro 10-Core,"512GB","16GB",2299.00
+ab40,Mac,MacBook Pro,"16in",M1 Pro 10-Core,"1TB","16GB",2479.00
+ab41,Mac,MacBook Pro,"16in",M1 Pro 10-Core,"2TB","16GB",2839.00
+ab42,Mac,MacBook Pro,"16in",M1 Pro 10-Core,"4TB","16GB",3379.00
+ab43,Mac,MacBook Pro,"16in",M1 Pro 10-Core,"8TB","16GB",4459.00
+ab44,Mac,MacBook Pro,"16in",M1 Pro 10-Core,"512GB","32GB",2659.00
+ab45,Mac,MacBook Pro,"16in",M1 Pro 10-Core,"1TB","32GB",2839.00
+ab46,Mac,MacBook Pro,"16in",M1 Pro 10-Core,"2TB","32GB",3199.00
+ab47,Mac,MacBook Pro,"16in",M1 Pro 10-Core,"4TB","32GB",3739.00
+ab48,Mac,MacBook Pro,"16in",M1 Pro 10-Core,"8TB","32GB",4819.00
+ab49,Mac,MacBook Pro,"16in",M1 Max 10-Core,"512GB","32GB",2839.00
+ab50,Mac,MacBook Pro,"16in",M1 Max 10-Core,"1TB","32GB",3019.00
+ab51,Mac,MacBook Pro,"16in",M1 Max 10-Core,"2TB","32GB",3379.00
+ab52,Mac,MacBook Pro,"16in",M1 Max 10-Core,"4TB","32GB",3919.00
+ab53,Mac,MacBook Pro,"16in",M1 Max 10-Core,"8TB","32GB",4999.00
+ab54,Mac,MacBook Pro,"16in",M1 Max 10-Core,"512GB","64GB",3199.00
+ab55,Mac,MacBook Pro,"16in",M1 Max 10-Core,"1TB","64GB",3379.00
+ab56,Mac,MacBook Pro,"16in",M1 Max 10-Core,"2TB","64GB",3739.00
+ab57,Mac,MacBook Pro,"16in",M1 Max 10-Core,"4TB","64GB",4279.00
+ab58,Mac,MacBook Pro,"16in",M1 Max 10-Core,"8TB","64GB",5359.00
+ac01,Mac,iMac,"24in",M1 8-Core,"256GB","8GB",1249.00
+ac02,Mac,iMac,"24in",M1 8-Core,"512GB","8GB",1429.00
+ac03,Mac,iMac,"24in",M1 8-Core,"1TB","8GB",1609.00
+ac04,Mac,iMac,"24in",M1 8-Core,"2TB","8GB",1969.00
+ac05,Mac,iMac,"24in",M1 8-Core,"256GB","16GB",1429.00
+ac06,Mac,iMac,"24in",M1 8-Core,"512GB","16GB",1609.00
+ac07,Mac,iMac,"24in",M1 8-Core,"1TB","16GB",1789.00
+ac08,Mac,iMac,"24in",M1 8-Core,"2TB","16GB",2149.00
+ac09,Mac,iMac,"27in",i5 3.1GHz 6-Core,"256GB","8GB",1699.00
+ac10,Mac,iMac,"27in",i5 3.1GHz 6-Core,"256GB","16GB",1879.00
+ac11,Mac,iMac,"27in",i5 3.1GHz 6-Core,"256GB","32GB",2239.00
+ac12,Mac,iMac,"27in",i5 3.1GHz 6-Core,"256GB","64GB",2599.00
+ac13,Mac,iMac,"27in",i5 3.1GHz 6-Core,"256GB","128GB",4039.00
+ac14,Mac,iMac,"27in",i5 3.3GHz 6-Core,"512GB","8GB",1899.00
+ac15,Mac,iMac,"27in",i5 3.3GHz 6-Core,"512GB","16GB",2079.00
+ac16,Mac,iMac,"27in",i5 3.3GHz 6-Core,"512GB","32GB",2439.00
+ac17,Mac,iMac,"27in",i5 3.3GHz 6-Core,"512GB","64GB",2799.00
+ac18,Mac,iMac,"27in",i5 3.3GHz 6-Core,"512GB","128GB",4239.00
+ac19,Mac,iMac,"27in",i7 3.8GHz 8-Core,"512GB","8GB",2099.00
+ac20,Mac,iMac,"27in",i7 3.8GHz 8-Core,"512GB","16GB",2279.00
+ac21,Mac,iMac,"27in",i7 3.8GHz 8-Core,"512GB","32GB",2639.00
+ac22,Mac,iMac,"27in",i7 3.8GHz 8-Core,"512GB","64GB",2999.00
+ac23,Mac,iMac,"27in",i7 3.8GHz 8-Core,"512GB","128GB",4439.00
+ac24,Mac,iMac,"27in",i9 3.6GHz 10-Core,"512GB","8GB",2459.00
+ac25,Mac,iMac,"27in",i9 3.6GHz 10-Core,"512GB","16GB",2639.00
+ac26,Mac,iMac,"27in",i9 3.6GHz 10-Core,"512GB","32GB",2999.00
+ac27,Mac,iMac,"27in",i9 3.6GHz 10-Core,"512GB","64GB",3359.00
+ac28,Mac,iMac,"27in",i9 3.6GHz 10-Core,"512GB","128GB",4799.00
+ad01,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"256GB","32GB",5599.00
+ad02,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"256GB","48GB",5869.00
+ad03,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"256GB","96GB",6499.00
+ad04,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"256GB","192GB",8299.00
+ad05,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"1TB","32GB",5959.00
+ad06,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"1TB","48GB",6229.00
+ad07,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"1TB","96GB",6859.00
+ad08,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"1TB","192GB",8659.00
+ad09,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"2TB","32GB",6319.00
+ad10,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"2TB","48GB",6589.00
+ad11,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"2TB","96GB",7219.00
+ad12,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"2TB","192GB",9019.00
+ad13,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"4TB","32GB",6859.00
+ad14,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"4TB","48GB",7129.00
+ad15,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"4TB","96GB",7759.00
+ad16,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"4TB","192GB",9559.00
+ad17,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"8TB","32GB",7939.00
+ad18,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"8TB","48GB",8209.00
+ad19,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"8TB","96GB",8839.00
+ad20,Mac,Mac Pro,,Xeon W 3.5GHz 8-Core,"8TB","192GB",10639.00
+ad21,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"256GB","32GB",6499.00
+ad22,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"256GB","48GB",6769.00
+ad23,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"256GB","96GB",7399.00
+ad24,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"256GB","192GB",9199.00
+ad25,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"1TB","32GB",6859.00
+ad26,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"1TB","48GB",7129.00
+ad27,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"1TB","96GB",7759.00
+ad28,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"1TB","192GB",9559.00
+ad29,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"2TB","32GB",7219.00
+ad30,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"2TB","48GB",7489.00
+ad31,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"2TB","96GB",8119.00
+ad32,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"2TB","192GB",9919.00
+ad33,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"4TB","32GB",7759.00
+ad34,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"4TB","48GB",8029.00
+ad35,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"4TB","96GB",8659.00
+ad36,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"4TB","192GB",10459.00
+ad37,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"8TB","32GB",8839.00
+ad38,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"8TB","48GB",9109.00
+ad39,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"8TB","96GB",9739.00
+ad40,Mac,Mac Pro,,Xeon W 3.3GHz 12-Core,"8TB","192GB",11539.00
+ae01,Mac,Mac mini,,M1 8-Core,"256GB","8GB",649.00
+ae02,Mac,Mac mini,,M1 8-Core,"512GB","8GB",849.00
+ae03,Mac,Mac mini,,M1 8-Core,"1TB","8GB",1029.00
+ae04,Mac,Mac mini,,M1 8-Core,"2TB","8GB",1389.00
+ae05,Mac,Mac mini,,M1 8-Core,"256GB","16GB",829.00
+ae06,Mac,Mac mini,,M1 8-Core,"512GB","16GB",1029.00
+ae07,Mac,Mac mini,,M1 8-Core,"1TB","16GB",1209.00
+ae08,Mac,Mac mini,,M1 8-Core,"2TB","16GB",1569.00
+ba01,iPad,iPad Pro,"11in",M1,"128GB","8GB",749.00
+ba02,iPad,iPad Pro,"11in",M1,"256GB","8GB",849.00
+ba03,iPad,iPad Pro,"11in",M1,"512GB","8GB",999.00
+ba04,iPad,iPad Pro,"11in",M1,"1TB","16GB",1399.00
+ba05,iPad,iPad Pro,"11in",M1,"2TB","16GB",1799.00
+ba06,iPad,iPad Pro,"12.9in",M1,"128GB","8GB",999.00
+ba07,iPad,iPad Pro,"12.9in",M1,"256GB","8GB",1099.00
+ba08,iPad,iPad Pro,"12.9in",M1,"512GB","8GB",1299.00
+ba09,iPad,iPad Pro,"12.9in",M1,"1TB","16GB",1699.00
+ba10,iPad,iPad Pro,"12.9in",M1,"2TB","16GB",2099.00
+bb01,iPad,iPad Air,"10.9in",A14 Bionic,"64GB",,549.00
+bb02,iPad,iPad Air,"10.9in",A14 Bionic,"256GB",,699.00
+bc01,iPad,iPad,"10.2in",A13 Bionic,"64GB",,309.00
+bc02,iPad,iPad,"10.2in",A13 Bionic,"256GB",,459.00
+bd01,iPad,iPad mini,"8.3in",A15 Bionic,"64GB",,449.00
+bd02,iPad,iPad mini,"8.3in",A15 Bionic,"256GB",,599.00
+ca01,iPhone,iPhone 13 Pro,"6.1in",A15 Bionic,"128GB",,999.00
+ca02,iPhone,iPhone 13 Pro,"6.1in",A15 Bionic,"256GB",,1099.00
+ca03,iPhone,iPhone 13 Pro,"6.1in",A15 Bionic,"512GB",,1299.00
+ca04,iPhone,iPhone 13 Pro,"6.1in",A15 Bionic,"1TB",,1499.00
+ca05,iPhone,iPhone 13 Pro Max,"6.7in",A15 Bionic,"128GB",,1099.00
+ca06,iPhone,iPhone 13 Pro Max,"6.7in",A15 Bionic,"256GB",,1199.00
+ca07,iPhone,iPhone 13 Pro Max,"6.7in",A15 Bionic,"512GB",,1399.00
+ca08,iPhone,iPhone 13 Pro Max,"6.7in",A15 Bionic,"1TB",,1599.00
+ca09,iPhone,iPhone 13,"6.1in",A15 Bionic,"128GB",,799.00
+ca10,iPhone,iPhone 13,"6.1in",A15 Bionic,"256GB",,899.00
+ca11,iPhone,iPhone 13,"6.1in",A15 Bionic,"512GB",,1099.00
+ca12,iPhone,iPhone 13 mini,"5.4in",A15 Bionic,"128GB",,699.00
+ca13,iPhone,iPhone 13 mini,"5.4in",A15 Bionic,"256GB",,799.00
+ca14,iPhone,iPhone 13 mini,"5.4in",A15 Bionic,"512GB",,999.00
+cb01,iPhone,iPhone 12,"6.1in",A14 Bionic,"128GB",,699.00
+cb02,iPhone,iPhone 12,"6.1in",A14 Bionic,"256GB",,749.00
+cb03,iPhone,iPhone 12,"6.1in",A14 Bionic,"512GB",,849.00
+cb04,iPhone,iPhone 12 mini,"5.4in",A14 Bionic,"128GB",,599.00
+cb05,iPhone,iPhone 12 mini,"5.4in",A14 Bionic,"256GB",,649.00
+cb06,iPhone,iPhone 12 mini,"5.4in",A14 Bionic,"512GB",,749.00
+cc01,iPhone,iPhone SE,"4.7in",A13 Bionic,"64GB",,399.00
+cc02,iPhone,iPhone SE,"4.7in",A13 Bionic,"128GB",,449.00
+cd01,iPhone,iPhone 11,"6.1in",A13 Bionic,"64GB",,499.00
+cd02,iPhone,iPhone 11,"6.1in",A13 Bionic,"128GB",,549.00
+da01,Watch,Apple Watch Series 7 Aluminum,"41mm",,,,399.00
+da02,Watch,Apple Watch Series 7 Aluminum,"45mm",,,,429.00
+da03,Watch,Apple Watch Series 7 Stainless Steel,"41mm",,,,749.00
+da04,Watch,Apple Watch Series 7 Stainless Steel,"45mm",,,,799.00
+da05,Watch,Apple Watch Series 7 Titanium,"41mm",,,,849.00
+da06,Watch,Apple Watch Series 7 Titanium,"45mm",,,,899.00
+db01,Watch,Apple Watch SE,"40mm",,,,279.00
+db02,Watch,Apple Watch SE,"44mm",,,,309.00
+dc01,Watch,Apple Watch Series 3,"38mm",,,,199.00
+dc02,Watch,Apple Watch Series 3,"42mm",,,,229.00

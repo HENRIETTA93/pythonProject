@@ -1,0 +1,274 @@
+"store_id","store_name","city","st","lat","lng"
+R000,apple.com,,,,
+R001,Glendale Galleria,Glendale,CA,34.14533,-118.25845
+R002,Palo Alto,Palo Alto,CA,37.44637,-122.16077
+R003,Bellevue Square,Bellevue,WA,47.616327,-122.2042
+R004,South Coast Plaza,Costa Mesa,CA,33.6921,-117.89322
+R006,Lenox Square,Atlanta,GA,33.847941,-84.363533
+R007,Mall Of America,Minneapolis,MN,44.8543,-93.244386
+R009,Easton Town Center,Columbus,OH,40.054068,-82.914958
+R011,Marketstreet,Lynnfield,MA,42.51559068,-71.03424696
+R012,The Falls,Miami,FL,25.64371956,-80.33814594
+R013,Tice's Corner,Woodcliff Lake,NJ,41.04191006,-74.07516964
+R014,Broadway Plaza,Walnut Creek,CA,37.896525,-122.059297
+R015,Fashion Island,Newport Beach,CA,33.61509123,-117.8752529
+R016,Walden Galleria,Buffalo,NY,42.914661,-78.762075
+R017,Crossgates,Albany,NY,42.68902,-73.849222
+R018,Woodfield,Schaumburg,IL,42.0456619,-88.0388
+R019,International Plaza,Tampa,FL,27.96408,-82.51952
+R020,Saddle Creek,Germantown,TN,35.09344,-89.812433
+R021,Cambridgeside,Cambridge,MA,42.367932,-71.075913
+R022,Rosedale Center,Saint Paul,MN,45.012576,-93.173237
+R023,Northridge,Northridge,CA,34.23961761,-118.5560731
+R024,Wellington Green,Wellington,FL,26.647028,-80.208856
+R025,Westfarms,Farmington,CT,41.72275803,-72.76451306
+R026,Chandler Fashion Center,Chandler,AZ,33.302255,-111.89969
+R027,Rockingham Park,Salem,NH,42.767197,-71.231989
+R028,Kenwood Towne Centre,Cincinnati,OH,39.201632,-84.37789
+R029,Burlingame,Burlingame,CA,37.57827,-122.34708
+R030,Aspen Grove,Littleton,CO,39.585168,-105.026
+R031,Scottsdale Fashion Square,Scottsdale,AZ,33.50367,-111.9266
+R032,Soho,New York,NY,40.725058,-73.999037
+R033,Stonestown,San Francisco,CA,37.72721492,-122.4769552
+R034,Pasadena,Pasadena,CA,34.14576588,-118.1515861
+R035,Michigan Avenue,Chicago,IL,41.88929,-87.6237
+R036,Clarendon,Arlington,VA,38.88792904,-77.09104298
+R039,Valley Fair,Santa Clara,CA,37.324585,-121.946497
+R040,Fashion Valley,San Diego,CA,32.76846587,-117.1658323
+R041,Twelve Oaks,Novi,MI,42.4924,-83.4704
+R042,Knox Street,Dallas,TX,32.82254,-96.78791
+R043,Short Hills,Short Hills,NJ,40.740099,-74.36499
+R044,Santa Rosa Plaza,Santa Rosa,CA,38.43843981,-122.7164186
+R046,Nanuet,Nanuet,NY,41.0956,-74.0162
+R047,Cherry Creek,Denver,CO,39.717437,-104.95492
+R049,Southpoint,Durham,NC,35.905106,-78.943003
+R050,The Grove,Los Angeles,CA,34.07143,-118.357469
+R051,Third Street Promenade,Santa Monica,CA,34.01532814,-118.4954292
+R052,Infinite Loop,Cupertino,CA,37.331423,-122.030503
+R053,Millenia,Orlando,FL,28.486,-81.43174
+R054,Southdale,Minneapolis,MN,44.880785,-93.324933
+R055,Somerset,Troy,MI,42.563,-83.18337
+R056,Oakbrook,Oak Brook,IL,41.84972,-87.9537
+R057,Bay Street,Emeryville,CA,37.83475,-122.29224
+R058,Houston Galleria,Houston,TX,29.73906103,-95.46440984
+R059,Mayfair,Milwaukee,WI,43.06355,-88.04479
+R060,Roosevelt Field,Garden City,NY,40.73797421,-73.61230799
+R061,The Westchester,White Plains,NY,41.031788,-73.760351
+R062,West County,Saint Louis,MO,38.601199,-90.447078
+R063,Towson Town Center,Towson,MD,39.40371,-76.60004
+R064,Fashion Show,Las Vegas,NV,36.127508,-115.173007
+R065,King Of Prussia,King Of Prussia,PA,40.088174,-75.391134
+R066,The Fashion Mall At Keystone,Indianapolis,IN,39.9141,-86.11181
+R067,Menlo Park,Edison,NJ,40.549111,-74.335811
+R068,Walt Whitman,Huntington Station,NY,40.821498,-73.410436
+R069,Mission Viejo,Mission Viejo,CA,33.557258,-117.670118
+R070,Arden Fair,Sacramento,CA,38.601039,-121.426442
+R071,Corte Madera,Corte Madera,CA,37.928465,-122.514284
+R072,University Village,Seattle,WA,47.6639,-122.2984
+R073,Ala Moana,Honolulu,HI,21.29023622,-157.8423058
+R074,Boca Raton,Boca Raton,FL,26.36569,-80.13323
+R075,Union Square,San Francisco,CA,37.7886,-122.407159
+R076,Chestnut Hill,Chestnut Hill,MA,42.321205,-71.17616
+R077,Pioneer Place,Portland,OR,45.5178302,-122.6775182
+R078,Short Pump Town Center,Henrico,VA,37.656044,-77.618722
+R080,Avalon,Alpharetta,GA,34.07062237,-84.27481413
+R081,Eton,Beachwood,OH,41.463332,-81.474623
+R082,UTC,San Diego,CA,32.871867,-117.212674
+R083,Southpark,Charlotte,NC,35.152573,-80.832012
+R084,Montgomery Mall,Bethesda,MD,39.024365,-77.146182
+R085,Barton Creek,Austin,TX,30.25806,-97.80722
+R086,La Encantada,Tucson,AZ,32.32497,-110.92985
+R087,Aventura,Miami,FL,25.95825,-80.141707
+R088,Sagemore,Marlton,NJ,39.87958,-74.91887
+R089,Old Orchard,Skokie,IL,42.057204,-87.749956
+R090,Washington Square,Portland,OR,45.450701,-122.780998
+R093,Danbury Fair Mall,Danbury,CT,41.3806,-73.48015
+R094,Victoria Gardens,Rancho Cucamonga,CA,34.11069,-117.5335
+R095,Fifth Avenue,New York,NY,40.764479,-73.973211
+R096,Shadyside,Pittsburgh,PA,40.45104366,-79.9333305
+R097,Country Club Plaza,Kansas City,MO,39.0413,-94.590172
+R099,Stanford Shopping Center,Palo Alto,CA,37.44177,-122.172489
+R100,Alderwood,Lynnwood,WA,47.830595,-122.27195
+R101,Stoneridge Mall,Pleasanton,CA,37.69525,-121.92867
+R102,Christiana Mall,Newark,DE,39.679231,-75.653211
+R103,Rockaway,Rockaway,NJ,40.906615,-74.553704
+R104,Bridgewater,Bridgewater,NJ,40.58638,-74.61979
+R105,Oakridge,San Jose,CA,37.251599,-121.862899
+R106,Southcenter,Seattle,WA,47.45935,-122.258
+R107,Syracuse,Syracuse,NY,43.0695184,-76.17291744
+R108,Century City,Los Angeles,CA,34.05855,-118.418116
+R109,Jordan Creek,West Des Moines,IA,41.570044,-93.803773
+R110,South Shore,Braintree,MA,42.22222,-71.02444
+R111,St. Johns Town Center,Jacksonville,FL,30.253253,-81.525252
+R112,Bethesda Row,Bethesda,MD,38.9806471,-77.0977081
+R114,Saint Louis Galleria,Saint Louis,MO,38.636143,-90.347891
+R115,Lincoln Road,Miami Beach,FL,25.79102,-80.139364
+R116,Crabtree Valley Mall,Raleigh,NC,35.840118,-78.679187
+R117,Garden State Plaza,Paramus,NJ,40.91848208,-74.0756301
+R122,Manhattan Village,Manhattan Beach,CA,33.89909,-118.393209
+R123,Green Hills,Nashville,TN,36.10704,-86.816382
+R124,Beverly Center,Los Angeles,CA,34.0749,-118.3773
+R125,City Creek Center,Salt Lake City,UT,40.768413,-111.892042
+R126,The Woodlands,Spring,TX,30.1645,-95.4555
+R127,The Gardens Mall,Palm Beach Gardens,FL,26.84865,-80.0848
+R129,Pentagon City,Arlington,VA,38.86311,-77.06122
+R130,Penn Square,Oklahoma City,OK,35.52485,-97.54551
+R131,La Cantera,San Antonio,TX,29.59333,-98.61556
+R132,Woodland,Grand Rapids,MI,42.9166,-85.5883
+R133,Downtown Nashville,Nashville,TN,36.16046,-86.7787
+R134,Bridgeport Village,Portland,OR,45.39677,-122.75193
+R137,Derby Street,Hingham,MA,42.17605,-70.90996
+R138,Freehold Raceway Mall,Freehold,NJ,40.25269214,-74.30033512
+R139,Smith Haven,Lake Grove,NY,40.8649,-73.1311
+R140,Eastview,Victor,NY,43.0297,-77.4428
+R141,Northbrook,Northbrook,IL,42.15048,-87.81709
+R142,Annapolis,Annapolis,MD,38.990536,-76.54414
+R143,Florida Mall,Orlando,FL,28.445141,-81.394177
+R144,Northpark Center,Dallas,TX,32.86937,-96.77428
+R146,Irvine Spectrum Center,Irvine,CA,33.6489,-117.7406
+R147,South Hills Village,Pittsburgh,PA,40.3427,-80.05589
+R148,Sherman Oaks,Sherman Oaks,CA,34.157258,-118.438615
+R149,Boylston Street,Boston,MA,42.34898651,-71.08248401
+R151,Southlake Town Square,Southlake,TX,32.943821,-97.130591
+R152,Staten Island,Staten Island,NY,40.582432,-74.165837
+R154,The Oaks,Thousand Oaks,CA,34.18405,-118.88763
+R155,Burlington,Burlington,MA,42.48275,-71.21398
+R156,Brea Mall,Brea,CA,33.915871,-117.886592
+R161,The Forum Shops,Las Vegas,NV,36.11878611,-115.1776912
+R162,Walnut Street,Philadelphia,PA,39.95003333,-75.16788779
+R164,Memorial City,Houston,TX,29.78102,-95.53893
+R166,Suburban Square,Ardmore,PA,40.00884,-75.28786
+R167,Providence Place,Providence,RI,41.8269,-71.4163
+R168,Columbia,Columbia,MD,39.216,-76.85995
+R169,Waterside Shops,Naples,FL,26.2132,-81.8017
+R172,Twenty Ninth Street,Boulder,CO,40.01754,-105.25649
+R177,ABQ Uptown,Albuquerque,NM,35.10299,-106.56682
+R182,Flatiron Crossing,Broomfield,CO,39.9334099,-105.1329389
+R183,Ridgedale,Hopkins,MN,44.9685555,-93.43663338
+R184,Perimeter,Atlanta,GA,33.92409,-84.34062
+R185,Coconut Point,Estero,FL,26.40210059,-81.8066357
+R186,Summit Sierra,Reno,NV,39.4031,-119.7516
+R189,Topanga,Canoga Park,CA,34.19023737,-118.6031033
+R190,Village Pointe,Omaha,NE,41.261188,-96.183078
+R191,Holyoke,Holyoke,MA,42.16836119,-72.64122987
+R192,Crocker Park,Westlake,OH,41.45909,-81.95301
+R198,Royal Hawaiian,Honolulu,HI,21.278075,-157.828165
+R199,Higuera Street,San Luis Obispo,CA,35.28061751,-120.6618796
+R202,Sono Collection,Norwalk,CT,41.1058,-73.4185
+R203,West Town Mall,Knoxville,TN,35.924375,-84.03725
+R204,Baybrook,Friendswood,TX,29.54157368,-95.14818989
+R205,First Colony Mall,Sugar Land,TX,29.59141,-95.625
+R206,Cherry Hill,Cherry Hill,NJ,39.941067,-75.023797
+R210,Kahala,Honolulu,HI,21.27708111,-157.7869855
+R213,Otay Ranch,Chula Vista,CA,32.62401345,-116.9666093
+R214,The Galleria,Fort Lauderdale,FL,26.13682758,-80.11416725
+R216,Domain Northside,Austin,TX,30.402708,-97.721954
+R217,Chestnut Street,San Francisco,CA,37.800415,-122.438363
+R218,Partridge Creek,Clinton Township,MI,42.62571328,-82.94641024
+R219,Town Square,Las Vegas,NV,36.06767,-115.17607
+R221,Fair Oaks,Fairfax,VA,38.8626,-77.359
+R225,The Summit,Birmingham,AL,33.44801152,-86.72851362
+R228,Park Meadows,Lone Tree,CO,39.562176,-104.875562
+R229,Hilldale,Madison,WI,43.07214428,-89.45294738
+R230,Briarwood,Ann Arbor,MI,42.24045456,-83.74698853
+R231,Hillsdale,San Mateo,CA,37.5389,-122.3018
+R232,Natick,Natick,MA,42.301522,-71.383724
+R233,Woodland Hills,Tulsa,OK,36.06342,-95.88056
+R234,Willow Grove Park,Willow Grove,PA,40.140456,-75.12356
+R235,Lakeside Shopping Center,Metairie,LA,30.00603295,-90.1571732
+R236,Fashion Fair,Fresno,CA,36.80674,-119.77553
+R237,Orland Square Mall,Orland Park,IL,41.6193,-87.8479
+R240,Los Gatos,Los Gatos,CA,37.22338973,-121.9837682
+R247,Arrowhead,Glendale,AZ,33.6422,-112.2256
+R250,West 14th Street,New York,NY,40.7412,-74.00542
+R251,Upper West Side,New York,NY,40.77507222,-73.98259529
+R257,Bayshore,Milwaukee,WI,43.121566,-87.915186
+R258,Deer Park,Barrington,IL,42.1605,-88.0554
+R259,Mall Of Georgia,Buford,GA,34.06567,-83.98333
+R261,Ridge Hill,Yonkers,NY,40.96373,-73.85643
+R262,Anchorage 5th Avenue Mall,Anchorage,AK,61.216734,-149.888387
+R263,Mall Of Louisiana,Baton Rouge,LA,30.38801,-91.08676
+R264,Oxmoor,Louisville,KY,38.247278,-85.609467
+R266,Bridge Street,Huntsville,AL,34.716144,-86.673021
+R267,Santan Village,Gilbert,AZ,33.30879,-111.74271
+R271,Reston,Reston,VA,38.9585,-77.3581
+R281,Lehigh Valley,Whitehall,PA,40.62926,-75.48147
+R282,Greenwich Avenue,Greenwich,CT,41.02329826,-73.62529603
+R283,Leawood,Leawood,KS,38.91131,-94.6378
+R284,Lincoln Park,Chicago,IL,41.91062,-87.64856
+R285,North County,Escondido,CA,33.07109,-117.06626
+R286,The Promenade At Chenal,Little Rock,AR,34.76635,-92.45902
+R287,Georgetown,Washington,DC,38.90592254,-77.06231017
+R288,Fritz Farm,Lexington,KY,37.977139,-84.528169
+R289,Brandon,Brandon,FL,27.9328,-82.3264
+R290,North Star,San Antonio,TX,29.51817208,-98.49608499
+R291,Altamonte,Altamonte Springs,FL,28.66665,-81.37696
+R292,Scottsdale Quarter,Scottsdale,AZ,33.62411,-111.92514
+R293,Friendly Center,Greensboro,NC,36.08601,-79.83615
+R294,Carlsbad,Carlsbad,CA,33.07125634,-117.2651988
+R297,El Paseo Village,Palm Desert,CA,33.719631,-116.383301
+R298,Roseville,Roseville,CA,38.77304211,-121.2699351
+R299,Franklin Park Mall,Toledo,OH,41.694016,-83.640205
+R300,Los Cerritos,Cerritos,CA,33.862423,-118.093942
+R303,Boise Towne Square,Boise,ID,43.60841,-116.2782
+R304,Park City,Lancaster,PA,40.06662152,-76.33930424
+R305,Del Monte,Monterey,CA,36.58410346,-121.8973482
+R307,Maine Mall,South Portland,ME,43.633574,-70.334645
+R312,Dadeland,Miami,FL,25.689879,-80.313707
+R316,University Park Village,Fort Worth,TX,32.727707,-97.361671
+R317,State Street,Santa Barbara,CA,34.42132862,-119.7015442
+R318,Charleston,Charleston,SC,32.78336144,-79.93493482
+R321,Willowbrook Mall,Houston,TX,29.96054685,-95.5392295
+R322,Vintage Faire,Modesto,CA,37.68774981,-121.0532618
+R324,Renaissance At Colony Park,Ridgeland,MS,32.43419391,-90.14692436
+R325,Willowbrook,Wayne,NJ,40.88944,-74.25861
+R327,Manhasset,Manhasset,NY,40.79502122,-73.67648624
+R338,The Promenade Shops At Briargate,Colorado Springs,CO,38.962692,-104.79529
+R339,Tacoma Mall,Tacoma,WA,47.215559,-122.4696
+R345,Promenade Temecula,Temecula,CA,33.52375719,-117.1531134
+R346,Legacy Place,Dedham,MA,42.23087274,-71.17839332
+R348,Main Place,Naperville,IL,41.7728,-88.15037
+R353,Summit Mall,Akron,OH,41.13441,-81.61738
+R354,Pheasant Lane,Nashua,NH,42.701675,-71.43737367
+R355,Haywood Mall,Greenville,SC,34.84938479,-82.33393241
+R360,University Park Mall,Mishawaka,IN,41.71847,-86.19101
+R364,Augusta,Augusta,GA,33.46575,-82.08065
+R413,Ross Park,Pittsburgh,PA,40.54369,-80.00782
+R414,"4th Street",Berkeley,CA,37.869346,-122.300122
+R415,Grand Central,New York,NY,40.752733,-73.976907
+R417,Polaris Fashion Place,Columbus,OH,40.14572,-82.98037
+R420,River Park Square,Spokane,WA,47.658889,-117.4225
+R437,Highland Village,Houston,TX,29.74197,-95.44574
+R446,New Haven,New Haven,CT,41.3119,-72.93093
+R451,The Americana At Brand,Glendale,CA,34.14443,-118.25698
+R461,Fashion Place,Salt Lake City,UT,40.636147,-111.8876
+R462,Valencia Town Center,Valencia,CA,34.41515,-118.55813
+R463,Northlake Mall,Charlotte,NC,35.35257,-80.85143
+R492,Cielo Vista Mall,El Paso,TX,31.77508,-106.3794
+R513,Coolsprings Galleria,Franklin,TN,35.95814,-86.81336
+R516,Carnegie Library,Washington,DC,38.902601,-77.022989
+R518,The Greene,Dayton,OH,39.694173,-84.101912
+R549,Quaker Bridge,Lawrence Township,NJ,40.291824,-74.681344
+R550,Valley Plaza,Bakersfield,CA,35.33795,-119.03271
+R582,Upper East Side,New York,NY,40.773584,-73.964542
+R591,Cumberland Mall,Atlanta,GA,33.88024,-84.46835
+R594,Williamsburg,Brooklyn,NY,40.71557,-73.95988
+R598,Potomac Town Center,Woodbridge,VA,38.6282157,-77.2877284
+R599,Station Park,Farmington,UT,40.983221,-111.906456
+R612,Queens Center,Elmhurst,NY,40.734751,-73.869029
+R613,Evergreen Walk,South Windsor,CT,41.812848,-72.556558
+R614,Lynnhaven Mall,Virginia Beach,VA,36.816619,-76.071055
+R615,University Town Center,Sarasota,FL,27.38493,-82.45268
+R616,Eastwood Towne Center,Lansing,MI,42.764347,-84.514723
+R622,Solomon Pond Mall,Marlborough,MA,42.355548,-71.612912
+R623,Brickell City Centre,Miami,FL,25.7667,-80.1935
+R629,Trumbull,Trumbull,CT,41.229466,-73.225779
+R631,The Mall Of New Hampshire,Manchester,NH,42.9562362,-71.4324994
+R650,Summerlin,Las Vegas,NV,36.15009,-115.3334
+R654,World Trade Center,New York,NY,40.711721,-74.011154
+R715,Downtown Brooklyn,Brooklyn,NY,40.685612,-73.978247
+R720,Tower Theatre,Los Angeles,CA,34.0435491,-118.2546643
+R746,Galleria Dallas,Dallas,TX,32.93039238,-96.81940426
+R753,The Mall At Bay Plaza,Bronx,NY,40.8638,-73.8269
+R824,Apple Park Visitor Center,Cupertino,CA,37.33289,-122.0052
+R010,Tysons Corner,McLean,VA,38.91673,-77.22321
