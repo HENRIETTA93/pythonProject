@@ -255,6 +255,17 @@ order by items_purchased desc, store_state;
  */
 
 -- START ANSWER --
+ select
+ 'Week'||date_part('week', o.ord_dt)- date_part('week', o.ord_dt-((date_part('day',o.ord_dt)-7)|| ' day')::interval)+1 as week,
+ sum(oi.qty*p.price)
+ from prods p
+ join order_items oi using(prod_id)
+ join orders o using(ord_id)
+ where date_part('year', o.ord_dt)=2021 and date_part('month',o.ord_dt)=10
+ and p.prod_grp like 'iPad%' and p.prod_grp!='iPad mini'
+ and date_part('week', o.ord_dt)- date_part('week', o.ord_dt-((date_part('day',o.ord_dt)-7)|| ' day')::interval)!='-1'
+ group by 'Week'||date_part('week', o.ord_dt)- date_part('week', o.ord_dt-((date_part('day',o.ord_dt)-7)|| ' day')::interval)+1
+ order by week;
 
 
 

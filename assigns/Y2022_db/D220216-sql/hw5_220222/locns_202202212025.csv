@@ -1,0 +1,302 @@
+"locn_id","locn_name","locn_type","city","st","zip","lat","lng"
+0,Mobile,m,,,,,
+1,Brickell Avenue,a,Miami,FL,"33131",25.768275,-80.1902723
+2,Riverside Plaza,a,Riverside,CA,"92506",33.954082,-117.391322
+3,Winnetka,a,Winnetka,IL,"60093",42.1055409999999,-87.734916
+4,"3rd Avenue & 42nd Street",a,New York,NY,"10017",40.7509095,-73.9735829
+5,Bakersfield-Oswell,a,Bakersfield,CA,"93306",35.392014,-118.949169
+6,Monrovia,a,Monrovia,CA,"91016",34.149444,-118.001364
+7,New City,a,New City,NY,"10956",41.154571,-73.987897
+8,Pleasant Hill,a,Pleasant Hill,CA,"94523",37.9712768,-122.0638919
+9,Cypress Creek,a,Fort Lauderdale,FL,"33309",26.2038489999999,-80.1548119999999
+10,Glendora,a,Glendora,CA,"91740",34.1068606,-117.857134
+11,Brookfield,a,Brookfield,IL,"60513",41.816514,-87.846864
+12,Morningside Gardens,a,New York,NY,"10027",40.8121308,-73.957409
+13,San Pablo,a,San Pablo,CA,"94806",37.9644236,-122.3375889
+14,Camarillo,a,Camarillo,CA,"93010",34.2205752,-119.038955
+15,Bensonhurst,a,Brooklyn,NY,"11214",40.6021526,-73.9941075
+16,South San Francisco,a,South San Francisco,CA,"94080",37.654686,-122.437665
+17,Glen Cove,a,Glen Cove,NY,"11542",40.8626527,-73.6328519
+18,Broadway & 63rd St,a,New York,NY,"10023",40.7708364,-73.9818534
+19,San Mateo-Hillsdale,a,San Mateo,CA,"94403",37.5358654,-122.2990713
+20,"575 Lexington Avenue",a,New York,NY,"10022",40.7584385,-73.9702732
+21,Long Beach-World Trade Center,a,Long Beach,CA,"90831",33.767897,-118.199763999999
+22,Yonkers Financial Center,a,Yonkers,NY,"10701",40.934388,-73.902127
+23,Spanish River,a,Boca Raton,FL,"33431",26.386534,-80.0770129
+24,Commack,a,Commack,NY,"11725",40.8422289999999,-73.30418
+25,City Hall,a,New York,NY,"10007",40.712895,-74.007527
+26,Boca Raton,a,Boca Raton,FL,"33434",26.3680088,-80.2023244
+27,Long Beach,a,Long Beach,NY,"11561",40.5888189,-73.6601256
+28,Gardena 1,a,Gardena,CA,"90248",33.8630516,-118.3093972
+29,Private Bank - Los Angeles,a,Los Angeles,CA,"90071",34.0514962,-118.2558979
+30,Town Center Circle,a,Fort Lauderdale,FL,"33326",26.0983473,-80.3851644
+31,Encino,a,Encino,CA,"91436",34.1579394,-118.494149099999
+32,Sacramento-University Village,a,Sacramento,CA,"95825",38.573485,-121.414032
+33,Richmond,a,Richmond,CA,"94805",37.933734,-122.334545099999
+34,Lake Forest,a,Lake Forest,CA,"92630",33.6205401,-117.7001642
+35,Hasting-On-Hudson,a,Hastings On Hudson,NY,"10706",40.994264,-73.8798275
+36,Mountain View,a,Mountain View,CA,"94040",37.403139,-122.113079
+37,Anaheim Hills,a,Anaheim,CA,"92807",33.8597872,-117.7908372
+38,North Hills,a,North Hills,CA,"91343",34.235619,-118.4844426
+39,Pinecrest,a,Miami,FL,"33156",25.6857342,-80.3117987
+40,Tarzana,a,Tarzana,CA,"91356",34.1726577,-118.5529527
+41,Temple City,a,Temple City,CA,"91780",34.1063253999999,-118.0636348
+42,Oak Park,a,River Forest,IL,"60305",41.8883594,-87.8051472
+43,Bell Boulevard,a,Bayside,NY,"11361",40.7650547,-73.771538
+44,Porter Ranch,a,Porter Ranch,CA,"91326",34.2747747,-118.5559114
+45,Bedford,a,Brooklyn,NY,"11216",40.6800469999999,-73.9447989
+46,Arlington Main,a,Arlington Heights,IL,"60005",42.082757,-87.9820386
+47,"22nd & Irving",a,San Francisco,CA,"94122",37.7635992999999,-122.4792777
+48,Riverdale,a,Bronx,NY,"10471",40.906085,-73.9042847
+49,"171st Street Andoadway",a,New York,NY,"10010",40.7426787999999,-73.9892345
+50,Walnut Creek,a,Walnut Creek,CA,"94596",37.8962058,-122.0627178
+51,Capitola,a,Capitola,CA,"95010",36.978039,-121.965384
+52,Great Neck,a,Great Neck,NY,"11021",40.7881068999999,-73.728581
+53,Santa Ana-North Main,a,Santa Ana,CA,"92705",33.7721468999999,-117.866369999999
+54,Cedarhurst,a,Cedarhurst,NY,"11516",40.6224,-73.72345
+55,Borough Park,a,Brooklyn,NY,"11219",40.6318927999999,-73.9955882
+56,Los Angeles-Los Feliz,a,Los Angeles,CA,"90027",34.1048622,-118.287685
+57,Larchmont,a,Larchmont,NY,"10538",40.9321751,-73.7592442
+58,Chappaqua,a,Chappaqua,NY,"10514",41.1575046,-73.7730865
+59,Ave. Of The Americas-23rd St.,a,New York,NY,"10010",40.7430636,-73.9927025
+60,Arlington Heights,a,Arlington Heights,IL,"60004",42.1091721,-87.9805281
+61,"120 Broadway",a,New York,NY,"10271",40.7084751,-74.0108464
+62,Palos Verdes,a,Palos Verdes Peninsula,CA,"90274",33.769503,-118.365734
+63,Dublin,a,Dublin,CA,"94568",37.7031449,-121.9335259
+64,South Ozone Park,a,South Ozone Park,NY,"11420",40.6748301,-73.8049684
+65,Throggs Neck,a,Bronx,NY,"10465",40.8218929999999,-73.819425
+66,Lakeland,a,Mohegan Lake,NY,"10547",41.3107302999999,-73.8689947
+67,Santa Clara,a,Santa Clara,CA,"95050",37.3299025,-121.9656422
+68,Brentwood 2,a,Brentwood,NY,"11717",40.780312,-73.248418
+69,MId Island,a,Staten Island,NY,"10314",40.5773568,-74.1693256
+70,North Lindenhurst,a,Lindenhurst,NY,"11757",40.70276,-73.377266
+71,Hollywood,a,Hollywood,FL,"33019",25.989165,-80.119563
+72,Brush Hollow,a,Westbury,NY,"11590",40.77972,-73.5589609
+73,Palatine,a,Palatine,IL,"60067",42.118118,-88.034896
+74,Madison Avenue-42nd Street,a,New York,NY,"10017",40.753239,-73.979139
+75,Canoga Park,a,Canoga Park,CA,"91303",34.1995691,-118.6059147
+76,Washington Heights,a,New York,NY,"10033",40.8498515,-73.9362684
+77,Los Angeles-Rancho Park Pico,a,Los Angeles,CA,"90064",34.041782,-118.424282
+78,Downey,a,Downey,CA,"90241",33.936638,-118.121626
+79,San Lorenzo,a,San Lorenzo,CA,"94580",37.679742,-122.126269099999
+80,Broadway And 178th Street,a,New York,NY,"10033",40.8485778,-73.9369924
+81,Seward Park,a,New York,NY,"10002",40.7159098,-73.9870091
+82,Jerome Avenue-208th Street,a,Bronx,NY,"10467",40.8815976,-73.8822878
+83,Deer Park,a,Deer Park,NY,"11729",40.7606453999999,-73.3134754
+84,Torrance-Del Amo,a,Torrance,CA,"90505",33.824927,-118.351966999999
+85,Bayfront Plaza,a,Miami,FL,"33131",25.7734624,-80.187561
+86,Los Gatos,a,Los Gatos,CA,"95032",37.2382232999999,-121.9619885
+87,San Gabriel,a,San Gabriel,CA,"91776",34.0790816,-118.108044799999
+88,Sunset Harbour,a,Miami Beach,FL,"33139",25.7939915,-80.1417026
+89,Arcadia-Downtown,a,Arcadia,CA,"91006",34.1386929999999,-118.027664999999
+90,Oakland Park,a,Fort Lauderdale,FL,"33306",26.167897,-80.118669
+91,Floral Park,a,Floral Park,NY,"11001",40.729213,-73.702669
+92,Park Avenue- 32nd Street,a,New York,NY,"10016",40.745956,-73.981612
+93,Morris Park,a,Bronx,NY,"10461",40.8505241,-73.8513377
+94,Midtown Miami,a,Miami,FL,"33127",25.8075673,-80.195472
+95,Smithtown,a,Smithtown,NY,"11787",40.8552426,-73.1935171
+96,Beverly Hills-Downtown,a,Beverly Hills,CA,"90212",34.0670917999999,-118.396958599999
+97,South Park Slope,a,Brooklyn,NY,"11215",40.6698299,-73.9857909
+98,Fresh Meadows,a,Fresh Meadows,NY,"11365",40.7429376,-73.7877069
+99,Brighton Beach,a,Brooklyn,NY,"11235",40.5776536,-73.9603734
+100,Niles,a,Niles,IL,"60714",42.040554,-87.836252
+101,Fresno-Marks/Herndon,b,Fresno,CA,"93711",36.837639,-119.847891999999
+102,Jamaica 2,b,Jamaica,NY,"11432",40.71038,-73.793072
+103,"660 West Duarte Road",b,Arcadia,CA,"91007",34.1260908,-118.0538797
+104,Bridgeport,b,Chicago,IL,"60608",41.83189,-87.6462407999999
+105,Syossett,b,Syosset,NY,"11791",40.8102399,-73.5083191
+106,"2700 Pacific Coast Highway",b,Torrance,CA,"90505",33.792675,-118.334799
+107,Piedmont,b,Oakland,CA,"94611",37.8266334,-122.252362
+108,San Rafael-Downtown,b,San Rafael,CA,"94901",37.9715617,-122.5224408
+109,Greenburgh,b,White Plains,NY,"10607",41.0415318999999,-73.7931442
+110,San Francisco-Marina,b,San Francisco,CA,"94123",37.8005212,-122.4393242
+111,"441 Columbus Avenue Bombay",b,New York,NY,"10024",40.7832849,-73.9742797999999
+112,Eastchester,b,Scarsdale,NY,"10583",40.969992,-73.806566
+113,California Avenue,b,Bakersfield,CA,"93309",35.3567014,-119.061457499999
+114,Palm Desert,b,Palm Desert,CA,"92260",33.7258346,-116.3982814
+115,Chula Vista-Downtown,b,Chula Vista,CA,"91910",32.6336503999999,-117.0793746
+116,Rego Park,b,Rego Park,NY,"11374",40.7304479999999,-73.861148
+117,La Canada,b,La Canada Flintridge,CA,"91011",34.202174,-118.1954089
+118,Pasadena-Garfield,b,Pasadena,CA,"91101",34.1460603999999,-118.146690099999
+119,San Fernando,b,San Fernando,CA,"91340",34.2795524,-118.4422047
+120,Miramar,b,Hollywood,FL,"33027",25.9787927,-80.3610647
+121,Liberty Avenue,b,Brooklyn,NY,"11208",40.6789074,-73.8648208
+122,Massapequa Park,b,Massapequa Park,NY,"11762",40.6666052,-73.455235
+123,Oakland-Downtown,b,Oakland,CA,"94612",37.8038074,-122.2715259
+124,Mag Mile,b,Chicago,IL,"60611",41.8920263,-87.624016
+125,Bronxville,b,Bronxville,NY,"10708",40.937819,-73.833136
+126,Third Avenue-75th Street,b,Brooklyn,NY,"11209",40.6313906,-74.0276799
+127,Queens Village,b,Queens Village,NY,"11428",40.7176237,-73.737654
+128,"1201 North Central Avenue",b,Glendale,CA,"91202",34.1639396,-118.2569695
+129,Franklin & Adams,b,Chicago,IL,"60606",41.879427,-87.63485
+130,Flatbush-Church Avenue,b,Brooklyn,NY,"11226",40.650225,-73.958274
+131,Stuyvesant,b,New York,NY,"10009",40.7320764,-73.981993
+132,Utopia Parkway,b,Fresh Meadows,NY,"11366",40.7257464,-73.7916047
+133,Water Street,b,New York,NY,"10038",40.7069463,-74.00558
+134,Whittier Downs,b,Whittier,CA,"90606",33.9720407,-118.0717523
+135,Chicago Private Bank,b,Chicago,IL,"60606",41.8802854,-87.6347110999999
+136,Tujunga,b,Tujunga,CA,"91042",34.25939,-118.302259
+137,Clovis,b,Clovis,CA,"93612",36.80807,-119.709601
+138,Bronx,b,Bronx,NY,"10451",40.8168689,-73.91968
+139,Citicorp Center,b,Chicago,IL,"60661",41.8821509,-87.6399565
+140,Huntington Beach,b,Huntington Beach,CA,"92647",33.7300189,-117.996443
+141,Rochdale Village,b,Jamaica,NY,"11434",40.6726991,-73.7704734
+142,Irvine Alton Parkway,b,Irvine,CA,"92618",33.6699225,-117.787791
+143,Vernon Hills,b,Vernon Hills,IL,"60061",42.2376726,-87.9446325999999
+144,San Francisco-Outer Richmond,b,San Francisco,CA,"94121",37.7802723,-122.48491
+145,Eighteenth Avenue,b,Brooklyn,NY,"11204",40.619535,-73.9901359999999
+146,Hicksville,b,Hicksville,NY,"11801",40.77705,-73.52911
+147,Smith Haven,b,Lake Grove,NY,"11755",40.8642843999999,-73.1344419
+148,Sacramento-Greenhaven,b,Sacramento,CA,"95831",38.4941457,-121.523725499999
+149,Poway Road,b,Poway,CA,"92064",32.956232,-117.0397127
+150,Silverlake,b,Los Angeles,CA,"90039",34.1016301,-118.2590777
+151,Diamond Bar,b,Diamond Bar,CA,"91765",34.0013357,-117.8107919
+152,Escondido-Valley Parkway,b,Escondido,CA,"92027",33.1330809,-117.061023099999
+153,Laguardia Place,b,New York,NY,"10012",40.7291272,-73.9980092
+154,Highland Park,b,Highland Park,IL,"60035",42.189182,-87.8028719
+155,Mission Street,b,San Francisco,CA,"94112",37.7241399,-122.435432599999
+156,Armonk,b,Armonk,NY,"10504",41.1304141,-73.7127219
+157,Glendale,b,Glendale,CA,"91203",34.1567817,-118.254941099999
+158,"5015 Eagle Rock Blvd",b,Los Angeles,CA,"90041",34.137469,-118.214995
+159,Placentia,b,Placentia,CA,"92870",33.885314,-117.8626178
+160,San Carlos South,b,San Carlos,CA,"94070",37.5037266,-122.258106099999
+161,Hanford,b,Hanford,CA,"93230",36.3276281,-119.6491538
+162,South Westbury,b,Westbury,NY,"11590",40.755069,-73.555848
+163,Lexington Avenue-54th Street,b,New York,NY,"10022",40.759277,-73.972165
+164,Fifth Avenue 1,b,New York,NY,"10022",40.764555,-73.9723449999999
+165,Doral West,b,Miami,FL,"33178",25.812159,-80.372443
+166,Portage Park,b,Chicago,IL,"60634",41.945199,-87.766381
+167,Mission Viejo,b,Mission Viejo,CA,"92692",33.5941885,-117.6594723
+168,Broadway Astor,b,New York,NY,"10003",40.7303907,-73.9925939
+169,Lake Success,b,New Hyde Park,NY,"11040",40.7535513,-73.6970725999999
+170,North Flushing,b,Flushing,NY,"11354",40.7755804,-73.8235673
+171,Reseda West,b,Reseda,CA,"91335",34.2010087,-118.5315877
+172,Bird Road,b,Miami,FL,"33165",25.733325,-80.33624
+173,Castro Street,b,San Francisco,CA,"94114",37.76181,-122.4352153
+174,"39138 Fremont Blvd",b,Fremont,CA,"94538",37.5543124,-121.9842788
+175,Danville - Town & Country,b,Danville,CA,"94526",37.81295,-121.9957713
+176,San Jose-Camden,b,San Jose,CA,"95124",37.2625,-121.921819
+177,Monterey Park,b,Monterey Park,CA,"91754",34.063944,-118.123191999999
+178,Industry/Puente Hills,b,Rowland Heights,CA,"91748",33.990502,-117.917279
+179,Plantation,b,Fort Lauderdale,FL,"33324",26.120105,-80.261234
+180,Chicago-Uptown,b,Chicago,IL,"60640",41.971281,-87.6595572
+181,Mount Kisco,b,Mount Kisco,NY,"10549",41.2062174,-73.7298419
+182,Court Street,b,Brooklyn,NY,"11231",40.6805853,-73.9965939999999
+183,Aventura Boulevard,b,Miami,FL,"33180",25.959185,-80.14613
+184,Tribeca,b,New York,NY,"10013",40.7164695,-74.0084954
+185,Manhattan Plaza,b,New York,NY,"10036",40.7586406,-73.9927506
+186,El Cajon,b,El Cajon,CA,"92020",32.8079368,-116.9660449
+187,"99 Post Street",b,San Francisco,CA,"94104",37.7888809,-122.4036476
+188,North Babylon,b,North Babylon,NY,"11703",40.7375999,-73.3206066
+189,San Diego-Broadway,b,San Diego,CA,"92101",32.7154815,-117.1632734
+190,Fordham,b,Bronx,NY,"10468",40.862536,-73.8983458
+191,Farmingdale,b,Farmingdale,NY,"11735",40.7323464,-73.4483634
+192,San Juan Capistrano,b,San Juan Capistrano,CA,"92675",33.493971,-117.663078
+193,Norwalk,b,Norwalk,CA,"90650",33.907582,-118.076429
+194,Sherman Oaks-Van Nuys,b,Sherman Oaks,CA,"91403",34.152719,-118.448196
+195,Allerton Avenue,b,Bronx,NY,"10467",40.8652972,-73.8669097
+196,San Mateo,b,San Mateo,CA,"94401",37.5634451,-122.325604099999
+197,Huntington Village,b,Huntington,NY,"11743",40.8708619,-73.4305917999999
+198,Bedford Village,b,Bedford,NY,"10506",41.1970711,-73.652621
+199,Third Avenue-63rd Street,b,New York,NY,"10021",40.7713438,-73.9594772999999
+200,Ridgewood,b,Brooklyn,NY,"11237",40.699067,-73.9176229999999
+201,Fresno-Marks/Herndon,a,Fresno,CA,"93711",36.837639,-119.847891999999
+202,Jamaica 2,a,Jamaica,NY,"11432",40.71038,-73.793072
+203,"660 West Duarte Road",a,Arcadia,CA,"91007",34.1260908,-118.0538797
+204,Bridgeport,a,Chicago,IL,"60608",41.83189,-87.6462407999999
+205,Syossett,a,Syosset,NY,"11791",40.8102399,-73.5083191
+206,"2700 Pacific Coast Highway",a,Torrance,CA,"90505",33.792675,-118.334799
+207,Piedmont,a,Oakland,CA,"94611",37.8266334,-122.252362
+208,San Rafael-Downtown,a,San Rafael,CA,"94901",37.9715617,-122.5224408
+209,Greenburgh,a,White Plains,NY,"10607",41.0415318999999,-73.7931442
+210,San Francisco-Marina,a,San Francisco,CA,"94123",37.8005212,-122.4393242
+211,"441 Columbus Avenue Bombay",a,New York,NY,"10024",40.7832849,-73.9742797999999
+212,Eastchester,a,Scarsdale,NY,"10583",40.969992,-73.806566
+213,California Avenue,a,Bakersfield,CA,"93309",35.3567014,-119.061457499999
+214,Palm Desert,a,Palm Desert,CA,"92260",33.7258346,-116.3982814
+215,Chula Vista-Downtown,a,Chula Vista,CA,"91910",32.6336503999999,-117.0793746
+216,Rego Park,a,Rego Park,NY,"11374",40.7304479999999,-73.861148
+217,La Canada,a,La Canada Flintridge,CA,"91011",34.202174,-118.1954089
+218,Pasadena-Garfield,a,Pasadena,CA,"91101",34.1460603999999,-118.146690099999
+219,San Fernando,a,San Fernando,CA,"91340",34.2795524,-118.4422047
+220,Miramar,a,Hollywood,FL,"33027",25.9787927,-80.3610647
+221,Liberty Avenue,a,Brooklyn,NY,"11208",40.6789074,-73.8648208
+222,Massapequa Park,a,Massapequa Park,NY,"11762",40.6666052,-73.455235
+223,Oakland-Downtown,a,Oakland,CA,"94612",37.8038074,-122.2715259
+224,Mag Mile,a,Chicago,IL,"60611",41.8920263,-87.624016
+225,Bronxville,a,Bronxville,NY,"10708",40.937819,-73.833136
+226,Third Avenue-75th Street,a,Brooklyn,NY,"11209",40.6313906,-74.0276799
+227,Queens Village,a,Queens Village,NY,"11428",40.7176237,-73.737654
+228,"1201 North Central Avenue",a,Glendale,CA,"91202",34.1639396,-118.2569695
+229,Franklin & Adams,a,Chicago,IL,"60606",41.879427,-87.63485
+230,Flatbush-Church Avenue,a,Brooklyn,NY,"11226",40.650225,-73.958274
+231,Stuyvesant,a,New York,NY,"10009",40.7320764,-73.981993
+232,Utopia Parkway,a,Fresh Meadows,NY,"11366",40.7257464,-73.7916047
+233,Water Street,a,New York,NY,"10038",40.7069463,-74.00558
+234,Whittier Downs,a,Whittier,CA,"90606",33.9720407,-118.0717523
+235,Chicago Private Bank,a,Chicago,IL,"60606",41.8802854,-87.6347110999999
+236,Tujunga,a,Tujunga,CA,"91042",34.25939,-118.302259
+237,Clovis,a,Clovis,CA,"93612",36.80807,-119.709601
+238,Bronx,a,Bronx,NY,"10451",40.8168689,-73.91968
+239,Citicorp Center,a,Chicago,IL,"60661",41.8821509,-87.6399565
+240,Huntington Beach,a,Huntington Beach,CA,"92647",33.7300189,-117.996443
+241,Rochdale Village,a,Jamaica,NY,"11434",40.6726991,-73.7704734
+242,Irvine Alton Parkway,a,Irvine,CA,"92618",33.6699225,-117.787791
+243,Vernon Hills,a,Vernon Hills,IL,"60061",42.2376726,-87.9446325999999
+244,San Francisco-Outer Richmond,a,San Francisco,CA,"94121",37.7802723,-122.48491
+245,Eighteenth Avenue,a,Brooklyn,NY,"11204",40.619535,-73.9901359999999
+246,Hicksville,a,Hicksville,NY,"11801",40.77705,-73.52911
+247,Smith Haven,a,Lake Grove,NY,"11755",40.8642843999999,-73.1344419
+248,Sacramento-Greenhaven,a,Sacramento,CA,"95831",38.4941457,-121.523725499999
+249,Poway Road,a,Poway,CA,"92064",32.956232,-117.0397127
+250,Silverlake,a,Los Angeles,CA,"90039",34.1016301,-118.2590777
+251,Diamond Bar,a,Diamond Bar,CA,"91765",34.0013357,-117.8107919
+252,Escondido-Valley Parkway,a,Escondido,CA,"92027",33.1330809,-117.061023099999
+253,Laguardia Place,a,New York,NY,"10012",40.7291272,-73.9980092
+254,Highland Park,a,Highland Park,IL,"60035",42.189182,-87.8028719
+255,Mission Street,a,San Francisco,CA,"94112",37.7241399,-122.435432599999
+256,Armonk,a,Armonk,NY,"10504",41.1304141,-73.7127219
+257,Glendale,a,Glendale,CA,"91203",34.1567817,-118.254941099999
+258,"5015 Eagle Rock Blvd",a,Los Angeles,CA,"90041",34.137469,-118.214995
+259,Placentia,a,Placentia,CA,"92870",33.885314,-117.8626178
+260,San Carlos South,a,San Carlos,CA,"94070",37.5037266,-122.258106099999
+261,Hanford,a,Hanford,CA,"93230",36.3276281,-119.6491538
+262,South Westbury,a,Westbury,NY,"11590",40.755069,-73.555848
+263,Lexington Avenue-54th Street,a,New York,NY,"10022",40.759277,-73.972165
+264,Fifth Avenue 1,a,New York,NY,"10022",40.764555,-73.9723449999999
+265,Doral West,a,Miami,FL,"33178",25.812159,-80.372443
+266,Portage Park,a,Chicago,IL,"60634",41.945199,-87.766381
+267,Mission Viejo,a,Mission Viejo,CA,"92692",33.5941885,-117.6594723
+268,Broadway Astor,a,New York,NY,"10003",40.7303907,-73.9925939
+269,Lake Success,a,New Hyde Park,NY,"11040",40.7535513,-73.6970725999999
+270,North Flushing,a,Flushing,NY,"11354",40.7755804,-73.8235673
+271,Reseda West,a,Reseda,CA,"91335",34.2010087,-118.5315877
+272,Bird Road,a,Miami,FL,"33165",25.733325,-80.33624
+273,Castro Street,a,San Francisco,CA,"94114",37.76181,-122.4352153
+274,"39138 Fremont Blvd",a,Fremont,CA,"94538",37.5543124,-121.9842788
+275,Danville - Town & Country,a,Danville,CA,"94526",37.81295,-121.9957713
+276,San Jose-Camden,a,San Jose,CA,"95124",37.2625,-121.921819
+277,Monterey Park,a,Monterey Park,CA,"91754",34.063944,-118.123191999999
+278,Industry/Puente Hills,a,Rowland Heights,CA,"91748",33.990502,-117.917279
+279,Plantation,a,Fort Lauderdale,FL,"33324",26.120105,-80.261234
+280,Chicago-Uptown,a,Chicago,IL,"60640",41.971281,-87.6595572
+281,Mount Kisco,a,Mount Kisco,NY,"10549",41.2062174,-73.7298419
+282,Court Street,a,Brooklyn,NY,"11231",40.6805853,-73.9965939999999
+283,Aventura Boulevard,a,Miami,FL,"33180",25.959185,-80.14613
+284,Tribeca,a,New York,NY,"10013",40.7164695,-74.0084954
+285,Manhattan Plaza,a,New York,NY,"10036",40.7586406,-73.9927506
+286,El Cajon,a,El Cajon,CA,"92020",32.8079368,-116.9660449
+287,"99 Post Street",a,San Francisco,CA,"94104",37.7888809,-122.4036476
+288,North Babylon,a,North Babylon,NY,"11703",40.7375999,-73.3206066
+289,San Diego-Broadway,a,San Diego,CA,"92101",32.7154815,-117.1632734
+290,Fordham,a,Bronx,NY,"10468",40.862536,-73.8983458
+291,Farmingdale,a,Farmingdale,NY,"11735",40.7323464,-73.4483634
+292,San Juan Capistrano,a,San Juan Capistrano,CA,"92675",33.493971,-117.663078
+293,Norwalk,a,Norwalk,CA,"90650",33.907582,-118.076429
+294,Sherman Oaks-Van Nuys,a,Sherman Oaks,CA,"91403",34.152719,-118.448196
+295,Allerton Avenue,a,Bronx,NY,"10467",40.8652972,-73.8669097
+296,San Mateo,a,San Mateo,CA,"94401",37.5634451,-122.325604099999
+297,Huntington Village,a,Huntington,NY,"11743",40.8708619,-73.4305917999999
+298,Bedford Village,a,Bedford,NY,"10506",41.1970711,-73.652621
+299,Third Avenue-63rd Street,a,New York,NY,"10021",40.7713438,-73.9594772999999
+300,Ridgewood,a,Brooklyn,NY,"11237",40.699067,-73.9176229999999
