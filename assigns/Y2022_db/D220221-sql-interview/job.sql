@@ -121,3 +121,164 @@ from tmp t2;
 select v1.month, v2."Company ID", v2.headcount
 from v1 left join v1 v2 on v1.month2=v2.month
 where to_date(v1.month,'YYYY-MM-DD')<=now();
+
+
+===v3
+
+
+create or replace view v1
+as
+with tmp as
+(
+select tt.month, tt1."Company ID", tt1.headcount
+from
+(
+select t1."year"||'-'||t2.month as month
+from
+(
+select generate_series "year" from generate_series(2000, (select extract(year from now()))::integer)
+) t1
+,
+(
+select '01-01' as month
+union
+select '02-01' as month
+union
+select '03-01' as month
+union
+select '04-01' as month
+union
+select '05-01' as month
+union
+select '06-01' as month
+union
+select '07-01' as month
+union
+select '08-01' as month
+union
+select '09-01' as month
+union
+select '10-01' as month
+union
+select '11-01' as month
+union
+select '12-01' as month
+order by month
+) t2
+) tt left join
+(
+select "Company ID", extract(year from "Start Date")||'-'||to_char("Start Date",'MM')||'-01' as Month,
+count( distinct "Person ID") as headcount
+from job
+where extract(year from "Start Date")>=2000
+and
+"End Date" is null
+or "Start Date">=
+ to_date(extract(year from "Start Date")||'-'||to_char("Start Date",'MM')||'-01','YYYY-MM-DD')
+  and  to_date(extract(year from "Start Date")||'-'||to_char("Start Date",'MM')||'-01','YYYY-MM-DD') <="End Date"
+group by "Company ID", extract(year from "Start Date")||'-'||to_char("Start Date",'MM')||'-01'
+) tt1 on tt1.month=tt.month
+)
+select t2.month, t2."Company ID", t2.headcount,
+(
+select max(t1.month)
+from tmp t1 where t1.month<t2.month and t1.headcount is not null
+) as month2
+from tmp t2;
+
+
+
+select v1.month, v2."Company ID", v2.headcount
+from v1 left join v1 v2 on v1.month2=v2.month
+where to_date(v1.month,'YYYY-MM-DD')<=now();
+
+
+----------updated at 20220222
+
+create or replace view v1
+as
+with tmp as
+(
+select tt.month, tt1."Company ID", tt1.headcount
+from
+(
+select t1."year"||'-'||t2.month as month
+from
+(
+select generate_series "year" from generate_series(2000, (select extract(year from now()))::integer)
+) t1
+,
+(
+select '01-01' as month
+union
+select '02-01' as month
+union
+select '03-01' as month
+union
+select '04-01' as month
+union
+select '05-01' as month
+union
+select '06-01' as month
+union
+select '07-01' as month
+union
+select '08-01' as month
+union
+select '09-01' as month
+union
+select '10-01' as month
+union
+select '11-01' as month
+union
+select '12-01' as month
+order by month
+) t2
+) tt left join
+(
+select t1."Company ID", t1.month, case when  t2.headcount  is null then t1.headcount else t1.headcount-t2.headcount end as headcount
+from
+(
+
+select "Company ID", month,
+-- sum(counts),
+-- sum(case when "End Date" is not null then 1 else 0 end) as go_counts,
+ sum(sum(counts)) over(order by month rows unbounded preceding) as headcount
+from
+(
+select "Company ID", date_part('year',"Start Date")||'-'||to_char("Start Date",'MM')||'-01' as month, "End Date", count("Person ID") as counts
+from job
+-- where "End Date" is null
+group by "Company ID", date_part('year',"Start Date")||'-'||to_char("Start Date",'MM')||'-01', "End Date"
+) t
+group by "Company ID", month
+
+) t1
+full join
+(
+select "Company ID", month,
+-- sum(case when "End Date" is not null then 1 else 0 end) as go_counts,
+ sum(sum(counts)) over(order by month rows unbounded preceding) as headcount
+from
+(
+select "Company ID", date_part('year',"End Date")||'-'||to_char("End Date",'MM')||'-01' as month,  count("Person ID") as counts
+from job
+where "End Date" is not null
+group by "Company ID", date_part('year',"End Date")||'-'||to_char("End Date",'MM')||'-01'
+) t
+group by "Company ID", month
+) t2 on t1."Company ID"=t2."Company ID" and t1.month>=t2.month
+
+
+) tt1 on tt1.month=tt.month
+)
+select t2.month, t2."Company ID", t2.headcount,
+(
+select max(t1.month)
+from tmp t1 where t1.month<t2.month and t1.headcount is not null
+) as month2
+from tmp t2;
+
+select v1.month, v2."Company ID", v2.headcount
+from v1 left join v1 v2 on v1.month2=v2.month
+where to_date(v1.month,'YYYY-MM-DD')<=now();
