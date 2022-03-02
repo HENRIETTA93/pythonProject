@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<!-- saved from url=(0123)https://learn.bu.edu/bbcswebdav/pid-9833774-dt-content-rid-61814471_1/courses/22sprgmetcs779_o1/course/module3/allpages.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Module 3</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/getHeader.js.下载"></script>
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+<script src="./Module 3_files/onlymet.js.下载"></script>
+</head>
+<body>
+<h1>Module 3</h1>
+
+<div class="importantcenter">
+<p>This is a single, concatenated file, suitable for printing or saving as a PDF for offline viewing. Please note that some animations or images may not work.</p></div>
+
+<div id="header" class="boxBlueCenter" style="visibility: visible;">
+<table class="arrange">
+<tbody><tr>
+<td colspan="2"><h4>Module 3 Study Guide and Deliverables</h4></td>
+</tr>
+<tr>
+<td><strong>Readings:</strong></td>
+<td><p>Primary Reading: </p>
+  <ul>
+    <li>CB6 chapter 22 - Transaction Management, pages 619-661 (through 22.3)</li>
+    <li>CB6 chapter 24 - Distributed DB concepts, pages 734-778 (please see below for sections which are secondary) </li>
+    <li>CB6 chapter 25 - Advanced Distributed DB concepts,&nbsp; Distributed Deadlock management, Failures of distributed environment, 2 phase commit, pages 789-800</li>
+    <li>CB6 chapter 26 - Replication and mobile databases, pages 827-840, Replication intro and Mobile databases, pages 267-868</li>
+  </ul>
+  <p>Secondary Reading: </p>
+  <ul>
+    <li>CB6 chapter 22 - Transaction Management, pages 661-674 (especially section on backup and recovery; 22.5.4 might be relevant)</li>
+    <li>CB6 chapter 24.2 - Overview of netowrking (if you are familiar with it - might be worth a scan)</li>
+    <li>CB6 chapter 25 - Review 3 phase commit specifically</li>
+    <li>CB6 chapter 26 - scan through issues with mobile databases; and 26.5  Oracle replication is a good case study of Replication in Oracle specifically</li>
+    <li>Looney chapter 25 - disucsses database links for distributed databases and examples of location transparency</li>
+  </ul>  </td>
+</tr>
+<tr>
+  <td><strong>Assignments:</strong></td>
+	<td><ul>
+	  <li>Assignments 3.0 and 3.1 <span class="date">due  Friday, February 4 at 6:00 AM ET</span></li>
+	  <li>Programming Part 3 due Monday<span class="date">, February 7 at 6:00 AM ET</span></li>
+	  </ul></td>
+</tr>
+<tr>
+<td><strong>Assessments:</strong></td>
+	<td>Quiz 3 <span class="date">due   Friday, February 4 at 6:00 AM ET</span></td>
+</tr>
+<tr>
+<td><strong>Term Project Note:</strong></td>
+	<td><p>Term Project Update #3, <span class="date">is due Monday, February 7 at 6:00 AM ET</span>. </p>
+	  <p>This term project deliverable may include an update of your project plan or any other portions of your term project. The purpose of this deliverable is to provide your instructor with an opportunity to guide you midway in your term project. </p></td>
+</tr>
+<tr class="onlyode">
+  <td><strong>Live Classrooms:</strong></td>
+ <td><p>Supplementary Live Session<span class="date">, Wednesday, January 26, 8:00 PM - 10:00 PM ET</span></p>
+   <p>Current week's assignment review and examples<span class="date">, Saturday, January 29, 11:00 AM - 12:00 PM (noon) ET</span></p>
+   <p>Additional SQL Review and Live office help<span class="date">, Sunday, January 30, 11:00 AM - 12:00 PM (noon) ET</span></p>
+   <p>Live office help<span class="date">, Monday, January 31, 8:00 PM - 9:00 PM ET</span></p>
+ </td>
+ </tr>
+</tbody></table>
+</div>
+<script>
+getHeader('header','../syllabus/metcs779_S05_studyGuide.html','mod3');
+</script>
+
+<div id="p0">
+
+
+
+<title>Introduction</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+
+
+
+<h1>Introduction</h1>
+<!--
+<table class="video">
+<tr><td><script src="https://cdnapisec.kaltura.com/p/2159741/sp/215974100/embedIframeJs/uiconf_id/37822691/partner_id/2159741"></script>
+<div id="metcs779_wk3" style="width: 525px; height: 331px;">metcs779_wk3 video cannot be displayed here</div>
+<script>
+kWidget.embed({
+"targetId": "metcs779_wk3",
+"wid": "_2159741",
+"uiconf_id": 37822691,
+"flashvars": {
+"streamerType": "auto"
+},
+"cache_st": 1491572044,
+"entry_id": "1_zraa8qsr"
+});
+</script>
+<script>window.parent.document.querySelector('iframe').setAttribute('allowfullscreen',true);</script>
+<script src="https://api.3playmedia.com/p/projects/10896/files/metcs779_wk3/embed.js?plugin=transcript&settings=height:300,width:525,skin:frost,can_collapse:true,can_print:true,can_download:true&player_type=kaltura&player_id=metcs779_wk3&usevideoid=1"></script>
+</td></tr>
+</table>
+-->
+    
+<p>Distributed database management systems (DDBMS) are database  systems where several (two or more) <strong>database instances</strong> work together to  form one logical database. DDBMS are widely used in large geographically  distributed organizations, for a number of reasons:</p>
+<ul>
+  <li>By distributing the data close to the locations where it is used most, performance is improved, network traffic is reduced, and the risks associated with network outage are reduced.</li>
+<li>DDBMS can be very fault-tolerant. For example, DDBMS can be designed so that critical data is not lost even if a site is destroyed and conventional recovery for that site fails.</li>
+<li>DDBMS can be designed so that they scale well. For example, with a distributed enterprise database design, bringing up a new regional office may only involve installing a new regional database server in the office and making it a part of the enterprise DDBMS.</li>
+</ul>
+
+<div class="definitioncenter">
+ <h4>Definition of a Database Instance</h4>
+ <p>A computer, DBMS software, and associated durable storage that implement a database.</p>
+ </div>
+
+<h2>Learning Outcomes</h2>
+
+<p>By reading this lesson, participating in discussions, and completing the assignments, you will be able to:</p>
+
+<ul>
+<li>Describe what a distributed database management system (DDBMS) is, what its components are, and how it works.</li>
+<li>Describe how transactions are managed in a DDBMS.</li>
+<li>Describe two-phase commit, how it works, and why it is important.</li>
+<li>Describe how data are partitioned, replicated, and allocated in distributed database design.</li>
+<li>Describe how distributed database performance, fault tolerance, and network traffic are affected by different design choices.</li>
+<li>Understand distributed database designs that you encounter.</li>
+<li>Design efficient  reliable, scalable Distributed Database Management Systems.</li>
+<li>Describe the different levels of transparency in a DDBMS and explain why transparency is important.</li>
+<li>Describe federated and tiered database designs and why they are used.</li>
+</ul>
+
+
+</div>
+<script>
+getHeader('p0','../module3/metcs779_M3L0T01_Introduction.htm','body');
+</script>
+
+<header>Lecture 3A - Transaction Management</header>
+
+<div id="a1">
+
+
+  
+  <title>Overview</title>
+  <link href="./Module 3_files/local.css" rel="stylesheet" type="text/css">
+  
+
+<h1>Overview</h1>
+<p>This lecture introduces transactions, transaction management, and database
+ concurrency control, including serializability, locking methods, and deadlocks.
+ We then cover the basics of recovering a database, including the need for transaction
+ logging. Finally, we discuss the basic transaction and recovery features that
+ are available in Oracle.</p>
+ 
+ <p>Transaction Management is introduced in Chapter 22 of the sixth edition of Connolly and Begg. You are responsible for the material in this lecture and in Connolly and Begg. You are not responsible for the Oracle-specific techniques, but you may find some of them useful for your term project.</p>
+<h2>Learning Objectives</h2>
+<p>By reading this lecture, participating in discussions, and completing the assignments, you will be able to:</p>
+<ul>
+<li> Explain and use the ACIDS properties of transactions.</li>
+<li> Explain why database concurrency control is important and choose appropriate concurrency control for applications.</li>
+<li> Explain the different types of locks and how they are used in databases.</li>
+<li> Describe deadlocks—what causes them, how they affect database applications, and how to prevent deadlock problems.</li>
+<li> Describe how transaction logs are produced and their roles in database recovery. </li>
+</ul>
+
+
+
+</div>
+<script>
+getHeader('a1','../module3/metcs779_M3L1T01_Overview.htm','body');
+</script>
+
+<div id="a2">
+
+
+
+<title>Properties of Transactions</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+
+
+
+<h1>Properties of Transactions</h1>
+
+<p>One of the most important aspects of a transactional database is how the database manages its transactions. Both concurrency control and recovery are required to support high transaction rates and protect the database from inconsistencies and data loss. If a database doesn’t have concurrency control it can’t support concurrent transactions, greatly reducing database transaction throughput. Without database recovery, a database can’t be restored to a consistent state after a transaction is aborted or the database is corrupted by software error, human error, or hardware failure.</p>
+
+<p>A transaction is any action or series of actions carried out by a single user or application program that reads or updates the contents of the database. Transactions sound simple, but they are rather complex and have several properties that you must understand. A transaction can have two different outcomes—committed or aborted. If the transaction is committed by the user or application using the COMMIT command, then the transaction is said to be <em>committed</em> and the database is in a consistent state where all database constraints are satisfied. If the transaction does not execute successfully the transaction is <em>aborted</em>, and then the database must be restored to the consistent state that it was in before the transaction was started. A transaction can be explicitly aborted by the user or application using the SQL ROLLBACK command.&nbsp; A transaction can also be aborted by the DBMS for reasons such as the unavailability of a lock needed by the transaction. When the DBMS aborts a transaction it normally automatically restarts the transaction later. This restarting of an aborted transaction is normally implemented within the database kernel where it is invisible to the user.</p>
+
+<p>Below is an example of a simple transaction:</p>
+
+<blockquote>
+<p class="code">UPDATE CUSTOMER SET CUSTOMER_FNAME='JIM'<br>
+WHERE CUSTOMER_ID=12232<br>
+COMMIT;</p>
+</blockquote>
+
+<p>In most DBMS, and in the ANSI and ISO SQL standards, a transaction begins implicitly when a connection is established to the database and each subsequent COMMIT or ROLLBACK begins a new transaction. In other DBMS such as Microsoft SQL Server there would be the line BEGIN TRANSACTION at the top of this example. The COMMIT statement above makes the update of the name permanent. If the last line had been ROLLBACK then the transaction would have been aborted and the database would not have been changed.</p>
+
+<p>In a fully transactional database transactions should possess the five basic <strong>ACIDS</strong> properties:</p>
+
+<p><strong><em>Atomicity</em></strong> requires that all modifications must follow an “all or nothing” rule. This means that when part of a transaction fails, then the whole transaction fails so that the user doesn’t have to worry about incomplete transactions or inconsistent data.</p>
+
+<p><strong><em>Consistency</em></strong> guarantees that a transaction will transform the database from one consistent state to another consistent state. This means that the database will enforce consistency through constraints according to the database schema.</p>
+<p><strong><em>Isolation</em></strong> ensures that each transaction operates independently from other transactions. This is possible through locking and concurrency control in the DBMS.</p>
+<p><strong><em>Durability</em></strong> requires that committed transactions are permanently recorded in the database and won’t be lost due to failures such as system crashes.</p>
+<p><strong><em>Serializability</em></strong> makes sure that it appears as if the requests in transactions are executed in the order that the user or application presents them to the DBMS, with no intervening transactions, even though the requests may actually be executed in a different order with intervening transactions.</p>
+
+
+</div>
+<script>
+getHeader('a2','../module3/metcs779_M3L1T02_PropertiesofTransactions.htm','body');
+</script>
+
+<div id="a3">
+
+
+
+<title>Concurrency Control</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>Concurrency Control</h1>
+
+<p>Imagine many people trying to access and update a spreadsheet at once. Even if everyone can obtain a copy of the spreadsheet from a shared file system, when the different users save their changes it will wipe out changes made by other concurrent users. How can you make sure people aren’t updating the same thing at the same time? How can you make sure that the data the person is reading is up-to-date? Concurrency control is a name for the functionality that permits multiple users to read and update the same set of data while ensuring that everyone sees a consistent view of the data and that no one's updates are lost. A spreadsheet does not have concurrency control, but a database does and can assure that numerous users can access and manipulate the same set of data. Concurrency control is obviously very useful. It is also a little complicated.</p>
+<p>The major advantage of using a database to manage your data is the ability to have many users access shared data concurrently. With concurrency control the database assures that the data is always consistent. The basic definition of <em>concurrency control </em>is the process of managing simultaneous operations on the database without having them interfere with one another. Concurrency control is necessary to prevent problems that can cause incorrect functioning of applications, including:</p>
+<p><em><strong>Lost update problem</strong></em>—a lost update is where a completed update operation
+by one user can be overwritten by another user’s update operation. </p><p>
+<em><strong>Uncommitted dependency problem</strong></em>—this occurs when one transaction
+is allowed to see the intermediate results of another transaction before it
+has committed.</p>
+
+<p><em><strong>Inconsistent analysis problem</strong></em>—this occurs when a transaction reads
+several values from the database but a second transaction updates some of
+them during the execution of the first.</p>
+
+<h2>Serializability</h2>
+
+<p>The main objective of serializability is to find nonserial schedules that
+allow transactions to execute concurrently without interfering with one another
+and thereby produce a database state that could be produced by a serial execution.</p>
+
+<p>Serializability is possible with the help of the concurrency control’s scheduling, where transactions are executed by a particular schedule. Here are some definitions:</p>
+
+<p><em><strong>Schedule</strong></em>—a schedule is a sequence of operations by a set of concurrent transactions. The goal of a schedule is that it functions in the same way for all transactions as a serial schedule.</p>
+
+<p><em><strong>Serial schedule</strong></em>—a serial schedule is a schedule where the operations of each transaction are executed consecutively without any interleaved operations from other transactions. A serial schedule is the definition of functionally correct concurrency.</p>
+
+<p><em><strong>Nonserial schedule</strong></em>—a nonserial schedule is a schedule where the operations from a set of concurrent transactions are interleaved. A nonserial schedule may or may not be functionally equivalent to a serial schedule.</p>
+
+<p>There are two main concurrency control mechanisms that allow a DBMS to perform transactions safely in parallel—locking and timestamping.</p>
+
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Serializability finds non-consecutive ways to execute transactions to produce a database state that could be produced serially.&nbsp; Why would it be a problem to execute transactions on a serial schedule? (Select all that apply.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>With a serial schedule, each transaction would wait for the previous one to end before starting.&nbsp; Waiting for each transaction to complete would have a performance impact.</td>
+<td style="display: none;">This is true. With a serial schedule transactions proceed in a given order from start to finish.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>With a serial schedule, concurrent transactions would not update the database in the correct order.</td>
+<td style="display: none;">This is false. Transactions update the database correctly, since one transaction doesn't start until the previous one finishes.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>With a serial schedule, there could be too many concurrent transactions that would overload the database.</td>
+<td style="display: none;">This is true. Transactions appear to progress consecutively, which is the best for accuracy, but too many concurrent transactions could cause a serious performance hit.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a3','../module3/metcs779_M3L1T03_ConcurrencyControl.htm','body');
+</script>
+
+<div id="a4">
+
+
+
+<title>Locking Methods</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>Locking Methods</h1>
+
+<p>Locking is one of the main practices for concurrency control. Locking ensures
+data integrity. When one transaction is accessing the database, a lock may
+deny access to other transactions to ensure correct results. For example, look
+at the query below:</p>
+
+<blockquote>
+<p class="code">BEGIN TRANSACTION<br>
+UPDATE CUSTOMER SET CUSTOMER_NAME='JIM'<br>
+WHERE CUSTOMER_ID=12232<br>
+--COMMIT/ROLLBACK</p>
+</blockquote>
+
+<p>Since we have not committed the transaction yet and since this is an update statement, there will be an exclusive lock on the row where CUSTOMER_ID=12232. If an application or user tried to access the row they would not be able to, because of the lock. If a transaction has an <em>exclusive lock</em> then it can read or update the item, and no other transaction can access it.</p>
+<p>Once this query is committed another transaction can occur on the item For
+ example: let’s assume that the previous query was committed and the query below
+is executed.</p>
+
+<blockquote>
+<p class="code">SELECT * FROM CUSTOMER <br>
+WHERE CUSTOMER_ID=12232</p>
+</blockquote>
+
+<p>The query will have a shared lock on the item because it is only reading the data. If a transaction has a <em>shared lock</em> on an item, it can only read the item. Once an item has a shared lock, it can only be read. An exclusive lock cannot be obtained on a shared lock to update the data because of the shared lock. The locking ensures the data integrity so that users don’t read incorrect data.</p>
+<div class="testcenter">
+ <form>
+<h4>Test Yourself</h4>
+<p>If user A owns an exclusive lock on the CUSTOMER table, and user B wants to read that table, which kind of lock (exclusive or shared) would user B be able to obtain for his read of&nbsp; the CUSTOMER table?</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>Exclusive lock</td>
+<td style="display: none;">This is false. User B would not be able to get an exclusive lock since user A owns an exclusive lock on the CUSTOMER table.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>Shared lock</td>
+<td style="display: none;">This is false. User B would not be able to get a shared lock on CUSTOMER since user A owns an exclusive lock on that table.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>No lock</td>
+<td style="display: none;">This is true. User B would not be able to obtain any locks on the CUSTOMER table until user A released the exclusive lock.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a4','../module3/metcs779_M3L1T04_LockingMethods.htm','body');
+</script>
+
+<div id="a5">
+
+
+
+<title>Deadlocks and Timestamps</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>Deadlocks and Timestamps</h1>
+
+<p><em>Deadlocks</em> occur when two or more transactions are each waiting for locks to be released that are held by the other. For example, suppose that Session A holds lock X and is trying to procure lock Y. Suppose that session B holds lock Y and is trying to procure lock X. Neither can proceed. They are deadlocked until something breaks the deadlock. That something is the DBMS. One simple way that DBMS detect deadlocks is when a query waits too long for a lock. A DBA can specify the query timeout dependent upon the type of query.</p>
+<p>Once the deadlock is identified the DBA must decide which transaction to abort. Usually there will be one transaction causing a block of numerous transactions so it is obvious that the transaction causing the block should be aborted. But at other times it is hard to tell which transaction to stop, so the DBA will need to do some research in order to find which transaction to kill.</p>
+<p>There are numerous things to take into consideration: How long has the transaction
+ been running? How has the deadlock affected the performance of the database?
+ How much data is the transaction going to update? How far do you have to roll
+ back the transaction without having an effect on the database? Also, it is
+ important to look at trends. If a particular query is causing numerous deadlocks,
+maybe the query needs to be changed or altered.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>If user A owns a shared lock on the CUSTOMER table, and user B wants to update that table, which kind of lock (exclusive or shared) would user B be able to obtain?</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>Exclusive lock</td>
+<td style="display: none;">This is false. User B would not be able to get an exclusive lock since user A owns a shared lock on the CUSTOMER table.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Shared lock</td>
+<td style="display: none;">This is true. The only lock available to user B would be a shared lock. Once user A released the shared lock, user B would be able to obtain an exclusive lock.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>No lock</td>
+<td style="display: none;">This is false. User B could get a shared lock to read the same data on the same table as User A.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+<h2>Timestamps</h2>
+
+<p>Timestamping is a concurrency control mechanism that orders transactions in
+such a way that older transactions (transactions with smaller timestamps) get
+priority in the event of conflict. Timestamping is sufficient to assure correct
+concurrency control, but timestamping is not used without locks, because concurrency
+control based on timestamps alone results in a very slow database with much
+less concurrency than if locks were also used.</p>
+
+
+</div>
+<script>
+getHeader('a5','../module3/metcs779_M3L1T05_DeadlocksandTimestamps.htm','body');
+</script>
+
+<div id="a6">
+
+
+  
+  <title>Recovering Databases</title>
+  <link href="./Module 3_files/local.css" rel="stylesheet" type="text/css">
+  
+
+<h1>Recovering Databases</h1>
+<p>Knowing how to recover a database from an inconsistent state  is very important. Sometimes a business will be inoperable if a database is  down. For example, airlines can’t fly airplanes and banks can’t conduct  business without databases. Every minute the database is offline, Amazon will  be losing money. It is important to know how to recover the database and have a  strategy or plan to get the database back online as soon as possible. Without  the right configuration of database backups, there might be the possibility of  data loss.</p>
+<p>Transactions play a critical role in recovering a database. The transaction
+  log contains all the database changes since the last backup. The content of
+  a transaction log is different between different DBMS, but a transaction log
+ generally contains the following information:</p>
+<ul>
+<li> A transaction identifier</li>
+<li> A before-image of the data item</li>
+<li> An after-image of the data item</li>
+<li> Type of log record</li>
+<li> Checkpoint information</li>
+</ul>
+<p>The transaction log file is used for database recovery, performance, monitoring,
+ and auditing. A <em>checkpoint</em> in the log file is the point of synchronization
+ between the database and the log file.</p>
+
+
+</div>
+<script>
+getHeader('a6','../module3/metcs779_M3L1T06_RecoveringDatabases.htm','body');
+</script>
+
+<div id="a7">
+
+
+ 
+ <title>Oracle Concurrency and Recovery</title>
+ <link href="./Module 3_files/local.css" rel="stylesheet" type="text/css">
+ 
+
+<h1>Oracle Concurrency and Recovery</h1>
+<p>Oracle uses optimistic concurrency control with an advanced multi-version read consistency protocol that guarantees a session sees a consistent view of the data, even though the data has been changed by another session since the transaction began. Oracle does this by maintaining "rollback segments," which store the changes to the database. Before a transaction starts, Oracle writes the before-image to a rollback segment.&nbsp; In that way, rollback segments preserve the original data. This permits Oracle transactions to actually change the data in the database during the transaction, before the transaction is committed. At commit time Oracle checks if the transaction violated any constraints such as locks, and if so, rolls back the transaction.</p>
+
+
+</div>
+<script>
+getHeader('a7','../module3/metcs779_M3L1T07_OracleConcurrencyandRecovery.htm','body');
+</script>
+
+<div id="a8">
+
+
+
+<title>Isolation Levels</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>Isolation Levels</h1>
+
+<p>Oracle, like other DBMS, permits DBAs some control of the more expensive aspects
+of concurrency control. One of these controls is the ability to specify the
+isolation levels. Isolation levels are DBMS settings that control how transactions
+perform. They describe how a transaction will be isolated from other transactions.
+</p>
+
+<p><em><strong>READ COMMITTED</strong></em>—serialization is forced at the statement level, where
+each statement within a transaction sees only data that was committed before
+the statement started. This is the default isolation level for Oracle.</p>
+
+<p><em><strong>SERIALIZABLE</strong></em>—serialization is forced at the transaction level, so
+each statement within a transaction sees data with only the changes committed.</p>
+
+<p><em><strong>READ ONLY</strong>—</em>read only is where transactions only see data that was
+committed before the transaction started.</p>
+
+<p>There are several other isolation levels that are available and they are different
+in every DBMS, but their intentions are to control the isolation and concurrency
+of transactions. The isolation level in Oracle is set using the “SET TRANSACTION”
+or “ALTER SESSION” commands.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Isolation is the transaction property that ensures that the transaction will be independent of other transactions. Select all that are true about isolation levels.</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>Because isolation is a transaction property, isolation levels only affect how the DBMS behaves when transactions are committed.</td>
+<td style="display: none;">This is false. Isolation levels influence DBMS behavior during transactions. Examples include having SQL read uncommitted changes in the midst of a transaction for less stringent serializability settings. This may result in the same SELECT returning different results when executed at different times in a transaction, because another transaction changed data that the SELECT depended upon.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>If the isolation level is set to the typical commercial DBMS default (READ COMMITTED in Oracle), data might change between repeated executions of the same statement in a transaction.</td>
+<td style="display: none;">This is true, since READ COMMITTED occurs at the statement level and not at the transaction level. READ COMMITTED is the default isolation level for Oracle.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>The SERIALIZABLE level will provide the most accurate data.</td>
+<td style="display: none;">This is true. The SERIALIZABLE level makes it appear that transactions are run one at a time. However, while this is the best for accuracy, it is often not the best for performance.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a8','../module3/metcs779_M3L1T08_IsolationLevels.htm','body');
+</script>
+
+<div id="a9">
+
+
+ 
+ <title>Backup and Recovery</title>
+ <link href="./Module 3_files/local.css" rel="stylesheet" type="text/css">
+ 
+
+
+<h1>Backup and Recovery</h1>
+ 
+ <p>For backup and recovery, Oracle provides the Oracle Recovery  MANager (RMAN). The recovery manager maintains backup information and has the  ability to perform complete backups, incremental backups, and other types of  backups, and also assists with restoring or recovering a database. RMAN logs  all backup operations to the control files of the database that is being backed  up. Since the DBMS has all of the information needed to determine how to  recover, recovering a database can be as simple as one command:</p>
+ <blockquote>
+  <p class="code">RMAN&gt; RESTORE DATABASE;</p>
+ </blockquote>
+<p>The backup information can also be queried and reported.</p>
+
+
+</div>
+<script>
+getHeader('a9','../module3/metcs779_M3L1T09_BackupandRecovery.htm','body');
+</script>
+
+<div id="a10">
+
+
+ 
+ <title>Summary</title>
+ <link href="./Module 3_files/local.css" rel="stylesheet" type="text/css">
+ 
+
+<h1>Summary</h1>
+<p>Transaction management and concurrency control are critical  in database management systems; they maintain database integrity and correct  operation when concurrent transactions are accessing the same data. Concurrency  control makes it possible for many users to access the same database, with each  user’s transactions executing as if that user were the only user of the  database, with no lost updates or other concurrency problems. The best  concurrency control implementations permit thousands of transactions to execute  concurrently, greatly improving database performance and scalability.  Concurrency control implementations on modern DBMS all use timestamps and  locks, but the details differ between DBMS.</p>
+
+
+</div>
+<script>
+getHeader('a10','../module3/metcs779_M3L1T10_Summary.htm','body');
+</script>
+
+<header>Lecture 3B - Distributed Database Management Systems</header>
+
+<div id="b1">
+
+
+
+<title>DDBMS Basics</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>DDBMS Basics</h1>
+
+<p><strong><em>The technical definition of a DDBMS</em></strong> is a DBMS that supports distributed transactions. A DDBMS need not be geographically distributed. One common use of DDBMS technology is high reliability systems with two or more database servers in a fault-tolerant configuration connected by high speed local area networks.</p>
+<p>Centralized database designs require that data be stored in a single central site, but this is not very flexible and has performance, scalability, and other limitations. The centralized database's shortcomings spawned a demand for applications based on data access from different sources at multiple locations and distributed database technology was developed to meet those needs.</p>
+
+<p><strong><em>DDBMS Advantages and Disadvantages</em></strong>—The following table summarizes the main advantages and corresponding disadvantages of DDBMS compared to centralized (single instance) DBMS.</p>
+
+<table class="data">
+<tbody><tr>
+<th>Advantages</th>
+<th>Disadvantages</th>
+</tr>
+<tr>
+<td>Locating data near where they are needed</td>
+<td>Multiple database servers and instances to maintain</td>
+</tr>
+<tr>
+<td>Faster data access for local data, so better performance</td>
+<td>Less central visibility and control over database accesses</td>
+</tr>
+<tr>
+<td>Easier to manage growth and scale up and down</td>
+<td>Need to configure distribution</td>
+</tr>
+<tr>
+<td>Reduced risk of single point of failure with replication</td>
+<td>Need for additional storage</td>
+</tr>
+<tr>
+<td>Reduced ongoing operating costs</td>
+<td>Higher initial training costs</td>
+</tr>
+<tr>
+<td>Reduced risk of data loss</td>
+<td>Increased risk of data theft</td>
+</tr>
+<tr>
+<td>Faster recovery with a good design</td>
+<td>Increased complexity of backup and recovery</td>
+</tr>
+</tbody></table>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>What are some of the advantages of a DDBMS compared to a centralized DBMS? (Choose all that are true.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>A DDBMS is easier to scale up as additional capability is needed.</td>
+<td style="display: none;">This is true. If the database is well designed, it is easier to scale up by adding more database servers to provide increased capacity.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>With a DDBMS, it is easier to train designers and administrators.</td>
+<td style="display: none;">This is false. Additional training is needed so that designers and administrators understand how the data is distributed and replicated on different machines.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>With a DDBMS, it is easier to recover data.</td>
+<td style="display: none;">This is false. It is faster to recover data sometimes, but since fragments can be located on different machines, and only one fragment might fail, planning for complete recovery can become very complex.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>What are some of the advantages of a centralized DBMS compared to a DDBMS? (Choose all that are true.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>A centralized DBMS is easier to design than a DDBMS.</td>
+<td style="display: none;">This is true. Fragmentation, allocation and replication are not factors to consider in a centralized design.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>A centralized DBMS requires less maintenance than a DDBMS.</td>
+<td style="display: none;">This is true. Since there is only one database on one machine
+a centralized database is easier to maintain.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>A centralized DBMS will always have lower operating costs over the long run.</td>
+<td style="display: none;">This is false. A DDBMS will have higher initial training costs, but may have lower operating costs over time, because less expensive hosts may be needed and because functionality intrinsic to DDBMS may be easier to manage and have lower costs than corresponding centralized database technology. Network costs can also be lower with a DDBMS, and the costs associated with slower user response may make centralized system costs higher.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+<p>A DDBMS must perform all of the functions of a centralized DBMS, plus all functions imposed by the distribution of the data and processing. Ideally, the DDBMS should perform these additional functions <em>transparently</em> to the end user, meaning that the DDBMS looks to the user and the application SQL as if it were a single-instance DBMS.</p>
+<p>DDBMS are distributed systems, so they have the usual network infrastructure of distributed systems. Sometimes user workstations are associated with a DDBMS, though this isn't necessary.</p>
+
+<p><strong><em>Transaction processors and data processors</em></strong> are functionality that all DDBMS must have. The term <em>transaction processor</em> (TP) refers to the functionality that supervises distributed transactions. The term <em>data processor </em>(DP) refers to the functionality that retrieves, updates, and stores the data on the database instances that are part of the DDBMS. The data processor is usually a DBMS, often interfaced via a database driver such as ODBC, JDBC, or ADO.net. The transaction processor functionality may be implemented in a DBMS, or it may be different software, such as BEA's Tuxedo or the distributed transaction management in Microsoft's COM+.</p>
+
+<p><strong><em>The XA/Open Distributed Transaction Processing standard</em></strong> is the leading standard for the management of distributed transactions, particularly heterogeneous distributed transactions. XA distributed transaction processing is supported by Oracle and other leading DBMS, and also by J2EE and .net. The application programs may communicate using the Java Transaction API (JTA) in Java Enterprise, which is the Java implementation of the XA standard distributed transaction API.</p>
+
+<p><strong><em>The JTA, or Java Transaction API</em></strong>, is Oracle/Sun Microsystems' Java Enterprise application  programming interface for distributed transactions. JTA is based on the  standard XA API for distributed transactions. Java application developers can  use JTA to communicate with a distributed transaction processor and use that TP  service to coordinate distributed transactions on multiple DPs.</p>
+<div class="explorecenter"><p>You can obtain additional information on the X/Open distributed transaction standards at <a href="http://docs.openlinksw.com/mt/xamt.html" target="_blank">http://docs.openlinksw.com/mt/xamt.html</a> and other websites.</p></div>
+
+
+</div>
+<script>
+getHeader('b1','../module3/metcs779_M3L2T01_DDBMSBasics.htm','body');
+</script>
+
+<div id="b2">
+
+
+
+<title>DDBMS Basics Continued</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>DDBMS Basics Continued</h1>
+
+<p><strong><em>Distinctions between distributed processing and distributed databases</em></strong>—Distributed databases require distributed processing, but most distributed processing systems do not include distributed databases. The key distinguishing characteristic of distributed databases is distributed transactions. The following table summarizes one of the standard ways of classifying distributed processing and distributed database systems.</p>
+
+<table class="data">
+<tbody><tr>
+<th>Distributed System Class</th>
+<th>Characteristics</th>
+</tr>
+<tr>
+<td>Single-Site Processing, Single-Site Data (SPSD)</td>
+<td>DBMS is located on the host computer, which is accessed by terminals or terminal emulators connected to it.<br>
+SPSD is mainly found today in legacy systems such as BU's UIS, and in ERP systems, such as BUWorks.</td>
+</tr>
+<tr>
+<td>Multiple-Site Processing, Single-Site Data (MPSD)</td>
+<td>Multiple processes run on different computers sharing a single database instance.
+<br>
+Many two-tier applications, with PCs and other clients directly connected to a database server, are in this class, as are most n-tier application systems with a single DBMS in the database tier.</td>
+</tr>
+<tr>
+<td>Federated systems</td>
+<td>Multiple-site processing, with multiple-site data, but without distributed transactions. These architectures are fairly common in large data warehouses, where distributed transactions are not required.</td>
+</tr>
+<tr>
+<td>
+<p>True DDBMS</p>
+</td>
+<td>Fully distributed database management systems with support for transaction processing, with multiple data processors and distributed transactions.</td>
+</tr>
+</tbody></table>
+
+<p><strong><em>Homogenous and heterogeneous DDBMS</em></strong> - DDBMS can be classified as either homogeneous or heterogeneous. Homogeneous DDBMS integrate only one type of DBMS such as Oracle or DB2. Heterogeneous DDBMS include DBMS from different vendors.</p>
+
+<p><strong><em>DDBMS transparency</em></strong> is important in simplifying the user's model of the DDBMS and in improving maintainability of the SQL code that accesses the DDBMS. The following table summarizes the different transparency features.</p>
+
+<table class="data">
+<tbody><tr>
+<th>Transparency Feature</th>
+<th>What this Feature Hides and Does</th>
+</tr>
+<tr>
+<td>Distribution transparency</td>
+<td>The fact that the data are distributed</td>
+</tr>
+<tr>
+<td>Transaction transparency</td>
+<td>That distributed transactions are involved; also ensures that database transactions will maintain database integrity</td>
+</tr>
+<tr>
+<td>Failure transparency</td>
+<td>That an instance or other distributed database component has failed</td>
+</tr>
+<tr>
+<td>Performance transparency</td>
+<td>That the DDBMS does not perform as fast as a single-instance DBMS</td>
+</tr>
+<tr>
+<td>Heterogeneity transparency</td>
+<td>That the DDBMS is heterogeneous</td>
+</tr>
+</tbody></table>
+
+<div class="testcenter">
+<h4>Test Yourself</h4>
+<p>With heterogeneity transparency, a user could be connected to an Oracle DBMS instance which conducts distributed transactions with a DB2 instance and it would seem to the user that they were using the same type of database. True or False?</p>
+<button>Show Answer</button>
+<p style="display: none;">This is true, and is the definition of heterogeneity transparency.</p>
+</div>
+
+<p>Distribution transparency has three distinct levels, which are summarized in the following table:</p>
+
+<table class="data">
+<tbody><tr>
+<th>Level of Distribution Transparency</th>
+<th>Comments</th>
+<th>Example SQL</th>
+</tr>
+<tr>
+<td>Fragmentation transparency
+<br>
+(highest level)</td>
+<td>Hides both data fragmentation and data location.
+<br>
+Neither fragments nor locations are required in SQL.
+<br>
+Strongly preferred for maintainability of SQL, because SQL does not change when data are refragmented or reallocated.</td>
+<td class="code">select * from customer</td>
+</tr>
+<tr>
+<td>Location transparency
+<br>
+(medium level)</td>
+<td>Hides the instances (locations) to which the data is allocated, but does not hide the fragmentation.
+<br>
+SQL changes may be required when data is refragmented.</td>
+<td class="code">Select * from BOS_CUS
+<br>
+UNION
+<br>
+select * from NYC_CUS</td>
+</tr>
+<tr>
+<td>Local mapping transparency
+<br>
+(lowest level)</td>
+<td>Both fragment name and location are required in the SQL, so SQL changes are required when data is refragmented or relocated.
+<br>
+Synonyms (or views) and links alone can provide location transparency, so this level should not normally be used.</td>
+<td class="code">Select * from BOS_Link.BOS_CUS
+<br>
+UNION
+<br>
+select * from NYC_Link.NYC_CUS</td>
+</tr>
+</tbody></table>
+
+<p>As a general rule you should use the highest level of distribution transparency supported by the TPs and DPs that you are using. The main problem with using less than full distribution transparency is that then your SQL depends on the details of the distribution design, which can change over time. For example, if your implementation has only location transparency then adding a new instance to the distributed database would require changing all of the enterprise-level selects to add unions for the additional logical tables.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Select all that are true of distribution transparency:</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Fragmentation transparency eliminates SQL changes due to data location changes.</td>
+<td style="display: none;">This is true. Fragmentation transparency is the highest transparency level and it the hides both the data fragmentation and the data location.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>With local mapping transparency, the location of the data is transparent.</td>
+<td style="display: none;">This is false. Local mapping transparency is the lowest level of distribution transparency, and both the location and fragment name must be provided in the SQL command.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>With location transparency the fragment name must be specified, but the data instance is hidden.</td>
+<td style="display: none;">This is true. Location transparency needs more than fragmentation transparency, because it requires fragment names, but it requires less than local mapping transparency because the locations of the fragments do not need to be specified.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('b2','../module3/metcs779_M3L2T02_DDBMSBasicsContinued.htm','body');
+</script>
+
+<div id="b3">
+
+
+
+<title>Remote and Distributed Requests and Transactions</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>Remote and Distributed Requests and Transactions</h1>
+
+<p>Remote requests and remote transactions and distributed requests and distributed transactions are all subtly different. Remote requests do not require DDBMS capability, but can be implemented by applications software without a TP. Distributed transactions require distributed ACIDS transactions and TP capabilities.</p>
+<p><strong><em>Remote requests</em></strong> let single SQL statements read, write, or update data on a single DP. Remote requests require a DBMS with database link capability, but do not require DDBMS capability or a TP. From the DBMS' perspective it does not matter whether there is a LAN or WAN between the client and the DBMS, so remote requests are really no different than any other requests, except that the term <em>remote request</em> connotes that the DBMS is in a different location than the computer that generates the remote request. Remote requests do not even require that the DP support transactions, so remote requests can be used with DBMS such as MySQL with the default MyISAM back end, which does not support transactions.</p>
+
+<p><strong><em>Remote transactions</em></strong> are no different than remote requests, except that several requests (e.g. SQL statements) may be involved. The remote DP is responsible for transactional integrity of the remote requests. All that is required for remote transactions is that the remote DP support transactions.</p>
+
+<div class="definitioncenter">
+<h4>Transactions</h4>
+<p>Recall that transactions satisfy the ACIDS properties: Atomicity, Concurrency, Isolation, Durability, and Serializability.</p>
+</div>
+
+<p><strong><em>Distributed transactions</em></strong> are transactions that require one or more DPs and a TP that together have distributed transaction capability. Support for distributed transactions is what defines a DDBMS configuration, so without distributed transaction support a distributed system is not a distributed database system. The following figure from our MET CS669 text illustrates a distributed transaction. Note that the distributed transaction involves updating the customer, invoice, and product tables. Requests are part of the atomic transaction, even though the tables are allocated to different DPs.</p>
+
+<p class="center"><img src="./Module 3_files/metcs779_W02L01_Fig10_12.gif" width="510" alt="" height="310"></p>
+
+<p>In the example above, the database tables are allocated to different DPs, but the tables are not fragmented. Consider the example below, where the customer table has been horizontally fragmented into tables C1 and C2 and those tables have been allocated to different instances.</p>
+<p class="center"><img src="./Module 3_files/metcs779_W02L01_Fig10_14.gif" width="500" alt="" height="300"></p>
+
+<p>In this example full fragmentation transparency has allowed us to refer to C1 and C2 using the logical table name CUSTOMER.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Select all that are true of remote and distributed requests and transactions:</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>A remote request requires a transaction processor so that the local DBMS can communicate with the remote DBMS.</td>
+<td style="display: none;">This is false. A remote request requires a data processor, but not a transaction processor.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Remote requests and remote transactions are similar, the difference being that remote requests process one SQL command at a time, and remote transactions process blocks of multiple SQL statements that are part of the same transaction.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>Distributed transactions require at least one data processor and multiple transaction processors.</td>
+<td style="display: none;">This is false. A distributed transaction requires at least one transaction processor and can have any number of data processors.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+<p><strong><em>Why do DDBMS need distributed requests and distributed transactions?</em></strong> &nbsp;We might think that we could just use two SELECTs in the application, one to access C1 and another to access C2, and union the result sets, without needing DDBMS capability. Unfortunately this approach might result in inconsistencies, because the states of C1 and C2 may correspond to the final states of different transactions. For example, suppose that our application queries C1, then queries C2, and suppose another session is transferring a customer from C1 to C2 by deleting the customer from C1 and then adding that same customer to C2. If the customer is deleted from C1 before the SELECT against C1 and the customer has not yet been added to C2 before the SELECT against C2, then the customer will not appear in the result set of the two application-level SELECTs, even though the customer should have been in the result set. This simple example points out why it is essential that all transactions against distributed databases (both the two selects and the moving of the customer) be atomic distributed transactions. In other words, distributed requests are similar to distributed transactions, in the sense that they correspond to one transactional state of the entire distributed database. The difference between distributed requests and distributed transactions is that distributed requests leave the distributed database in the same transactional state, while distributed transactions change that distributed transactional state.</p>
+
+</div>
+<script>
+getHeader('b3','../module3/metcs779_M3L2T03_RemoteandDistributedRequestsandTransactions.htm','body');
+</script>
+
+<div id="b4">
+
+
+
+<title>Distributed Concurrency Control</title>
+<link href="./Module 3_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>Distributed Concurrency Control</h1>
+
+<p>In distributed database systems concurrency control is more  complex than in single-instance systems and lock contention is more important.  This section describes the techniques used for concurrency control in DDBMS.</p>
+<p><strong><em>The distributed concurrency problem</em></strong>—Suppose that a TP or application sends parts of a  distributed transaction to two instances, which we call A and B. Suppose that  instance A successfully commits the transaction. Suppose further that instance  B cannot commit the transaction—for example, because the data violates an  integrity constraint in B. Then the TP or application has a database integrity  problem that it cannot solve, because to solve it would require either rolling  back the committed transaction at A or somehow forcing a commit at B. What is  needed is some way to roll back the committed transaction A and/or some way to  retry the failed transaction at B. What is needed is a more general  implementation of transactions that handles the situation when not all DPs are  able to commit. This generalization is provided in two-phase commit protocols.</p>
+<div class="summarycenter">
+  <h4>Three Phase Commit</h4>
+<p>Two-phase commit protocols can block, for example if a DP times out after sending the commit to the TP but before receiving the final commit from the TP. Blocking is rare enough that most systems use two-phase commit. There is a non-blocking generalization of two-phase commit which introduces a pre-committed state in both the TP and DP. You are not responsible for three-phase commit in this class other than being aware that it exists. The interested reader can consult an excellent treatment in Connolly and Begg pp. 797–800.</p>
+</div>
+
+<p><strong><em>Two-phase commit protocols</em></strong> permit any part of a distributed transaction to be undone and retried in the event that not all parts of the distributed transaction can be successfully committed.</p>
+<p>In order to support the ability to roll back committed transactions DPs in distributed database systems must write their transaction logs to durable storage before updating the durable representations of the tables, so that both the old and new versions are in durable storage. Two-phase commit protocols also support efficient retrying of portions of the transaction and other recovery mechanisms.</p>
+
+<p><strong><em>Coordinator and subordinates</em></strong>—Two-phase commit protocols involve communications between the transaction <em>coordinator</em> or TP, and one or more <em>subordinates</em>, or DPs. In these protocols the coordinator is the client and the subordinates are the servers. The coordinator has the overall responsibility for managing and finally committing the transaction. The final commit cannot be issued until all subordinates have completed their parts of the transaction. The selection of the coordinator may depend on where the transaction is initiated; for example, an application may request a distributed transaction be implemented by a particular TP. The particular subordinates involved in a transaction are the DPs that have been allocated fragments involved in the transaction.</p>
+
+<div class="testcenter">
+<h4>Test Yourself</h4>
+<p>In the two-phase commit protocol, the transaction processor acts as the server, and the data processors act as clients. True or False?</p>
+<button>Show Answer</button>
+<p style="display: none;">This is false.&nbsp; The transaction processor acts as the client, and the data processors act as servers.</p>
+</div>
+
+<p><strong><em>DO-UNDO_REDO protocols</em></strong>—In two-phase commit, the TP communicates with the DP in terms of DO-UNDO-REDO protocols. The following table summarizes the three parts of this protocol.</p>
+
+<table class="data">
+<tbody><tr>
+<th>Action/Name</th>
+<th>What the DP does when the TP requests the action</th>
+<th>When it is done</th>
+</tr>
+<tr>
+<th scope="row">DO</th>
+<td>The DP writes the before and after values to the transaction log and then performs the requested operation.</td>
+<td>By each involved DP at the beginning of a distributed transaction</td>
+</tr>
+<tr>
+<th scope="row">UNDO</th>
+<td>The DP uses the transaction log entries to rollback the operation.</td>
+<td>After a distributed transaction failure, to restore the previous consistent state</td>
+</tr>
+<tr>
+<th scope="row">REDO</th>
+<td>The DP reads the transaction log and retries the operation.</td>
+<td>To recover by retrying the transaction</td>
+</tr>
+</tbody></table>
+
+<p><strong>The Preparation and Final Commit Phases</strong>—As the name suggests, the two-phase commit protocol is  divided into two distinct phases. The first phase is the preparation phase and  the second the commit phase. The two phases are described in the following  steps:</p>
+<table class="data">
+  <tbody><tr>
+<th colspan="2">Two-phase Commit Protocol</th>
+</tr>
+<tr>
+<td><strong>Phase One: The Preparation Phase
+</strong>
+<ol>
+<li> The coordinator sends a PREPARE TO COMMIT message to all subordinates.</li>
+<li> The subordinates respond with an indication signifying whether or not they’re prepared to commit.</li>
+<li> If the coordinator does not receive a Yes from all subordinates, it aborts or retries the transaction, using the DO-UNDO-REDO protocol.</li>
+<li> If the coordinator receives a Yes from all subordinates it proceeds to phase two.</li>
+<li> If the coordinator does not receive a Yes from all subordinates after retrying it returns a distributed transaction failure error to the application.</li>
+</ol> 
+</td>
+
+<td><strong>Phase Two: The Final Commit
+</strong>
+<ol>
+<li> The coordinator sends a COMMIT message to all subordinates.</li>
+<li> Each subordinate commits the changes using the DO protocol.</li>
+<li> Subordinates reply to the coordinator with a COMMITTED or NOT COMMITTED message.</li>
+<li> If any subordinates are not able to commit, the coordinator sends an ABORT message to all subordinates, forcing them to UNDO all changes. The coordinator may then retry the transaction or return an error to the caller.</li>
+</ol> 
+</td>
+</tr>
+</tbody></table>
+
+
+</div>
+<script>
+getHeader('b4','../module3/metcs779_M3L2T04_DistributedConcurrencyControl.htm','body');
+</script>
+
+<div id="b5">
+
+
+
+<title>Distributed Query Optimization</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>Distributed Query Optimization</h1>
+
+<p><strong><em>Distributed query optimization can be complex</em></strong>, because the performance of a distributed query depends on network performance, replication, data statistics, and other factors. The distributed query optimizer identifies the fragments to be used in the query, selects the optimum execution order, selects the sites to be accessed to minimize communication costs, and selects the replicas to use in the query. The output of the query optimizer is the <em>execution plan</em> for the query.</p>
+
+<p><strong><em>The objective of query optimization</em></strong> is to minimize the total cost associated with the execution of a request. Costs associated with a request are a function of the:</p>
+<ul>
+ <li> Total elapsed time to complete the request</li>
+<li> Total elapsed time to get the first parts of the result set to the user</li>
+<li> I/O cost</li>
+<li> Communication (network) cost</li>
+<li> CPU time cost</li>
+</ul> 
+
+<p><strong><em>Replica transparency</em></strong> is the ability of the DDBMS to hide replication in the distributed database. The distributed query optimization must provide replica transparency. This means that the DDBMS must hide the resources required to update replicas. It also means that the DDBMS must generate distributed query plans that are functionally equivalent to plans without replication.</p>
+
+<p><strong><em>Distributed query optimization techniques.</em></strong> There are many techniques for optimizing distributed queries. These techniques can be classified along the following dimensions:</p>
+
+<ul>
+<li> Whether they are manual or automatic</li>
+<li> Whether they are static or dynamic</li>
+<li> Whether they are statistics-based or rule-based</li>
+</ul> 
+
+<p><strong><em>Manual versus automatic query optimization techniques</em></strong>—Manual query optimization involves having the SQL programmer provide hints and other directives to the query optimizer to help it determine the best query plan. Manual query optimization has the disadvantage of requiring the manual query plan to be updated each time the distribution design changes or the database statistics change significantly. Automatic optimization is implemented entirely within the DDBMS. As processors become faster the cost of automatic optimization is becoming almost insignificant compared to the cost of executing distributed requests, the speed of which can be constrained by network bandwidth and delays.</p>
+<p><strong><em>Static versus dynamic query optimization techniques</em></strong>—Static query optimization takes place when the request is submitted to the DDBMS. The static query optimization is used for stored procedures, triggers, and methods. With dynamic query optimization the query is optimized each time it is executed. Dynamic query optimization is used when a SQL statement is sent to the DDBMS for processing, optimization and immediate execution, such as when a user or application sends a SQL statement to the DDBMS. Dynamic query optimization is not normally used with stored procedures, triggers, or methods, because the optimal query plan will change only when the database schema or statistics change. You can obtain the advantages of dynamic optimization without the overheads by encapsulating the SQL in durable objects such as stored procedures or triggers and recompiling these durable SQL statements each time the database statistics are recomputed, which is typically scheduled nightly or weekly for stable production systems.</p>
+<p><strong><em>Rule-based versus statistics-based optimization techniques</em></strong>—Rule-based optimizers use a hierarchy of rules to determine the query pattern to use. These rules are very general, but the rules do not take into account important details such as the size of tables and the selectivity of WHERE clauses, because these details depend on the actual data in the database. Because they do not use statistics, rule-based optimizers will occasionally produce plans that take more than an order of magnitude longer than the best plans. Statistics-based optimization algorithms require that statistics be collected on the tables and indexes. The statistics are used to predict the cost of the different alternative query plans, so these optimizers are also called <em>cost-based optimizers</em>. Statistics-based optimization generally outperforms rule-based optimization, and cost-based optimization is more robust, meaning that it does not produce substantially suboptimal plans the way that rule-based optimizers occasionally do.</p>
+<div class="testcenter">
+ <form>
+<h4>Test Yourself</h4>
+<p>Select all that are true about distributed query optimization.</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Manual distributed query optimization can rapidly become outdated if there are multiple changes to the database or changes to network performance.</td>
+<td style="display: none;">This is true. With automatic query optimization, changes that affect the statistics or distributed design will trigger a new optimized query plan.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>The goal of distributed query optimization is to provide the same level of accuracy as a local transaction.</td>
+<td style="display: none;">This is false. The goal is to provide the same level of service for a distributed transaction as for a local one.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>A stored procedure that selects customer records would invoke the dynamic query optimizer.</td>
+<td style="display: none;">This is false. A stored procedure normally uses static query optimization. Dynamic query optimization would be used if the stored procedure is recompiled every time new statistics are available.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('b5','../module3/metcs779_M3L2T05_DistributedQueryOptimization.htm','body');
+</script>
+
+<header>Lecture 3C - How to Design Distributed Databases</header>
+
+<div id="c1">
+
+
+  
+  <title>Data Fragmentation</title>
+  <link href="./Module 3_files/local.css" rel="stylesheet" type="text/css">
+  
+
+<h1>Data Fragmentation</h1>
+<p>In this section you will learn how to partition the database into fragments, how to determine which fragments to replicate, and how to determine where to locate those fragments and replicas.</p>
+
+ <p><strong><em>Fragmentation</em></strong> breaks objects into two or more fragments stored on different instances. Information about data fragmentation is stored in the distributed data catalog (DDC), from which it is accessed by the TP to process user requests.</p>
+ <p><strong><em>There are three data fragmentation strategies</em></strong>—horizontal fragmentation, vertical fragmentation, and mixed fragmentation, which is just a combination of horizontal and vertical fragmentation. <em>Horizontal fragmentation</em> (also called <em>row fragmentation</em>) is the division of a relation (table) into multiple subsets of tuples (rows). <em>Vertical fragmentation</em> is the division of a relation into multiple relations, often sharing some of the attributes (columns), particularly primary key columns. <em>Mixed fragmentation</em> is the division of a relation (table) into multiple relations (columns) and the division of each of those relations into multiple relations, each containing a subset of the tuples (rows). Horizontal fragmentation does not normally allow any duplication of the tuples (rows) between the fragments, while vertical fragmentation usually duplicates the primary key in each of the fragments.</p>
+
+<div class="definitioncenter">
+ <h4>Advanced Technical Detail</h4>
+ <p>You may notice that horizontal fragmentation is similar to  row partitioning in databases such as Oracle and DB2/UDB. Both use keys to  partition a table by row. In both the partitions are separate tables that are  combined into one logical table at the SQL level. The main difference is that  in the fragmentation of a table in a distributed database the fragments are  located on different instances, while in a row-partitioned table the partitions  are located on the same instance.</p></div>
+ 
+ <p>Horizontal fragmentation requires a <em>fragmentation key</em> that determines which rows go in each fragment. The fragmentation key may be  the primary key or any ordered set of columns. The fragmentation key does not  have to be a candidate key for the table and it does not have to be unique. The  columns in the fragmentation key should usually not be nullable. For example,  in a distributed database design that is horizontally fragmented by geographic  region the fragmentation key may be the geographic region identifier.</p>
+
+
+</div>
+<script>
+getHeader('c1','../module3/metcs779_M3L3T01_DataFragmentation.htm','body');
+</script>
+
+<div id="c2">
+
+
+
+<title>Fragmentation Examples</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>Fragmentation Examples</h1>
+
+
+<p>The following four figures from <em>Database Systems: Design, Implementation &amp; Management</em> (Rob, Coronel, &amp; Morris; Cengage Publishing) illustrate,  respectively, a customer table; the customer table horizontally fragmented with  the CUS_STATE as the fragmentation key; the customer table vertically  fragmented into service-oriented and collection fragments, with CUS_NUM as a  common column; and the customer table with mixed fragmentation horizontally by  state and vertically as previously.</p>
+<div>
+  <div> </div>
+</div>
+<p class="center"><img src="./Module 3_files/metcs779_W02L01_Fig10_16.gif" width="500" alt="" height="160"></p>
+<p class="center"><strong>Horizontally Fragmented Table Contents</strong></p>
+<p class="center"><img src="./Module 3_files/metcs779_W02L01_Fig10_17.gif" width="500" alt="" height="250"></p>
+<p class="center"><img src="./Module 3_files/metcs779_W02L01_Fig10_18.gif" alt="" width="400" height="325"></p>
+<p class="center"><img src="./Module 3_files/metcs779_W02L01_Fig10_19.gif" alt="" width="450" height="525"></p>
+
+<p>Note that in this example if the database has customers from  all fifty states that there would be 100 fragments. While this is not enough  fragments to be a concern, the fragments would be of very different sizes, so  it is not likely a good fragmentation design. A better fragmentation key would  be something such as the geographic region of the enterprise, or a range of  state keys for each fragment. With vertical fragmentation by state, the  designer would have to address what happens when data for a new state is  inserted into the database and assure that the required tables are  automatically identified and created.</p>
+<div class="testcenter">
+  <form>
+<h4>Test Yourself</h4>
+<p>Select all that are true about fragmentation:</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>A fragmentation key should not include nullable columns.</td>
+<td style="display: none;">This is true. If a fragmentation key included nullable columns there would be no basis for fragmenting rows with nulls in those columns.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>Mixed fragmentation involves fragmenting different tables on common fields.</td>
+<td style="display: none;">This is false. Mixed fragmentation involves fragmenting the rows and columns of the same table.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>The fragmentation key needs to be a non-nullable unique key so that rows or columns can be fragmented efficiently.</td>
+<td style="display: none;">This is false. The key has to be non-nullable, but it does not have to be unique. For example, a state code column may be the fragmentation key for a sales order table, with many sales orders for the same states.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('c2','../module3/metcs779_M3L3T02_FragmentationExamples.htm','body');
+</script>
+
+<div id="c3">
+
+
+
+<title>Replication</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>Replication</h1>
+
+<p><strong><em>Data replication</em></strong> in a distributed database is the storage of the same data on multiple instances  in the distributed database. Usually entire tables are replicated. Data  replication makes the data available locally on instances, which is faster than  having the data fetched over the network, so replication usually speeds queries  and improves response time. Replication can also reduce communications traffic.  A common use of replication in critical databases is to protect against data  loss.</p>
+<p>Replication is also commonly used with big data models, such  as Hadoop, that are highly optimized for read transactions. The assumption is  that hardware fails often, and with the commodity hardware that is the basis  for the big data platforms, hardware failure is to be expected. Data is copied  to several machines so that if one machine fails, the job can continue  executing on one of the replicas. Replication also aids in performance with  Hadoop and other big data model frameworks, because reads can be performed in a  parallel fashion on the same data on different machines.</p>
+<p><strong><em>Fully replicated databases</em></strong>—Sometimes entire databases are replicated as hot backups  for critical high availability systems. For example, repository banks, which  keep records of securities for mutual fund companies, sometimes keep their  mutual fund data in triply replicated databases. When designing fully  replicated databases, consideration must be given to the amount of network  traffic required to maintain the replicas and the network delays and DDBMS  processing delays that this engenders. If the update rates are very high at all,  it is best to connect the replicated instances via a fiber optic or other high  speed, low latency network, usually a local or campus-scale network. One common  full replication scenario in a geographically partitioned database is to  replicate all of the data at headquarters. This approach protects against data  loss and also permits the headquarters instance to efficiently analyze the data  at enterprise scope.</p>
+<p><strong><em>Partially replicated databases—</em></strong>This is a common design for distributed databases. In partially  replicated databases, some fragments may be replicated at sites where they are  frequently needed. For example, infrequently updated tables such as those that  represent states and countries may be replicated to all sites where they are  joined. Sometimes tables that hold critical data such as accounts may be  replicated to protect against data loss. When replicating frequently changing  fragments be sure to estimate and measure the network traffic and performance  degradation to maintain the replicas.</p>
+<p><strong><em>Unreplicated distributed databases</em></strong>—Replication is often not required. For example, a  horizontally fragmented database may have all of the data in each instance for  the geographic region that it supports, and adequate backup and recovery to  protect against data loss. Distributed requests can be run against the  unreplicated tables to gather data for enterprise-scale analysis or a separate  data warehouse can be developed that gathers and organizes the data  appropriately for analysis at the enterprise level.</p>
+<div class="testcenter">
+  <form>
+<h4>Test Yourself</h4>
+<p>Select all that are true of replicated databases.</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>A frequently updated table in an application with many transactions is a good candidate for replication.</td>
+<td style="display: none;">This is false. There is a cost associated with keeping the replicas synchronized, so frequent updates would mean all replicas must be updated as part of the same transaction. This would cause performance issues.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>Replication is an essential part of a distributed database.</td>
+<td style="display: none;">This is false. While it could be important for failover, or for other reasons, it is not necessary to include replication in a distributed database.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>Performance always improves if the data is replicated.</td>
+<td style="display: none;">This is false. Performance may improve if the data is mostly used in read-only transactions and jobs can be run in parallel on the same data, but if the replicas are updated frequently, performance may suffer.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('c3','../module3/metcs779_M3L3T03_Replication.htm','body');
+</script>
+
+<div id="c4">
+
+
+
+<title>Data Allocation</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>Data Allocation</h1>
+
+<p><strong><em>Data allocation</em></strong> is deciding where to locate each fragment of a distributed database. Data allocation design is closely coupled with fragmentation design, because the fragmentation design is often driven by the desire to locate data on the instances where it is used the most, to improve performance. Data allocation design is also closely coupled with replication design, because the reasons for replicating (improving performance and preventing data loss) can only be realized if the replicas are allocated appropriately.</p>
+
+<p><strong><em>Data allocation strategies</em></strong>—The simplest  data allocation strategy is to allocate all of the fragments at one site or  instance. This is the allocation strategy for a centralized database.  Distributed database allocations are driven by and drive the fragmentation  design and replication design. The general guidelines for data allocation are:</p>
+<div>
+  <div> </div>
+</div>
+<ul>
+  <li>Allocate an unreplicated fragment on the instance where it is most frequently used or where its presence will result in the best overall performance, compared to allocating it elsewhere. To perform this analysis you will need to have a good idea of the distribution of query patterns. If a fragment is frequently accessed by more than one instance separated by a wide area network consider replicating the fragment.</li>
+<li>Consider security implications in the data allocation decision. Avoid locating sensitive data on instances where it could be accessed by individuals or programs that should not have access to it. Collections of sensitive data such as enterprise financial data or sensitive personnel data should often be allocated to instances associated with the corresponding functional parts of the organization such as HR or finance.</li>
+<li>If replication is in the design to prevent loss of critical data allocate the replicas in places that are unlikely to be impacted by the same event. For example, allocate replicas in different buildings, and connect the instances by a fiber optic network.</li>
+</ul> 
+
+<div class="dangercenter">
+<h4>Network Latency Slows Distributed Databases</h4>
+<p>Signal transmission latency in the network is a significant factor in the performance of distributed databases, so fiber optic connections are preferred over copper or other wire connections. The signals travel in fiber at nearly the speed of light, while in CAT5 and most other wire-based network implementations the speed of the signals is about one third of the speed of light.</p>
+</div>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Select all that are true about data allocation:</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Size of the data and performance would be important factors to consider for data allocation strategies for mobile users.</td>
+<td style="display: none;">This is true. For mobile users, the data should be used mostly for reads, and the size should be kept to a minimum.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>An excellent allocation strategy involves allocating data in different data centers in the same building.</td>
+<td style="display: none;">This is false. There are many failure modes that affect multiple data centers in the same building, including power, cooling, security, and structural failures. For backup and recovery, and in the light of disasters like 9/11 or Hurricane Sandy, the best strategy may be to move the data to different buildings or different cities.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>If multiple users access a single fragment in multiple locations, it is preferable to allocate the data centrally to reduce network traffic.</td>
+<td style="display: none;">This is false. Although this could be helpful, a better allocation design may be to replicate the data fragment, and allocate it to all machines so they can use it locally. Replication would also likely reduce network traffic compared to centralization.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('c4','../module3/metcs779_M3L3T04_DataAllocation.htm','body');
+</script>
+
+<header>Lecture 3D - Client/Server relationships in DDBMS</header>
+
+<div id="d1">
+
+
+
+<title>Client/Server Relationships in DDBMS</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+
+
+
+<h1>Client/Server Relationships in DDBMS</h1>
+
+<p>The way that a TP controls the DPs involved in a distributed  transaction is similar to (though more complex than) the way a client controls  its servers in traditional client/server architectures. The service provided by  the TP is management of the distributed transaction. The TP's client is the  application. The DP provides the data processing services to the TP, which is  the client of the DP. Thus there are two client/server relationships involving  the application, TP and DP. This is illustrated in the following figure.</p>
+<div class="image centermargin" style="width:186px" title="Copyright © Trustees of Boston University 2014. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders.">
+  <div class="title">Two-Phase Commit Protocol</div>
+<img src="./Module 3_files/metcs779_M3L4T01_ClientServerRelationshipsinDDBMS1.png" width="184" height="321" alt=""> 
+</div>
+
+
+</div>
+<script>
+getHeader('d1','../module3/metcs779_M3L4T01_ClientServerRelationshipsinDDBMS.htm','body');
+</script>
+
+<div id="d2">
+
+
+
+<title>Federated Databases</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+
+
+
+<h1>Federated Databases</h1>
+
+<p>Federated databases are distributed systems in which applications implement communications between databases. Federated databases do not of themselves support distributed transactions. Federated databases are occasionally used for large distributed data warehouses and other database applications that do not require distributed transactions. Some of the largest data warehouses use federated databases.</p>
+
+
+</div>
+<script>
+getHeader('d2','../module3/metcs779_M3L4T02_FederatedDatabases.htm','body');
+</script>
+
+<div id="d3">
+
+
+
+<title>Tiered Databases</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+
+
+
+<h1>Tiered Databases</h1>
+
+<p>Tiered databases are hierarchically organized federated databases. Tiered database architectures are often used in larger enterprises. For example, the following figure illustrates a common tiered database architecture where data warehouse databases are tiered with data mart databases and the data marts databases extract their data from the data warehouses.</p>
+
+<figure class="image centermargin" style="width:535px" title="Copyright © Trustees of Boston University 2014. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders.">
+<div class="title">Data Warehouse Components</div>
+<img src="./Module 3_files/metcs779_M3L4T03_TieredDatabases1.png" width="533" height="345" alt="Data Warehouse Components">
+</figure>
+
+
+</div>
+<script>
+getHeader('d3','../module3/metcs779_M3L4T03_TieredDatabases.htm','body');
+</script>
+
+<div id="d4">
+
+
+
+<title>Summary</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>Summary</h1>
+
+<p>A distributed database stores logically related data in two or more instances (usually located in different sites) connected by computer networks. Distributed database systems support distributed transactions, while federated and tiered database systems may be linked by applications without true distributed transactions.</p>
+<p>A distributed database is divided into fragments. The main components of a DDBMS are the transaction processor and the data processor, which may be combined. DDBMS can be described by the extent to which they support different transparencies, which means the degree to which the DDBMS behaves like a single-instance DBMS. A transaction is formed by one or more database requests. All or portions of a database can be replicated over multiple instances connected by a computer network.</p>
+<p>Client/server architecture refers to execution control  between two computers interacting over a computer network to form a system  where the client initiates requests to the server and the server responds, but the  server does not initiate requests to the client. In a DDBMS the application is  the client of the TP, and the TP is the client of the DPs. The X/Open  distributed transaction standards facilitate heterogeneous distributed database  systems using a variety of application languages, TPs, and DPs.</p>
+<div class="testcenter">
+  <form>
+<h4>Test Yourself</h4>
+<p>Select all that are true about distributed databases.</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>A database is a distributed database if it has fragments of the database located at different sites which are connected by a network and the database has transactions that involve data at multiple sites.</td>
+<td style="display: none;">This is true, and is the definition of a distributed database.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>A federated database processes distributed transactions on multiple computers in the same way as a distributed database.</td>
+<td style="display: none;">This is false. A federated database does not process distributed transactions. In a federated database system distributed  transactions are implemented externally to the federated databases via a  transaction processor if they are used at all.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>DDBMS transparencies help to convince the user that they’re operating on a single, centralized database instance.</td>
+<td style="display: none;">This is true. This is the goal of the different kinds of transparencies that are covered in this lecture.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('d4','../module3/metcs779_M3L4T04_Summary.htm','body');
+</script>
+
+<header>Lecture 3E - Replication and Mobile Databases</header>
+
+<div id="e1">
+
+
+
+<title>Overview</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+
+
+
+<h1>Overview</h1>
+
+<p>This lecture introduces data replication technology for mobile  databases and Oracle replication. The goal of this lecture is to help you  understand and be able to employ data replication and mobile databases.</p>
+<p>We begin this lecture by introducing the basic concepts of data replication.
+  We then move to the different types of replication and how they are used. Next,
+  we describe the replication server, which is the software system that manages
+  the data replication. Then, we introduce mobile databases, including the increasing
+  demands of mobile computing, the advantages and issues. Finally, we discuss
+how Oracle implements replication.</p>
+
+<p>Replication and mobile databases are introduced in Chapter  26 of the sixth edition of Connolly and Begg. You are responsible for the  material in this lecture and in Connolly and Begg. You are not responsible for  the Oracle-specific techniques, though you may find them useful for your term  project.</p>
+<h2>Learning Objectives</h2>
+
+<p>&nbsp;By  reading this lesson, participating in discussions, and completing the  assignments, you will be able to:</p>
+
+<ul>
+<li>Describe the different types of replication.</li>
+<li>Describe replication server functions.</li>
+<li>Explain the demand for mobile databases.</li>
+<li>Describe how Oracle supports data
+replication.</li>
+</ul>
+
+
+</div>
+<script>
+getHeader('e1','../module3/metcs779_M3L5T01_Overview.htm','body');
+</script>
+
+<div id="e2">
+
+
+ 
+<title>Introduction to Data Replication</title>
+ <link href="./Module 3_files/local.css" rel="stylesheet" type="text/css">
+ <script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/testyourself_binary.js.下载"></script>
+
+
+<h1>Introduction to Data Replication</h1>
+<p>Data replication is duplicating data on one or more database  instances. Data replication can serve many purposes, including:</p>
+<ul>
+  <li> <em><strong>Database Availability</strong></em>—A business may require a database to be  operating 24/7. For example, Amazon.com or another online retailer will lose  sales if they are unavailable to customers. If database replication is implemented  and there is a problem on the current database, it is fairly straightforward to  fail over to the replicated database, with little or no user downtime. </li>
+<li> <em><strong>Database Backup and Recovery</strong></em>—Most businesses can't afford to lose transaction  data. If a database were to become corrupted, the DBA would have to restore the  database from backup, including replaying the transaction logs since the last  backup. Restoring a database from a backup can take many hours or even many  days, during which time the database is not available. A good way to maintain  availability in spite of database instance failure or corruption is to fully  replicate the database and to fail over to the replica if the primary database  becomes unavailable or corrupted. Fail over to a replica can be implanted  within seconds. Full replication is the most common replication design, largely  because of its ability to support fail over. </li>
+<li> <em><strong>Scalability and Load Balancing</strong></em>—Applications such as busy web sites must support  very high database request rates. One possible solution is to replicate the  data to several databases and have requests balanced on each database. For  example, there could be three database servers replicating data to each other  (3 database servers all with the same data), so that the system could allocate  database requests to each server to spread the request workload. This approach  works best with database workload that is mainly SELECTs, with few database  changes, because of the overhead of maintaining the replicas when the data  changes.</li>
+</ul>
+<p>Often a database can be factored into different databases,  with some data replicated and some data different for the different databases.  For example, a retail web site database could have product data replicated to  many servers, while the customer data could be localized to individual servers,  each of which supports transactions for a subset of the customers. This  replication architecture minimizes replication overhead, because the replicated  data changes slowly, while supporting local joins of dynamic data, such as  customer and shopping cart data, with the more static replicated data. This  architecture can also be very scalable through the addition of many database  instances, and it can support very high request rates. This architecture  requires a means of routing requests to the appropriate servers, based on  customer ID, for example.</p>
+<div class="testcenter">
+  <h4>Test Yourself</h4>
+ <p>Data replication can provide better availability  and faster fail over, but it may not  provide easier maintenance. True or False?</p>
+ <div>
+   <div> </div>
+   <div> </div>
+ </div>
+<button>Show Answer</button>
+ <p style="display: none;">This is true. While availability and faster fail over can be easily accomplished with data replication, the replicas incur more storage and can be more complex to back up and recover, so maintenance can be more complex.</p>
+</div>
+
+<h2>Types of Data Replication</h2>
+<p><strong><em>Synchronous replication</em></strong>—The replicated data is updated immediately when the  source data is updated.</p>
+<p><strong><em>Asynchronous replication</em></strong>—The target database is updated after the source data  has been modified.</p>
+<div class="testcenter">
+ <h4>Test Yourself</h4>
+ <p>An example of synchronous replication would be running a series of batch updates at night to update a replica. True or False?</p>
+ <button>Show Answer</button>
+ <p style="display: none;">This is false. This is actually an example of asynchronous replication, since the batch updates are not performed immediately as part of transactions.</p>
+</div>
+
+
+
+</div>
+<script>
+getHeader('e2','../module3/metcs779_M3L5T02_IntroductiontoDataReplication.htm','body');
+</script>
+
+<div id="e3">
+
+
+
+<title>Replication Server Functionality</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+
+
+
+<h1>Replication Server Functionality</h1>
+
+<p>Replication is supported by every major database vendor. There are numerous
+solutions that vendors offer.</p>
+<p>Although the main purpose of replication is to distribute the data to multiple
+  locations, there are many other functions that need to be provided.</p>
+
+<p><strong><em>Scalability</em></strong>—The  replication service should be able to handle all types of data replication. For  example, a transaction may consist of adding 10 records or it may consist of  updating 1,000 records.</p>
+
+<p><strong><em>Mapping and transformation</em></strong>—The replication service should be able to replicate  data to different server types. For example, an Oracle database server can  replicate data to a SQL Server database.</p>
+
+<p><strong><em>Object replication</em></strong>—For example, if a new table or stored procedure is  created, the system should replicate it.</p>
+
+<p><strong><em>Specification of replication schema</em></strong>—The replication service should allow a user to select  specific objects and/or data that is to be replicated. For example, a company  may only want to replicate its purchase transactions.</p>
+
+<p><strong><em>Subscription mechanism</em></strong>—For example, the replication service should allow the  setup of one or multiple servers to receive replicated data.</p>
+
+<p><strong><em>Easy administration</em></strong>—The replication service should have tools that are  easy for the DBA to use to check the status and monitor the system. An example  of the Microsoft SQL Server Replication Monitor tool is below.</p>
+
+<figure class="image" style="width:668px" title="Copyright © Trustees of Boston University 2016. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders.">
+<div class="title">Replication Monitor</div>
+<img src="./Module 3_files/metcs779_M03L04T04_serverFunctionality_clip_image002.jpg" alt="Replication Monitor" width="666" height="275">
+</figure>
+
+</div>
+<script>
+getHeader('e3','../module3/metcs779_M3L5T04_ReplicationServerFunctionality.htm','body');
+</script>
+
+<div id="e4">
+
+
+
+<title>Ownership</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>Ownership</h1>
+
+<p>Ownership deals with what server has privileges to update which data. There
+are three main types of ownership.</p>
+
+<p><strong><em>Easy administration</em></strong>—The replication service should have tools that are  easy for the DBA to use to check the status and monitor the system. An example  of the Microsoft SQL Server Replication Monitor tool is below.</p>
+
+<p><img src="./Module 3_files/metcs779_M3L5T05_ownership1.gif" alt="" width="269" height="307"></p>
+
+<p>Bridgeport Sailboats has four sales locations and at each location there is
+one database to record sales transactions. They use publisher/subscriber replication (historically referred to as master/slave replication) to write all of their sales transactions to the data warehouse. The data warehouse
+is located at the corporate office where upper management uses the data warehouse
+to perform analysis with decision support tools. Each sales location acts as
+a primary site (publisher) and then replicates the sales transactions to its subscriber, which is the data warehouse. The data warehouse cannot write or update
+data to the primary sites. Each sales location can only write or update data
+on its own server and replicate that data to the data warehouse.</p>
+
+<p><em><strong>Workflow ownership</strong></em>—Like the publisher/subscriber ownership, all updates
+and writes are made on the primary site, but once the data is replicated on
+to the next site, that site is also allowed to update the data. An easy way
+to grasp the workflow ownership is to look at an order processing system where
+the processing of orders follows a series of steps. The following diagram is
+a simplification of an online credit card purchase transaction where workflow
+replication might be applied:</p>
+
+<p><img src="./Module 3_files/metcs779_M3L5T05_ownership2.gif" alt="" width="404" height="139"></p>
+
+<p>The steps of workflow ownership replication for an online credit card purchase
+could be:</p>
+
+<ol>
+<li> Company sends credit card info for authorization.</li>
+<li> Once authorized, the data is updated and sent to the credit card company
+for processing.</li>
+<li> The credit card company then credits the amount to the company bank account.</li>
+<li> Finally, the company is notified that the transaction was completed and
+what funds were credited.</li>
+</ol>
+
+<p>At each of these steps the data was replicated to the next subscriber and
+then updated by that subscriber.</p>
+
+<p><strong><em>Update-anywhere  ownership</em></strong><em>—</em>This  is like a peer-to-peer network, where all sites can update the replicated data  on any site. This a shared ownership environment that allows local sites to  function autonomously even when other sites are not available. One simple  example of update-anywhere ownership is a company in which each location owns  its own information and the locations also need access to data at other  locations. For example, view the diagram below of an international real estate  company.</p>
+<p><img src="./Module 3_files/metcs779_M3L5T05_ownership3.gif" alt="" width="247" height="322"></p>
+
+<p>A person may visit the United States office to put up a property for sale
+in Germany. Since the property is in Germany, the sales agent in the United
+States must access to the server in Germany to put the property for sale.
+When the data for the property is updated in the database in Germany the
+data would be replicated to each of the other sites.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Select all that are true of the different forms of ownership of replicated data.</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Update-anywhere ownership can lead to problems with updates and consistency since any server can update any other server.</td>
+<td style="display: none;">This is true. With update-anywhere ownership, each server operates somewhat independently, so updates to one server may conflict with updates to a different server.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>The principle of workflow ownership gives update rights to each server in sequence.</td>
+<td style="display: none;">This is true, but only one server can update the data at any time.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>In a publisher-subscriber ownership structure, all updates to database replicas happen at the publisher and are propagated to each of the replicas.</td>
+<td style="display: none;">This is true. The replicas can only read the data. All updates are processed by the publisher.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('e4','../module3/metcs779_M3L5T05_Ownership.htm','body');
+</script>
+
+<div id="e5">
+
+
+
+<title>Introduction to Mobile Databases</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+
+
+
+<h1>Introduction to Mobile Databases</h1>
+
+<p>The mobile industry is rapidly expanding and countless Internet of Things (IoT) devices are changing the way that  people conduct business, with web access almost anywhere anytime. Of course  there are limitations due to cost and security, but mobile databases offer solutions  for some of these limitations.</p>
+<div>
+  <div> </div>
+</div>
+<p><strong>A <em>mobile  database</em></strong> is a database that is portable and  physically separate from the corporate database server but is capable of  communicating with that server from remote sites and sharing corporate data.</p>
+<p><img src="./Module 3_files/metcs779_M3L5T06_introMobile4.gif" alt="" width="291" height="147"></p>
+
+<p>An example of a company that uses mobile databases is FedEx.  Each delivery truck is equipped with a mobile device that is capable of  scanning a package to update the status of the delivery. Then, as soon as the  mobile database is updated and communication is available, the corporate  database is updated and a customer can go online and view the status of the  delivery.</p>
+
+</div>
+<script>
+getHeader('e5','../module3/metcs779_M3L5T06_IntroductiontoMobileDatabases.htm','body');
+</script>
+
+<div id="e6">
+
+
+
+<title>Issues with Mobile Databases</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+<script src="./Module 3_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 3_files/ty.js.下载"></script>
+
+
+
+<h1>Issues with Mobile Databases</h1>
+
+<p>There are several issues with mobile databases:</p>
+
+<ul>
+<li> While wireless communication is improving, wireless bandwidth is variable
+and generally lower than copper or fiber.</li>
+<li> There are many areas where wireless connectivity is not available.</li>
+<li> It can be expensive to transfer large amounts of data over wireless networks.</li>
+<li> Security raises many concerns. The transferring of data is more vulnerable,
+the mobile device could be stolen, and information could be stolen. </li>
+<li> When many people are using mobile devices, the network congestion can degrade
+communications performance.</li>
+</ul>
+
+<p>On top of these issues, there have been proposals for new transaction models
+because the classical transaction models may not be appropriate for a mobile
+environment.</p>
+
+<p>Events that may occur while using a mobile device that need to be taken into
+consideration:</p>
+
+<ul>
+<li> A mobile device may disconnect in the middle of a transaction.</li>
+<li> The originating site of the transaction may be different from the ending
+site.</li>
+<li> Transactions may be lost if a mobile device breaks or is lost.</li>
+</ul>
+
+<p>The <em>Kangaroo Transaction model</em> is based on the  concepts of open-nested transactions and split transactions, which support  mobility and disconnections. This is very important because in a mobile  environment a device can move around and disconnect unexpectedly at anytime.  Also, query processing must deal with location-aware queries and  location-dependent queries, as well as moving object database queries,  spatio-temporal queries, and continuous queries. The costs for query  optimization are much more difficult to estimate.</p>
+
+<div class="testcenter">
+  <form>
+<h4>Test Yourself</h4>
+<p>Given the kinds of issues that affect mobile databases, like variable wireless bandwidth, continuous queries, etc., select the best strategy for distributed query optimization:</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="radio" value="F" name="x"></td>
+<td>Static query optimization</td>
+<td style="display: none;">The goal of any query optimization is to reduce the total cost of a request. Static query optimization removes the runtime overhead of calculating a new plan each time the query is run, but the plan it generates may not be optimal by the time the query is actually executed on a mobile database.</td>
+</tr>
+<tr>
+<td><input type="radio" value="T" name="x"></td>
+<td>Dynamic query optimization</td>
+<td style="display: none;">Dynamic query optimization is preferable for a mobile database 	since the conditions are constantly changing.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('e6','../module3/metcs779_M3L5T07_IssueswithMobileDatabases.htm','body');
+</script>
+
+<div id="e7">
+
+
+
+<title>Oracle Replication</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+
+
+
+<h1>Oracle Replication</h1>
+
+<p>Oracle advanced replication supports both synchronous and asynchronous replication.
+In the standard edition of Oracle there can only be one master site, but with
+the enterprise edition there may be multiple master sites. Oracle manages replication
+objects using replication groups, which are created to organize schema objects
+that are required by a particular application. An Oracle replication environment
+supports two types of sites: master sites and materialized view sites. There
+are four main types of replication in Oracle:</p>
+
+<ul>
+<li> materialized view replication, </li>
+<li> single master replication, </li>
+<li> multimaster replication, and</li>
+<li> hybrid replication.</li>
+</ul>
+
+
+</div>
+<script>
+getHeader('e7','../module3/metcs779_M3L5T08_OracleReplication.htm','body');
+</script>
+
+<div id="e8">
+
+
+
+<title>Summary</title>
+<link href="./Module 3_files/local.css" rel="stylesheet">
+
+
+
+<h1>Summary</h1>
+
+<p>Replication is the process of distributing multiple copies  of data to one or more sites. It is important because it enables businesses to  provide users with access to current data where and when they need it. With  replication there is improved availability, reliability, performance and  support for more users. Also, replication can be a means of disaster recovery, with  a second database server available if the master server fails. The replication  server is the software system that manages the replication and the typical  mechanisms are database snapshots and database triggers.</p>
+<p>A mobile database is a database that is portable and  physically separate from the corporate database server. The needs of mobile  databases are robust because of the increasing demand for applications on  mobile devices. Since this is a fairly new developing technology, there are  still a number of issues that need to be addressed—for example, security and  transaction handling. Mobile devices mainly use the Kangaroo transaction model.</p>
+<p>Oracle Advanced Replication is available in the standard  edition and the enterprise edition of Oracle. There are four types of  replication available: materialized view replication, single master  replication, multimaster replication, and hybrid replication.</p>
+
+</div>
+<script>
+getHeader('e8','../module3/metcs779_M3L5T09_Summary.htm','body');
+</script>
+
+
+<div class="xl-chrome-ext-bar" id="xl_chrome_ext_{4DB361DE-01F7-4376-B494-639E489D19ED}" style="display: none;">
+      <div class="xl-chrome-ext-bar__logo"></div>
+
+      <a id="xl_chrome_ext_download" href="javascript:;" class="xl-chrome-ext-bar__option">下载视频</a>
+      <a id="xl_chrome_ext_close" href="javascript:;" class="xl-chrome-ext-bar__close"></a>
+    </div></body></html>

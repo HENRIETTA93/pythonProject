@@ -1,0 +1,295 @@
+/*
+ty.js
+Dan Hillman (dhillman@bu.edu)
+3 December 2010
+
+This script allows one to add an unlimited number of formative evaluation items within an HTML page.
+
+BINARY (QUESTION AND ANSWER)
+<div class="testcenter">
+<h4>Test Yourself 1.1</h4>
+<p>Question qoes here.</p>
+<button>Show Answer</button>
+<p>Answer goes here.</p>
+</div>
+
+Anything that is below the button is displayed when the button is clicked.
+
+MULTIPART
+
+This script extends the Test Yourself items to display the answers to an unlimited number of steps within the same object.
+
+Clicking the ty-toggle line reveals the content of the ty-content div below it:
+
+<div class="testcenter">
+<h4>Test Yourself (Multipart)</h4>
+<p>Problem solving text goes here. (Click each step to reveal its solution.)</p>
+  <p class="ty-toggle">How many bits are needed...?</p>
+  <div class="ty-content">
+    <p>Some answer here.</p>
+  </div>
+  <p class="ty-toggle">How many computers are supported....?</p>
+  <div class="ty-content">
+    <p>Some answer here.</p>
+  </div>
+  <p class="ty-toggle">Some other part..?</p>
+  <div class="ty-content">
+    <p>Some answer here.</p>
+  </div>
+    <p class="ty-toggle">Additional problem feedback</p>
+  <div class="ty-content">
+    <p>Some answer here.</p>
+  </div>
+</div>
+
+For multiple choice (radio button) or multiple answer (checkbox) kinds of questions, the <form> must be included. The assumption is that the form will contain a table.
+Column 1 contains the input (radio or checkbox). The value indicates whether this is true (T) or false (F).
+Column 2 contains the question.
+Column 3 contains the feedback for each question (optional).
+
+Column 3 is hidden until the button is clicked. In addition, general feedback may be included after the button.
+
+RADIO (MULTIPLE CHOICE)
+<div class="testcenter">
+<form>
+<h4>Test Yourself 1.2</h4>
+<p>Question</p>
+<table class="ty">
+<tr>
+<td><input type="radio" name="x" value="T"></td>
+<td>True answer.</td>
+<td>This is true. Additional feedback.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>False answer.</td>
+<td>This is false.  Additional feedback.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>False answer.</td>
+<td>This is false.  Additional feedback.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>False answer.</td>
+<td>This is false.  Additional feedback.</td>
+</tr>
+</table>
+<button>Show Answer</button>
+<p>General feedback.</p>
+</form>
+</div>
+
+CHECKBOX (MULTIPLE ANSWER)
+<div class="testcenter">
+<form>
+<h4>Test Yourself 1.3</h4>
+<p>Question (Check all that are true.)</p>
+<table class="ty">
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>True answer.</td>
+<td>This is true. Additional feedback.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="F"></td>
+<td>False answer.</td>
+<td>This is false.  Additional feedback.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="F"></td>
+<td>False answer.</td>
+<td>This is false.  Additional feedback.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>True answer.</td>
+<td>This is true. Additional feedback.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>True answer.</td>
+<td>This is true. Additional feedback.</td>
+</tr>
+</table>
+<button>Show Answer</button>
+<p>General feedback.</p>
+</form>
+</div>
+
+
+Notes
+The class ty, e.g., <table class="ty">, is only used to identify a table with a third column to be hidden/revealed by the Show Answer button.
+
+Presentation of the check/x feedback appears on a single line if the following class is added to the CSS:
+.testcenter tr td:first-child {
+	white-space: nowrap;
+	text-align: right;
+	}
+
+There is no validation checking, so if a radio table has more than one row of value="T", more than one line will be marked correct.
+
+If an iframe is in the answer section of a TY item, it may not load with the page because it's hidden. Add the "iframe" class to the object to make it load when the Show Answer button is clicked.
+
+ 
+Edits
+2 February 2011: Revised to display user's original selection.
+15 February 2011: Allow for textarea and feedback.
+9 October 2014: Simplified, cleaned, and rewritten to use jQuery.
+18 November 2014: Added multipart code.
+24 November 2014: Replaced right and wrong graphics with Unicode glyphs.
+6 March 2016: Added transmission to website for reports.
+23 June 2017: Allow test or testcenter button to trigger. Load an iframe, if one exists. This is for embedded spreadsheets.
+26 February 2018: Get the courseID from localstorage rather than a URL. Code by Andy Abrahamson (andrewa@bu.edu).
+7 March 2018: Added a validation check requiring radio or checkbox from working unless an answer is selected. Code by Ye Liu (liuye@bu.edu). Changed .prev to .prevAll to allow hints to be placed above buttons.
+*/
+
+
+$(document).ready(function(){
+
+    // Get the courseID from localstorage
+    if (localStorage.getItem("courseId")) {
+    var courseID = localStorage.getItem("courseId");	
+	   courseID = courseID.trim();
+    }
+
+	// This section is for the ty multipart
+	$("[class^='test']").find('.ty-toggle').click(function(){
+		
+		// Toggle display of leading glyph
+		$(this).toggleClass('ty-toggle-reveal');
+		
+		// Send info to database		
+		var tyID = $(this).closest("div").attr("id");
+		
+		if (tyID) {
+			var tyContent = $(this).closest("div").html();
+			$.post("https://www.bu.edu/dbin/disted/ty/index.php", {courseID: courseID, tyID: tyID, tyContent: tyContent, tyType: "m"});			
+		}
+		
+		// Expand or collapse this panel
+		$(this).next().toggle();
+	});
+
+
+
+	// Hide the third column of all tables with the class ty
+	$('.ty td:nth-child(3)').css("display", "none");
+
+	// Hide all siblings after a button
+	$(':button').nextAll().css("display", "none");
+
+	// Graphics for right and wrong answers
+	var right = "<span class=\"ty_check\">&#10004;</span>";
+	var wrong = "<span class=\"ty_x\">&#10008;</span>";
+	
+	// Collect clicks and type
+	var checks = "";
+	var type = "";
+
+	
+	// Click the button to make stuff happen
+	$(".test button, .testcenter button").click(function() {
+	
+		// Load an iframe, if one exists
+		$('.iframe').attr('src', function (i, val) {return val;});
+ 
+ 
+	  //if there is no input when click the button, no validation error message
+      if ($(this).prevAll("table").find('input[name="x"]').length > 0 && $(this).prevAll("table").find('input[name="x"]').is(":checked")==false) 
+	   {
+	 
+	    //if it is a checkbox
+	    if ($(this).prevAll("table").find('input[name="x"]').eq(0).is(':checkbox')) {
+			alert("You didn't choose an answer. Please select at least one answer and try again.");
+		 }
+	 
+	    //if it is a radio button
+	     else if ($(this).prevAll("table").find('input[name="x"]').eq(0).is(':radio')) 
+		 {
+             alert("You didn't choose an answer. Please select an answer and try again.");
+	     }
+      return false;
+      }
+
+	 else{
+
+		// If a form exists, cycle through all inputs
+		$(this).prevAll("table").find('input[name="x"]').each(function() {
+			var value = $(this).val(); // this fetches the value
+			var checked = $(this).prop('checked'); // this fetches if checked
+			
+			// A checked item is 1, unchecked is 0
+			if (checked) {
+				checks += "1";
+			} else {
+				checks += "0";
+			}
+				
+		
+			// Do different things depending on whether something is a radio or checkbox		
+			if ($(this).is("input[type='checkbox']")) {	
+				type = "c";	
+				// CHECKBOXES display all correct and wrong answers
+				// Correct answer selected
+				if (value == 'T' && checked == true) $(this).before(right);
+		
+				// Correct answer not selected
+				if (value == 'T' && checked == false) $(this).before(wrong);
+		
+				// Wrong answer selected
+				if (value == 'F' && checked == true) $(this).before(wrong);
+		
+				//Wrong answer not selected
+				if (value == 'F' && checked == false) $(this).before(right);			
+			} else {
+				type = "r";		
+				// RADIOS display the correct answer and error
+				// Correct answer selected
+				if (value == 'T' && checked == true) $(this).before(right);
+		
+				// Correct answer not selected - display correct answer
+				if (value == 'T' && checked == false) $(this).before(right);
+
+				// Wrong answer selected
+				if (value == 'F' && checked == true) $(this).before(wrong);
+		
+				//Wrong answer not selected displays nothing
+			}
+		});
+	
+		// Show the third column
+		$(this).prevAll("table").find('td:nth-child(3)').css("display", "block"); 	
+
+		// Hide the button
+		$(this).hide();
+	
+		// Show all siblings after the button
+		$(this).nextAll().css("display", "block");
+		
+		
+		// This stuff is new as of 6 March 2016
+		// If a tyID exists, submit a form to the database for reports
+		var tyID = $(this).closest("div").attr("id");
+				
+		if (tyID) {			
+			// Get the contents of the div [Maybe filter this later	]
+			var tyContent = $(this).closest("div").html();
+			
+			// If the type isn't declared yet, it's binary
+			if (type == "") {
+				type = "b";
+			}
+				
+			$.post("https://www.bu.edu/dbin/disted/ty/index.php", {courseID: courseID, tyID: tyID, tyContent: tyContent, tyType: type, tyValue: checks});
+		}
+		
+		checks = "";
+		type = "";
+		
+		return false;
+}
+	});
+
+});

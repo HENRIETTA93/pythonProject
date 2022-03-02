@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<!-- saved from url=(0123)https://learn.bu.edu/bbcswebdav/pid-9833698-dt-content-rid-61814359_1/courses/22sprgmetcs779_o1/course/module1/allpages.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Module 1</title>
+<link href="./Module 1_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 1_files/getHeader.js.下载"></script>
+<script src="./Module 1_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 1_files/ty.js.下载"></script>
+<script src="./Module 1_files/onlymet.js.下载"></script>
+</head>
+<body>
+
+<h1>Module 1</h1>
+
+<div class="importantcenter">
+<p>This is a single, concatenated file, suitable for printing or saving as a PDF for offline viewing. Please note that some animations or images may not work.</p></div>
+
+<div id="header" class="boxBlueCenter" style="visibility: visible;">
+<table class="arrange">
+<tbody><tr>
+<td colspan="2">
+<h4>Module 1 Study Guide and Deliverables</h4>
+</td>
+</tr>
+<tr>
+<td><strong>Readings:</strong></td>
+<td><p>Primary Reding:</p>
+  <ul>
+    <li>CB6 chapter 15</li>
+  </ul>
+  <p>Secondary Reading:</p>
+  <ul>
+    <li>CB6 chapters 6, 7, and 8 - SQL Programming</li>
+    <li>Loney chapters 32, 34 and 35 - Oracle Specific</li>
+  </ul></td>
+</tr>
+<tr>
+  <td><strong>Assignments:</strong></td>
+	<td><ul>
+	  <li>Assignment 1.0, <span class="date">due Friday, January 21 at 6:00 AM ET</span></li>
+	  <li>Programming Part 1, <span class="date">due Monday, January 24 at 6:00 AM ET</span></li>
+	  </ul></td>
+</tr>
+<tr>
+<td><strong>Assessments:</strong></td>
+	<td><ul>
+	  <li>Crediting Sources Tutorial Self-Assessment <span class="date">due Friday, January 21 at 6:00 AM ET</span></li>
+	  <li>Quiz 1 <span class="date">due Friday, January 21 at 6:00 AM ET</span></li>
+	  </ul></td>
+</tr>
+<tr>
+<td><strong>Term Project Note:</strong></td>
+<td> <p>Term Project Update #1, <span class="date">is due </span><span class="date">Monday, January 24 at 6:00 AM ET</span>.</p>
+  <p>During this first module you should begin to think about what you
+    will be doing for your term project and discuss your ideas with your
+    instructor. Your term project can be based on any advanced
+    database topic, including but not limited to XML and databases, database
+    performance measurement or tuning, advanced non-relational databases, decision support databases, data
+    mining, distributed databases, object-oriented databases, object-relational
+    databases, tiered databases, very large databases, or advanced database
+    architectures. </p></td>
+</tr>
+<tr class="onlyode">
+  <td><strong>Live Classrooms:</strong></td>
+ <td><p>Supplementary Live Session<span class="date">, Thursday, January 13, 8:00 PM - 10:00 PM ET</span></p>
+   <p>Current week's assignment review and examples<span class="date">, Saturday, January 15, 11:00 AM - 12:00 PM (noon) ET</span></p>
+   <p>SQL Review<span class="date">, Sunday, January 16, 11:00 AM - 12:00 PM ET</span></p>
+
+   <p>Live office help<span class="date">, Tuesday, January 18, 8:00 PM - 9:00 PM ET</span></p></td>
+ </tr>
+</tbody></table>
+</div>
+<script>
+getHeader('header','../syllabus/metcs779_S05_studyGuide.html','mod1');
+</script>
+
+
+
+<header>Lecture 1A - Advanced Normalization</header>
+
+<div id="b1">
+
+
+<title>Introduction</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>Introduction</h1>
+
+<!--<table class="video">
+<tr><td><script src="/bbcswebdav/courses/00cwr_odeelements/scripts/jwplayer.js"></script><script>jwplayer.key="G6qTlDPYDEkfm0jc3sGXPI4PH/RJbpbXTEQnDQ==";</script><div id="metcs779_intro">metcs779_intro is displayed here</div><script>jwplayer("metcs779_intro").setup({playlist:[{image: "http://www.bu.edu/av/disted/met/cis/cs779/downloadable/metcs779_intro.jpg",tracks:[{file: "/bbcswebdav/courses/00cwr_odeelements/captions/met/cis/cs779/metcs779_intro.vtt",label: "On",kind: "captions"}],sources:[{file:"http://www.bu.edu/av/disted/met/cis/cs779/downloadable/metcs779_intro.mp4"}]}],height:281,width:500});</script></td></tr>
+<tr><td><script src="https://api.3playmedia.com/p/projects/10896/files/metcs779_intro/embed.js?plugin=transcript&amp;settings=height:281,width:500,skin:frost,can_collapse:true,can_print:true,can_download:true&amp;player_type=jw&amp;player_id=metcs779_intro&amp;usevideoid=1"></script></td></tr>
+<tr><td><a href="http://www.bu.edu/av/disted/met/cis/cs779/downloadable/metcs779_intro.mp4" target="_blank"><img src="https://onlinecampus.bu.edu/bbcswebdav/courses/00cwr_odeelements/course_template_images/icon_download.png" class="icondownload" alt="" />Download</a></td></tr>
+</table>
+-->
+<p>In this lecture you will continue the study of normalization that you began in MET CS 669, and will learn about denormalization. We will introduce Boyce-Codd normal form and fourth normal form. We will discuss over normalization, which sometimes happens when we apply the normalization rules more thoroughly than is appropriate, resulting in more tables than are useful. We will then discuss denormalization, which reassembles the objects that normalization has disassembled, and does other things to improve performance. In this lesson you will also learn to use object-oriented ways of thinking about the design of relational databases. As you learn to think this way, you will find that you are able to design good, simple, and efficient schemas fairly quickly, without worrying about higher normal form problems.</p>
+
+
+<h2>Learning Outcomes</h2>
+<p>By reading this lesson, participating in discussions, and completing the assignments, you will be able to:</p>
+<ul>
+<li>Describe Boyce-Codd and Fourth Normal Form</li>
+<li>Determine whether a table is in Boyce-Codd Normal Form</li>
+<li>Renormalize to Boyce-Codd Normal Form</li>
+<li>Determine whether a table is in Fourth Normal Form</li>
+<li>Renormalize to Fourth Normal Form</li>
+<li>Determine when denormalization may improve performance</li>
+<li>Safely denormalize while minimizing the risks of anomalies and inconsistent
+data</li>
+<li>Design databases using Enhanced Entity-Relationship Modeling</li>
+<li>Design and implement database triggers of medium complexity</li>
+<li>Design and implement database processes and functions</li>
+</ul>
+
+
+</div>
+<script>
+getHeader('b1','../module1/metcs779_M1L2T01_Introduction.htm','body');
+</script>
+
+<div id="b2">
+
+
+<title>Third and Boyce-Codd Normal Forms</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>Third and Boyce-Codd Normal Forms</h1>
+<p>A discussion of third and fourth  normal forms is complicated by the fact that there are several popular  oversimplified definitions of third normal form and several equivalent correct  definitions of third normal form. One oversimplified definition of third normal  form is that a table is in third normal form if it is in second normal form and  it contains no transitive dependencies. Another oversimplified definition is  that a table is in third normal form if every non-key attribute provides information  about the key and about nothing else. This works fine if the table has only one  determinant, which is a candidate key. Sometimes it happens that a table has  more than one determinant. Consider the following example.</p>
+<div class="examplecenter">
+<p>A company database has a COMPUTER table in which they record data for all of their computers. In this company all computers have an asset tag with an ASSET_ID, which uniquely identifies each computer. All computers in this company also have a MAKE, MODEL, and SERIAL_NUMBER, which also uniquely identify each computer. Thus each computer has two candidate keys, the ASSET_ID, and the triple {MAKE, MODEL, and SERIAL_NUMBER}. If the COMPUTER table has columns ASSET_ID, MAKE, MODEL, and SERIAL_NUMBER, then the COMPUTER table has multiple candidate keys.</p></div>
+
+<p>This is common. For example, many tables representing people have multiple candidate keys.</p>
+
+<p>There are transitive dependencies between the ASSET_ID and the triple {MAKE, MODEL, and SERIAL_NUMBER}. No matter which of the keys that we choose as the primary key, there will still be transitive dependencies between the other candidate key and all non-key columns. Thus this table is not in third normal form (3NF)  by these oversimplified definitions of 3NF. Yet there seems to be nothing wrong with this table. It just has two candidate keys, and each of these determines all of the other columns. There is nothing wrong with a table that has more than one candidate key; this occurs frequently. The problem is with the oversimplified definitions of third  normal form.</p>
+<p>This problem with the oversimplified  definitions of third normal form is the reason that our text (e.g. CB6 page 427)  and other rigorous sources provide more complex definitions. Third normal form  was originally defined by <a href="https://en.wikipedia.org/wiki/E.F._Codd" title="E.F. Codd" target="_blank">E.F. Codd</a> in 1971  [Codd71], and his definition is general, because it doesn’t require keys.<u> </u>Codd's definition states that a relation R  is in 3NF <a href="https://en.wikipedia.org/wiki/If_and_only_if" title="If and only if" target="_blank">if and only if</a> it  satisfies both of the following conditions:</p>
+<ul type="disc">
+  <li>The <a href="https://en.wikipedia.org/wiki/Relation_%28database%29" title="Relation (database)" target="_blank">relation</a> R       is in <a href="https://en.wikipedia.org/wiki/Second_normal_form" title="Second normal form" target="_blank">second normal form</a> (2NF), and</li>
+  <li>Every non-prime attribute of R is non-transitively       dependent on every key of R.</li>
+</ul>
+<p>A <em>non-prime attribute</em> is an  attribute that does not belong to any <a href="https://en.wikipedia.org/wiki/Candidate_key" title="Candidate key" target="_blank">candidate key</a> of R, and a <em><a href="https://en.wikipedia.org/wiki/Transitive_dependency" title="Transitive dependency" target="_blank">transitive dependency</a></em> is a <a href="https://en.wikipedia.org/wiki/Functional_dependency" title="Functional dependency" target="_blank">functional dependency</a> in which <em>X</em> → <em>Z</em> (<em>X</em> determines <em>Z</em>) indirectly, by  virtue of <em>X</em> → <em>Y</em> and <em>Y</em> → <em>Z</em> (where it is not the case  that <em>Y</em> → <em>X</em>).</p>
+<p>Our Connolly and Begg text provides  us with an equivalent definition of the modern general third normal form, which  also does not require that a relation have keys:</p>
+<blockquote>
+  <p><strong>The general definition of third normal form (3NF)</strong> is a relation that is in 1NF and 2NF in which no  non-candidate-key attribute is transitively dependent on any candidate key. In  this definition a candidate key attribute is part of any candidate key.</p>
+</blockquote>
+<p>BCNF is not just an improved version  of third normal form. BCNF is more restrictive than 3NF. Every relation that is  in BCNF is also in 3NF, but not every relation that is in 3NF is in BCNF. There  is a good discussion and example of this in CB6 pages 438 and 439.</p>
+<p>It can happen that information is  lost when a table is normalized from third normal form to BCNF. This is  uncommon, so most databases are normalized to BCNF, but you need to be aware  that it can occur. There is a good discussion of this in CB6 pages 439 and 440.  The key point is that there is a tradeoff between representing all of the  functional dependencies and data redundancy. 3NF may represent important  functional dependencies that are lost when the relation is normalized to BCNF.  If you encounter this situation you have the choice of keeping the relation in  3NF and dealing with the data redundancies or normalizing to BCNF and accepting  the loss of the functional dependencies. If your database architecture provides  good control of the consistency of redundant data (such as restricting table  access to stored procedures that maintain the consistency of redundant data)  and the functional dependencies that would be lost are important to represent  then it may be best to keep the relation in 3NF.</p>
+<div class="storycenter">
+  <h4><strong>Summary  of the modern versions of 1NF, 2NF, and 3NF</strong></h4>
+<p>As people developed and used  relational databases they noticed that many tables, such as history and audit  tables, often had no natural primary key, and still functioned quite well. Over  time people developed newer definitions of 1NF, 2NF, and 3NF which are based on  functional dependencies and do not require a primary key or even a key. Connolly  and Begg present these as general definitions of the normal forms, for example on  CB6 page 427. The following definitions are adapted from those in CB6: 
+</p><blockquote>
+  <p>A table is  in general first normal form if and only if the data are arranged in tabular  form with the data in each cell being atomic, the columns represent the same  attributes of entity instances, and all of the attributes of each entity  instance are represented in the same row. </p>
+</blockquote>
+<p>Notice that this definition supports the key goals of traditional 1NF without requiring a primary key or even a candidate key.
+</p><p>In the following definitions of the  general forms of 2NF and 3NF a <em>candidate  key attribute</em> is an attribute that is part of any candidate key and a <em>non-candidate-key attribute</em> is an  attribute that is not part of any candidate key.
+</p><blockquote>
+  <p>A table is  in general second normal form if and only if it is in first normal form and  every non-candidate-key attribute is fully functionally dependent on every  candidate key. An attribute is fully functionally dependent on another set of  attributes if it is functionally dependent on the full set of attributes, but  not on any proper subset of the attributes. </p>
+</blockquote>
+<p>This is the generalization of the traditional 2NF which does not require a primary key. Note that all tables in 1NF without candidate keys satisfy this definition of 2NF. Next we consider the modern version of 3NF:
+</p><blockquote>
+  <p>A table is  in general third normal form if and only if it is in second normal form and no  non-candidate-key attributes are transitively dependent on any candidate key.</p>
+</blockquote>
+<p>Transitive dependencies occur when a  set of columns determines a second set of columns and those columns in turn  determine a third set of columns, all in the same table. (If you don’t feel  that you understand this you can consult CB6 Page 412, which includes an  extensive discussion and examples.) Note that this is a generalization of the traditional 3NF definition to the cases where there is no primary key. This  definition does not require candidate keys either. We now state the condition for BCNF: 
+</p><blockquote>
+  <p>A table is  in Boyce-Codd Normal form if and only if all determinants are super keys.</p>
+  <p>With the definition of a determinant as a minimal set of attributes that fully  functionally determines another set of attributes there is an equivalent  definition that a relation is in BCNF if and only if all determinants are  candidate keys.</p>
+</blockquote>
+<p>Note  that this definition of BCNF does not require that there be a primary key or candidate keys or even that the table have functional dependencies.
+</p><p>In 1982 Carlo Zanio published a 3NF definition  that clarifies the relationship between 3NF and BCNF [Zanio82]. His 3NF  definition is equivalent to Codd's, but he expressed it differently. This  definition states that a table is in 3NF if and only if, for each of its  functional dependencies <em>X</em> → <em>Y</em>, at least one of the following  conditions holds:</p>
+<ol>
+  <li><em>X</em> contains <em>Y</em> (<em>X</em> → <em>Y</em> is a trivial functional dependency), or</li>
+  <li><em>X</em> is a <a href="https://en.wikipedia.org/wiki/Superkey" title="Superkey" target="_blank">superkey</a>, or</li>
+  <li>Every element of <em>Y</em>-<em>X</em>, the set difference between Y and X, is a <em>prime attribute.</em></li>
+</ol>
+<p>The first two conditions are the  same as for BCNF. Zaniolo's definition of 3NF also allows the third condition.  Thus relations where at least one functional dependency satisfies condition 3,  but not condition 1 or 2, is in 3NF but not in BCNF.</p>
+</div>
+<p>References:</p>
+<p>[Codd71] Codd, E.F. "Further  Normalization of the Data Base Relational Model." (Presented at Courant  Computer Science Symposia Series 6, "Data Base Systems," New York  City, May 24th–25th, 1971.) IBM Research Report RJ909 (August 31st, 1971).  Republished in Randall J. Rustin (ed.), <em>Data Base Systems: Courant Computer  Science Symposia Series 6</em>. Prentice-Hall, 1972.</p>
+<p>[Zaniolo82] Zaniolo, Carlo.  "A New Normal Form for the Design of Relational Database Schemata." <em>ACM  Transactions on Database Systems</em> 7(3), September 1982.</p>
+
+</div>
+<script>
+getHeader('b2','../module1/metcs779_M1L2T02_BoyceCoddandFourthNormalForms.htm','body');
+</script>
+
+<div id="b3">
+
+
+<title>More on Boyce-Codd Normal Form</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>More on Boyce-Codd Normal Form</h1>
+
+<p>A table can be in third normal form but not Boyce-Codd normal form (BCNF). Consider the following functional dependency diagram from the CS 669 text.</p>
+
+<p class="center"><img src="./Module 1_files/metcs779_W01L01_fig5_7_3nf.gif" alt="" width="550" height="192"></p>
+
+<p>This table is in third normal form, because it is in second normal form and there are no transitive dependencies. (That B depends on C is not transitive, because C depends upon both A and B.) Yet the table is not in BCNF, because even though C determines the key column B, C is not a candidate key by itself.</p>
+<p>How do we fix this? Because C determines B, we can replace B in the primary key by C. This gives us a table that is not even in second normal form, because C, which is now only a part of the primary key, determines B, which is now a non-key column. Thus B does not depend on the whole key, which violates the second normal form. This is illustrated in the center functional dependency diagram in the following figure:</p>
+
+<p class="center"><img src="./Module 1_files/metcs779_W01L01_fig5_8_decomp.gif" alt="" width="550" height="500"></p>
+
+<p>We resolve the problem in the standard way by normalizing this table into two tables, which are both in 3NF and BCNF, as illustrated at the bottom of the figure. An example follows.</p>
+
+
+</div>
+<script>
+getHeader('b3','../module1/metcs779_M1L2T03_MoreonBoyceCoddNormalForm.htm','body');
+</script>
+
+<div id="b4">
+
+
+<title>Satisfying Both 3NF and BCNF</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+<script src="./Module 1_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 1_files/ty.js.下载"></script>
+
+
+
+<h1>Satisfying Both 3NF and BCNF</h1>
+
+<p>An example will help clarify this. Consider the following sample data from the text.</p>
+
+<p class="center"><img alt="" src="./Module 1_files/metcs779_W01L01_tbl5_3.gif" width="550" height="160"></p>
+
+<p>Consider the functional dependencies.</p>
+
+<ul>
+<li>CLASS_CODE is really a section code, so CLASS_CODE determines the STAFF_ID of the instructor.</li>
+<li>STAFF_ID does not determine CLASS_CODE, because an instructor may teach more than one section.</li>
+<li>A student can only take one section from an instructor, so the combination of STU_ID and STAFF_ID determines CLASS_CODE and ENROLL_GRADE.</li>
+</ul>
+
+<p>The resulting functional dependency graph looks like Panel A in the following diagram.</p>
+
+<p class="center"><img src="./Module 1_files/metcs779_W01L01_fig5_9_decomp2.gif" alt="" width="550" height="416"></p>
+
+<p>This database table is trying to represent two different things:</p>
+
+<ul>
+<li>An instructor teaching a class</li>
+<li>A student taking a class</li>
+</ul>
+
+<p>These are quite distinct, with different lifetimes. This causes serious problems, including:</p>
+
+<ul>
+<li>There is no way to record that an instructor is assigned to a class without also assigning a student to the class at the same time.</li>
+<li>If you delete all of the students from a class you lose the information about who is teaching the class.</li>
+<li>If you change the instructor for a class you have to update all of the rows for the class. While an appropriate update clause can handle this, it is inefficient.</li>
+</ul>
+
+<p>The first two problems are unacceptable, illustrating why it is important to check that tables are in BCNF. It is important to know how to recognize and fix these problems, in order to:</p>
+
+<ul>
+<li>Avoid them in your own designs,</li>
+<li>Recognize and fix them in someone else's design</li>
+<li>Recognize and fix them in a designs that have been modified, and</li>
+<li>Recognize and fix them when porting data into a database from unnormalized sources such as spreadsheets.</li>
+</ul>
+
+<p>Panel B in the figure illustrates how we fix these problems by decomposing the table into two tables, one representing students assigned to classes and the other representing instructors assigned to classes. Both tables satisfy BCNF.</p>
+
+<p class="center"><img alt="" src="./Module 1_files/metcs779_W01L01_fig5_9b_decomp2.gif"></p>
+
+<div class="summarycenter">
+<h4>Alternative Explanation</h4>
+<p>The Boyce-Codd condition means that any time that the value of any column can be determined from the values of any other set of columns then the other set of columns must be a candidate key. Let A be any column in a table, and let C be a different set of columns that determines A. Then if the table is in Boyce-Codd normal form, then C must determine not only A, but must also determine the values of all of the other columns in the table. This is a severe constraint, and it is just what we want, because it excludes all dependences except those based on candidate keys, without excluding the cases where there are multiple candidate keys. Today most commercial OLTP (Online Transaction Processing) databases are designed to Boyce-Codd normal form, though sometimes they are carefully denormalized afterwards, to improve performance.</p>
+</div>
+
+<div class="tipcenter">
+<h4>Performance Tip</h4>
+<p>In this example the BCNF normalization may improve performance. There is one row in the table on the left in Panel B for each student, and one row in the table on the right for each section. Since there are normally many students per section, there are probably many more rows in the table on the left than there are in the table on the right. After the normalization the table on the left has one less column (STAFF_ID) so the rows are shorter, and the left hand table is significantly smaller after the normalization. As a result, the total size of the two tables in Panel B is probably less than the size of the one table in Panel A, so the normalization reduces database size. Smaller tables are more likely to be in the block buffer cache, so this reduces the amount of input and output to storage required to access the data in the tables. As a result, correcting the anomalies will probably also result in a faster database. There is another more advanced consideration. The right-hand table in Panel B is probably small enough so that it will be resident in the database block buffer cache, so that joining it on modern DBMS such as Oracle will not slow processing measurably.</p>
+</div>
+
+<div class="testcenter">
+<h4>Test Yourself</h4>
+<p>Is this table in Boyce-Codd normal form?</p>
+<blockquote>
+<p> BookID – primary key<br>
+10DigitISBN<br>
+13DigitISBN<br>
+BookTitle<br>
+BookAuthor</p>
+</blockquote>
+<button>Show Answer</button>
+<p style="display: none;">Yes.&nbsp; All the determinants (BookID, 10DigitISBN, 13DigitISBN) can by themselves determine all the other fields in the row, so it satisfies the rule that all the determinants are candidate keys.</p>
+</div>
+
+
+</div>
+<script>
+getHeader('b4','../module1/metcs779_M1L2T04_SatisfyingBoth3NFandBCNF.htm','body');
+</script>
+
+<div id="b5">
+
+
+ <title>Fourth Normal Form</title>
+ 
+<link href="./Module 1_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 1_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 1_files/ty.js.下载"></script>
+ 
+
+ <h1>Fourth Normal Form</h1>
+ <p>When a table represents a relationship between entities, it is important that each row in the table represents only one independently varying relationship between those entities. The fourth normal form checks this constraint. <strong>A table is in fourth normal form (4NF) if it is in 3NF and has no multiple sets of multi-valued dependencies.</strong> Suppose that we have a VOLUNTEER table that represents the facts of employees volunteering for organizations such as the Red Cross and United Way. This table represents the relationships between the employees and the organizations for which they volunteer. The following table illustrates three designs for the VOLUNTEER table. All three tables have the same columns; they differ in the presence of nulls.</p>
+ <p class="center"><img alt="" src="./Module 1_files/metcs779_W01L01_fig5_15_multi.gif" width="550" height="263"></p>
+ <p>The first design has a nullable ORG_CODE column, with NULLs present, and it has no primary key. The second table has nulls in both ORG_CODE and ASSIGN_NUM, so it doesn't have a primary key either. The third design has a primary key consisting of all three columns, but it is still not really correct, and it could take many rows to store all the combinations of relationships between employees, organizations, and assignments. All three tables are trying to represent both the relationship between the employee and organization and the relationship between the employee and their assignments in the company. Because these relationships are independent, trying to represent them in the same table creates problems. The following figure from the text illustrates how the relationship between employees and their volunteer organizations is represented in the SERVICE_V1 table and the relationship between employees and their assignments is represented in the ASSIGNMENT table.</p>
+ <p class="center"><img alt="" src="./Module 1_files/metcs779_W01L01_fig5_16_4nf.gif" width="550" height="690"></p>
+ <p>The entity-relationship diagram at the bottom shows how the tables SERVICE_V1 and ASSIGNMENT associate the employees with their service organizations and projects respectively. All tables have primary keys. The primary key of SERVICE_V1 includes both of the columns. It is common for the primary key of an association table to include all of the columns of the table. The ASSIGNMENT table has two keys - the synthetic key ASSIGN_NUM and the natural key consisting of EMP_NUM and PROJ_CODE. This is also a common construction that is used when other tables need to refer to the relationship, and it is better to have a smaller foreign key than the natural key for the relationship.</p>
+ 
+<div class="testcenter">
+<h4>Test Yourself</h4>
+<p>Consider the following table which represents employees and their  assignments to different managers on different projects on different weeks. An  employee can work on multiple projects with different managers in the same  week. The table has a four-column primary key. A Manager may work on multiple  projects, so there are no transitive dependencies and the table is in third  normal form. Is this table in Fourth normal form?</p>
+
+<blockquote>
+ <p>EmployeeID – primary key<br>
+ WeekEndingDate – primary key<br>
+ ProjectCode – primary key<br>
+ Manager – primary key<br>
+ ProjectResponsibility<br>
+ HoursWorked</p>
+</blockquote>
+<button>Show Answer</button>
+<p style="display: none;">This table is not in fourth normal form, because there is a  multivalued dependency between ProjectCode and Manager. The underlying problem  is that the design does not separate the management organization of the  projects from the work done by employees on the projects. One  fourth-normal-form design would explicitly represent ProjectArea (a group with  one manager) and their managers. With this change the table would have a  three-column primary key consisting of EmployeeID, WeekEndingData, and ProjectArea, with dependent columns ProjectResposibility and HoursWorked, and there would be no multivalued dependency.</p>
+</div> 
+ 
+
+</div>
+<script>
+getHeader('b5','../module1/metcs779_M1L2T05_FourthNormalForm.htm','body');
+</script>
+
+<div id="b6">
+
+
+<title>Denormalization</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 1_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 1_files/ty.js.下载"></script>
+
+
+
+<h1>Denormalization</h1>
+
+<p>As we have seen, the normalization process breaks down complex tables into multiple simpler tables that are usually easier to work with and that function without anomalies. Sometimes normalization increases the size of databases, and it usually increases the number of tables that must be joined in queries. When more tables must be joined there should usually be indexes to support those joins, as well, which increases database size. Because each table queried normally requires some I/O the larger number of tables also increases the number of I/O operations required to execute the queries. Because joins involving many tables sometimes have no efficient query plans, the processing time can increase dramatically when the number of joined tables increases. For these reasons the database design process involves compromises between normalization and database performance.</p>
+
+<p>"Over-normalization" refers to what happens when the normalization process is carried on without regard to its consequences for the understandability of  the schema, performance,  database size, or the number of tables. Here are a few guidelines that you can use to question whether a normalization step may not be helpful:</p>
+
+<div class="tipcenter">
+<h4><strong>How to tell when you may be over-normalizing</strong></h4>
+<ul>
+<li>If you have a table A that contains one representation of a conceptual object B, but object B is only ever present as part of object A, then there is not usually any advantage in separating B into its own table. You should be able to keep the columns that represent B as columns of table A, eliminating joins of B. Conversely, if there are many repetitions of the rows of object B in object A and the rows are long, then it may be faster to normalize.</li>
+<li>If you find yourself joining more than a few tables, and the queries are too slow, in spite of careful indexing, you should look for ways to combine tables. The number of tables that you can join depends on the size of the tables. Efficiently joining even two terabyte-class tables takes great care. The best commercial databases can usually handle joins of up to about eight moderate-sized tables without too much degradation, when there is appropriate RAM and other resources, but fewer tables is usually much faster.</li>
+<li>When you find that the normalization has broken natural domain objects into unnatural pieces, it may be time to keep the less normalized form. Correct application of the normalization rules should not do this, so you may have made a mistake. Check the object rules presented on the next page. You may also consider reducing the number of tables by using one of the ANSI/ISO standard collection types in databases       such as Oracle (Loney, Ch. 34) and DB2.</li>
+    <li>When the normalization breaks up tables that correspond to object classes in object-oriented application software you should question whether this normalization is wise, and ask why the application object modelers did not so decompose their objects. Application operations with the database are usually fastest when the tables in the database correspond to application software object classes.</li>
+</ul>
+</div>
+
+<p>Denormalization  is often carried out to improve the correspondence between the data access  patterns and the way the data is stored. For example, I consulted on the design  of a large data warehouse for a telephone company. The warehouse had a multi-billion-row CALL_DETAIL table with a row for each phone call. The table had a number of  small columns that represented commonly accessed data such as the originating  number, destination number, start time, and stop time. The table also had one very large text column that held detail about the routing of the call. This one  column was many times larger than the sum of the size of all the other columns. The large column was rarely accessed. We moved this column to its own table, so that the data for this column would not be brought in from storage each time the frequently accessed data was accessed, slowing the performance of those frequent queries. The result was about an order of magnitude increase in average performance, with insignificant slowing of the queries that access the  very large column, as expected.</p>
+<p>The dimensional schemas used in data marts and data warehouses are technically denormalized according to the normal forms that we have discussed here, but I prefer to think of them as normalized in a very different way, according to a different set of normalization rules, which optimize for query performance and database size. We will cover these rules and dimensional design in Week 4.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>What are some of the reasons for denormalizing a schema? (Check all that are true.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Denormalizing is important when the application could get better performance with fewer joins.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Denormalizing can reduce the number of indexes required to efficiently support joins, and so reduce database size and index maintenance overhead.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Denormalizing is important if the way the data is stored is not optimal for the way the data is accessed.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('b6','../module1/metcs779_M1L2T06_Denormalization.htm','body');
+</script>
+
+<div id="b7">
+
+
+<title>Object-Oriented Design Tests</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 1_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 1_files/ty.js.下载"></script>
+
+
+
+<h1>Object-Oriented Design Tests</h1>
+
+<div class="definitioncenter">
+<h4>Definition</h4>
+<p>An <em>object class</em> refers to a kind of entity. Nouns which are  not proper nouns are names for object classes. Proper nouns are names for  instances of those classes. For example, <em>city</em> is a noun that is the English language name of an object class and <em>Boston</em> is the name of an instance of  that class. CS682 <em>Systems Analysis and  Design</em> covers this topic in detail.</p>
+</div>
+
+<p>What all of these normalization tests are really doing is checking that each table represents a different kind of object class (entity type), and not part of an object class, or parts of multiple object classes, or other constructs that we don't normally want in our databases. What I would like to share with you now is a different set of rules and way of thinking that will help you identify the objects in your database. These rules and ways of thinking don't replace the normalization rules that we have studied, but supplement them. I have found that when these object checks succeed and the normalization checks succeed, that the design is quite solid. The object-oriented ways of thinking also help us when we are designing databases to support applications developed using object-oriented languages such as Java, C++ or C#.</p>
+
+<p>The object-oriented tests depend on thinking about the real-world entities represented by the rows in the table. Many real-world entities are physical objects such as airplanes or shoes. Other entities, such as accounts and degrees, are not primarily physical, but they gain a physical-like importance and permanence because people ascribe to them the reality of physical objects.</p>
+
+<ul>
+  <li>The first test is whether all parts (columns) of the       entities represented by the rows in this table are created and destroyed at the same time. If some parts can be created at different times, this suggests that those parts may really represent a different object, which is often best represented in a different table, often linked by a foreign key. Pay particular attention to nullable columns to make sure that they are really part of the same object as the other columns.</li>
+  <li>A second test is whether the entity type represented by this table has a  natural name. If the entities represented by the rows all share a common type  name, then the table probably represents a natural object. The name may be a phrase. Many natural object types have names, but be aware that not all natural object types have names, even esoteric names known only to experts in the problem domain. If you encounter one of these unnamed object types you can test it by asking domain experts if they recognize it. They may say something like, "Sure, it's something that we all understand; we just don't have a name for it."</li>
+  <li>Do all of the entities represented by the rows in this table exhibit the same behavior? If the behaviors of different entities are different this suggests that they may be of different types.</li>
+</ul>
+
+<p>As a general rule in production databases it is best to use tables that are normalized to at least BCNF, and use denormalization sparingly. If you denormalize you should understand why you are doing it, and make sure that you have analyzed and dealt with the anomalies and potential data inconsistencies that may result. A different set of general rules applies to analysis databases such as data warehouses.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>You’re considering a database design for an online candy store. Apply the rules listed above and name some of the possible objects in your design. (Check all that are true.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Candy</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>Price</td>
+<td style="display: none;">This is false. Price is more likely to be an attribute.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Customer</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Order</td>
+<td style="display: none;">This is true.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('b7','../module1/metcs779_M1L2T07_ObjectOrientedDesignTests.htm','body');
+</script>
+
+<header>Lecture 1B - Database Programming</header>
+
+<div id="c1">
+
+
+<title>Overview</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>Overview</h1>
+
+<p>All industrial-strength DBMS include a database programming language. PL/SQL is the programming language developed by Oracle. Database programming languages such as TransactSQL, which is supported by Microsoft SQL Server and Sybase, are similar. Database programs are used to write triggers, stored procedures, stored functions, and object methods. Database programming is important for databases that support large numbers of applications, for advanced database security, for efficient execution of conditional operations, and for data and compute intensive operations such as loading data warehouses.</p>
+
+<h2>Learning Objectives</h2>
+
+<p>By reading this lesson, participating in discussions, and completing the assignments, you will be able to:</p>
+
+<ul>
+<li>Describe what database programming is and how it is used.</li>
+<li>Write and run programmatic SQL using Oracle’s PL/SQL or Microsoft SQL Server’s Transact SQLanonymous PL/SQL blocks using SQLPlus.</li>
+<li>Write and test the common kinds of database triggers in Oracle's PL/SQL or Transact SQL.</li>
+<li>Write and test stored procedures in PL/SQL or Transact SQL.</li>
+<li>Write and test stored functions in PL/SQL or Transact SQL.</li>
+<li>Write and test  code to catch and handle database exceptions.</li>
+</ul>
+
+<p>You will also be prepared to use PL/SQL to write object methods when we discuss object-relational databases.</p>
+
+
+</div>
+<script>
+getHeader('c1','../module1/metcs779_M1L3T01_Overview.htm','body');
+</script>
+
+<div id="c2">
+
+
+<title>Introduction to Database Programming with PL/SQL</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 1_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 1_files/ty.js.下载"></script>
+
+
+
+<h1>Introduction to Database Programming with PL/SQL</h1>
+
+<p><strong><em>Database programming languages</em></strong> combine SQL, parameter passing, execution control constructs and exception handling to create powerful database-oriented programming languages. Database programs are sent to the database as text only once, where they are parsed, compiled, optimized, and stored as an integral part of the database. The database programs may then be executed many times without incurring this overhead.</p>
+
+<p><strong><em>There are three common kinds of database programs</em></strong>—stored procedures, stored functions, and triggers. Object-relational DBMS such  as Oracle and DB2 also support methods, which database programs associated with  object types. We will learn to write and run all three common types of database  programs using PL/SQL or Transact SQL. In a later lecture on object-oriented  extensions we will also learn how to write methods in PL/SQL.</p>
+
+<p><strong><em>Database programming meets important business needs</em></strong>, including:</p>
+
+<ul>
+<li>Encapsulating common functionality in a way that can be easily shared between applications, thereby minimizing application size and complexity, minimizing life cycle costs and improving quality.</li>
+<li>Improving performance by eliminating repeated SQL transmissions, parsing, and optimization.</li>
+<li>Reducing the need to communicate intermediate results with applications, thereby improving speed and reducing network traffic.</li>
+<li>Providing the fastest way to implement data-intensive database operations. Database code has minimal data access overhead.</li>
+<li>Supporting triggers, which is database code that runs automatically when specified operations change the database. Triggers can be used for many things, including enforcing integrity constraints and maintaining denormalized data.</li>
+<li>Providing the opportunity to not support direct access to the underlying tables, and allowing access only through stored procedures. The stored procedures can then enforce arbitrary security, audit, or other functionality. The stored procedures serve as an interface layer, hiding underlying database changes from applications.</li>
+<li>If database access is only through stored procedures, then the stored procedures can enforce integrity constraints. Stored procedures can support complex transaction-oriented business constraints, and they are usually faster than implementing constraints using more local constraint mechanisms such as foreign keys or triggers. Stored procedures are used for this reason in very high performance systems and systems with complex integrity constraints.</li>
+</ul>
+
+<p>So, database programming is very useful, particularly when there are many applications, complex integrity constraints, high throughput, and/or critical databases. For these reasons database programming is widely used for enterprise and other critical databases.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>What are some of the reasons to use stored procedures? (Check all that are true.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Stored procedures can be reused between applications.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Stored procedures can improve performance.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Stored procedures provide additional functionality.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>Stored procedures execute data intensive applications more slowly than &nbsp;procedural code executing on database clients.</td>
+<td style="display: none;">This is almost always false. Stored procedures execute in the DBMS with  direct access to the data, eliminating the need to encode, transmit, and decode  the data. Stored procedures execute on a database server, which is almost  always more capable than database client platforms.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+<div class="storycenter">
+<h4>Language and Compatibility</h4>
+<p>To say that the languages are <em>semantically</em> similar means that users can say things in the different languages that mean about the same thing. This is not surprising, because the different vendors designed their database programming languages to solve the same customer problems.</p>
+<p>To say that the languages are <em>syntactically</em> incompatible is to say that the grammars for the languages are sufficiently different that programs written in one language are not syntactically (grammatically) correct in the other languages.</p></div>
+
+<p>In the 1980s DBMS vendors, including Oracle, IBM and Sybase implemented database programming languages because their customers needed them, and the ANSI standards committee did not address database programming until ANSI SQL 1999. As a result there are different <em>semantically</em> similar but <em>syntactically</em> incompatible database programming languages. There are programs that translate database code from one DBMS to another. The translated code may not function in precisely the same way, often because of differences in the underlying databases, so database programmers need to be attentive when porting database programs. ANSI SQL 99 includes a standard database programming language based on the language in IBM's DB2, but it is not yet widely supported. DB2 also supports PL/SQL.</p>
+
+<p>Footnote: MySQL's database programming language is newly implemented, and it is based on the ANSI SQL99 standard.</p>
+<p><strong><em>What is database programming?</em></strong> Database programming involves the definition, coding, testing, and maintenance of triggers, stored procedures, stored functions, and methods.</p>
+
+<p>Database programming is also a specialized software engineering job category that involves significant database and programming skills.</p>
+
+
+</div>
+<script>
+getHeader('c2','../module1/metcs779_M1L3T02_IntroductiontoDatabaseProgrammingwithPLSQL.htm','body');
+</script>
+
+<div id="c3">
+
+
+<title>PL/SQL Blocks</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>PL/SQL Blocks</h1>
+
+<p>The most basic PL/SQL construct is a PL/SQL  block. A PL/SQL block is a piece of code that is sent to the database, where it is executed just once, and not saved for future use the way a stored procedure or function is stored. A PL/SQL block is <em>anonymous</em>, meaning that it has no name. A PL/SQL block can't be called again, so we don't need to give it a name by which we can be refer to it in future calls. A PL/SQL block can begin with the word DECLARE or with the word BEGIN, and it ends with the word END. The following figure from the text illustrates some very simple PL/SQL blocks.</p>
+
+<div class="image" style="width:552px" title="Copyright © Trustees of Boston University 2014."><img alt="" src="./Module 1_files/metcs779_W01L02_fig07_28_anonblock.gif" width="550" height="510"></div>
+
+
+<p>The example at the top just illustrates that Oracle will accept a single INSERT statement even if it is preceded by BEGIN and followed by END, and that when the block has executed Oracle and SQLPlus tell us that a procedure has successfully completed, even though it is not a procedure but just a PL/SQL block. The second example shows us that a PL/SQL block can include a call to the PUT_LINE procedure in the DBMS_OUTPUT built-in package. Such a procedure call is not legal as a SQL statement, so this tells us that we can do more inside of a PL/SQL block than we can in just SQL. Note the line SET SERVEROUTPUT ON. This enables the output of the DBMS_OUTPUT package. Without this line the block would have executed just fine, but the line "New Vendor Added!" would not have appeared in SQLPlus or another database client.</p>
+
+<div class="fyicenter">
+ <h4>Transact-SQL Block Example</h4>
+<p>A Transact SQL (T-SQL) block can begin with the word DECLARE or with the word BEGIN, and it ends with the word END. The following illustrates a very simple T-SQL block.</p>
+
+<p class="code">begin<br>
+insert into VENDOR<br>
+VALUES (25678, 'Microsoft Corp.', 'Bill Gates', '765', '546-8484', 'WA','N');<br>
+END;</p>
+
+
+<p>When it completes successfully, you’ll see the following under "Messages":</p>
+
+<p><img src="./Module 1_files/metcs779_M1L3T04_plsql_blocks1_1.jpg" alt="" width="193" height="73"></p>
+
+<p>The equivalent for Oracle’s DBMS_OUTPUT.PUT_LINE in T-SQL is the command, <em>PRINT</em>. So to print a message in T-SQL after the INSERT command, you could use this block of code:</p>
+
+<p class="code">begin<br>
+insert into VENDOR VALUES (25772, 'Clue Store', 'Isaac Hayes', '456', '323-2009', 'VA','N');<br>
+PRINT 'New Vendor Added!';<br>
+END;</p>
+
+<p>When this is executed in T-SQL, the resulting message would look something like this:</p>
+
+<p><img src="./Module 1_files/metcs779_M1L3T04_plsql_blocks1_2.jpg" alt="" width="176" height="88"></p></div>
+
+<div class="importantcenter">
+<h4>Note</h4>
+<p>In the first Oracle example, creating an anonymous block will have the same result as entering the INSERT statement on the command line by itself, because there are no statements inside the block other than the INSERT statement.</p>
+In the second example, however, using the block allows execution of the DBMS_OUTPUT.PUT_LINE command.&nbsp; If you try to execute the DBMS_OUTPUT.PUT_LINE directly from the SQL*Plus command line, you’ll see the error, "Unrecognized command", but within the block it works as shown in the example.</div>
+
+
+</div>
+<script>
+getHeader('c3','../module1/metcs779_M1L3T03_PLSQLBlocks.htm','body');
+</script>
+
+<div id="c4">
+
+
+<title>PL/SQL Block with a DECLARE Section</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>PL/SQL Block with a DECLARE Section</h1>
+
+<p>We now examine the full form of a PL/SQL block with a DECLARE section:</p>
+
+<div class="image" style="width:626px" title="Copyright © Trustees of Boston University 2014."><img width="624" height="404" alt="" src="./Module 1_files/metcs779_W01L02_toad_declare.gif"></div>
+
+<div class="definitioncenter">
+<h4>Definitions of Declaration and Block</h4>
+<p>A <em><strong>declaration</strong></em> is a code segment that defines a symbol, such as <em>colanchor</em> above, and gives it a meaning. Usually declarations create variables.</p>
+<p>In programming languages the term <em><strong>block</strong></em> describes a segment of code that contains declarations and statements and perhaps exception handling. Depending on the programming language, blocks are delimited by a symbol such as BEGIN or left brace, and ended by a symbol such as END or right brace.</p>
+<h4>PL/SQL Maintainability Tip</h4>
+<p>When a data type in the database changes it is often necessary to
+change the data types in the PL/SQL or other database code. Oracle
+provides the %TYPE and %ROWTYPE syntax to permit you to anchor your
+PL/SQL data types to the corresponding data types in the database.
+Sometimes it is helpful to anchor our declarations to something closer
+to a schema type than a column type. (This is similar to using an abstract
+data type, which we will study in the lecture on object-relational
+database features.) This can be done by creating a special table with
+one column representing each business-oriented data type. This table
+typically has no data, and is used solely to anchor declarations. For
+example, this table might have a first_name column of type VARCHAR(20),
+an account_balance column of type NUMBER(9,2) and a gender column of
+type CHAR(1). Database CASE tools such as Oracle Designer support schema-level
+data types, and these tools can be used to create this data types anchoring
+table, as well as to implement coordinated schema data type changes.</p></div>
+
+<p>As one might expect, the DECLARE section before the BEGIN is where you can put <u>declarations</u> for the <u>block</u>. This example illustrates three additional PL/SQL features. One of these features is the anchoring of the data types of variables to the corresponding data types in the database. Consider the line of code:</p>
+
+<blockquote>
+<p class="code">colanchor emp.empno%type;</p>
+</blockquote>
+
+<p>This line of code creates a new symbol <em>colanchor</em> which has as its scope the PL/SQL block. The type of this new symbol is declared to be the same as the type of the empno column of the emp table. The type of the variable colanchor is <em>anchored</em> to the type of the empno column. We don't need to know the type of the empno column to create the new variable to hold values of the empno column; we just anchor the declaration to the column. This anchoring of variables is very useful in improving the maintainability of PL/SQL code. Large enterprise database systems may have tens to hundreds of thousands of lines of PL/SQL code. If this code is built using anchoring, and the data types in the underlying schema change, then all that the developer has to do is recompile and appropriately retest the PL/SQL code, rather than laboriously searching the PL/SQL source code for all of the places where the declarations need to change to keep up with the schema changes.</p>
+
+<p>Notice the second declaration seen above:</p>
+<blockquote>
+<p class="code">rowanchor emp%rowtype</p>
+</blockquote>
+
+<p>This declaration creates a new variable <em>rowanchor</em> which has as its data type a record with the same structure as an entire row of the emp table. As we will see later, such records are useful as a place to store data in row-by-row processing with explicit cursors.</p>
+<p>Note the line of code near the bottom of the PL/SQL block above:</p>
+
+<blockquote>
+<p class="code">rowanchor := 44;</p>
+</blockquote>
+
+<p>This is just a simple assignment statement. The “:=” is a two-character symbol that represents the assignment of a value to a variable in PL/SQL. (This has the same meaning as the “=” symbol in Java or C++.) What this statement does is give the local variable <em>rowanchor</em> the value 44. You will probably notice that this is an error. It makes no sense to assign a simple value to a whole record which contains multiple simple values. The correct syntax would be something like rowanchor.empno := 44;</p>
+
+<p>Note from the block in the lower right hand corner of the TOAD window (shown above) that the PL/SQL block generated an error message.</p>
+
+
+</div>
+<script>
+getHeader('c4','../module1/metcs779_M1L3T04_PLSQLBlockwithaDECLARESection.htm','body');
+</script>
+
+<div id="c5">
+
+
+<title>TOAD Errors</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+<script src="./Module 1_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 1_files/ty.js.下载"></script>
+
+
+
+<h1>TOAD Errors</h1>
+
+<p>Now let's generate an error to see how TOAD presents errors to us:</p>
+
+<div class="image" style="width:626px" title="Copyright © Trustees of Boston University 2014."><img width="624" height="404" alt="" src="./Module 1_files/metcs779_W01L02_toad_declare_err.gif"></div>
+
+<p>The error that I made is to attempt to assign the simple value 44 to the rowanchor variable, which is a record anchored to the table emp. Oracle returns an error and TOAD presents us with a popup:</p>
+
+<div class="image" style="width:410px" title="Copyright © Trustees of Boston University 2014."><img width="408" height="214" alt="" src="./Module 1_files/metcs779_W01L02_toad_error_pu.gif"></div>
+
+<p>Notice that there is more than one error message. This is typical of Oracle&nbsp;and other RDBMS. Usually the error message that we care about is near the top; in this case it is the second, PLS error that tells us that the expression is of the wrong type.</p>
+
+<div class="tipcenter">When something more complicated is going on, Oracle may give you a dozen or more error messages from one real error. For example, suppose that a utility stored procedure has an unhandled SQL error and that stored procedure is invoked from a trigger that was “triggered” by another SQL statement in a transactional stored procedure. Then you would expect error messages from the SQL statement, from the utility stored procedure containing the SQL statement, from the trigger, from the SQL statement that caused the trigger, and from the transactional stored procedure.</div>
+
+<p>Note, to assign a value to rowanchor, you will need to use a cursor to read through the rows and populate the rowanchor.</p>
+
+<blockquote>
+<p class="code">CURSOR c1 IS<br>
+SELECT empno, ename FROM emp;</p>
+</blockquote>
+<p>Then it will be possible to assign a value to one of the columns represented by rowanchor.&nbsp; The following illustrates the corrected code:</p>
+<blockquote>
+
+<p class="code"> declare<br>
+colanchor emp.empno%type;<br>
+rowanchor emp%rowtype;<br>
+CURSOR c1 IS<br>
+SELECT empno, ename FROM emp;<br>
+begin<br>
+colanchor:=43;<br>
+rowanchor.empno:=44;<br>
+end;</p>
+</blockquote>
+
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>When would you use an anchor for a declared variable in a PL/SQL block?</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>Use a row anchor (%rowtype) for one attribute when you need to perform a  join.</td>
+<td style="display: none;">This is false. Row anchors are used to declare records, not single attributes.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Use a column anchor for a variable whose type may change over the lifetime of the database.</td>
+<td style="display: none;">This is true. This design greatly reduces the effort to update the data types in persistent stored modules such as stored procedures.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Use a row anchor to declare a record which has the same structure as a table in the database.</td>
+<td style="display: none;">This is true. Anchoring record declarations to database tables can greatly simplify database code maintenance and record-level operations.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('c5','../module1/metcs779_M1L3T05_TOADErrors.htm','body');
+</script>
+
+<div id="c6">
+
+
+<title>A More Complex Example</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>A More Complex Example</h1>
+
+<p>We now examine a PL/SQL block of more interesting complexity, from the text:</p>
+
+<div class="image" style="width:552px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_W01L02_fig07_29_blks_var_loops.gif" alt="" width="550" height="290"></div>
+
+<p>Note that the variables declared in the declarations section are initialized; this is a good practice. Notice the SELECT INTO syntax. There is no standard output such as the user screen for PL/SQL to select a result set into, so SELECT statements in PL/SQL must always have the INTO clause. Notice the BETWEEN clause; this is shorthand for two WHERE clauses specifying the upper and lower bounds. Notice the two vertical bar characters in line 9; these two characters together comprise the SQL string concatenation operation. If you have been attentive you will realize that this session must have executed SET SERVEROUTPUT ON before this code was executed, because the DBMS_OUTPUT.PUT_LINE procedure results in output to the SQLPlus screen. Notice the PL/SQL WHILE loop, which executes everything between the LOOP and END LOOP as long as the condition (<em>W_P2 &lt; 300</em> in this case), is true.</p>
+
+<div class="fyicenter">
+<h4>T-SQL Example</h4>
+<p><img src="./Module 1_files/metcs779_M1L3T04_plsql_blocks4_1.jpg" alt="" width="492" height="514"></p>
+<p>You might notice a few changes between the PL/SQL version and this T-SQL version.<br>
+    In T-SQL:</p>
+<ol>
+  <li>All the variables used within the block are prefaced with an @ sign.</li>
+  <li>The WHILE construct is essentially the same.&nbsp; Use BEGIN for T-SQL to start the actions performed as long as the WHILE condition is true, and end the WHILE loop with an END statement before it rechecks the condition in the WHILE clause.</li>
+  <li>The SELECT…INTO construct is not valid in SQL Server, so instead, the SELECT statement below sets the variable @w_num equal to the value being selected, in this case count(p_code).</li>
+  <li>The PRINT statement in SQL Server performs the same function as DBMS_OUTPUT.PUT_LINE in PL/SQL.&nbsp; Instead of the double bars between clauses, SQL Server uses the plus (+) sign.&nbsp; Also, variables need to use the CAST command to allow the variable to be output as a string.</li>
+  <li>To establish a new value for a variable use the command SET, like this:&nbsp; set @w_p1 = @w_p2 + 1.</li>
+</ol>
+</div>
+
+
+</div>
+<script>
+getHeader('c6','../module1/metcs779_M1L3T06_AMoreComplexExample.htm','body');
+</script>
+
+<div id="c7">
+
+
+<title>A List of Data Types</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>A List of Data Types</h1>
+
+<p>So far we have declared variables of NUMBER types and of one anchored record type. Let's examine all of the different types that can be declared in PL/SQL. The following tabular list of data types is derived from <em>Oracle</em><em>:  The Complete Reference</em>.</p>
+
+<table class="data">
+<tbody><tr>
+<td>BINARY_DOUBLE</td>
+<td>FLOAT</td>
+<td>NUMBER</td>
+<td>SMALLINT</td>
+</tr>
+<tr>
+<td>BINARY_FLOAT</td>
+<td>INT</td>
+<td>NUMERIC</td>
+<td>STRING</td>
+</tr>
+<tr>
+<td>BINARY_INTEGER</td>
+<td>INTEGER</td>
+<td>NVARCHAR2</td>
+<td>TIMESTAMP</td>
+</tr>
+<tr>
+<td>BOOLEAN</td>
+<td>INTERVAL DAY TO SECOND</td>
+<td>PLS_INTEGER</td>
+<td>TIMESTAMP WITH LOCAL TIMEZONE</td>
+</tr>
+<tr>
+<td>CHAR</td>
+<td>INTERVAL YEAR TO MONTH</td>
+<td>POSITIVE</td>
+<td>TIMESTAMP WITH TIMEZONE</td>
+</tr>
+<tr>
+<td>CHARACTER</td>
+<td>LONG</td>
+<td>POSITIVEN</td>
+<td>UROWID</td>
+</tr>
+<tr>
+<td>DATE</td>
+<td>LONG RAW</td>
+<td>RAW</td>
+<td>VARCHAR</td>
+</tr>
+<tr>
+<td>DEC</td>
+<td>NATURAL</td>
+<td>REAL</td>
+<td>VARCHAR2</td>
+</tr>
+<tr>
+<td>DECIMAL</td>
+<td>NATURALN</td>
+<td>ROWID</td>
+<td></td>
+</tr>
+<tr>
+<td>DOUBLE PRECISION</td>
+<td>NCHAR</td>
+<td>SIGNTYPE</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<p>This list includes the simple scalar PL/SQL data types. There are additional PL/SQL data types such as CURSOR and RECORD which declare things other than simple scalar data types. Additional non-scalar data types are summarized in the following table.</p>
+
+<table class="data">
+<tbody><tr>
+<th>Composite Types</th>
+<td>RECORD, TABLE, VARRAY</td>
+</tr>
+<tr>
+<th>Reference Types</th>
+<td>REF CURSOR, REF &lt;object type&gt;</td>
+</tr>
+<tr>
+<th>LOB Types</th>
+<td>BLOB, BFILE, CLOB, NCLOB</td>
+</tr>
+</tbody></table>
+
+<div class="fyicenter">
+<h4>T-SQL Data Types</h4>
+
+<p>The following tabular list of data types for SQL Server 2012 is derived from the <em>technet.microsoft.com</em> website.</p>
+
+<h4>Exact Numerics</h4>
+<table class="data">
+<tbody><tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms187745.aspx" target="_blank">bigint</a></td>
+<td><a href="http://technet.microsoft.com/en-us/library/ms187746.aspx" target="_blank">numeric</a></td>
+</tr>
+<tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms177603.aspx" target="_blank">bit</a></td>
+<td><a href="http://technet.microsoft.com/en-us/library/ms187745.aspx" target="_blank">smallint</a></td>
+</tr>
+<tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms187746.aspx" target="_blank">decimal</a></td>
+<td><a href="http://technet.microsoft.com/en-us/library/ms179882.aspx" target="_blank">smallmoney</a></td>
+</tr>
+<tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms187745.aspx" target="_blank">int</a></td>
+<td><a href="http://technet.microsoft.com/en-us/library/ms187745.aspx" target="_blank">tinyint</a></td>
+</tr>
+<tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms179882.aspx" target="_blank">money</a></td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h4>Approximate Numerics</h4>
+<table class="data">
+<tbody><tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms173773.aspx" target="_blank">float</a></td>
+<td><a href="http://technet.microsoft.com/en-us/library/ms173773.aspx" target="_blank">real</a></td>
+</tr>
+</tbody></table>
+
+<h4>Date and Time</h4>
+<table class="data">
+<tbody><tr>
+<td><a href="http://technet.microsoft.com/en-us/library/bb630352.aspx" target="_blank">date</a></td>
+<td><a href="http://technet.microsoft.com/en-us/library/bb630289.aspx" target="_blank">datetimeoffset</a></td>
+</tr>
+<tr>
+<td><a href="http://technet.microsoft.com/en-us/library/bb677335.aspx" target="_blank">datetime2</a></td>
+<td><a href="http://technet.microsoft.com/en-us/library/ms182418.aspx" target="_blank">smalldatetime</a></td>
+</tr>
+<tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms187819.aspx" target="_blank">datetime</a></td>
+<td><a href="http://technet.microsoft.com/en-us/library/bb677243.aspx" target="_blank">time</a></td>
+</tr>
+</tbody></table>
+
+<h4>Character Strings</h4>
+<table class="data">
+<tbody><tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms176089.aspx" target="_blank">char</a></td>
+<td><a href="http://technet.microsoft.com/en-us/library/ms176089.aspx" target="_blank">varchar</a></td>
+</tr>
+<tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms187993.aspx" target="_blank">text</a></td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h4>Unicode Character Strings</h4>
+<table class="data">
+<tbody><tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms186939.aspx" target="_blank">nchar</a></td>
+<td><a href="http://technet.microsoft.com/en-us/library/ms186939.aspx" target="_blank">nvarchar</a></td>
+</tr>
+<tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms187993.aspx" target="_blank">ntext</a></td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h4>Binary Strings</h4>
+<table class="data">
+<tbody><tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms188362.aspx" target="_blank">binary</a></td>
+<td><a href="http://technet.microsoft.com/en-us/library/ms188362.aspx" target="_blank">varbinary</a></td>
+</tr>
+<tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms187993.aspx" target="_blank">image</a></td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h4>Other Data Types</h4>
+<table class="data">
+<tbody><tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms190498.aspx" target="_blank">cursor</a></td>
+<td><a href="http://technet.microsoft.com/en-us/library/ms182776.aspx" target="_blank">timestamp</a></td>
+</tr>
+<tr>
+<td><a href="http://technet.microsoft.com/en-us/library/bb677290.aspx" target="_blank">hierarchyid</a></td>
+<td><a href="http://technet.microsoft.com/en-us/library/ms187942.aspx" target="_blank">uniqueidentifier</a></td>
+</tr>
+<tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms173829.aspx" target="_blank">sql_variant</a></td>
+<td><a href="http://technet.microsoft.com/en-us/library/ms187339.aspx" target="_blank">xml</a></td>
+</tr>
+<tr>
+<td><a href="http://technet.microsoft.com/en-us/library/ms175010.aspx" target="_blank">table</a></td>
+<td></td>
+</tr>
+</tbody></table>
+</div>
+
+
+</div>
+<script>
+getHeader('c7','../module1/metcs779_M1L3T07_AListofDataTypes.htm','body');
+</script>
+
+<div id="c8">
+
+
+<title>Triggers</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet" type="text/css">
+
+
+
+<h1>Triggers</h1>
+
+<p>A <em>trigger</em> is a kind of durable database object that you can develop using database programming languages such as PL/SQL and T-SQL. Triggers are automatically invoked by the DBMS when a triggering event associated with the trigger occurs. Triggering events may be DML statements such as inserts into a particular table or an update of a particular column in a table. In Oracle there are also DDL triggers, which are associated with the creation or deletion of database objects. Oracle also has login triggers, which are associated with the creation of a session, and database triggers associated with the startup of the database itself. We will cover each of these types of triggers in this section.</p>
+
+
+</div>
+<script>
+getHeader('c8','../module1/metcs779_M1L3T08_Triggers.htm','body');
+</script>
+
+<div id="c9">
+
+
+<title>DML Triggers</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>DML Triggers</h1>
+
+<p>A DML trigger is database code that executes when specified DELETE, INSERT, or UPDATE operations are performed. I will now show you how a trigger can be used to maintain denormalized data. I will use the examples from the text, so as to not to overload you with examples, but I will provide independent commentary. Let's begin by looking at the PRODUCT table, which includes denormalization:</p>
+
+<div class="image" style="width:552px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_W01L02_fig07_30.gif" alt="" width="550" height="325"></div>
+
+<div class="definitioncenter">
+<h4>Boolean Expression</h4>
+<p>A Boolean expression is an expression which has as its value either <em>true</em> or <em>false</em>.</p>
+</div>
+
+<p>Notice the P_REORDER column. This column is intended to be one when P_ONHAND is less than P_MIN, and zero otherwise. Since P_ONHAND is greater than P_MIN for all rows in this table, P_REORDER is zero as it should be. This is included to illustrate the use of a trigger to maintain denormalizations. One would not normally include such a column in a product table, because it would increase the row length, and would so likely slow even the queries intended to identify products to reorder. P_REORDER is an integer-encoded Boolean equivalent to the <em>Boolean expression</em> (P_ONHAND &lt; P_MIN). Most of the cost of evaluating such an expression is the cost of fetching the row from storage, and you would be hard pressed to measure the CPU cost. If this table had many millions of rows you might consider having such a P_REORDER column to have something to index, but in Oracle you would do better to implement this as a function-based index rather than a column plus an index. We will cover function-based indexes in the second lecture of week 2.</p>
+
+
+</div>
+<script>
+getHeader('c9','../module1/metcs779_M1L3T09_DMLTriggers.htm','body');
+</script>
+
+<div id="c10">
+
+
+<title>Triggers to Maintain Denormalization</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>Triggers to Maintain Denormalization</h1>
+
+<p>Now let's look at the authors' demo first try at a trigger to maintain the P_REORDER denormalization</p>
+
+<div class="image" style="width:452px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers3_1_NEW.jpg" alt="" width="450" height="200"></div>
+
+<div class="fyicenter">
+<h4>T-SQL Example</h4>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers3_1.jpg" alt="" width="364" height="312"></p>
+</div>
+
+<p>Notice the use of CREATE OR REPLACE instead of just CREATE TRIGGER. This is a good practice in scripts that create durable database objects for Oracle databases, because what we want to do is create this particular trigger and we want the new one to replace an old one if it exists. If we had used just CREATE TRIGGER it would be an error if the trigger exists. This same principle applies to creating other durable objects such as stored procedures. There is no corresponding CREATE OR REPLACE TABLE syntax, because there may be data in the table, so DBMS vendors force us to explicitly say DROP TABLE or ALTER TABLE.</p>
+
+<p>Notice the  name of the trigger TRG_PRODUCT_REORDER. A better convention is to begin the  trigger name&nbsp;with the name of the table that the DML trigger is associated  with. By the industry convention this trigger would be named something like  PRODUCT_REORDER_TR. The reason to begin the trigger name with its table name is  so that when we list triggers ordering by name then the triggers for a table  are listed together. The other reason is that trigger error messages can be  obscure, and this trigger naming convention helps us know where to look for the  problem.</p>
+<div class="fyicenter">
+  <h4>T-SQL Trigger Notes</h4>
+<p>T-SQL does not support the <em>CREATE OR REPLACE </em>construct  used in PL/SQL, though since MSSQL 2016 there is an equivalent CREATE OR ALTER.  In earlier versions of MSSQL it is necessary to use <em>CREATE TRIGGER </em>the first time the trigger is created, and <em>ALTER TRIGGER </em>when making changes to an existing trigger. </p>
+<p>To specify the update of a particular column in the AFTER clause in a T-SQL trigger, you specify just the function (INSERT/UPDATE) and then specify the column in the clause like so:</p>
+
+<blockquote>
+<p class="code">IF (UPDATE(column_name))<br>
+BEGIN<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(SQL lines)<br>
+END</p>
+</blockquote>
+
+<p>We also use the clause <em>SET NOCOUNT ON</em>. This phrase prevents the display of the "Number of rows affected".</p>
+
+<p>Notice that this is  an AFTER trigger, which means that it runs after the insert or update of P_ONHAND. Most commercial DBMS support both BEFORE and AFTER triggers. &nbsp;Oracle and Microsoft  SQL Server since MSSQL 2000 also implement INSTEAD OF triggers, which run instead of the triggering DML.</p>
+</div>
+
+<div class="tipcenter"><p>INSTEAD triggers are powerful. For example, you can use them to compute the value that actually should have been inserted in a row, or use them to prevent some users from updating particular columns.</p></div>
+
+<p>Notice that this trigger updates every row in the PRODUCT table each time the trigger runs. While this is functionally correct it is extremely inefficient. This mistake is presented here to show you how easy it is to make mistakes like this. Such mistakes are common enough that triggers sometimes cause unsuspected database inefficiencies.</p>
+
+
+</div>
+<script>
+getHeader('c10','../module1/metcs779_M1L3T10_TriggerstoMaintainDenormalization.htm','body');
+</script>
+
+<div id="c11">
+
+
+<title>More Debugging of the Example</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>More Debugging of the Example</h1>
+
+<p>There is another serious design error in this trigger, other than the one that the authors point out in their debugging demonstration. The error is that this is a statement trigger rather than a FOR EACH ROW trigger. This trigger will run only once no matter how many rows are inserted or updated. This trigger is still functionally correct, because each update or insert recomputes all of the P_REORDER values, but this is still quite inefficient, and if we fixed the efficiency bug in the trigger so that it only updates the P_REORDER values for rows that are updated, this design bug would cause a correctness bug. To illustrate why this is important consider a SQL statement to update the PRODUCT table as part of the transaction that committed a shopping cart:</p>
+
+<blockquote>
+<p class="code">UPDATE product p
+<br>
+SET p.p_onhand = p.p_onhand -
+<br>
+(SELECT qty FROM SHOPPING_CART sc
+<br>
+WHERE sc.product_id = p.product_id);</p>
+</blockquote>
+
+<p>The UPDATE statement above can update any number of rows of the product table. This is common.</p>
+
+<div class="storycenter"><p>I notice that there is probably a business rule error in this trigger. The trigger sets the reorder flag when p_onhand = p_min. Sometimes you want to have zero of an item in stock, for example for a special-order-only item. This trigger would make it awkward to maintain these inventories. For example, if p_min is zero, indicating that it is OK to have none in stock, then this trigger would set the reorder flag even if there were the intended zero in stock.</p></div>
+
+<p>Next we follow the text with one of the tests of this trigger. Note that even a DBA can't invoke a trigger any other way than causing the triggering event, which in this case is a change to P_ONHAND.</p>
+
+<figure class="image" style="width:552px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers4_1_NEW.jpg" alt="Verifying the Trigger Execution" width="550" height="260"></figure>
+
+<div class="fyicenter">
+<h4>Verifying the T-SQL Trigger</h4>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers4_1.jpg" alt="Verifying the T-SQL Trigger" width="580" height="214"></p>
+<p>We see that the trigger is functionally correct for this update.</p>
+</div>
+
+
+</div>
+<script>
+getHeader('c11','../module1/metcs779_M1L3T11_MoreDebuggingoftheExample.htm','body');
+</script>
+
+<div id="c12">
+
+
+<title>Further Debugging of the Example</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 1_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 1_files/ty.js.下载"></script>
+
+
+
+<h1>Further Debugging of the Example</h1>
+
+<p>The author's next test changes to the P_MIN column, and of course the trigger doesn't work correctly, because the trigger doesn't have updates of P_MIN as a trigger condition:</p>
+
+<figure class="image" style="width:552px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers5_1_NEW.jpg" alt="" width="550" height="270"></figure>
+
+<p>Note that P_REORDER is still zero, even though P_ONHAND is less than P_MIN.</p>
+
+<div class="fyicenter">
+<h4>T-SQL Example</h4>
+<p>The P_REORDER Value Mismatch after Update of the P_MIN attribute</p>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers4_2.jpg" alt="T-SQL Example" width="589" height="239"></p>
+</div>
+
+<p>So we proceed to fix one of the bugs in the trigger:</p>
+
+<p>We just add the clause (or UPDATE(P_MIN) to show that the trigger will be fired when P_MIN is updated.</p>
+
+<figure class="image" style="width:452px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers5_3_NEW.jpg" alt="" width="450" height="250"></figure>
+
+<div class="fyicenter">
+<p>Note that this trigger still has three bugs—being a statement trigger when it should be a FOR EACH ROW trigger, updating every row in PRODUCT, and never setting P_REORDER to zero, even when P_ONHAND &gt; P_MIN.</p>
+</div>
+
+<div class="fyicenter">
+<h4>T-SQL Example</h4>
+<p>The second version of the TRG_PRODUCT_REORDER trigger:</p>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers5_6_NEW.jpg" alt="" width="304" height="223"></p>
+</div>
+
+<p>We next test this trigger for increases in the value of P_MIN:</p>
+<figure class="image" style="width:552px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers5_4_NEW.jpg" alt="" width="550" height="280"></figure>
+
+<div class="fyicenter">
+<h4>T-SQL Example</h4>
+<p>The successful trigger execution:</p>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers5_7.jpg" alt="" width="579" height="247"></p>
+</div>
+
+<p>So now let's try increasing the value of P_ONHAND:</p>
+
+<figure class="image" style="width:552px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers5_5_NEW.jpg" alt="" width="550" height="275"></figure>
+
+<div class="fyicenter">
+<h4>T-SQL Example</h4>
+
+<p>P_REORDER Value Mismatch after increasing the P_ONHAND Value:</p>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers5_8.jpg" alt="" width="591" height="212"></p>
+</div>
+
+<div class="tipcenter">
+<h4>Performance Tip</h4>
+<p>Responsibility-based design and development is the best practice for all database design and programming. The responsibility of this trigger is correctly maintaining the value of P_REORDER, no matter what happens. This localization of responsibility in the trigger is critical for maintainability, testability, correctness, and life cycle costs. For example, if there is any problem with P_REORDER there is only one place to check—this trigger.</p></div>
+
+<p>So the trigger doesn't handle this correctly either, because P_REORDER
+= 1 when P_ONHAND is greater than P_MIN. This should not be surprising to programmers, because the trigger doesn't correctly take responsibility for the setting P_REORDER in all cases. The next example corrects all three of these errors:</p>
+
+<figure class="image" style="width:552px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers5_0_NEW.jpg" alt="" width="550" height="300"></figure>
+
+<p>Note that it is a FOR EACH ROW trigger, as it should be.</p>
+
+<p>This trigger will run for each row which is either new or for which either P_MIN or P_ONHAND is updated. We note that the <em>assertion</em> for which this trigger is responsible is that P_REORDER is zero when P_ONHAND is less than P_MIN and otherwise P_REORDER is one.</p>
+
+<div class="fyicenter">
+<h4>T-SQL Example</h4>
+<p>The third version of the TRG_PRODUCT_REORDER trigger:</p>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers5_9.jpg" alt="" width="593" height="482"></p>
+<p>Note that this uses a <em>cursor</em>, which is a subset of data.</p>
+<p>Like the other versions of this trigger, we start by checking to see if the P_Onhand or P_Min fields have been updated. If so, we want to check every record in the Product table to see if any other values for P_Reorder need to be adjusted. So we start by declaring a cursor. What we’re going to “put into” the cursor is the set of values determined by the select statement, in this case all the product codes, P_Onhand values and P_Min values from the entire Product table. Temporary variables that will “hold” the record values are also declared in this section.</p>
+<p>The “Fetch Next” statement loops through every record selected into the cursor and only adjusts those for which the onhand value is less than the minimum value. FETCH NEXT …INTO sets the temporary variables equal to the record values for each record it reads. We set up a “WHILE” loop to loop through all the records in the cursor. If all the records in the cursor have been processed, the variable @@FETCH_STATUS is no longer zero and there is no need to continue processing the data. Note, also, that it’s important to fetch the next record right before the end of the WHILE loop, so the trigger doesn’t continue to process the same record over and over again.</p>
+<p>This trigger will run for each row which is either new or for which either P_MIN or P_ONHAND is updated. We note that the <em>assertion </em>for which this trigger is responsible is that P_REORDER is zero when P_ONHAND is less than P_MIN and otherwise P_REORDER is one.</p>
+</div>
+
+<div class="definitioncenter">
+<h4>Definition of Assertion</h4>
+<p>An <em>assertion</em> is a Boolean predicate which should always be true. Assertions are important in programming, and there is support for assertions in programming languages. Some optimizing compilers will try to prove that assertions are true, and if they can do so will eliminate runtime tests for the assertions. Compilers may also use the fact that assertions are true in optimizing the code. If you wanted to check this assertion you could add a CHECK constraint, and the check constraint would run after this trigger. In practice you would probably not do this in a busy production database, because of the overhead.</p></div>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>What are some of the reasons to use a FOR EACH ROW or statenebt-level trigger?</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>FOR EACH ROW triggers execute each time a new row is updated or inserted, which is a good way to maintain the data.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>A FOR EACH ROW trigger will only run once for an UPDATE statement.</td>
+<td style="display: none;">This is false. A FOR EACH ROW trigger will run once for each row which  is updated when the update satisfies the conditions of the trigger.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>A FOR EACH ROW trigger only executes once, but it updates the entire  table.</td>
+<td style="display: none;">This is false. A FOR EACH ROW trigger runs once for each updated row in  the table that satisfies the conditions of the trigger.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+<p>We next test this trigger, by updating every row in the PRODUCT table, but not changing any values:</p>
+
+<figure class="image" style="width:552px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers5_2_NEW.jpg" alt="" width="550" height="425"></figure>
+
+<div class="fyicenter">
+<h4>T-SQL Example</h4>
+<p>Execution of the Third Trigger Version:</p>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers5_6.jpg" width="591" height="495" alt=""></p>
+</div>
+
+<p>Notice that the first row in the PRODUCT table has an incorrect value for P_REORDER, and that this error is corrected after running the trigger on all rows. Note that the trigger would run in exactly the same way on all rows if we had said:</p>
+
+<blockquote>
+<p class="code">UPDATE product SET p_min = p_min;</p>
+</blockquote>
+
+<p>This appears to be an industrial-strength trigger that can bear full responsibility for the correctness of P_REORDER.</p>
+
+<div class="tipcenter">
+<h4>Testing Tip</h4>
+<p>Triggers are difficult to test, so I usually develop a procedure to test all of the cases, which in this case would include an insert, and at least three updates each of P_ONHAND and P_MIN, where one update increased and decreased each value and one update left it unchanged. The test procedure would normally insert test data in the PRODUCT table, run the tests, and then delete the test data. This can be done most safely against a production database by not committing the test data inserts and then rolling back the transaction that inserts the test data when the tests have been completed. Thus if the test crashes for any reason, the inserts will be automatically rolled back. I usually do such tests within PL/SQL or T-SQL because then I can implement good exception handling, which we will cover later in the lecture.</p>
+</div>
+
+
+</div>
+<script>
+getHeader('c12','../module1/metcs779_M1L3T12_FurtherDebuggingoftheExample.htm','body');
+</script>
+
+<div id="c13">
+
+
+<title>Decrementing Triggers</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 1_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 1_files/ty.js.下载"></script>
+
+
+
+<h1>Decrementing Triggers</h1>
+
+<p>We next continue with the presentation based on the example in the book, with a “toy” trigger that decrements product.p_onhand when a new row is inserted in the LINE table.</p>
+
+<div class="image" style="width:477px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers6_1_NEW.jpg" alt="" width="475" height="260"></div>
+
+<div class="fyicenter">
+<h4>T-SQL Example</h4>
+<p>TRG_LINE_PROD trigger to update the ONHAND quantity:</p>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers6_1.jpg" width="432" height="135" alt=""></p>
+</div>
+
+<p>I termed this a “toy” trigger because it is not a good design to implement this functionality in this trigger. The main reasons that this is not a good design are:</p>
+
+<ul>
+<li>The decrementing of the product.p_onhand column should happen when the goods are <u>picked</u> and shipped, and not when the line items are added. It is a common business practice to accept orders for goods and then ship them when they are received. This is part of the basis for the efficiency improvements from tight supply chain integration.</li>
+<li>This trigger would cause problems when rows are inserted into the line table for back orders, reorders, and other reasons that should not change product.p_onhand.</li>
+<li>This trigger changes p_onhand, yet the trigger is not competent to take responsibility for p_onhand, which can also change when goods are received, shipped, or inventoried. This is hence a rather complex responsibility that cannot be localized in this trigger. A better approach would be to give responsibility for product.p_onhand to a PL/SQL package responsible for the warehouse, shipping and receiving functions.</li>
+<li>This trigger does not even attempt to handle the case where the line table is updated.</li>
+</ul>
+
+<div class="definitioncenter">
+<h4>Being Picked</h4>
+<p><em>Picking</em> refers to the operations in warehouses where goods for a shipping order are removed from stock.</p></div>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>When would you use the construct :OLD in a trigger? (Check all that are true.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>You would use :OLD when you want to insert the unchanged data into an Archive table.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>You would use :OLD when you want to update old data before the row is updated.</td>
+<td style="display: none;">This is false. You will not be able to use ":OLD" to change data that is in the process of changing.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>You would use :OLD when you want the trigger to access the data values in a record before they may have been changed.</td>
+<td style="display: none;">This is true. This is the basic function of :OLD.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>You can change the values in the database by changing the values in :OLD.</td>
+<td style="display: none;">This is false. Changes to :OLD do not change the database. Changes to :NEW do.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('c13','../module1/metcs779_M1L3T13_DecrementingTriggers.htm','body');
+</script>
+
+<div id="c14">
+
+
+<title>Triggers That Update</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>Triggers That Update</h1>
+
+<p>We now continue with the examples in the text, this time with the trigger that updates the customer.cus.balance when a row is inserted into the line table. As you may guess this is not a good design, but this makes it useful for teaching both good design and some additional features of triggers.</p>
+
+<div class="image" style="width:547px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers7_1_NEW.jpg" alt="" width="545" height="445"></div>
+
+<div class="fyicenter">
+<h4>T-SQL Version of TRG_LINE_CUS Trigger</h4>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers7_1.jpg" width="593" height="403" alt="T-SQL version of TRG_LINE_CUS trigger"></p>
+<p>Note that the comment <em>scan stopper</em> symbol in PL/SQL is two adjacent hyphens.</p>
+</div>
+
+<div class="definitioncenter">
+<h4>Definition of a Scan Stopper</h4>
+<p>A <em>scan stopper</em> is a symbol that causes the scanner, which is the first stage of parsing of a program, to stop looking for tokens, but to skip to the end of the current line. The scan stopper symbol in C++ and Java is two adjacent forward slashes.</p></div>
+
+
+<p>Notice that this trigger has a declarations section between DECLARE and BEGIN, just as in the PL/SQL blocks that begin with DECLARE.</p>
+
+<p>This trigger doesn't handle the case where the line table is updated, so it is not of industrial strength.</p>
+
+<p>Notice also that the SELECT statement beginning on line 12 does not have any checking for whether a CUS_CODE was actually selected into W_CUS. If the invoice number field of the newly inserted record is not in the invoice table, then W_CUS will be left NULL, and the UPDATE statement that begins on line 20 would do nothing, and the trigger wouldn't give any hint that there was an error. The customer would just not have their cus_balance increased. This is a correctness error in this trigger.</p>
+
+<div class="tipcenter">
+<h4>Design Tip</h4>
+<p>Triggers, stored procedures, and other database objects should take full responsibility for the correctness of what they are attempting to accomplish (their responsibilities) and generate an error if any of their inputs or preconditions is violated.</p>
+</div>
+
+<p>Note that this trigger updates the customer balance for each row inserted into the line table. This is inefficient, apart from the correctness problems mentioned above. A better design would localize this functionality in a stored procedure that implements the committing of an order, and this stored procedure would add up the amounts for the line items, and add this total invoice amount to the customer's balance in one update statement.</p>
+
+
+</div>
+<script>
+getHeader('c14','../module1/metcs779_M1L3T14_TriggersThatUpdate.htm','body');
+</script>
+
+<div id="c15">
+
+
+<title>DDL Triggers</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>DDL Triggers</h1>
+
+<p>DDL triggers are database code that is associated with DDL operations such as the creation of a database object. Consider the following example:</p>
+
+<div class="image" style="width:530px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers8_1_NEW.jpg" alt="" width="528" height="228"></div>
+
+<div class="fyicenter">
+<h4>The CREATE_AUDIT Trigger in T-SQL</h4>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers8_1.jpg" alt="" width="306" height="123"></p>
+</div>
+
+<p>We now test this trigger by creating a table:</p>
+
+<div class="image" style="width:434px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers8_2_NEW.jpg" alt="" width="432" height="195"></div>
+
+<div class="fyicenter">
+<h4>Test_table Created in T-SQL</h4>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers8_2.jpg" alt="" width="254" height="115"></p>
+</div>
+
+<p>In a production application the DDL trigger would have logged the create operation, and may have alerted the DBA via email. The ROLLBACK command can be used in trigger to prevent DDL operations as in the following example:</p>
+
+<div class="image" style="width:577px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers8_3_NEW.jpg" alt="" width="575" height="385"></div>
+
+<p>A few words are appropriate about the call to the built-in function RAISE_APPLICATION_ERROR. The first argument is a binary_integer error code number, which must be in the range -20000 to -20999. Believe it or not, the first 20,000 negative error codes are used by Oracle for its own exceptions, and even the exception numbers from -20000 to -20005 are used by packages such as DBMS_OUTPUT and DBMS_DESCRIBE, so to be on the safe side it is best to use error code numbers between -20006 and -20999. The second argument is the error message, which you saw above when we tried to create the table table2. Note that the error number that Oracle sent was ORA-20999, which is the error number that we specified in the call to RAISE_APPLICATION_ERROR. The third argument to RAISE_APPLICATION_ERROR is a Boolean which tells Oracle whether to keep the errors in the error stack or replace existing errors; we told Oracle to replace existing errors on the stack. So now you get an idea of how Oracle generates all those error messages. This before DDL trigger prevented the execution of the create table statement, and if you checked you would see that table 2 doesn't exist.</p>
+
+<div class="fyicenter">
+<h4>T-SQL Version of Stop-DDL Trigger</h4>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers8_3.jpg" alt="" width="334" height="146"></p>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers8_4.jpg" alt="" width="495" height="148"></p>
+<p><img src="./Module 1_files/metcs779_M1L3T05_triggers8_5.jpg" alt="" width="333" height="106"></p></div>
+
+<p>Just a note here. You probably noticed that you can see the effects of the previous trigger as well. Since this trigger has a different name, they both act on the create table command. Debugging is sometimes difficult if more than one trigger is running on a table. In SQL Server, you can find out which server triggers exist with the command:</p>
+
+<blockquote>
+<p class="code">SELECT * FROM sys.server_triggers</p>
+</blockquote>
+
+
+</div>
+<script>
+getHeader('c15','../module1/metcs779_M1L3T15_DDLTriggers.htm','body');
+</script>
+
+<div id="c16">
+
+
+<title>Startup and Logon Triggers</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+<script src="./Module 1_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 1_files/ty.js.下载"></script>
+
+
+
+<h1>Startup and Logon Triggers</h1>
+
+<h2>Startup Triggers</h2>
+
+<p>Oracle supports triggers that run when the instance is started; consider:</p>
+
+<p>Create or replace trigger START_TRG after startup on database<br>
+begin <br>
+/* do whatever */ end;</p>
+
+<p>The code between <em>be</em><em>g</em><em>i</em><em>n </em>and <em>en</em><em>d </em>will run each time the database instance is started. This is useful for operations such as setting up links to other databases.</p>
+
+<h2>Logon Triggers</h2>
+
+<p>SQL Server and Oracle also lets us create triggers that run whenever a user attempts to logon to the database. These triggers fire after the user has been authenticated, but before the session starts. The triggers do not fire if the user fails authentication.</p>
+<p>I kept my SQLPlus session running, and created this trigger from TOAD for a reason that will be obvious shortly.</p>
+
+<div class="image" style="width:614px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers9_1_NEW.jpg" alt="" width="612" height="408"></div>
+
+<p>This innocent looking trigger just counts the number of user tables and then divides that number by zero, which raises an unhandled exception. By the ANSI standards this rolls back the transaction that triggered this event. So let's go back to our SQLPlus session and test this:</p>
+
+<div class="image" style="width:542px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers9_2_NEW.jpg" alt="" width="540" height="286"></div>
+
+<p>I have created what could be a serious problem. Not only can I no longer login to my database instance using any user name (even SYS as SYSDBA doesn't have enough privilege to override this trigger), but my SQLPlus connection was terminated by the error! Fortunately I anticipated this, and still have the TOAD connection that I used to create the logon trigger.</p>
+
+<div class="image" style="width:566px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T05_triggers9_3_NEW.jpg" alt="" width="564" height="362"></div>
+
+<p>So I dropped this dangerous logon trigger; what a relief! If I hadn't been able to drop it I would have been stuck and would have had to reinstall Oracle to create any new connections to the database.</p>
+
+<p>Some final remarks about triggers before we move on to stored procedures. The first is that you can enable or disable triggers, using this syntax:</p>
+
+<blockquote>
+<p class="code">Alter trigger &lt;trigger name&gt; enable; Alter trigger &lt;trigger name&gt; disable;</p>
+</blockquote>
+
+<p>To disable or enable a trigger you must be the owner of the trigger or have ALTER ANY TRIGGER privilege, which DBAs have. A DBA would normally disable a DDL blocking trigger before making a DDL change to a database, make the DDL changes, and then re-enable the DDL trigger before putting the database back in production.</p>
+
+<div class="fyicenter">
+<h4>T-SQL Example</h4>
+<p class="code">enable trigger &lt;trigger name&gt; ON DATABASE(or ON ALL SERVER);<br>
+disable trigger &lt;trigger name&gt; on &lt;schema&gt;.&lt;tableName&gt;;</p>
+<p>To disable or enable a trigger for one table, you must have ALTER privilege on the table.</p>
+<p>To disable or enable a trigger ON ALL SERVER, you must have  CONTROL SERVER permission on the server, which is common at the DBA level. To  enable a trigger ON DATABASE, you would need ALTER ANY DATABASE permission.</p>
+<p>Disabling a trigger is not the same as dropping the trigger. When you disable a trigger, it still exists in the database but will not fire (Microsoft, 2013).</p>
+</div>
+
+<p>Logon triggers can be used to track logon activity or to restrict logins.&nbsp; It is possible to create a logon trigger that prevents <em>all</em> users from logging on, so they must be used with care.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Which of the following are true of triggers? (Check all that are true.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>The owner of a trigger can enable and disable it.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>When a trigger is disabled it will not run even if the triggering event occurs.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>A trigger fires based on an event.&nbsp; The only way to prevent a trigger from firing is to disable or drop the trigger <em>before</em> the event occurs.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('c16','../module1/metcs779_M1L3T16_StartupandLogonTriggers.htm','body');
+</script>
+
+<div id="c17">
+
+
+<title>Stored Procedures</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>Stored Procedures</h1>
+
+<p>The most common use for database programming is in stored procedures and stored functions. Like triggers, stored procedures and functions are durable; they remain in the database after you create them until someone drops them. Creating a stored procedure or function is like creating a table. It is a DDL statement, so it is effectively committed immediately when you do it, and you do not need an explicit COMMIT to make the change permanent and visible to everyone.</p>
+
+<p>Let's continue with the examples in the text, first with a simple procedure that increases the discount by five percent for every product where the quantity on hand is at least twice the minimum quantity.</p>
+
+<div class="image" style="width:502px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T06_stored_proced1_1_NEW.jpg" alt="" width="500" height="250"></div>
+
+<div class="fyicenter">
+<h4>T-SQL Version of prc_prod_discount Procedure</h4>
+<p><img src="./Module 1_files/metcs779_M1L3T06_strored_proced1_1.jpg" width="320" height="208" alt=""></p>
+<p>Note that this procedure has no input and no output parameters. This is intentional, to make this example as simple as possible.</p>
+</div>
+
+<div class="fyicenter">
+<h4>Note the word “AS.”</h4>
+<p>This could also be “IS.” There is no difference in meaning between IS and AS, but you have to use one of the two. Choose whichever makes the most sense for the procedure that you are writing. The following figure from the text illustrates a test of this procedure.</p>
+</div>
+
+<div class="tipcenter">
+<h4>Reality Check</h4>
+<p>Discounting is considerably more complex than this trivial example. Most of the products in the product table above would be discounted by this procedure immediately after a minimum size shipment was received, because p_min_reorder is more than twice p_min.</p></div>
+<p>To execute this procedure, we use this command:</p>
+<blockquote>
+<p class="code"> EXEC prc_prod_discount;</p>
+</blockquote>
+<p>Note the line <em>E</em><em>XE</em><em>C PRC_PROD_DISCOUNT</em>. EXEC is the short form of EXECUTE. This is how you invoke a stored procedure from SQL.</p>
+<p> The following screenshot shows the values in the PRODUCT table before the procedure is executed:</p>
+
+<div class="image" style="width:609px" title="Copyright © Trustees of Boston University 2013. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders."><img src="./Module 1_files/metcs779_M1L3T06_strored_proced1_2.jpg" alt="" width="607" height="291"></div>
+
+
+<p>And this screenshot shows the values after the procedure is executed:</p>
+
+<div class="image" style="width:627px" title="Copyright © Trustees of Boston University 2013. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders."><img src="./Module 1_files/metcs779_M1L3T06_strored_proced1_3.jpg" alt="" width="625" height="287"></div>
+
+
+</div>
+<script>
+getHeader('c17','../module1/metcs779_M1L3T17_StoredProcedures.htm','body');
+</script>
+
+<div id="c18">
+
+
+<title>Procedures with Parameters</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>Procedures with Parameters</h1>
+
+<p>In the next example we explore a procedure with parameters and a WHILE loop.</p>
+
+<div class="image" style="width:552px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T06_stored_proced2_1_NEW.jpg" alt="" width="550" height="260"></div>
+
+<div class="fyicenter">
+<h4>T-SQL Version of PRC_PROD_DISCOUNT Stored Procedure with Parameters</h4>
+<p><img src="./Module 1_files/metcs779_M1L3T06_strored_proced2_1.jpg" width="503" height="295" alt=""></p></div>
+
+<p>Note the symbol WPI (@wpi in the T-SQL version). This is the formal name of the parameter through which the WPI parameter is passed into the procedure. The WPI parameter is an input parameter.&nbsp; </p>
+<p>Note the symbol IN. This could have been <em>IN</em>, <em>OUT</em>, or <em>IN OUT</em>. This required property of each parameter tells Oracle whether to pass the value of the parameter into the procedure, out of the procedure, or both. For complexity control and because parameter passing costs some CPU time it is best to minimize the number of parameters and to only use IN OUT when you need it. About 90% of parameters are IN parameters.</p>
+
+<p>Note that the procedure checks the validity of its input parameter. Stored procedures should always check their input parameters when it is feasible to do so. There is a design problem in what the stored procedure does when an invalid WPI value is detected. What it does is print an error message and return. The code that called this stored procedure won't have a hint that anything was wrong, and will go merrily on its way assuming that the discount has been implemented, which it has not. The procedure should throw an exception or return a result code to indicate to the caller that something is wrong. We will get to exceptions a little later in this lecture.</p>
+
+<p>Notice also that there is no check that P_DISCOUNT, which is the fraction of the discount, does not exceed one. This is a functional error in this procedure. I don't want to harp on this, but it is really important that stored procedures take full responsibility for the correctness of the functions that they are responsible for. It is common that industrial-strength stored procedures are 60% or more error checking and recovery code. Stored procedures should normally check the correctness of all of their input parameters, and any other <em>preconditions </em>before doing anything.</p>
+
+<div class="definitioncenter"><p>A precondition is something that should be true before a module is invoked.</p></div>
+
+
+</div>
+<script>
+getHeader('c18','../module1/metcs779_M1L3T18_ProcedureswithParameters.htm','body');
+</script>
+
+<div id="c19">
+
+
+<title>Stored Procedure at Work</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+<script src="./Module 1_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 1_files/ty.js.下载"></script>
+
+
+
+<h1>Stored Procedure at Work</h1>
+
+<p>The following screen from the Rob and Coronel text shows the stored procedure at work. Note that this execution of a stored procedure from the command line is not how stored procedures are normally executed. Stored procedures are normally invoked by applications code or other stored procedures.</p>
+
+<figure class="image" style="width:552px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T06_stored_proced3_2_NEW.jpg" alt="" width="550" height="250"></figure>
+
+<div class="fyicenter">
+<h4>T-SQL Example</h4>
+<p>Executing the PRC_PROD_DISCOUNT stored procedure with parameters:</p>
+<p><img src="./Module 1_files/metcs779_M1L3T06_strored_proced3_1.jpg" alt="" width="428" height="163"></p>
+</div>
+
+<p>We now examine the next stored procedure in the text, which adds a customer to the database.</p>
+
+<figure class="image" style="width:509px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T06_stored_proced3_1_NEW.jpg" alt="" width="507" height="405"></figure>
+
+<div class="fyicenter">
+<h4>T-SQL Example</h4>
+<p>The PRC_CUS_ADD stored procedure with additional notes.</p>
+
+<p>Before we look at this, though, we’ll create a sequence to auto-increment the customer code, which is the primary key in CUSTOMER. Creating a sequence in SQL Server 2012 is fairly straightforward.</p>
+<p><img src="./Module 1_files/metcs779_M1L3T06_strored_proced3_2.jpg" width="275" height="135" alt=""></p>
+
+<p>To use the SEQUENCE in the stored procedure, we use the clause <span class="code">NEXT VALUE FOR &lt;sequence-name&gt;</span> to replace the input value for the attribute using the sequence, in this case CUS_CODE.</p>
+
+<p><img src="./Module 1_files/metcs779_M1L3T06_strored_proced3_3.jpg" width="600" height="271" alt=""></p>
+</div>
+
+<p>The first thing that we notice is that this procedure takes five input parameters. This is quite normal. The next thing that we notice is that the stored procedure does not check the validity of its input parameters, but depends on the foreign key and other integrity constraints in the customer table to enforce the integrity for this transaction. This is not a good design.</p>
+
+<p>Notice that a string such as 'Hi there' could be passed in as an area code, and the procedure wouldn't complain. In fact, the whole parameter type structure is unsafe. The W_LN and W_FN input parameters should be type checked to have no more than about 30 characters. The area code should be a NUMERIC(3,0) or INT. There should be a country code input parameter; this is a design bug in the schema, and not only in this procedure. Real customers also have addresses, both snail mail and email, and these should be provided as additional parameters to the procedure that creates a customer.</p>
+
+<p>Notice that in the example above the attempt to execute the procedure passing nulls to the last three parameters cause an error, because the cus_areacode column in the customer table in the teacher schema is NOT NULL.</p>
+
+<p>Notice also the way that this error message is printed, with double quotes around the schema name, table name, and column name. It is a good practice to double quote identifiers when creating tables or accessing or using them via tools. Oracle and other ANSI databases will take a double quoted string as an identifier for a table or column, even if the string contains spaces or other characters, or if the identifier is a reserved word. Thus the double quotes serve as a kind of safety net that improves the likelihood that your create statements will work and that your output will be understood by users who see things like “discount price” as a column name.</p>
+
+<p>The following screenshot shows the execution of this procedure:</p>
+
+<figure class="image" style="width:577px" title="Copyright © Trustees of Boston University 2013. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders."><img src="./Module 1_files/metcs779_M1L3T06_strored_proced3_4.jpg" alt="" width="575" height="143"></figure>
+
+<div class="tipcenter">
+<h4>Reality Check</h4>
+<p>The authors are simplifying the examples to make it easier for you to follow them. Real production-quality examples are about twice as complex than these textbook examples. The main additions are input and precondition checking and exception handling code, which is typically about half of a production stored procedure.</p>
+</div>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Select all that are true about stored procedures:</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Stored procedures can take parameters.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Stored procedures can return a value.</td>
+<td style="display: none;">This is true. Stored procedures can return values through IN or IN OUT parameters.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>Stored procedure requires a  COMMIT statement before the stored procedure is durably stored in the database.</td>
+<td style="display: none;">This is false. Because a stored procedure is created using DDL, it becomes permanent immediately, without an explicit COMMIT command.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('c19','../module1/metcs779_M1L3T19_StoredProcedureatWork.htm','body');
+</script>
+
+<div id="c20">
+
+
+<title>Stored Functions</title>
+
+<link href="./Module 1_files/local.css" rel="stylesheet">
+
+
+
+<h1>Stored Functions</h1>
+
+<p>Stored functions are almost like stored procedures. The only differences are that functions return a value through their function name, so that you have to call functions in a context where the function value makes syntactic sense, such as in a select list or on the right-hand side of an assignment statement. The most important parts of the syntax for creating a function is:</p>
+
+<blockquote>
+<p class="code">CREATE [OR REPLACE] FUNCTION [schema.]&lt;function name&gt;[(&lt;parameter list&gt;)] RETURN &lt;return data type&gt;<br>
+[AUTHID DEFINER | CURRENT_USER] [DETERMINISTIC]<br>
+[PARALLEL ENABLE :] [PIPELINED]<br>
+IS</p>
+<p class="code">&lt;declarations&gt; BEGIN<br>
+&lt;executable statements&gt; [EXCEPTION<br>
+&lt;exception handler statements&gt;] END [ &lt;function name&gt; ];</p>
+</blockquote>
+
+<div class="fyicenter">
+<h4>T-SQL Create Function Syntax</h4>
+
+<p class="code">CREATE FUNCTION [ schema_name. ] function_name <br>
+[ { @parameter_name [ AS ][ type_schema_name. ] parameter_data_type [ = default ] [ READONLY ] } <br>
+[ ,...n ] <br>
+] <br>
+) <br>
+RETURNS return_data_type <br>
+[ WITH &lt;function_option&gt; [ ,...n ] ] BEGIN <br>
+function_body <br>
+RETURN scalar_expression <br>
+END <br>
+[ ; ]</p>
+</div>
+
+<p>I want to explain this function definition syntax a bit, in case you are not familiar with it.</p>
+
+<ul>
+<li> Words in all capitals represent themselves, though you can use any casing that you wish, and Oracle won't care. For example, your function declarations must begin with FUNCTION, function, Function, or some other casing of the word “function.”</li>
+<li> Text inside of angle brackets, such as “&lt;function name&gt;”, describes the thing that it represents, in this case the name of the function that is being created.</li>
+<li>Items inside of square brackets, such as “[schema.]”, are optional. For example if you have the CREATE ANY FUNCTION privilege you can create a function for Scott by saying “CREATE FUNCTION scott.foo :”.</li>
+<li>Lists of items separated by the vertical bar character (“|”) indicate that the syntax includes one of the items in the list. For example after the RETURN clause you can say “AUTHID DEFINER” or “CURRENT_USER” or neither (because it is in square brackets), but not both. We will explain what this means on the next page.</li>
+</ul>
+
+<h2>The Meaning of Clauses</h2>
+
+<p>The following table describes what  the clauses mean. Most of these clauses also apply to stored procedures, but we didn't tell you about them when we were introducing stored procedures, because it might have been too much to take in at one time.</p>
+
+<table class="data">
+<tbody><tr>
+<th>Clause</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>CREATE FUNCTION</td>
+<td>This just signals that you are creating a function. If you use the OR REPLACE syntax then the new function definition will replace any existing function definition. Choose the function name carefully so that it is unique and easy to understand.</td>
+</tr>
+<tr>
+<td>[(&lt;argument list&gt;)]</td>
+<td>These are the optional parameters. Functions, such as the built-in function SYSDATE, can take no arguments, in which case they can't have parentheses after their names when they are declared or invoked. The &lt;argument list&gt; is a comma-separated list of triples, each of which consists of the name of the parameter, one of IN, OUT, or IN OUT, and the data type.</td>
+</tr>
+<tr>
+<td>return data type</td>
+<td>This is the data type of the value returned in the function name.</td>
+</tr>
+<tr>
+<td>AUTHID clause</td>
+<td>This is an advanced security feature which determines if the function will execute with the privileges of the user who created the function or the user who is executing the function.</td>
+</tr>
+<tr>
+<td>DETERMINISTIC clause</td>
+<td>This tells the optimizer whether it can try to use a cached value of the function result if none of its inputs change, or whether it must call the function each time, for example if the result depends on time or external inputs.</td>
+</tr>
+<tr>
+<td>PARALLEL_ENABLE clause</td>
+<td>This tells the optimizer that it can try to run this function in parallel with other parts of its invoking SELECT.</td>
+</tr>
+<tr>
+<td>PIPELINED clause</td>
+<td>Tells the optimizer to return the results of this function iteratively using the PIPE ROW command</td>
+</tr>
+<tr>
+<td>Declarations</td>
+<td>If present this is a list of declaration statements for the local variables that have as their lexical scope and lifetime that of the function.</td>
+</tr>
+<tr>
+<td>Executable statements</td>
+<td>A PL/SQL function must have at least one executable statement.</td>
+</tr>
+<tr>
+<td>Exception handler statements</td>
+<td>Each of these statements consists of WHEN followed by an exception name, followed by a PL/SQL block that handles that exception.</td>
+</tr>
+<tr>
+<td>End descriptor</td>
+<td>Between the END and the final semicolon you can (and should) place the name of the function. This tells the reader that this is the end of the function declaration, and distinguishes this END from those in the body of the function. It is a good practice to include the end descriptor in all PL/SQL procedure and function declarations, particularly when they are more than one page long.</td>
+</tr>
+</tbody></table>
+
+<p>The DETERMINISTIC, PARALLEL ENABLE, and PIPELINED clauses are more advanced. The AUTHID clause is something that you should understand. Oracle lets us choose which privileges a stored procedure runs under. By default a stored procedure or function runs with the privileges of the user who created it. This is usually what you want. For example a stored procedure that implements a business transaction as part of a transactional application programming interface should run with the privileges of the owner of the database objects, so that the procedure or function can access and change the tables, views, and other components of the database itself.</p>
+
+<p>Consider the following simple stored function:</p>
+
+<div class="image" style="width:482px" title="Copyright © Trustees of Boston University 2014."><img src="./Module 1_files/metcs779_M1L3T06_stored_functions_1_NEW.jpg" alt="" width="480" height="402"></div>
+
+<div class="fyicenter">
+<h4>T-SQL Version of NUM_EMP Function</h4>
+<p><img src="./Module 1_files/metcs779_M1L3T07_stored_functions1_1.jpg" width="317" height="224" alt=""></p>
+</div>
+
+<p>This simple function just runs a count of the number of employees in the EMP table. Note that I followed good practice and gave the end the name of the function.</p>
+
+<p>Note the odd select statement, where I selected from the table DUAL. DUAL is Oracle's dummy table. We have to provide Oracle a table name in SELECT statements because Oracle follows ANSI standards, so SELECT statements must include a table. Note that the function is DETERMINISTIC, which means that the optimizer can choose to cache the result.</p>
+
+<p>Let's test this.</p>
+<div class="fyicenter">
+<h4>T-SQL Execution of NUM_EMP Function</h4>
+<p>To execute the function in T-SQL, simple select it: select dbo.num_emp(); The response will look something like this:</p>
+<p><img src="./Module 1_files/metcs779_M1L3T07_stored_functions1_2.jpg" width="154" height="97" alt=""></p>
+</div>
+
+<p>You notice that our num_emp function returns the correct new value of 15 rather than the old value of 14 from the last time that we ran num_emp. The DBMS software is keeping track of what num_emp depends upon, and re-executes num_emp when necessary rather than using the obsolete cached value. As we will see in the last lecture of week 2, this is similar to the dependency tracking that databases do to determine which result sets in their SQL caches are still valid.</p>
+
+<p>After this has been saved, the “Object Explorer” now displays a new “Scalar-valued Function” called <em>dbo.num_emp</em>.</p>
+
+<div class="image" style="width:259px" title="Copyright © Trustees of Boston University 2013. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders."><img src="./Module 1_files/metcs779_M1L3T07_stored_functions1_3.jpg" alt="" width="257" height="413"></div>
+
+<div class="dangercenter">
+<h4>Term Project Note</h4>
+<p>Please be aware there is a major Term Project in this course worth a large part of your overall grade and I recommend that you begin work on the project now. During this first week, you should be defining potential projects at a conceptual level and discussing them with your facilitator. Click here for <a href="https://learn.bu.edu/bbcswebdav/pid-9833698-dt-content-rid-61814359_1/courses/22sprgmetcs779_o1/course/term%20project/metcs779_term_project.htm" target="_blank">Term Project Details</a>.</p>
+</div>
+
+<p>To help you check your understanding of the material, I have a prepared a short set of review questions with answers - <a href="https://learn.bu.edu/bbcswebdav/pid-9833698-dt-content-rid-61814359_1/courses/22sprgmetcs779_o1/course/documents/DBProgReviewQA.doc" target="_blank">database programming review questions and answers</a>.</p>
+
+
+</div>
+<script>
+getHeader('c20','../module1/metcs779_M1L3T20_StoredFunctions.htm','body');
+</script>
+
+
+<div class="xl-chrome-ext-bar" id="xl_chrome_ext_{4DB361DE-01F7-4376-B494-639E489D19ED}" style="display: none;">
+      <div class="xl-chrome-ext-bar__logo"></div>
+
+      <a id="xl_chrome_ext_download" href="javascript:;" class="xl-chrome-ext-bar__option">下载视频</a>
+      <a id="xl_chrome_ext_close" href="javascript:;" class="xl-chrome-ext-bar__close"></a>
+    </div></body></html>

@@ -1,0 +1,36 @@
+/*
+onlymet.js
+Dan Hillman (dhillman@bu.edu)
+31 March 2017
+
+All MET ODE public courseIDs end with a lowercase letter 'o' followed by a digit. Given a file's URL from the content collection, determine whether a MET course is ODE or FTF. If it is ODE, hide the items tagged with the onlyftf class. If it is FTF, hide the items tagged with the onlyode class.
+
+17 January 2018: Edited to check the courseID from local storage
+*/
+
+
+
+// Check for courseID in localstorage
+if (localStorage.getItem("courseId")) {
+	
+	var courseID = localStorage.getItem("courseId");	
+	courseID = courseID.trim();
+		
+	// Test courseID to see if dates should be hidden
+	testCourseID(courseID);
+}
+
+
+function testCourseID(courseID) {
+
+	if ((/o\d$/.test(courseID) === true)) {
+	
+		// If it's a match, hide FTF-only material
+		document.writeln('<style>.onlyftf{display:none}</style>');
+
+	} else {
+		// Otherwise, hide ODE-only material
+		document.writeln('<style>.onlyode{display:none}</style>');	
+
+	}
+}

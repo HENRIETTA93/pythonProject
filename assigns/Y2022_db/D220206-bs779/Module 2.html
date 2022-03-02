@@ -1,0 +1,2229 @@
+<!DOCTYPE html>
+<!-- saved from url=(0123)https://learn.bu.edu/bbcswebdav/pid-9833730-dt-content-rid-61814428_1/courses/22sprgmetcs779_o1/course/module2/allpages.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Module 2</title>
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/getHeader.js.下载"></script>
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+<script src="./Module 2_files/onlymet.js.下载"></script>
+</head>
+<body>
+
+<h1>Module 2</h1>
+
+<div class="importantcenter">
+<p>This is a single, concatenated file, suitable for printing or saving as a PDF for offline viewing. Please note that some animations or images may not work.</p></div>
+
+<div id="header" class="boxBlueCenter" style="visibility: visible;">
+<table class="arrange">
+<tbody><tr>
+<td colspan="2"><h4>Module 2 Study Guide and Deliverables</h4></td>
+</tr>
+<tr>
+<td><strong>Readings:</strong></td>
+<td><p>Primary Reading: </p>
+  <ul>
+    <li>CB6 chapters 19 and 23.6</li>
+   </ul>
+   <p>Secondary Reading:</p> 
+  <ul>
+    <li>CBP chapter 20</li>
+    <li>Loney chapters 46–48 and 36</li>
+  </ul></td>
+</tr>
+<tr>
+  <td><strong>Assignments:</strong></td>
+	<td><ul>
+	  <li>Assignment 2.0  <span class="date">due Friday, January 28 at </span><span class="date">6:00 AM ET</span></li>
+	  <li>Programming Part 2 <span class="date">due Monday, January 31 at 6:00 AM ET</span><br>
+	    </li>
+	  </ul></td>
+</tr>
+<tr>
+<td><strong>Assessments:</strong></td>
+<td>Quiz 2<span class="date"> due Friday, January 28 at 6:00 AM ET</span></td>
+</tr>
+<tr>
+<td><strong>Term Project Note:</strong></td>
+<td><p>Term Project Update #2, <span class="date">is due Monday, January 31 at 6:00 AM ET</span>. </p>
+  <p>During this  module you should finalize the definition of your project,
+    working with your instructor. You should  develop a project definition document with a project plan, and should  obtain approval for this project. Your updated term project concept can be different than the concept submitted for the Module 1 Term Project Proposal. Still, it is risky to change your term project concept after this module, because you may not have sufficient time to complete your project. </p></td>
+</tr>
+<tr class="onlyode">
+  <td><strong>Live Classrooms:</strong></td>
+ <td><p>Supplementary Live Session<span class="date">, Wednesday, January 19, 8:00 PM - 10:00 PM ET</span></p>
+   <p>Current week's assignment review and examples<span class="date">, Saturday, January 22, 11:00 AM - 12:00 PM (noon) ET</span></p>
+   <p>Additional SQL Review and Live office help<span class="date">, Sunday, January 23, 11:00 AM - 12:00 PM ET</span></p>
+   <p>Live office help<span class="date">, Monday, January 24, 8:00 PM - 9:00 PM ET</span></p></td>
+ </tr>
+</tbody></table>
+</div>
+<script>
+getHeader('header','../syllabus/metcs779_S05_studyGuide.html','mod2');
+</script>
+
+<header>Lecture 2A - Relational DB Performance Tuning</header>
+
+<div id="a1">
+
+
+<title>Overview - Tuning Relational Databases</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+
+
+
+<h1>Overview - Tuning Relational Databases</h1>
+
+<p>This lecture describes DBMS-independent techniques for designing relational databases and SQL statements that perform well as databases scale. Many performance tuning techniques are DBMS-specific. Consult your DBMS vendor's tuning documentation and independent DBMS-specific tuning guides. The goal of this lecture is to provide you with an opportunity to learn how to design scalable relational database applications systems, to determine what is causing performance problems, and to fix performance problems. These are critical skills for enterprise-scale production databases, data marts, data warehouses, and many other commercial database applications.</p>
+
+<p>We begin this lecture by introducing the basic relational database performance tuning concepts, including an introduction to RDBMS software architecture. We then move to tuning SQL statements, including the tuning process and tuning rules. Next we describe how to tune the database itself, including tuning the server hardware, tuning the instance parameters, designing fast relational schemas, indexing for performance, and hash and bitmap indexes. Finally we discuss tuning techniques that affect both the SQL and database, such as stored procedures.</p>
+
+<p>Performance tuning is introduced in Connolly and Begg sixth edition Chapter 19 <cite>Methodology—Monitoring and Tuning </cite><em>t</em><em>h</em><em>e Operational System</em>. This lecture builds on that introduction, including more advanced material. For students who are interested, general and Oracle-specific tuning is introduced in Loney 12c Chapter 46 <em>The Hitchhiker’s Guide to Tuning Applications and SQL </em>and Chapter 48 <em>Case Studies in Tuning</em>. You are not responsible for the Oracle- specific techniques, though you may find some of this material useful for a term project.</p>
+
+<h2>Learning Objectives</h2>
+
+<p>By completing the readings, participating in discussions, and completing the assignments, you will be able to:</p>
+
+<ul>
+<li>Describe why it is important to design scalable databases.</li>
+<li>Describe the three dimensions of scalable performance.</li>
+<li>Design efficient scalable relational schemas.</li>
+<li>Tune SELECT and other SQL requests.</li>
+<li>Design indexes for efficient request execution.</li>
+<li>Explain and use B-tree, hash, and bitmap indexes.</li>
+<li>Identify and correct common scalability problems.</li>
+</ul>
+
+
+</div>
+<script>
+getHeader('a1','../module2/metcs779_M2L1T01_OverviewTuningRelationalDatabases.htm','body');
+</script>
+
+<div id="a2">
+
+
+<title>SQL DBMS Data Flow Architecture</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>SQL DBMS Data Flow Architecture</h1>
+
+<p>We begin by examining what goes on inside a SQL RDBMS, to help us understand how to help an RDBMS execute our requests faster. The following figure illustrates the basic components of an RDBMS.</p>
+
+<div class="image" style="width:561px" title="Copyright © Trustees of Boston University 2014. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders.">
+  <div class="title">Relational DBMS Data Flow Architecture</div>
+  <img src="./Module 2_files/metcs779_M2L1T03_lsql_dbms_flow1.png" width="559" height="360" alt="">
+</div>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Where is the SQL Cache located in the database server?</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="radio" name="x" value="T"></td>
+<td>RAM</td>
+<td style="display: none;">This is true. SQL Cache is located in the RAM.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>Durable Storage</td>
+<td style="display: none;">This is false. SQL Cache would be slower on durable storage.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>Both RAM and Durable Storage</td>
+<td style="display: none;">This is false. SQL Cache would be slower even partially on durable storage.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a2','../module2/metcs779_M2L1T02_SQLDBMSDataFlowArchitecture.htm','body');
+</script>
+
+<div id="a3">
+
+
+<title>The Block Buffer Cache and the SQL Cache</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+<h1>The Block Buffer Cache and the SQL Cache</h1>
+<h2>The Block Buffer Cache and Performance</h2>
+<p>With modern processors and disk speeds, operations on data in the block buffer cache are at least 100 times faster than operations requiring I/O to disk. As a result much of what we do to optimize our RDBMS applications is based on minimizing the amount of I/O required to disk or other storage. Requests that can be processed using data in the cache (cache hits) are much faster than <span><span>SQLs</span></span> that require I/O (cache misses). The<em> cache hit ratio</em> (hits/(hits+misses)) is a key performance metric, which should usually be above 90%. We can maximize the cache hit ratio by providing lots of RAM for a large block buffer cache. <em>DBMS love RAM. </em>When there is more RAM, the DBMS can keep more data in the <span><span>caches—and</span></span> this means more cache hits and better performance. Smaller, frequently accessed tables and indexes are normally in the block buffer cache. Not much of a large table or index will fit in the cache, so processing a significant fraction of a large table or large index costs lots of I/O and time.</p>
+<h2>The SQL Cache</h2>
+<p>Sometimes applications will send the same SELECT statement to the DBMS over and over again. The SQL cache makes this reasonably efficient by caching the SQL and the result set for SELECT statements. The SQL cache monitors database changes to determine when the same SQL would produce the same cached result set. If a query would produce the same result set as a previous query, then the SQL cache returns that cached result set, and the SQL <span><span>isn’t</span></span> actually executed. The SQL cache thus shunts the entire RDBMS processing of the SQL. Because the cache eliminates the need to produce or execute a query plan, the SQL cache can make a significant difference in SELECT performance.</p>
+<p>In most modern commercial RDBMS the SQL cache also caches the query plan, eliminating the cost and delay of running the query optimizer, which can be computationally expensive. The cached query plan may be valid even though the cached result set is no longer valid, because data upon which the query depends may have changed. Query plan caching is particularly helpful with Microsoft SQL Server, which has an unusually computationally expensive query optimizer. The SQL cache holds result sets for SELECT statements; it may also hold the query plan for other SQL statement types.</p>
+<p>Often repeated <span><span>SELECTs</span></span> are due to immature software, where the application developers didn't save the result set and just reran the SELECT to fetch it again. Sometimes these repeated <span><span>SELECTs</span></span> are necessary for correct functioning of an application. For example, a financial application may need to query an interest rate each time a transaction is performed, to be sure that the interest rate is the correct one to use for the application at that time.</p>
+<div class="testcenter"><form>
+<h4>Test Yourself</h4>
+<p>Select all that are true about improving performance with cache optimization.</p>
+<table class="ty">
+<tbody>
+<tr>
+<td><input value="T" name="x" type="checkbox"></td>
+<td>The cache hit ratio should be high and can be maximized with lots of RAM.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input value="T" name="x" type="checkbox"></td>
+<td>The SQL cache can cache large result sets if the cache size is configured properly.</td>
+<td style="display: none;">This is true. A SQL cache ("SQL Result Cache" in Oracle) keeps query plans for SQL statement types like triggers and procedures, and keeps the result sets for SELECT statements.</td>
+</tr>
+<tr>
+<td><input value="F" name="x" type="checkbox"></td>
+<td>The block buffer cache keeps all the information about the SQL operation, including data and SQL statements.</td>
+<td style="display: none;">This is false. The block buffer cache only contains data.</td>
+</tr>
+</tbody>
+</table>
+<button>Show Answer</button></form></div>
+
+</div>
+<script>
+getHeader('a3','../module2/metcs779_M2L1T03_TheBlockBufferCacheandtheSQLCache.htm','body');
+</script>
+
+<div id="a4">
+
+
+<title>The Scalable Performance Problem</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>The Scalable Performance Problem</h1>
+
+<p>When the amount of data in a database is smaller than the physical RAM on the computer system, the database performs well regardless of scalable design problems. With un-scalable designs, when the database scales many requests take much longer—often unacceptably longer. Obtaining scalable performance is often the most difficult task faced by database designers and application developers. Fixing scalable performance problems often requires major redesign and rework, such as schema changes and rewriting thousands or millions of lines of application SQL. This can be very expensive, so it is important that database designs be scalable, particularly the database schema.</p>
+<div class="storycenter">
+ <h4>An Easy Scalability Fix</h4>
+<p>A two terabyte constellation data warehouse for which I was a design consultant didn't have an index that it needed, so a new query took an hour. When I added the index the query took a few seconds. This fix took me about thirty minutes, most of which was the runtime to create the new index. We didn't even need to interrupt the users; all that they knew was that the query results suddenly became much faster.</p></div>
+
+<div class="storycenter">
+<h4>A Difficult Scalability Fix</h4>
+<p>With an un-scalable design, a report that completed in three seconds with a small database took over two hours with a production database. I designed a new database architecture and data management system and supervised a two-year effort to incrementally redevelop the application. With the new architecture, the same queries took less than three seconds with much larger databases.</p></div>
+
+<p>Truly scalable designs are those where the DBMS does not operate on more data for each request as the database and load scale. Only a small fraction of the rows of a large table or index can be processed for each SQL. Scans are not scalable. Thus operations against tables that may grow in size must use indexes or other means to limit the number of rows accessed.</p>
+
+<p>A second important consideration is minimizing the size of intermediate results sets that the DBMS produces as part of executing the query plan. Large intermediate result sets need to be processed on storage (e.g., disk sorts), which is very slow compared to RAM. Good scalable performance requires query plans with intermediate result sets that fit in RAM. The query optimizer tries to sequence the restrictions so the intermediates are as small as possible. Avoiding large intermediates and disk sorts requires careful schema and query design and adequate RAM.</p>
+<div class="testcenter">
+ <form>
+<h4>Test Yourself</h4>
+<p>What is the most important consideration when improving scalable performance?</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>It is easy to rewrite applications SQL.</td>
+<td style="display: none;">This is false. It can take years to rewrite millions of lines of application SQL.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="T"></td>
+<td>RAM is faster than durable storage.</td>
+<td style="display: none;">This is true. If a result set can fit into RAM it can be processed much faster than durable storage.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>Scans are always scalable.</td>
+<td style="display: none;">This is false. Scans are not scalable.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>Result sets can be processed efficiently even if they do not fit into RAM.</td>
+<td style="display: none;">This is false. While result sets can be processed even if they do not fit into RAM it does not help scalable performance.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a4','../module2/metcs779_M2L1T04_TheScalablePerformanceProblem.htm','body');
+</script>
+
+<div id="a5">
+
+
+<title>Size, Throughput, and Session Scalability</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Size, Throughput, and Session Scalability</h1>
+
+<p>The three main measures of database scalability are how well the DB maintains performance as</p>
+
+<ul>
+<li><strong>The DB grows</strong>—This is <strong><em>size scalability</em></strong>. Software factors affecting size scalability include the application SQL, schema, and indexing. Hardware factors include I/O, storage type and  configuration, and CPU speed and number.</li>
+<li><strong>The transaction rate increases</strong>—This is <strong><em>throughput scalability</em></strong>. Throughput scalability is primarily determined by lock contention, DB server concurrency, and platform performance.</li>
+<li><strong>The number of simultaneous sessions increases</strong>—This is user or <strong><em>session scalability</em></strong><em>.</em> More concurrent sessions means more opportunities for lock contention. Session scalability is driven by schema design and DBMS concurrency support.</li>
+</ul>
+
+<p>Of these three size scalability is often the most difficult to obtain. Size scalability requires a good scalable schema, a well-configured DBMS, appropriate hardware, tuned SQL, careful indexing, good storage hardware and configuration, and adequate speed and number of processors. Table and index scans are slow on large databases, so size scalability requires indexing for all queries against large tables. There are many kinds of indexing.</p>
+
+<p>Good throughput scalability requires a good design and a fast scalable DBMS. If you require scalable throughput be sure to investigate throughput scalability when choosing the DBMS and architecture. You can sometimes obtain scalability by factoring and/or distributing the database, but be aware that many database applications do not factor well.</p>
+
+<p>When there are many concurrent users or other sessions and locks are being procured, there may be lock contention with sessions waiting for locks. This is normally a problem only for busy transactional applications and not for well-designed OLAP systems. Each session requires its own thread or process and takes considerable DBMS and operating system resources, which may need to be configured. Creating and destroying sessions is expensive. DBMS that reuse sessions usually have better session scalability.</p>
+
+<p>If you can't factor your database and need high scalability verify that your DBMS supports scalable platforms such as large multiprocessor servers and/or clustering or gridding. Oracle and DB2 have excellent scalability and they run on very fast platforms. MSSQL runs on midsize but not large multiprocessors. Thus MSSQL works for almost all databases, but not for very large un-factorable databases. MySQL is fast, free, and clusterable. MySQL clusters support very high throughput websites such as Yahoo. MySQL is maturing rapidly but it not yet suitable for very large un-factorable databases or very critical applications.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>What are some of the main considerations for scalability in database design? (Select all that apply.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Number of people or applications concurrently accessing the database, particularly when this may increase over time.</td>
+<td style="display: none;">This is true. This is session scalability.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>The rate at which requests must be processed, particularly when this may increase over time.</td>
+<td style="display: none;">This is true. This is throughput scalability.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td> Whether users access the database remotely.</td>
+<td style="display: none;">This is false. Database scalability is not affected by the origin of the requests.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a5','../module2/metcs779_M2L1T05_SizeThroughputandSessionScalability.htm','body');
+</script>
+
+<div id="a6">
+
+
+<title>The SQL Design and Tuning Process</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>The SQL Design and Tuning Process</h1>
+
+<p>This section describes how to tune application SQL so that  the DBMS can run it efficiently. SQL describes the data sought or the results  of the operation requested, so it is driven mainly by the application needs.  However, there may be different ways of describing what the application needs  and some of these typically are faster for the DBMS to execute than others.  Writers of scalable application SQL must therefore understand the schema and  the <em>request patterns. </em>The application, schema, indexing, and request  patterns are defined in concert. New designs may have bugs and some requests  will be slow. You should perform timing tests and tune with realistic databases  and workload.</p>
+<div class="definitioncenter">
+  <h4>Request Pattern</h4>
+<p>A <em>request pattern </em>is a particular pattern of SQL  statements. In an OLTP database, requests with different tables in the table  list or different tables or columns in WHERE clauses are normally considered  different patterns, because they require different indexes. Different select  lists do not make the patterns different. In a ROLAP schema, some patterns may  be very general, because everything is indexed. For example, a constellation  schema may efficiently support SELECTs where any one of a constellation of fact  tables is joined against any number of dimension tables, with WHERE clauses  that correspond to the attributes of the dimensions.</p></div>
+
+<p>We will now describe how to tune each of the clauses of a SELECT statement. We choose a SELECT statement because there are typically many more SELECTs than other DML statements. We also choose SELECT because a subquery is often the performance-critical part of an UPDATE, DELETE or INSERT.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Which of the following are true about the tuning process? (Check all that are true.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>Different columns in a WHERE clause can require different indexes.</td>
+<td style="display: none;">This is true. Different columns in the WHERE clause could require different indexes.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="F"></td>
+<td>In a ROLAP schema nothing is indexed.</td>
+<td style="display: none;">This is false. In a ROLAP schema everything is indexed.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="F"></td>
+<td>UPDATE, DELETE, and INSERT are more performance-critical than SELECT and finding the data because changes can take longer.</td>
+<td style="display: none;">This is false for two reasons.&nbsp;While changes can take longer the most difficult operation are usually finding the data to change. The other reaon that this is false is because there are so many more SELECT statements and subqueries that SELECT and finding the data is more performance-critical.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a6','../module2/metcs779_M2L1T06_TheSQLDesignandTuningProcess.htm','body');
+</script>
+
+<div id="a7">
+
+
+<title>SELECT and FROM Tuning</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>SELECT and FROM Tuning</h1>
+
+<table class="data">
+<tbody><tr>
+<th scope="row">SELECT List Tuning</th>
+<td>
+<p>Most of the cost of a query is fetching the row; the DBMS doesn't need to do much additional work to return additional items from a row. Nonetheless you should avoid selecting things that you don't really need, because the extra columns in the result set will need to be converted to character strings and sent from the DBMS to the application. In fine-tuned applications it is best to avoid selecting literals, constants or other data that is known to the application. Eliminating unneeded items will not have a large effect on performance unless the result sets are large, but we can often obtain a few percent improvement by eliminating unnecessary items in the select list. Unnecessary items in the select list appear in the intermediate result sets, so they can sometimes force disk sorts and otherwise cause significant slowdowns.</p>
+<p>Beware of the overhead of DISTINCT, ORDER BY and other operations on the SELECT list. These force sorts to identify duplicates. In some DBMS, such as MySQL, you may need to examine the query plan to determine if such operations are taking place.</p>
+<p>For analysis and reporting applications it is often useful to compute the SQL at runtime to omit unneeded items from the SELECT list. This is called <em>dynamic SQL</em>. Dynamic SQL permits the application to determine at runtime exactly the items that are needed in the select list, usually based on the information that the user requested.</p>
+</td>
+</tr>
+<tr>
+<th scope="row">FROM List Tuning and Joins</th>
+<td>
+<p>Be careful when joining tables, because joining many tables can degrade performance dramatically. A single table in the FROM list is fastest. Joining a small table won't slow a SQL query very much, because small tables are usually mainly in the block buffer cache, so little I/O is required to access them. Dimensional data warehouse dimension tables are usually present in the block buffer cache—and that is one reason why well-designed dimensional data warehouses perform well. (Dimension tables are tables that represent times, locations, customers and similar discrete non-event entities in dimensional data warehouses and data marts.)</p>
+<p>The number of ordinary-sized tables that can be joined with reasonable efficiency depends on the DBMS, indexing, etc. It is hard to generalize, but Oracle performance usually falls off around eight tables, while MySQL performance usually falls off when more than about three larger tables are joined.</p>
+<p>Joining two or more large tables takes great care. Make sure there are <em>join indexes </em>covering the joined columns of both tables, particularly on DBMS such as Oracle that support index joins of the indexes instead of the tables. When joining large tables also check index sparsity and beware of large intermediates. Check the query plan, time realistically, and help the optimizer if necessary.</p>
+</td>
+</tr>
+</tbody></table>
+
+<div class="examplecenter">
+<h4>An Example</h4>
+<p>Suppose that you have a foreign key from an order number column of a line_item table referencing the primary key order_number column of the order table. If you are joining these two tables with WHERE line_item.order_number = order.order_number then you should create an index covering line_item.order_number. There is already the primary key index on order.order_number.</p>
+</div>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Select some of the ways you can optimize SQL. (Choose all that apply.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>You can optimize SQL by using dynamic SQL to select only the needed fields at runtime.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>You can optimize SQL by joining fewer tables when that meets the application needs.</td>
+<td style="display: none;">This is true. Sometimes an application doesn't need information that might be derived by joining additional tables.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>Select all of the attributes so that all the data is retrieved in case you need it.</td>
+<td style="display: none;">This is false. It is better for performance to only select the data that you need.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a7','../module2/metcs779_M2L1T07_SELECTandFROMTuning.htm','body');
+</script>
+
+<div id="a8">
+
+
+<title>WHERE Clause Tuning</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>WHERE Clause Tuning</h1>
+
+<p>Tuning WHERE clauses can reap great performance improvements. One of the most important principles is to avoid functions in WHERE clauses such as <span class="code">WHERE UPPER(name) = 'GEORGE'</span>. The problem with functions in WHERE clauses is that in most DBMS (except Oracle) you can't easily index the result of the function call, so  the only way that the DBMS can test the WHERE clause is to scan every row of the table, run the function on each row, and then test the result. Table scans are very slow.</p>
+
+<div class="definitioncenter">
+<h4>Function Calls</h4>
+<p>A function call is something like <span class="code">WHERE UPPER(name) = 'GEORGE'</span>, where UPPER is a built-in function. IN and NOT IN are not function calls,  just part of SQL syntax that the optimizer can handle.</p>
+</div>
+
+<div class="tipcenter">
+<h4>Tips for using Function-Based Indexes</h4>
+<p>Oracle supports function-based indexes. A function-based  index indexes the result of the function call. When you INSERT a row into a  table with a function-based index, Oracle automatically calls the function and  inserts the result of the function call in the index. A function-based index is  better than the traditional approach of adding a column to the table to store  the function result such as UPPER(name), and then indexing that new column. It's  better because the function-based index stores the function result only in the  index, while the traditional (and portable) approach stores the function result  both in the table and the index.</p></div>
+
+<p>Use equality tests in WHERE clauses when possible. Equality  tests are usually a little faster with B-tree indexes and are the only type of  tests supported by hash and bitmap indexes.</p>
+<p>Test against literals in WHERE clauses when possible. For example, consider the WHERE clause <span class="code">WHERE person.firstname = ‘Sam’</span>. The string ‘Sam’ is a literal in this WHERE clause. The number 6 is a literal in the clause <span class="code">WHERE line_item.cost &gt; 6</span>. A cost-based optimizer can use the sparsity of the literal (for example, the fraction of person.firstname which are ‘Sam’) to improve optimization.</p>
+<p>Some DBMS, including MySQL, take the SQL order of the WHERE clauses as a hint for their execution order. This allows us to implicitly specify the order of the restrictions. This also means that for good performance we need to hand-tune every query that has more than one WHERE clause. With a cost-based optimizer the order of the WHERE clauses shouldn't matter, because the query optimizer will optimize the query based on the statistics of the database, including sparsity.</p>
+
+<h2>Functions in WHERE clauses</h2>
+<p>Avoid functions in WHERE clauses, such as:</p>
+
+<blockquote>
+<p class="code">WHERE LOWER(city) = 'boston'<br>
+WHERE SQRT(area) &gt; 3.0<br>
+WHERE my_function(hour) = 5</p>
+</blockquote>
+
+<p>There are many ways to eliminate functions, such as:</p>
+
+<blockquote>
+<p>Store <span class="code">city</span> in lower case and eliminate <span class="code">LOWER</span>
+<br>
+Transform the function: <span class="code">WHERE area &gt; 9.0</span>
+<br>
+Add a column with the function result, index it, (or use a function-based index in Oracle), and query it:<br>
+<span class="code">WHERE my_function_col= 5</span></p>
+</blockquote>
+
+<h2>LIKE in WHERE clauses</h2>
+<p>Avoid LIKE clauses, particularly when the % is  anywhere other than at the end, because these clauses can force index or table  scans.</p>
+
+<blockquote>
+<p>E.g., <span class="code">WHERE name LIKE 'geo%'</span> may be supported by a B-tree index on name, but
+<br>
+<span class="code">WHERE name LIKE '%rge' </span>commonly results in an index or table scan.</p>
+</blockquote>
+
+<p>LIKE is handy for exploring a database or prototyping, but a LIKE clause in a production system is usually not the most efficient design.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Select all that are true about tuning WHERE clauses for improved performance.</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Including a function in a WHERE clause usually requires the DBMS to scan every row of the table, applying the function to each row.</td>
+<td style="display: none;">This is true. Including the function requires the DBMS to scan every row of the table, whether or not it will be returned as a result of the query.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>A function-based index will be as efficient as storing the results of the function for each row in its own column, and then indexing that column.</td>
+<td style="display: none;">This is false. A function-based index stores the result just in the index, instead of both in the table and in the index, so it takes up less space.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>A WHERE clause can be optimized by using equality operators rather than inequality operators when that meets the application needs. </td>
+<td style="display: none;">This is true.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a8','../module2/metcs779_M2L1T08_WHEREClauseTuning.htm','body');
+</script>
+
+<div id="a9">
+
+
+ <title>ORDER BY and GROUP BY Clause Tuning</title>
+ 
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+ <script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/testyourself_binary.js.下载"></script>
+
+
+
+ <h1>ORDER BY and GROUP BY Clause Tuning</h1>
+ <table class="data">
+ <tbody><tr>
+ <th scope="row">ORDER BY Clause Tuning</th>
+ <td>
+ <p>Don't use ORDER BY unless you really need to. The ORDER BY clause forces a sort of the result set, and sorts of larger result sets will slow performance, even if the sorts will fit in RAM. It doesn't help performance if you are only fetching the first n rows of the result set, because the whole result set must be sorted to determine which rows to fetch.</p>
+ <p>Some DBMS do an implicit ORDER BY so that the result set order doesn't depend on the storage order. Suppress this sort for optimal performance. In MySQL you do this with <span class="code">ORDER BY NULL</span>.</p>
+ <p>If the ORDER BY clause columns are on one table you can also add a B-tree or other sorted index on the columns in the ORDER BY clause, keeping the order of the columns the same in the index and query. Not all DBMS are able to use an index to avoid the sort, so time the query with and without the index, and check the query plan.</p>
+ </td>
+ </tr>
+ <tr>
+ <th scope="row">GROUP BY Clause Tuning</th>
+ <td>
+ <p>GROUP BY is powerful, but it can also be slow if the GROUP BY operates on large intermediate result sets. If GROUP BY queries are slow, it is usually because there is a large intermediate result set that is being grouped. A GROUP BY clause may be computing aggregates that could be pre-computed and stored in an aggregate table. A good solution is to pre-compute the results of the GROUP BY and store them in a new aggregate table, which is queried without the GROUP BY clause. This is a common denormalization. There are costs to maintain the aggregates, including the additional complexity of the triggers or other mechanism and the additional storage and processing to maintain the aggregates. Materialized views are often a good design for the aggregates, because the DBMS maintains the  materialized views when the underlying tables change.</p>
+ <p>If the columns that appear in the GROUP BY clause are all in one table the grouping operation can be speeded if there is an index on the columns in the GROUP BY clause. Not all DBMS can use an index to speed grouping, so time the queries with and without the indexes, and check the query plan.</p>
+ </td>
+ </tr>
+ </tbody></table>
+ <div class="testcenter">
+ <h4>Test Yourself</h4>
+ <p>In the following SQL statement, only the first five rows are sorted by deptno before the requested 5 rows are returned (True or false): [ Rownum indicates the number of the row in the result set, so this query is requesting the first five rows. ]</p>
+ <blockquote>
+ <p class="code">SELECT * from employee <br>
+ WHERE rownum &lt;=5&nbsp; <br>
+ ORDER BY deptno;</p>
+ </blockquote>
+<button>Show Answer</button>
+ <p style="display: none;">False.&nbsp; All rows in the result set are sorted before the first 5 rows are returned. This is necessary to assure that the first five rows returned are the first five rows of the entire sorted result set.</p>
+ </div>
+
+
+
+</div>
+<script>
+getHeader('a9','../module2/metcs779_M2L1T09_ORDERBYandGROUPBYClauseTuning.htm','body');
+</script>
+
+<div id="a10">
+
+
+<title>Principles of Query Optimization</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Principles of Query Optimization</h1>
+
+<p>Request runtime depends primarily on the number of input/output operations that must be performed to execute the query plan. To estimate the number of required I/O operations you need to understand which tables and indexes will normally be memory resident, and which will be brought in by I/O operations from storage. This means that you can't search for anything in large tables, but must always use an index.</p>
+
+<p>Returning lots of data from a query is expensive, involving DBMS server resources, network resources, and client resources. SQL can usually be designed to reduce data in the database, and return only the results. When SQL can't easily reduce the data within the database, stored procedures can always reduce it.</p>
+
+<div class="testcenter">
+<h4>Test Yourself</h4>
+<p>True or False: Should DML operations against large tables be supported by indexes to obtain scalable performance?</p>
+<button>Show Answer</button>
+<p style="display: none;">This is true. The alternative to index support is scanning, which is very slow when tables are large.</p>
+</div>
+
+
+</div>
+<script>
+getHeader('a10','../module2/metcs779_M2L1T10_PrinciplesofQueryOptimization.htm','body');
+</script>
+
+<div id="a11">
+
+
+<title>Relational DBMS Server Tuning</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Relational DBMS Server Tuning</h1>
+
+<p>In the previous section we described what you can do on the  client side to tune the SQL that the application sends to the server. We now  describe what you can do on the server side so that the SQL runs quickly,  including tuning the hardware, database instance parameters, schema, and  indexing.</p>
+<h2>Tuning DBMS Server Hardware</h2>
+
+<p>The following table summarizes the hardware requirements for a platform to host the DBMS.</p>
+
+<table class="data">
+<tbody><tr>
+<th>Hardware</th>
+<th>Requirement for good performance</th>
+</tr>
+<tr>
+<td>CPU</td>
+<td>Enough so that some CPU is normally available under load. Scalable DBMS can use many CPUs. Check the DBMS doc and configure the DBMS for the number of CPUs.</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>Sufficient so that the block buffer cache can be made large enough to obtain a good cache hit ratio. Allow plenty of RAM for the operating and file systems. Check your DBMS and OS docs. Memory-resident databases can benefit from a great deal of RAM. For servers with more than a few gigabytes of RAM or for critical servers it is prudent to use error-correcting RAM. Error-correcting RAM costs very little more and it is much more reliable.</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>Large enough to obtain the required database performance. Size storage to at least three times the DB size for backup, growth and administration. Check vendor documentation.&nbsp;Consider solid-state (flash) storage if storage performance is critical.</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>As fast as feasible between clients and web server. Many gigabits may be needed between database server and application servers. Consider a Storage Area Network (SAN). Check vendor docs. Keep network traffic off the general LAN. Protect the DBMS with firewalls.</td>
+</tr>
+</tbody></table>
+
+<p>Database platforms are often configured and tuned by a systems administrator working with or supporting a DBA.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Which of the following are true regarding the size of the storage for a database and the size of the database? (Check all that are true.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>The size of the storage must be at least as large as the size of the database.</td>
+<td style="display: none;">This is true. To be durable at checkpoints the database must all fit on durable storage. In practice much more durable storage is required, for example to hold the transaction logs.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>In practice the available storage should be several times larger than the size of the database, to support administrative operations such as copying the database.</td>
+<td style="display: none;">This is true. A database should have storage about three times larger than the size of the data for backup, growth, and administration.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a11','../module2/metcs779_M2L1T11_RelationalDBMSServerTuning.htm','body');
+</script>
+
+<div id="a12">
+
+
+<title>Server Storage</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Server Storage</h1>
+
+<p>Other than schema and SQL design, storage has the greatest  effect on DBMS performance. There are many kinds of storage and tuning depends  on the kind that you have available. A slow hard disk will hurt database  performance. How database and other storage is physically allocated to hard  disks can have a large effect on performance. High-end storage, such as that  from the EMC Symmetrix family or a Hitachi Data Systems high-end product, is  generally the best, particularly for nonstop databases, but it is also the most  expensive option.</p>
+<p><strong><em>Database backup media</em></strong>—The consequences
+  of a failure to recover all of a database are usually much more severe than
+  failure to recover all of the files in a file system, so it is critical that
+  the database backup medium be very reliable. Tape is an exposed contacting
+  magnetic medium prone to wear, loss of magnetic material, dirt, and other
+  failures, so it is not very reliable. Backing up to tape is much slower than
+  backing up to hard disk or RAID. When you backup a database to tape (for
+  example, for an offsite or archival backup) it is a good practice to make
+  two interchangeable copies of each tape and verify the copies by testing
+  them. Even with care a backup to more than about ten tapes is likely to fail
+  during restore. Backup large databases to fast reliable media such as RAID
+or SAN or NAS storage.</p>
+
+<div class="definitioncenter">
+<h4>SAN means <em>Storage Area Network</em></h4>
+<p>SAN is the standard very high speed fiber channel network used for database storage.</p>
+</div>
+
+<div class="definitioncenter">
+<h4>NAS means <em>Network Attached Storage</em></h4>
+<p>This is fine for file systems, but because it is optimized for serial retrieval, it is not very good for databases.</p>
+</div>
+
+<p><strong><em>Spread the storage load</em></strong>—Disk seeks take milliseconds. Many operations involve sequential fetches, so if the HD arm is left where it is, the next fetch will be significantly faster. Thus, if two or more tables, indexes, or other objects are mapped to the same hard drive and operations are being carried out simultaneously, the hard disk arm will spend a lot of time moving back and forth between the storage areas for these objects. For the same reason, try to avoid using the same drive for the swapping store and any database store. Similarly try to put the transaction logs and rollback segments on different drives than the database tables and indexes. If you have multiple RAID devices on a server it is also desirable to spread the load between the RAID controllers.</p>
+
+<p><strong><em>Put tables and their indexes on separate drives</em></strong>—Some operations such as index-aided queries of large tables involve I/O alternating between an index and a table. If the table and index are on the same hard drive, there will be much head motion. If the index and table are on separate drives, the heads can move much less, and the index-aided search will be much faster. This can make an order of magnitude difference in the performance of index-aided queries.</p>
+
+<p><strong><em>I/O system tuning</em></strong> — Use the operating system utilities to determine the number of I/O operations against each drive. Identify the database objects that are responsible for any I/O hot spots. Move the objects to spread the load and improve performance. Pay attention to the rules above about co-locating tables, indexes, and transaction logs.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Which of the following correctly describe the relationship between hardware and DBMS performance? (Check all that are true.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>The CPU requirements of different DBMS are significantly different.</td>
+<td style="display: none;">This is true. Some DBMS such as Oracle and DB2 are very CPU efficient while others such as Microsoft SQL Server can require considerably more CPU resources.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>The amount of RAM available to the DBMS can have a major effect on database performance.</td>
+<td style="display: none;">This is true. If a DBMS has more RAM then more of the data will fit in the block buffer and SQL caches and other caches such as the sort cache can be larger. All of these improve performance.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>The performance of storage has a major effect on the performance of all DBMS except memory-resident DBMS.</td>
+<td style="display: none;">This is true. Storage typically has the most effect on DBMS performance.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="F"></td>
+<td>Network performance is typically a major consideration in scalable performance.</td>
+<td style="display: none;">This is false. While network performance must be high enough, this is usually fairly easy to arrange, so network performance is rarely limiting or a major consideration.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a12','../module2/metcs779_M2L1T12_ServerStorage.htm','body');
+</script>
+
+<div id="a13">
+
+
+<title>Tuning and RAID Storage</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Tuning and RAID Storage</h1>
+<div class="definitioncenter">
+  <h4>Definition of RAID</h4>
+<p>RAID stands for Redundant Array of Independent (or Inexpensive) Disks. Disk drives today are almost always Winchester technology, which is the technology used in PCs.</p>
+<p><strong>Performance Note:</strong> The highest-performance hard disks are much faster than ordinary hard disks. For example, the 15K RPM server disks from Hewlett Packard have a 3.5 millisecond average seek time.</p>
+</div>
+
+<p>As discussed before, high-end storage systems, such as those  from venders like EMC or Hitachi Data Systems, are generally the best,  particularly for nonstop databases, but they are also the most expensive. Large  cache RAID such as the EMC Clarion family is good for most large databases,  though not ideal for large nonstop databases. Ordinary RAID is inexpensive,  even with good caching controllers, and it works fine for most databases. Fast  Hard Disk (e.g., 15K RPM SCSI) is fine for databases where HD fault tolerance  is not needed. Ordinary HD (e.g., 7200 RPM synchronous ATA) is fine for most  small non-critical databases. Older slow hard disks can reduce database  performance substantially. If you need to run a database instance on a notebook  computer consider the new 7200 RPM notebook disks, which are available as an  option from leading vendors.</p>
+<p><strong><em>RAID storage</em></strong>—There  are many different RAID configurations, with different cost and performance  levels. Most RAID controllers can be configured for different applications.  Almost all large storage is based on RAID, sometimes with durable RAM and other  supporting hardware to improve performance. Hard drives fail fairly often, so  RAID configurations used for DB storage should tolerate HD failure. The  following table summarizes the common RAID configurations.</p>
+<table class="data">
+  <tbody><tr>
+<th>Configuration</th>
+<th>Characteristics</th>
+</tr>
+<tr>
+<td>RAID 0</td>
+<td>Uses striping to increase throughput, but has no fault tolerance, so it should not be used with databases where data loss risk is important.</td>
+</tr>
+<tr>
+<td>RAID 0+1</td>
+<td>Combines striping and mirroring for good throughput and fault tolerance.</td>
+</tr>
+<tr>
+<td>RAID 1</td>
+<td>Is mirroring of paired drives. It is fast and fault-tolerant, but requires twice the HD storage. Has about half the rotational latency of a single drive, because the result can be returned when the data comes under the head on the first drive. Software mirroring is much slower than a mirroring hardware controller, so it should not normally be used on databases where performance matters.</td>
+</tr>
+<tr>
+<td>RAID 3</td>
+<td>Uses a parity disk that stores the XOR of the other disks for fault tolerance. Not commonly used because of problems with the load on the parity disk.</td>
+</tr>
+<tr>
+<td>RAID 5</td>
+<td>Distributes the redundancy information over the drives and also blocks the data. This is the most common configuration for large RAID, because it is fault-tolerant and makes efficient use of the hard disks. RAID 5 requires a good caching controller to obtain good performance, because all but one drive must be read before returning the result.</td>
+</tr>
+<tr>
+<td>RAID 6</td>
+<td>RAID 5 plus additional error-correcting codes to protect against multiple disk failure.</td>
+</tr>
+<tr>
+<td>RAID 10</td>
+<td>Combines striping and mirroring for good throughput and fault tolerance. RAID 10 is common for small database storage where the efficiency of the hard disk usage is not important, because RAID 10 provides both good throughput and fault tolerance.</td>
+</tr>
+</tbody></table>
+<p>The performance of a RAID cache depends on how well it caches the data on the hard disks. The following table summarizes the common RAID controller cache types.</p>
+<table class="data">
+<tbody><tr>
+<th>Cache type</th>
+<th>Characteristics</th>
+</tr>
+<tr>
+<td>Read Cache</td>
+<td>Holds additional data beyond what was requested, e.g., the whole cylinder under the head; then if the additional data is requested it is immediately available from the cache. This is an example of pre-fetching.</td>
+</tr>
+<tr>
+<td>Write-Back Cache</td>
+<td>Durable RAM that supports immediate completion of write requests before data is written to HD.
+</td>
+</tr>
+<tr>
+<td>A RAID 5 Write Gather Cache</td>
+<td>Gathers all the blocks in a stripe and computes the redundancy codes, reducing the reads and permitting all blocks to be written to HD in parallel.</td>
+</tr>
+</tbody></table>
+<p>RAID 5 spreads the data over many hard drives using redundancy codes that permit reconstruction of the data even if one HD is lost. This makes the most efficient use of HD resources. With RAID 5 the data must be fetched from all but one spindle before the controller can reconstruct and return the data, so the overall latency is about one full rotation plus arm motion latency.</p>
+<p>RAID 1 can return the results as soon as any HD returns the  results, so RAID 1 or 0+1 perform better for DB storage than RAID 5 when the  RAID doesn't have cache. RAID 5 or 6 with a small or no controller cache is  fine as a backup device. RAID 5 or 6 works fine for database storage when used  with a good caching controller. The performance of the controllers, the amount  of cache, and the price vary quite widely.</p>
+<div class="testcenter">
+  <form>
+<h4>Test Yourself</h4>
+<p>Which RAID levels support drive failure? (Check all that are true.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" name="x" value="F"></td>
+<td>0</td>
+<td style="display: none;">This is false. Raid 0 does not support redundancy.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>1</td>
+<td style="display: none;">This is true. Raid 1 supports failure of 1 drive in a set of two.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>3</td>
+<td style="display: none;">This is true. Raid 3 supports single drive failure.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>5</td>
+<td style="display: none;">This is true. Raid 5 supports failure of 1 drive in a minimum of 3 disks.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>6</td>
+<td style="display: none;">This is true. Raid 6 supports failure of 2 drives in a minimum of 4 disks.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>10</td>
+<td style="display: none;">This is true. Raid 10 supports failure of up to half the drives but only 1 from each group.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a13','../module2/metcs779_M2L1T13_TuningandRAIDStorage.htm','body');
+</script>
+
+<div id="a14">
+
+
+<title>Indexes</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+<h1>Indexes</h1>
+<p>An index is a durable auxiliary data structure associated with a table that is usually used to efficiently identify and access the rows of the table. Indexes have no role in the relational model or SQL; their only consequence is speeding requests. The exception is unique indexes, which also enforce uniqueness constraints. There are many different uses for indexes, including primary and alternate keys, supporting indexes, join indexes, and indexes to support index joins. Different DBMS support different types of indexes. DBMS also differ in their support for different uses of indexes, such as using them for dimensional query plans, etc. The following table summarizes the common types of indexes.</p>
+<table class="data">
+<tbody>
+<tr><th>Index Type</th><th>Properties</th></tr>
+<tr>
+<td>B-tree</td>
+<td>Flexible. Supports equality, inequality, range searches, and index joins. Supported by all common SQL DBMS.</td>
+</tr>
+<tr>
+<td>Bitmap</td>
+<td><span>Very fast for binary joins with other bitmap indexes. Only useful for low cardinality columns. Very compact, because there is no <span>rowID</span> in the index. Does not support theta queries. Supported in Oracle.</span></td>
+</tr>
+<tr>
+<td>Hash</td>
+<td>Fast. Access time does not increase as the size of the index increases. Does not support theta queries. Supported in Oracle.</td>
+</tr>
+<tr>
+<td>Function-Based Indexes</td>
+<td>Supports function calls in WHERE clauses efficiently. Compact, because the function result is not stored in the table, but only in the index. Useful when most queries use the same function(s). Supported in Oracle.</td>
+</tr>
+<tr>
+<td>Index Organized Tables</td>
+<td>B-tree without the table, with all columns in the index. Eliminates the I/O to fetch the row. Supported in Oracle.</td>
+</tr>
+</tbody>
+</table>
+<div class="testcenter"><form>
+<h4>Test Yourself</h4>
+<p>What is the most compact index for a column that only has three possible values?</p>
+<table class="ty">
+<tbody>
+<tr>
+<td><input name="x" value="F" type="radio"></td>
+<td>B-Tree</td>
+<td style="display: none;">This is false. While this may be more efficient for some operations such as index joins with other B-tree indexes, the B-tree index requires a ROWID for each entry plus other overhead, so it is much larger than a bitmap index.</td>
+</tr>
+<tr>
+<td><input name="x" value="T" type="radio"></td>
+<td>Bitmap</td>
+<td style="display: none;">This is true. Bitmap uses bit arrays and works well for low-cardinality columns.</td>
+</tr>
+<tr>
+<td><input name="x" value="F" type="radio"></td>
+<td>Hash</td>
+<td style="display: none;">This is false. While a hash index would be the fastest and most scalable for equality keys, a hash index requires a ROWID for each entry, so it will be much larger than a bitmap index.</td>
+</tr>
+</tbody>
+</table>
+<button>Show Answer</button></form></div>
+
+</div>
+<script>
+getHeader('a14','../module2/metcs779_M2L1T14_Indexes.htm','body');
+</script>
+
+<div id="a15">
+
+
+<title>B-tree and Bitmap Indexes</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>B-tree and Bitmap Indexes</h1>
+
+<p><strong>B-tree indexes</strong> are the most common. B-tree indexes support equality, inequality, range, partial-key, index scan, fast index sorting, and query resolution from the index. B-tree indexes are self-balancing trees. B-tree indexes on multiple columns support queries on any prefix of the columns; for example, an index on {A,B,C} supports queries that need indexes on {A}, {A,B} or {A,B,C}. The technical way of saying this is that B-tree indexes support any prefix of the columns in the index. The most common type of B-tree index is the B+ tree index.</p>
+
+<div class="tipcenter">
+<p>Sometimes you need more than one index on the same column. For example, if you need to support frequent queries that need coverage of {A}, {B}, and {A,B}, then you need at least two indexes:</p>
+<p class="tabletext tabletext">{A,B} and {B} <br>
+-or- <br>
+{B,A} and {A}</p>
+</div>
+
+<div class="dangercenter">
+<h4><span class="tableTitle">Index Column Order Matters</span></h4>
+<p>The order of the columns matters in B-tree and other sorted indexes, because the order of the columns in the index is the order of the sort keys. The order of the WHERE clauses should not matter, but it can make a difference with DBMS such as MySQL that don't have a cost-based optimizer.</p>
+</div>
+
+<div class="summarycenter">
+<h4>Details about Index Scans</h4>
+<p>An index scan involves more CPU overhead than a table scan. An index scan is generally faster when the amount of data (in bytes) in the indexed columns is much less than the length of the row. The reason is that bringing in the index from storage is faster than bringing in the rows. If only a small fraction of the rows are fetched from the table, then it is faster to scan the index than to scan the table. It can happen that all required data is in the index, in which case the index scan can be significantly faster than the table scan.</p></div>
+
+<p>The optimizer can transpose the order of the WHERE clauses, so coverage of {A,B} is the same as coverage of {B,A}, though an index on {A,B} covers {A}, but not {B}. Sometimes a DBMS will do an index scan when the index is faster to scan than the table, so an index may speed a query that it doesn't actually cover.</p>
+
+<p><strong><em>Bitmap indexes</em></strong> are implemented with bit vectors with one bit for each row in a table. There is  one bit vector for each value of the indexed column, so bitmap indexes are  useful for indexing low-cardinality columns such as gender, location, and year.  The bit in the bit vector is one if the column for that bitmap index has the  value associated with that bitmap. Because there is one bit position for each  row in the table, the row locations can be computed from the bit number, and no  row pointers are required in the index. If the cardinality is low this makes  bitmap indexes smaller than other index types such as B-trees and hash indexes.  Bitmap indexes must be updated if rows are moved on disk. Sparse bit vectors  can be compressed. Bitmap indexes do not support inequalities or ranges, so  they are not useful for queries containing WHERE clauses such as WHERE cost  &gt; 10.</p>
+<div class="tipcenter">
+  <h4>Bitmap Indexes</h4>
+<p>Bitmap indexes are very efficient for WHERE clauses that combine AND, OR, NOT and other Boolean or set operators. They can be combined very efficiently by applying the corresponding operations to the bit strings. For example, bitmap indexes would help:</p>
+<blockquote>
+<blockquote>
+<p class="code">SELECT * FROM customer
+<br>
+WHERE gender='F'
+<br>
+AND (last_degree = 'MS') OR (last_degree = 'PhD')
+<br>
+AND marital_status = 'M';</p>
+</blockquote>
+</blockquote>
+<p>Note that <span class="code">gender</span>, <span class="code">last_degree</span>, and <span class="code">marital_status</span> all have low cardinality.</p></div>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Select all that are true about B-tree and bitmap indexes.</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>A bitmap index would work well for an attribute like Social Security number in&nbsp; a customer table, because all values are distinct.</td>
+<td style="display: none;">This is false. Bitmap indexes work best with attributes that have low cardinality, or a few possible values. Social Security number would have an almost infinite number of values, so it would not be a good choice for a bitmap index.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Bitmap indexes do not require as much storage space as B-tree indexes.</td>
+<td style="display: none;">This is true. Bitmap indexes are the most compact of all external index types. The only more compact type is the clustered index, which is sorting by the index key.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>In a table with a B-tree index which indexes the first two fields, an entry of {one,two} will also find rows that begin with {two, one}.</td>
+<td style="display: none;">This is false. Order matters, so for the row starting with {two,one} will only be located if the index entry is {two, one}.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a15','../module2/metcs779_M2L1T15_BtreeandBitmapIndexes.htm','body');
+</script>
+
+<div id="a16">
+
+
+<title>Hash Indexes</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Hash Indexes</h1>
+
+<p><strong><em>Hash indexes</em></strong> use a hash function over the indexed columns to identify and retrieve a bucket. The bucket is scanned for the key. If the key is not present the row with the key is not present. If the key is present the entry will be in the page, or potentially in an overflow page. Hash indexing can require about one I/O operation independent of the size of the table or key. Hash indexes do not support inequalities or range searches.</p>
+
+<p><strong><em>Dynamic hash</em></strong> <strong><em>indexing</em></strong> supports  tables whose size is unknown or varying over time. In dynamic hashing the size  of the space hashed into varies as the size of the table varies. It depends on  sequences of hash functions with varying bucket counts. The data migrates to  higher order members of the family when overflow chains grow and it migrates to  lower order members of the family when there are too many empty buckets.</p>
+
+<div class="testcenter">
+  <h4>Test Yourself</h4>
+<p>True or False: An appropriate hash index would greatly improve the scalable performance of a query that retrieves all of the customers in a large Customer table that have a DateOfBirth before January 1, 2000.</p>
+<button>Show Answer</button>
+<p style="display: none;">This is false. Hash indexes do not support range or inequality (theta) queries. If the Customer table has long rows then an index scan of the hash index may be faster than a table scan of Customer, but this is not a scalable design.</p>
+</div>
+
+
+</div>
+<script>
+getHeader('a16','../module2/metcs779_M2L1T16_HashIndexes.htm','body');
+</script>
+
+<div id="a17">
+
+
+<title>The Roles of Indexes</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>The Roles of Indexes</h1>
+
+<p><strong><em>Primary Key and Support indexes</em></strong>—The DBMS provides primary key indexes, which are commonly used in WHERE clauses. <em>Support indexes</em> are used to speed the restrictions of frequently run queries when the WHERE clauses are against columns other than the PK. For example:</p>
+
+<blockquote>
+<p class="code">WHERE customer.SSN = 123456789</p>
+</blockquote>
+<p>The SSN is not likely the primary key of customer, because not all customers will have social security numbers. Yet queries similar to the above may run frequently, so they need to be efficient. The solution is to add a support index to customer:</p>
+<blockquote>
+<p class="code">Create index customer_ssn_sx on customer(SSN);</p>
+</blockquote>
+
+<p>The suffix <em>_sx</em> is a conventional way to identify support indexes.</p>
+
+<p><strong><em>Selectivity and sparsity</em></strong>—If the values in an index
+help narrow the number of rows, then the index is more selective and useful
+to the optimizer. For example, an index on SSN is more useful than an index
+on gender. Primary key and unique indexes are  extreme cases of sparsity,
+because each value can occur only once.</p>
+
+<p><strong><em>Indexes to support joins</em></strong>—If two columns are frequently joined with a WHERE clause, then it is usually desirable to index both of the joined columns. When the referencing columns refer to a foreign key or unique column, then the PK or unique columns of the referenced table are already indexed, so we don't need to index them again. We do need to explicitly create the indexes on the <em>referencing</em> columns of foreign keys that are used in joins.</p>
+
+<p><strong><em>Index joins</em></strong>—When  both column sets involved in a join are indexed, the DBMS can do an <em>index join</em> to identify the rows that satisfy the WHERE clause without even using the  tables. Index joins can be much faster than un-indexed joins, because the  indexes are usually much smaller than the tables, so less I/O is required. In  sorted indexes such as B+ tree indexes, the traversal with comparison is fast.  With B+tree  indexes an index join can be done for inequalities (theta joins) as well as for  equijoins.</p>
+
+<p><strong><em>Indexes to support ORDER BY clauses</em></strong>—A B+ tree or other sorted index on the columns in an ORDER BY clause eliminates the need to sort the rows; they can just be fetched in order, based on the index. Thus a B+ tree index on the columns in an ORDER BY clause can greatly speed queries that return large result sets that must be ordered. The columns in the ORDER BY clause must be on the same table in order to use indexes to support ORDER BY clauses. Time your queries with and without the indexes and check the query plan to determine whether your DBMS can use indexes to speed ORDER BY clauses.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Select all that are true about indexing.</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>It is useful to add an index on the primary key.</td>
+<td style="display: none;">This is false. The DBMS provides an index on the primary key, so an additional index is not necessary.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>It is useful to add indexes on attributes that are frequently used together in a join statement.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>It can be useful to add an index on a foreign key.</td>
+<td style="display: none;">This is true. Most DBMS do not automatically add an index on a foreign key. It can be useful to add an index if the attribute is used frequently in join statements.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a17','../module2/metcs779_M2L1T17_TheRolesofIndexes.htm','body');
+</script>
+
+<div id="a18">
+
+
+<title>Tuning Relational DBMS Initialization Parameters</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Tuning Relational DBMS Initialization Parameters</h1>
+
+<p>DBMS have 100 or more initialization parameters that adjust  the sizes of internal buffers, caches, and establish various characteristics of  the operation of the instance. The specifics of these tuning parameters depend  on the DBMS; since there are no standards for database instance parameters, you  should study the documentation for your particular DBMS to determine what these  parameters are and how to tune them to obtain the best performance. The  following steps describe the general tuning process.</p>
+<ol>
+  <li><strong>Start with the appropriate size configuration  (typically named small, medium, large or huge)</strong> from the DBMS vendor and the type of database (OLTP,  general purpose or data warehouse). Check that your hardware will support it.  If it will not, downsize the configuration or upsize the hardware. Configure  storage. At this time you should adjust any particular configuration parameters  that you know should have different values than their defaults. Instructions  for setting these parameters are included with the DBMS configuration  documentation or as comments in the default configuration files.</li>
+<li><strong>Bring up the database instance</strong> and load or migrate the current production database if you have it.
+</li>
+<li>
+<strong>Load test</strong> by running load test scripts consisting of realistic application SQL streams.
+<ul>
+<li>Check key DBMS performance parameters such as the cache hit ratios. If any are out of line correct them as suggested in the DBMS tuning documentation. You may need to tune storage.</li>
+<li>Adjust parameters to improve performance. Repeat  until you are satisfied with the DBMS performance. Understand the effect of  each parameter and don't try to tune all the parameters using blind search.</li>
+<li>Check the SQL logs produced by the DBMS and look for SQLs that take longer than you expect. Look for poorly designed (<em>rogue</em>) requests and correct them. At this time you can also fix any remaining problems with indexes.
+</li>
+</ul>
+</li>
+<li><strong>Proceed to full-scale test and production</strong>. Continue with the tuning operations in step 3,  monitoring the logs, SQL performance, and storage. Check on a regular basis  (perhaps daily or weekly) and whenever there are performance issues or  significant changes. You may wish to use a DBMS monitoring tool to reduce the effort  required and more quickly identify problems.</li>
+</ol>
+
+<p><strong><em>General performance tuning rules</em></strong>—As a general rule of thumb, on a dedicated database server you  should size the shared global memory to about half the physical RAM on the  server. Watch the block buffer cache hit ratio and increase the block buffer  cache size limit if the block buffer cache hit ratio is under about 90% during  routine ongoing operations. Watch the SQL cache replacement and hit statistics  and increase the SQL cache size if there is much replacement in the cache, the  cache hit ratios are low, or analysis of the SQL logs indicates that there are  repeated SQLs. Other cache and RAM setting heuristics are DBMS-dependent. In DBMS  such as Oracle 10g and MSSQL, the system will automatically adjust the RAM  allocations within configuration limits.</p>
+<p><strong><em>Tuning the database blocksize</em></strong>—Mainstream DBMS such as Oracle, MSSQL, and DB2 support variable blocksize; the database blocksize should be a multiple of the virtual memory page size and the storage block size; powers of two multiples of 1024 bytes (1 kilobyte) are the rule, e.g. 2KB, 4KB, 8KB, 16KB, 32KB, or 64KB. The blocksize for a table should be at least four times the average row length for the table, to minimize fragmentation and block chaining. The optimal blocksize for an OLTP database without very long rows is usually 2KB to 16KB. The optimal blocksize for a warehouse is typically 32KB to 64KB; the larger blocksize helps reduce the number of I/O operations required to bring in large tables or indexes. There are variations in blocksize configuration flexibility. Oracle supports a different blocksize for each tablespace. To change the blocksize of MySQL you need to recompile the DBMS from source.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>What should the blocksize be for a table with an average row length of 16KB?</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>4KB</td>
+<td style="display: none;">This is false. The blocksize should be 4 times the average row length.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>16KB</td>
+<td style="display: none;">This is false. The blocksize should be 4 times the average row length.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>32KB</td>
+<td style="display: none;">This is false. The blocksize should usually be 4 times the average row length.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="T"></td>
+<td>64KB</td>
+<td style="display: none;">This is true. The blocksize should almost always be at least 4 times the average row length, to minimize block chaining.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a18','../module2/metcs779_M2L1T18_TuningRelationalDBMSInitializationParameters.htm','body');
+</script>
+
+<div id="a19">
+
+
+<title>Indexing for Performance</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Indexing for Performance</h1>
+
+<p>I use a three-phase approach for designing indexes. I begin by identifying the application request patterns. A request pattern is like a template for the kinds of SQL statements that you expect the database to efficiently support. For example, we may know that sales requests will equijoin the line_item table with the sales_order table and customer table, so the request pattern will be:</p>
+
+<blockquote>
+<p class="code">SELECT &lt;select list&gt;<br>
+FROM sales_order<br>
+INNER JOIN&nbsp; line_item ON <br>
+line_item.sales_order_id = sales_order.sales_order_id <br>
+INNER JOIN customer ON<br>
+sales_order.customer_id = customer.customer_id<br>
+</p>
+</blockquote>
+
+<p>Notice that we don't care what items are selected from these three tables, but only that something is needed from each table.</p>
+
+<p>The indexing for queries with this pattern would include a supporting index with coverage of line_item.sales_order_id and an index with coverage of sales_order.customer_id. It would be normal that sales_order_id is the synthetic primary key of the sales_order table. Primary keys are implemented as unique indexes, so there is no need to index sales_order.sales_order_id. Similarly it would be normal that customer_id is the synthetic primary key of the customer table, so no additional index is required.</p>
+
+<p>Suppose that there is an additional request pattern:</p>
+
+<blockquote>
+<p class="code">SELECT &lt;select list&gt;<br>
+FROM line_item, customer, product<br>
+INNER JOIN sales_order ON <br>
+line_item.sales_order_id = sales_order.sales_order_id <br>
+INNER JOIN customer ON<br>
+sales_order.customer_id = customer.customer_id<br>
+INNER JOIN product ON<br>
+line_item.product_id = product.product_id;</p>
+</blockquote>
+
+<p>Requests with this pattern would require the two indexes defined above, plus an additional index covering line_item.product_id. We now have a need for index coverage on two columns (sales_order_id and product_id) of the line_item table. We could create two separate indexes on the sales_order_id and product_id tables or create a two-column composite index on (sales_order_id, product_id). The choice between these options depends on the particular mix of queries.</p>
+
+<p>After designing the indexes to cover the expected request patterns, I run the applications or SQL stream against the indexed database, and collect request timing data. I analyze slow SQLs to understand why they are slow. Sometimes the problem is just a request pattern that you didn't expect; this can usually be corrected by adding an index or adding a column to an existing index. Occasionally the slowness can't be corrected by indexing, so changes to the requests or schema are required.</p>
+
+<p>Only create the indexes required to efficiently execute the intended plans. Do not create unneeded indexes, because unused indexes just increase database size and slow update, insert, and delete performance.</p>
+
+<p>Choose the appropriate kinds of indexes. Particularly for large databases and DBMS such as Oracle that support more advanced index types the selection of the appropriate index type can make up to an order of magnitude difference in query performance.</p>
+
+<p>Test each request pattern against production databases and  verify that the query plans are as intended and that they are fast. If the  optimizer produces a plan different than the one you intended, then understand  the plan the optimizer produced. Sometimes good optimizers find faster plans  than the ones we intended to use. Sometimes a surprising plan means that we  forgot an index. If the optimizer's plan is not fast enough and the optimizer  is not very good, restructure the SQL or use hints or other techniques to guide  the optimizer to a faster plan. Tune based on realistic SQLs against realistic  databases. Request performance depends on the database statistics.</p>
+<p>Sometimes you may encounter slow requests that cannot be made fast enough by indexing or changing the requests, and this slowness is due to scalable performance problems in the schema. No amount of tuning or indexing will make a poorly designed schema perform well. Incompatible schema changes "break" existing SQL, so it is important to get a good stable scalable schema early in development. Mature databases such as Oracle have many features that DBAs use to adapt the DB to changing SQL or workloads without changing the schema in ways that break existing application's SQL.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>What is the most efficient index for the query:<span class="code"> SELECT * FROM Assignment INNER JOIN Student ON Student.student_id = Assignment.student_id</span>? Assume that there is a B-tree primary key index on Student.student_id.</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="radio" name="x" value="T"></td>
+<td>A B-tree index on Assignment.student_id</td>
+<td style="display: none;">This is true. This index would support an index join between the primary key index of Student and Assignment.student_id.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>A bitmap index on Student.student_id</td>
+<td style="display: none;">This is false. There is already an index on this and most DBMS would not even allow a second index.</td>
+</tr>
+
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a19','../module2/metcs779_M2L1T19_IndexingforPerformance.htm','body');
+</script>
+
+<div id="a20">
+
+
+<title>Tuning that Affects both the SQL and DBMS</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Tuning that Affects both the SQL and DBMS</h1>
+
+<p>Some of the most effective techniques for improving performance  involve changing both the application and the DBMS. Because these changes alter  the application's SQL and the DBMS they are not as easy to implement as many of  the previously discussed techniques.</p>
+<p>One of the most basic techniques is to minimize the lengths in bytes of the rows in the database tables. You do this by eliminating unneeded columns, by choosing the most compact data types for the columns, and by eliminating unneeded data such as data values that represent null. (Modern DBMS such as Oracle use special algorithms to compress null values, so they store much more compactly than application-specified null values.) Operations against tables with shorter rows run faster, because more rows are brought in with each I/O operation and because the block buffer cache is better utilized. I have obtained a thirty percent performance improvement by carefully optimizing the data types in large tables.</p>
+
+<p>Another less obvious technique is to vertically partition tables that have very different access patterns for different columns, and very large columns. You do this by moving infrequently accessed large columns to another table. When you do this the frequently accessed columns will be in much shorter rows, so they will run much faster and cause less traffic in the block buffer cache. Using this technique I obtained a five-fold speedup of the frequent operations against a large telephone company warehouse table that contained one column that was most of the size of the table. What I did was to create a new table that shared the synthetic primary key of the previous table, and move this large VARCHAR column to the new table. The few queries that accessed the large VARCHAR column were rewritten to join the shorter table and the new longer-row table; these queries ran no more slowly than previously, because most of the time was spent accessing the long rows of the new table. Fortunately queries that accessed the large VARCHAR column were infrequent, so average performance was improved dramatically with no slowing of the worst case.</p>
+
+<div class="summarycenter">
+<h4>Advanced Topic</h4>
+<p>You may notice that this is the opposite of what is done  when tables that are frequently accessed together are physically clustered  using a common cluster key; this reduces the number of I/O operations required  to join the clustered tables. In this case what we are doing is physically  separating the storage for parts of a table that are infrequently accessed  together, rather than physically clustering the parts of different tables that  are frequently accessed together.</p>
+<p>*See Loney, <em>Oracle Database 12c: The Complete Referenc</em>e, Chapter 17, pages 338–340 for details on clustered tables.</p>
+</div>
+
+<p>Perhaps the most powerful performance optimizing technique  that changes both the SQL and the database is migrating data-intensive  computations from the application to the database itself as stored procedures  and triggers. We studied this in Week 1. Moving computations into stored  procedures has a number of advantages, including improving security, reducing  network traffic, and providing a more stable application interface in spite of  schema changes. Stored procedures have direct access to the data in RAM, so  they are faster than external computations for data-intensive operations. This  is a common approach for larger enterprise systems. Some databases are designed  so that applications can only access the database using stored procedures.  Stored procedures and triggers are not as portable as ANSI SQL 92, but vendors  are slowly catching up with SQL 99, which includes stored procedure and trigger  standards.</p>
+<div class="tipcenter">
+  <h4><span class="tableTitle">Performance Note</span></h4>
+<p>Most DBMS such as Oracle support executing Java in a Java  Virtual Machine in the database kernel or linking application C code into the stored  procedures kernel. Because Java is compiled on the fly and C is precompiled,  this is the most CPU-efficient approach for computation-intensive operations.  It is also the most difficult to achieve, because the native data types may not  correspond directly to the data types in C or Java, making data conversion necessary.  This can slow performance, so there is a design tradeoff when using Java or C.</p></div>
+
+<p>Another basic general technique for improving performance is to constrain the domain (the domain of a variable is the set of legal values that the variable can take on) of the data at the time that you insert or update it rather than doing operations on the data to convert it to some standard form at query time. For example, if text is stored with uncontrolled casing, then querying it requires converting it to standard casing, using something like:</p>
+
+<blockquote>
+<p class="code">WHERE UPPER(name) = 'FRED'</p>
+</blockquote>
+<p>The result UPPER function call isn't indexable, except with an Oracle function-based index, so it forces a scan, and it is much slower than:</p>
+
+<blockquote>
+<p class="code">WHERE name = 'FRED'</p>
+</blockquote>
+<p>Consider CHECK constraints or triggers to enforce data domain constraints such as casing.</p>
+<p>Even in OLTP databases there are usually many more queries than inserts or other change requests, so take time during changes to help the queries.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>What are some of the ways to optimize DBMS performance? (Select all that apply.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Performance can be optimized by eliminating data values that represent null.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Performance can be optimized by minimizing the length of bytes in each row.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Performance can be optimized by moving infrequently accessed columns to separate tables.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>Performance can be optimized by moving computations to stored procedures and triggers.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('a20','../module2/metcs779_M2L1T20_TuningthatAffectsboththeSQLandDBMS.htm','body');
+</script>
+
+<div id="a21">
+
+
+  <title>Summary</title>
+  
+  <link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+  
+
+<h2>Summary</h2>
+  <p>Design relational database applications for scalable performance. Scalable performance requires coordinated design of hardware, DBMS, DBMS configuration, schema, SQL, indexing and applications software architectures. Scalable performance requires coordinated tuning of both the SQL and the DB server with realistic databases and load. SQL changes may require DB server changes such as adding an index. With scalable performance best practices you will obtain good scalable performance and minimize the life cycle costs to maintain good performance, because any production performance tuning will be local and not disruptive.</p>
+
+
+</div>
+<script>
+getHeader('a21','../module2/metcs779_M2L1T21_Summary.htm','body');
+</script>
+
+<header>Lecture 2B - Database Security</header>
+
+<div id="b1">
+
+
+ <title>Overview</title>
+ 
+ <link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+
+
+ <h1>Overview</h1>
+ 
+<p>This lecture introduces Database Security. Database security  is a large topic; it is covered in detail in the course MET CS 674, <em>Database Security</em>. We begin this lecture  by introducing the basic concepts of database security and then introduce the  different kinds of threats, both internal and external. We then introduce the  countermeasures and practices that can be used to help protect against  different threats. We introduce the different security options and features  available in Oracle. Finally, we introduce the special database security  considerations for applications accessible over the web.</p>
+<p>Database Security is introduced in Chapter 20 of the sixth edition  of Connolly  and Begg. You are  responsible for the material in this lecture and in Connolly and Begg. You are  not responsible for techniques specific to Oracle or any other DBMS, but you  may find some of these useful for your term project.</p>
+
+<h2>Learning Objectives</h2>
+ 
+ <p>By  completing the readings, participating in discussions, and completing the  assignments, you will be able to: </p>
+ <div>
+   <div> </div>
+ </div>
+<ul>
+  <li> Explain the basics of database
+ security</li>
+<li> Explain why database security is important</li>
+<li> Protect a database from internal
+ and external threats</li>
+<li> Describe authentication and authorization</li>
+<li> Understand security measures used in Oracle</li>
+<li> Describe DBMS and Web Security</li>
+</ul> 
+
+ <div class="summarycenter">
+   <p>Portions of this lecture were prepared by Matthew Harris, a MET MSCIS graduate and DBA.</p>
+ </div>
+
+
+
+</div>
+<script>
+getHeader('b1','../module2/metcs779_M2L2T01_Overview.htm','body');
+</script>
+
+<div id="b2">
+
+
+<title>Database Security</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Database Security</h1>
+
+<p>The most important asset of an enterprise, apart from its people, is data, most of which is stored in databases. An enterprise can’t operate without its data. Since data is a very valuable resource, it is important to manage it under secure and confidential guidelines. Data must be protected both from outside threats and from threats that occur within the organization. Database management systems support different access privileges for different users and these controls should be used to minimize the threats to the data. For example, a data entry clerk, a database administrator, and a financial analyst should be granted different access privileges.</p>
+<p><strong><em>Database Security</em></strong> is the mechanism that protects the database against intentional or accidental threats, whether the threats are internal or external. The goal of database security is simple: protect the data.</p>
+
+<p>There are numerous different types of threats that we must take in consideration
+for database security:</p>
+
+<ul>
+ <li>Theft and fraud—for example, where someone intentionally tries to steal data or information from the database.</li>
+ <li>Loss of confidentiality—for example, the theft of personal or confidential information.</li>
+ <li>Loss of privacy—for example, where someone uses another person’s account for access.</li>
+ <li>Loss of integrity—for example, where someone with unauthorized access alters data in the database.</li>
+ <li>Loss of availability—for example, where a malicious attacker purposely takes the databases offline or a disk drive failure causes data loss. </li>
+</ul>
+
+<p>These are just a few examples of the numerous threats to a database system. Organizations must take database security seriously to protect the organization and its customers and to ensure that the organization can continue operations in spite of attacks or failures. The different types of database attacks can originate in many areas of the organization. It is the aim of database security to minimize or eliminate these threats.</p>
+<p>Implementing database security is usually the responsibility of the database administrator. In larger enterprises the database security policies and procedures may be managed directly or indirectly by a chief security officer; there may also be an executive Data Administrator who is responsible for the security policies and procedures for the data itself, independent of whether it is in a database.</p>
+<div class="testcenter">
+ <form>
+<h4>Test Yourself</h4>
+<p>When someone uses another person's account to read their data, but makes no use of that data, it is considered which type of threat? (Check all that are true.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" name="x" value="F"></td>
+<td>Fraud</td>
+<td style="display: none;">This is false. This would be where someone intentionally tries to steal data or information from the database and uses that data, for example to steal money.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>Loss of confidentiality</td>
+<td style="display: none;">This is true. This would be the theft of personal or confidential information.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>Loss of privacy</td>
+<td style="display: none;">This is true. When someone uses an account that is not theirs it is considered loss of privacy.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="F"></td>
+<td>Loss of integrity</td>
+<td style="display: none;">This is false. This would be where someone with unauthorized access alters data in the database.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="F"></td>
+<td>Loss of availability</td>
+<td style="display: none;">This is false. Examples of loss of availability include where a malicious attacker purposely takes a database offline or a disk drive failure causes data loss.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('b2','../module2/metcs779_M2L2T02_DatabaseSecurity.htm','body');
+</script>
+
+<div id="b3">
+
+
+<title>Threats</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+<h1>Threats</h1>
+<p>A <strong><em>Threat </em></strong>is any situation or event, whether intentional or accidental, that may affect a system or the organization. Threats can be caused by computer systems or by people. The goal of security in the organization is to identify and mitigate all threats. Since an organization has so many different avenues to consider for security, it is important to concentrate on many different parts of the DBMS.</p>
+<p>Common database security threats include:</p>
+<ul>
+<li><span>SQL <span>injection—where</span> a person may purposely alter database statements through a vulnerable channel to corrupt or access data.</span></li>
+<li><span>Excessive <span>privileges—where</span> users are granted database access privileges that exceed the requirements of their job function.</span></li>
+<li><span>Weak <span>authentication—where</span> database access is controlled by passwords that are easy to crack.</span></li>
+<li><span>Backup data <span>exposure—where</span> a database may be secure, but the backups may be vulnerable.</span></li>
+<li><span>Weak audit <span>trails—where</span> there is no logging of bad logins or unusual database transactions.</span></li>
+<li>Database communication vulnerabilities.</li>
+</ul>
+<p>In the next section, we will discuss strategies for limiting or eliminating these threats.</p>
+<div class="testcenter"><form>
+<h4>Test Yourself</h4>
+<p>Select all of the following that are true about database threats.</p>
+<table class="ty">
+<tbody>
+<tr>
+<td><input value="T" name="x" type="checkbox"></td>
+<td>Technological disasters that leave the data vulnerable are a database threat.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input value="T" name="x" type="checkbox"></td>
+<td>Giving database privileges to all members of the staff is a database threat.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input value="T" name="x" type="checkbox"></td>
+<td>A programming issue that causes database corruption is a database threat.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+</tbody>
+</table>
+<button>Show Answer</button></form></div>
+
+</div>
+<script>
+getHeader('b3','../module2/metcs779_M2L2T03_Threats.htm','body');
+</script>
+
+<div id="b4">
+
+
+<title>Countermeasures</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+
+
+
+<h1>Countermeasures</h1>
+
+<p>There are many different countermeasure strategies that an organization can adopt, but these vary depending on the type of company. We will go over the countermeasures for database threats.</p>
+
+
+</div>
+<script>
+getHeader('b4','../module2/metcs779_M2L2T04_Countermeasures.htm','body');
+</script>
+
+<div id="b5">
+
+
+<title>Database Access</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Database Access</h1>
+
+<p>Databases must have access controls to reduce internal or  external threats to the data. Most database systems today have a login process,  where users must enter a username and password to access the database. <strong><em>Authorization</em></strong> is the granting of  a right or privilege that enables a subject to have legitimate access to a  system or a system’s object.</p>
+<p>When a user enters their username and password, <strong><em>authentication</em></strong> is the mechanism  that determines whether the user is who he or she claims to be by checking the  username and password in the database. A <strong><em>database  privilege</em></strong> allows a user to create or access some database object such  as a table or to view or run certain DBMS utilities to view/modify data. The  database administrator is usually responsible for assuring that users are  granted the database privileges that they require to perform their job. It is  also important to assure that excessive privileges are not given.</p>
+<p>There are two access controls that are typical with database  management systems. </p>
+
+<p><strong><em>Discretionary  Access Control (DAC)</em></strong> is the  access control approach supported by the ANSI and ISO SQL standards, which  define the SQL GRANT and REVOKE commands. GRANT and REVOKE are often classified  as the third subset of SQL, termed the Data Control Language or DCL. Recall  that the other parts of SQL are the Data Manipulation Language (DML), which has  to do with operations on data, and the Data Definition Language (DDL), which  has to do with the creation, deletion, and alteration of database objects.  Oracle, Microsoft SQL Server, IBM UDB, and most other modern DBMS support  discretionary access control with various DCL commands to permit or revoke  privileges to database users.</p>
+<p><strong><em>Mandatory  Access Control (MAC)</em></strong><strong> </strong>is a more sophisticated and seldom  used access control approach. In most MAC implementations database access is  controlled by the operating system. Security policies implemented in MAC may be  configured so that they cannot be controlled by the database administrator.</p>
+<div class="testcenter">
+  <form>
+<h4>Test Yourself</h4>
+<p>Which of the following are true of authorization?</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td><em>Authorization</em> is the process of granting privileges to someone.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td><em>Authorization</em> is the mechanism of ensuring that the user is who he says he is.</td>
+<td style="display: none;">This is false. This is the definition of authentication.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td><em>Authorization</em> happens after the user has been authenticated.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('b5','../module2/metcs779_M2L2T05_DatabaseAccess.htm','body');
+</script>
+
+<div id="b6">
+
+
+<title>Views</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Views</h1>
+
+<p>A view is a dynamic result of one or more relational operations  on
+the base relations to produce another relation. A view is typically created
+because there is a query that a lot of users like to run. A view is a virtual
+table based on the results of a SQL statement. For security purposes, a view
+may be used so that certain information isn’t accessed by users.</p>
+
+<p>For example, suppose that customer service representatives need to access a
+customer’s information from the database. Look at the following database diagram, which represents the CUSTOMER table
+in the database.</p>
+
+<p><img src="./Module 2_files/metcs779_M2L2T06_views1.gif" alt="" width="229" height="174"></p>
+
+<p>Suppose that the customer service reps don’t need to know a customer’s
+credit card or Social Security information when talking to the customer. Rather
+than granting the customer services reps SELECT access on the CUSTOMER table
+we can create a view that limits what they can see about the customer.</p>
+
+<blockquote>
+<p class="code">CREATE VIEW CUSTOMER_VIEW AS<br>
+SELECT CUSTOMER_NAME, CUSTOMER_ADDRESS, CUSTOMER_PHONE,<br>
+CUSTOMER_BIRTHDATE<br>
+FROM CUSTOMER</p>
+</blockquote>
+
+<p>The view presents just the data that the customer service representatives need:</p>
+
+
+
+<p><img src="./Module 2_files/metcs779_M2L2T06_views2.gif" alt="" width="199" height="141"></p>
+
+
+
+<p>With the newly created view we can grant access to the customer service reps
+so they have the ability to do their jobs and contact customers, without having
+direct access to confidential information. Now we no longer have to grant them
+access to the CUSTOMER table.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>A view can be used to accomplish which of the  following tasks? (Check all that are true.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>Isolate rows with customer information from  other geographic locations of the firm.</td>
+<td style="display: none;">This is true. A view can be used to isolate rows with customer information, from other geographic locations, from customer service representatives.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>Isolate columns with confidential customer information, like Social Security numbers, from customer service representatives</td>
+<td style="display: none;">This is true. A view can be used to isolate columns with confidential customer information, like social security numbers, from customer service representatives.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>Join columns from multiple tables and present them as one view.</td>
+<td style="display: none;">This is true. A view can be used to join columns from multiple tables and present them as one view.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>Present aggregate information (such as the results of a function).</td>
+<td style="display: none;">This is true. A view can be used to present aggregate information (such as the result of a SUM operation or the results of a function call).</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('b6','../module2/metcs779_M2L2T06_Views.htm','body');
+</script>
+
+<div id="b7">
+
+
+<title>Encryption</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Encryption</h1>
+
+<p>Databases often hold sensitive data such as passwords,  social security numbers, credit card numbers, bank account numbers, and much  more. The data may seem too sensitive to pass and transmit over communication  lines, so an extra means of security is necessary. Encryption is simple; for  example, encryption will turn a simple word like ‘Boat’ into a plaintext string  that cannot be understood like ‘43289rwejsk23d923jsdds0mdwjudfwdfsa’. There are  numerous techniques for encoding data and they are usually irreversible without  the help of a password or encryption key.</p>
+<p>There are two main types of data encryption in a database: symmetric encryption
+and asymmetric encryption.</p>
+
+<p><em>Symmetric encryption </em>uses the same key for both encryption and decryption.</p>
+
+<p><em>Asymmetric encryption </em>uses different keys for encryption and decryption.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>When data is encrypted with one key and  decrypted with a different key, what type of encryption is being used?</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>Symmetric encryption</td>
+<td style="display: none;">This is false. Symmetric encryption is when the same key is used for encrypting and decrypting.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="T"></td>
+<td>Asymmetric encryption</td>
+<td style="display: none;">This is true. Asymmetric encryption is when one key is used for encryption and a different key is used for decryption.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('b7','../module2/metcs779_M2L2T07_Encryption.htm','body');
+</script>
+
+<div id="b8">
+
+
+<title>Oracle Security</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Oracle Security</h1>
+<p>Oracle provides two types of security: systems security and data security. There are two categories of privileges in Oracle: system privileges and object privileges.</p>
+<p><strong><em>System privileges</em></strong> control the right to perform an action on any schema object of a particular type. For example, creating a new user in the database is a system privilege. In Oracle this can be done by using the enterprise manager or with any database client tool using a database login with the CREATE USER privilege. Below is an example of a "Create User" box, for creating a new user. Typically, a system privilege such as CREATE USER is granted only to database administrators.</p>
+<figure class="image" style="width: 527px;" title="Copyright © Trustees of Boston University 2015. Images used for educational purposes TEACH Act (Technology, Education, and Copyright Harmonization Act of 2002). All copyrights belong to respective copyright holders."><img src="./Module 2_files/metcs779_M04L04T08_oracleSecurity_clip_image001.jpg" alt="http://media.wiley.com/assets/7/19/0-7645-0880-6_0802.jpg" width="525" height="465">
+<div class="credit"><span><span>http</span>://media.<span>wiley</span>.com/assets/7/19/0-7645-0880-6_0802.<span>jpg</span></span></div>
+</figure>
+<p><strong><em>Object privileges </em></strong>are privileges that allow a user to perform a particular action on a specific table, view, sequence, procedure, function, or package. To grant users access to certain objects, one must have system privileges. For example, an administrator may grant the user "JOHN" SELECT permission on the table CUSTOMERS with a simple SQL statement:</p>
+<blockquote>
+<p class="code">GRANT SELECT ON CUSTOMERS TO JOHN</p>
+</blockquote>
+<p>If the administrator wanted to authorize JOHN to grant others to access the same table, all that is required is the addition of the WITH GRANT option:</p>
+<blockquote>
+<p class="code">GRANT SELECT ON CUSTOMERS TO JOHN WITH GRANT OPTION</p>
+</blockquote>
+<div class="testcenter"><form>
+<h4>Test Yourself</h4>
+<p>The ability to CREATE TABLE is an example of which type of privilege?</p>
+<table class="ty">
+<tbody>
+<tr>
+<td><input name="x" value="T" type="radio"></td>
+<td>System privileges</td>
+<td style="display: none;">This is true. System privileges grant access to CREATE or DROP objects.</td>
+</tr>
+<tr>
+<td><input name="x" value="F" type="radio"></td>
+<td>Object privileges</td>
+<td style="display: none;">This is false. Object privileges grant permission for a specific user to access (SELECT, INSERT, UPDATE, DELETE, etc.) tables, views, procedures, functions, and packages.</td>
+</tr>
+</tbody>
+</table>
+<button>Show Answer</button></form></div>
+
+</div>
+<script>
+getHeader('b8','../module2/metcs779_M2L2T08_OracleSecurity.htm','body');
+</script>
+
+<div id="b9">
+
+
+<title>DBMS and Web Security</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+
+
+
+<h1>DBMS and Web Security</h1>
+
+<p>The challenge of working with databases online is the need to transmit and receive information while ensuring that all the data complies with privacy, integrity, authenticity, non-fabrication, and non-repudiation policies.</p>
+<p>There are numerous malicious attacks that can occur; the administrative staff must actively put in place protective measures to guard against these threats. The security measures associated with DBMS and the Web include: proxy servers, firewalls, message digest algorithms and digital signatures, digital certificates, Kerberos, secure sockets layer, secure http, secure electronic transactions, and many more.</p>
+
+
+</div>
+<script>
+getHeader('b9','../module2/metcs779_M2L2T09_DBMSandWebSecurity.htm','body');
+</script>
+
+<div id="b10">
+
+
+<title>Summary</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+
+
+
+<h1>Summary</h1>
+
+<p>This lecture introduced some of the threats to databases and data and the database functionalities that are available to mitigate these threats. It is important to implement database security so an organization can protect its data. Without its data, an organization would not be able to succeed. With the different security methods discussed it is possible to protect the database from internal and external attacks. There are numerous types of malicious attacks that must be assessed and mitigated. A database administrator must manage the database access controls and which users are granted which privileges. Database objects such as database views can help manage access to data. When data is being transmitted, encryption is especially important on attributes such as social security numbers or credit card numbers. The course MET CS674, <em>Database Security</em>, covers these topics in more detail, as well as covering advanced database security technologies such as Virtual Private Databases.</p>
+
+</div>
+<script>
+getHeader('b10','../module2/metcs779_M2L2T10_Summary.htm','body');
+</script>
+
+<header>Lecture 2C - Database Management, Connectivity, and Administration</header>
+
+<div id="c1">
+
+
+<title>Introducing a Database into an Organization</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+
+
+
+<h1>Introducing a Database into an Organization</h1>
+
+<p>Most organizations today have many databases, but occasionally it happens that there will be some data that is only present in file systems or other sources. When this data is first placed in a database there are a number of things that you will need to be alert for. The first is the technological change of introducing a new kind of software and DBMS hardware, meaning new skills and new hardware are often required. There are also managerial adjustments, such as having DBAs to care for the database and arranging regular backups and security. There is also the usual cultural resistance to change, particularly in enterprises that have been stable for some time. I have found that the best way to deal with all of these is with understanding (both human and technical) and patience.</p>
+<p>It can happen that individuals or parts of an organization don't want to share “their” data with the rest of the organization. This sense that parts of an organization can own data that is a valuable resource for the entire enterprise should be dealt with by executives of the organization. Over time fears of what might happen if others have access to previously local data should be replaced by an understanding that the data makes a real contribution to the well-being of the organization and that, by analyzing the data in the context of all the other data, better decisions can be made. Needless to say it is important that the technical people and managers who have access to the data not abuse the power that this gives them.</p>
+<p>When a database of any size is introduced into an organization a database administrator will be responsible for the database. The DBA will need to deal with the cultural, technical, and managerial issues that arise from introducing the new database. This can take considerable technical, communications, and interpersonal skills.</p>
+
+</div>
+<script>
+getHeader('c1','../module2/metcs779_M2L3T01_IntroducingaDatabaseintoanOrganization.htm','body');
+</script>
+
+<div id="c2">
+
+
+<title>Database Administrators</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Database Administrators</h1>
+
+<p>When you work very much with DBAs you learn that there are two kinds—development DBAs and production DBAs. A production DBA has to make sure that everything having to do with the production database works correctly all the time, so production DBAs tend to be very concerned about any changes and they learn to test any changes carefully before they go into production. A development DBA's job is to support the typically rapidly evolving database requirements of an application that is being developed or integrated. Change is the name of the game for a development DBA. A development DBA's job is developing a database foundation for ongoing growth and change. It is quite common for an application under development to trash the database and development DBAs often restore databases that developers have trashed. Thus an event such as having an application trash a database, that almost never occurs in production and is a major problem in production, may happen several times per day in a development database, where it is inconsequential. Some DBAs can function well as both development and production DBAs, but this dichotomy of job requirements often makes it difficult for DBAs to handle both roles, so most DBAs choose to go into either development or production.</p>
+<p>There are many different ways of placing the DBA function within an organization, including matrix reporting arrangements, where a DBA reports both to a DBA organization and to the development projects or production functions for which they are responsible. This matrix reporting approach has the advantages of integrating the DBA into the enterprise DBA resources and culture, while also integrating him or her into assigned projects within the organization. In these matrix arrangements, the DBA organization is primarily responsible for developing and continually updating the skill sets of all DBAs. The DBA organization can also provide coverage for a DBA during times when additional resources or skills are needed or when a DBA is on vacation or leave.</p>
+
+<div class="testcenter">
+ <form>
+<h4>Test Yourself</h4>
+<p>Which type of DBA would be responsible for a database being integration tested?</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="radio" name="x" value="T"></td>
+<td>Development DBA</td>
+<td style="display: none;">This is true. Integration testing should be done in a pre-production environment.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>Production DBA</td>
+<td style="display: none;">This is false. Integration testing should not be done in the production environment.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('c2','../module2/metcs779_M2L3T02_DatabaseAdministrators.htm','body');
+</script>
+
+<div id="c3">
+
+
+<title>Data Administration and Database Administration</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Data Administration and Database Administration</h1>
+
+<p>Large enterprises today usually have an executive, or an executive-led committee, responsible for the enterprise data itself, including:</p>
+
+<ul>
+<li>The identification of the data elements in the enterprise</li>
+<li>The definition of the data types and domains for each data element</li>
+<li>The requirements for protecting data from loss</li>
+<li>The requirements for keeping data private</li>
+<li>Who in the enterprise is responsible for each data element or group of data elements</li>
+<li>Where the data elements may reside within the enterprise and who has access to them</li>
+<li>Integrity constraints between data elements</li>
+<li>The business rules relating to each data element</li>
+<li>The business transactions that access and change data elements</li>
+<li>Overall data governance, including data policies and procedures</li>
+</ul>
+
+<p>The name of this position or group depends upon the  organization and the design of these data governance functions. Sometimes the  responsibilities rest with a single executive, who may be called the Data Administrator.  These functions are so important and far reaching that the responsibilities are  often given to a committee, which may be termed the Data Governance Committee.</p>
+<p>Notice that these functions mainly define policies,  procedures and standards pertaining to the data resources of the enterprise. A  DBA is responsible for implementing these policies and standards in the  databases for which the DBA is responsible. The DBA will usually define  derivative policies and standards that apply to his or her particular  databases, such as:</p>
+<ul>
+  <li>Database security policies, standards, and procedures</li>
+<li>Password policies, standards, and procedures</li>
+<li>Backup policies, standards, and procedures</li>
+<li>Database privilege policies, standards, and procedures</li>
+<li>Naming standards for database objects</li>
+<li>Database programming standards</li>
+<li>Application access standards</li>
+<li>Testing standards and procedures</li>
+</ul>
+
+<p>Over the last five years small- and medium-sized organizations  have begun to outsource their DBA functions. This has several advantages for  the organization, including obtaining DBA coverage around the clock and ready  access to specialized DBA skills. Over the last few years external DBA  organizations have begun to provide these services remotely, over the Internet.  This has the advantage of reducing cost and improving coverage.</p>
+<div class="testcenter">
+  <form>
+<h4>Test Yourself</h4>
+<p>Select some of the job functions that a data administrator or data governance committee might perform, according to the lecture.</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>A data administrator might define access and other security policies for data.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="F" name="x"></td>
+<td>A data administrator might define the requirements for security for a given table in the database and the policies that will accomplish that.</td>
+<td style="display: none;">This is false. Policies governing security for database objects are usually defined and implementedwritten and carried out by the DBA.</td>
+</tr>
+<tr>
+<td><input type="checkbox" value="T" name="x"></td>
+<td>A data administrator might define the general data types of enterprise data, such as customer and product IDs.</td>
+<td style="display: none;">This is true. These general data types are mapped into DBMS-specific data types by database architects, designers and DBAs.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('c3','../module2/metcs779_M2L3T03_Data AdministrationandDatabaseAdministration.htm','body');
+</script>
+
+<div id="c4">
+
+
+<title>Data Security, Privacy, and Integrity</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Data Security, Privacy, and Integrity</h1>
+
+<p>The <a href="http://www.hhs.gov/ocr/hipaa/" target="_blank">HIPAA</a> and <a href="http://en.wikipedia.org/wiki/Sarbanes-Oxley_Act" target="_blank">Sarbanes-Oxley</a> laws and regulations have increased the responsibilities of enterprises to secure databases, protect the privacy of data, and archive significant transactions for seven years. These requirements place increasing responsibility on database administrators, many of whom are currently working to assure that their enterprises comply with these laws. Read the section in the text on page 725 and the following lecture; if you are interested in these two acts, follow the links above and read more about them.</p>
+<div class="testcenter">
+ <form>
+<h4>Test Yourself</h4>
+<p>What year was the Health Insurance Portability and Accountability Act enacted?</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="radio" name="x" value="T"></td>
+<td>1996</td>
+<td style="display: none;">This is true. The Health Insurance Portability and Accountability Act was enacted in 1996.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>1997</td>
+<td style="display: none;">This is false. The Health Insurance Portability and Accountability Act was enacted in 1996.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>1998</td>
+<td style="display: none;">This is false. The Health Insurance Portability and Accountability Act was enacted in 1996.</td>
+</tr>
+<tr>
+<td><input type="radio" name="x" value="F"></td>
+<td>1999</td>
+<td style="display: none;">This is false. The Health Insurance Portability and Accountability Act was enacted in 1996.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('c4','../module2/metcs779_M2L3T04_DataSecurityPrivacyandIntegrity.htm','body');
+</script>
+
+<div id="c5">
+
+
+<title>Data Backup, Recovery and Disaster Management</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet" type="text/css">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+<h1>Data Backup, Recovery and Disaster Management</h1>
+<p>The steps involved in risk and disaster management are:</p>
+<ol>
+<li>Identify plausible threats that could damage the database. Include terrorist acts, fire, earthquakes, power outages, hardware failures and sabotage. While you are thinking about the things that could go wrong, think about how you will prevent them or recover from them if they do happen. This is not a frivolous exercise. Many enterprises have come to grief for not having assessed their database threats.</li>
+<li>Assess the costs and other consequences of each of these threats. It is often helpful to determine the cost of an outage as a function of time. For example, for a major airline client of mine the cost for the first twenty minutes of outage of the flight operations database is a few million dollars, and the cost for the second twenty minutes is about thirty million dollars. The costs of downtime for some financial databases are higher. The important thing is to estimate the costs and other consequences of database disasters.</li>
+<li>Create a disaster management plan that mediates the risks that you feel that it is cost-effective or otherwise necessary to mediate. You will find that simple precautions such as off-site backups, backup sites, and appropriate database replication may cover almost all of the threat scenarios.</li>
+<li>Estimate the residual risk if the disaster management plan is put in place and one or more of the identified plausible scenarios actually take place. If some residual risks are unacceptable then modify the plan or take out insurance to reduce the risk to an acceptable level. The insurance should cover the costs of the business interruption that may result from the loss, modification, or unavailability of the database. Enterprise executives should be involved if significant residual risks remain.</li>
+</ol>
+<div class="definitioncenter">
+<h4>The Term <em>Corrupted</em> has Two Meanings</h4>
+<p>The text refers to a database modified in security breaches as a <em>corrupted</em> database. The term <em>corrupted</em> also refers to a database where the durable records are technically incorrect. For example, there may be bad pointers or the checksums and data may not be consistent. A database that is corrupted in this sense is a serious problem that will tax a DBA's skills and may require database recovery.</p>
+</div>
+<div class="testcenter"><form>
+<h4>Test Yourself</h4>
+<p>Select all that are true about database disaster recovery.</p>
+<table class="ty">
+<tbody>
+<tr>
+<td><input value="T" name="x" type="checkbox"></td>
+<td>Errors in application software can be database threats that would need to be mitigated through testing and database constraints.</td>
+<td style="display: none;">This is true. User and application error are the most common sources of database corruption.</td>
+</tr>
+<tr>
+<td><input value="T" name="x" type="checkbox"></td>
+<td>A good backup plan might involve issuing additional privileges to trusted users.</td>
+<td style="display: none;">This is true.</td>
+</tr>
+<tr>
+<td><input value="T" name="x" type="checkbox"></td>
+<td>Comprehensive disaster recovery capability can be expensive.</td>
+<td style="display: none;">This is true. While basic disaster recovery such as database backups is comparatively inexpensive more comprehensive disaster recovery such as hot backup failover sites and full database replication can significantly increase hardware and related costs.</td>
+</tr>
+</tbody>
+</table>
+<button>Show Answer</button></form></div>
+
+</div>
+<script>
+getHeader('c5','../module2/metcs779_M2L3T05_DataBackupRecoveryandDisasterManagement.htm','body');
+</script>
+
+<div id="c6">
+
+
+<title>The DBA's Technical Roles</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>The DBA’s Technical Roles</h1>
+
+<p>Some of the roles of the DBA in a smaller organization, such  as selecting the DBMS type and distribution strategy, can be in the purview of  another specialty, the <em>database architect</em>. Functions such as determining  the storage for the database may be in the purview of the system administrator,  system architect, storage manager, or database architect. Often a DBA is given  the storage to use by the system or storage administrator, and the DBA's role  is limited to creating the database components (such as tablespaces) that  reside on that storage. The text has the DBA in the role of managing database  designers, which is not usual. More commonly development DBAs and database  designers are part of the same team, reporting to a project manager, possibly  with a matrix report to a database organization as well. The database designer's  role in the team is usually to produce the conceptual and logical designs. The  DBA's role includes the physical design and keeping an eye on the applications  design and the requests so that they use the database well. The DBA will work  with the database designers and may provide guidance and standards as well.</p>
+<p>If the database contains financial data, Sarbanes-Oxley has  added transaction archive management to a DBA's operational tasks; similarly,  if the databases have health information, HIPAA has added privacy auditing  tasks.</p>
+<p>Database technology is continually advancing and another of the  DBA's tasks is keeping up with the technology that is relevant to the  enterprise. Many DBAs spend an hour or more per day studying the latest  technology. DBAs may also prepare technology assessments or technology update  plans.</p>
+<p>I think of a database system as having two parts—above the  line and below the line, where the line is the SQL. The application developers  and schema designers determine what is above the line. The DBA's responsibility  includes the myriad of things that are beneath the SQL, which must be correct  enough so that the SQL will run well. This includes appropriate indexing,  tuning of the database configuration parameters, storage tuning, and tuning of  the host platform. Often the DBA will become involved in tuning the SQL as  well.</p>
+<p class="center"><img src="./Module 2_files/metcs779_W06L04_DBA.gif" alt="" width="635" height="468"></p>
+
+<p>I have known good production DBAs who seem to always have a queue of two or three people waiting to speak with them. A production DBA needs good people skills, good time management skills, and good technical skills.</p>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Which of the following tasks and skills might a DBA be  responsible for? (Check all that are true.)</p>
+<table class="ty">
+  <tbody><tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>Selecting database type and distribution strategy</td>
+<td style="display: none;">This is true. A DBA may be responsible for selecting database type and distribution strategy.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>Archive management</td>
+<td style="display: none;">This is true. A DBA is usually responsible for archive management.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>Privacy auditing tasks</td>
+<td style="display: none;">This is true. A DBA is usually responsible for privacy auditing tasks.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>Prepare technology assessments or technology update plans, in a small- to medium-sized organization.</td>
+<td style="display: none;">This is true. A DBA is usually responsible for preparing technology assessments or technology update plans in smaller organizations. In larger organizations teams which include DBAs usually have this responsibility.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>People, time management, and technical skills</td>
+<td style="display: none;">This is true. A DBA is responsible for having people, time management, and technical skills.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('c6','../module2/metcs779_M2L3T06_TheDBAsTechnicalRoles.htm','body');
+</script>
+
+<div id="c7">
+
+
+<title>Database Administration Tools</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+
+<h1>Database Administration Tools</h1>
+
+<p><strong><em>Data dictionaries</em></strong>—The  text describes stand-alone data dictionaries. The roles of stand-alone data  dictionaries have been supplanted by enterprise object models, which are more  complete and expressive. All modern DBMS (including newcomers like MySQL) now  support integrated data dictionaries and the SQL syntax for accessing the  integrated data dictionaries is included in the ANSI SQL standards. Integrated  data dictionaries are very useful. You can learn about the Oracle integrated  data dictionary by reading Chapter 45 in Loney, titled <em>The Hitchhiker's  Guide to the Oracle Data Dictionary</em>. The text describes passive data  dictionaries. Modern integrated data dictionaries are active.</p>
+<div class="storycenter">
+  <h4><span class="tableTitle">Data Dictionaries Can Save Time</span></h4>
+<p>As a consultant I was responsible for the Y2K testing of a  complex database system for a telephone services firm. I needed to shift  forward every date in a test database so that it corresponded to February 29th,  2000. (Yes it existed, as an exception to an exception to an exception, and 85%  of all software got it wrong.) This was easy to do, even though the database  had hundreds of DATE columns. I just wrote a query that accessed the data  dictionary and found all DATE columns. The query produced as its output a  script that contained an UPDATE for each of these DATE columns that added the  appropriate number of days. This would have taken days of difficult error-prone  work without the data dictionary, but it took about twenty minutes with the  data dictionary.</p></div>
+
+<div class="testcenter">
+<form>
+<h4>Test Yourself</h4>
+<p>Which of the following are true of data dictionaries? (Check all that are true.)</p>
+<table class="ty">
+<tbody><tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>A data dictionary is important in upgrading a database.</td>
+<td style="display: none;">This is true. A data dictionary is essential for upgrading a database.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>A data dictionary is essential to trigger generation.</td>
+<td style="display: none;">This is true. A data dictionary is needed to identify the table and attributes that a trigger is on.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>A data dictionary is important for connecting to a database.</td>
+<td style="display: none;">This is true. The user credentials and privileges are stored in the internal database data dictionary.</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="x" value="T"></td>
+<td>A data dictionary is important for accessing tables and columns of a database.</td>
+<td style="display: none;">This is true. A data dictionary stores the privileges that permit users to see and use database objects.</td>
+</tr>
+</tbody></table>
+<button>Show Answer</button>
+</form>
+</div>
+
+
+</div>
+<script>
+getHeader('c7','../module2/metcs779_M2L3T07_DatabaseAdministrationTools.htm','body');
+</script>
+
+<div id="c8">
+
+
+<title>Database CASE Tools</title>
+
+<link href="./Module 2_files/local.css" rel="stylesheet">
+<script src="./Module 2_files/jQueryLibrary.min.js.下载"></script>
+<script src="./Module 2_files/ty.js.下载"></script>
+
+
+<h1>Database CASE Tools</h1>
+<p>There are a number of relational database design tools. Visio Professional is a useful graphics tool and I have used it to produce some of the figures in this course, but it is not a bona fide database design tool. A decent database design tool should be able to produce the CREATE statements for at least one, and preferably several different, DBMS. Today the standard relational and object relational database graphical modeling language is the Extended Entity-Relationship (EER) language, so any tool that you select should ideally support this language. IBM's Rational Rose (<a href="http://www-306.ibm.com/software/awdtools/developer/datamodeler/" target="_blank">http://www-03.ibm.com/software/products/us/en/datamodeler/</a>) tool is a good modeling tool with support for UML and model-based development. I have used ERWin (<a href="http://erwin.com/" target="_blank">http://erwin.com/</a>) for several designs, both warehouse and OLTP. There are a number of free and open source tools available. Microsoft Access has an ERD presentation that makes an acceptable way of throwing together a simple ERD, though it is not a useful database design tool except for simple Access databases.</p>
+<div class="testcenter"><form>
+<h4>Test Yourself</h4>
+<p>Which of the following are bone fide database design tools? (Check all that are true.)</p>
+<table class="ty">
+<tbody>
+<tr>
+<td><input name="x" value="F" type="checkbox"></td>
+<td>Visio Professional</td>
+<td style="display: none;">This is false. Visio Professional is useful for creating database design diagrams but it lack the features of a true database design tool, such as the ability to generate CREATE statements for databases.</td>
+</tr>
+<tr>
+<td><input name="x" value="T" type="checkbox"></td>
+<td>Rational Rose</td>
+<td style="display: none;">This is true. Rational Rose is a capable database design tool that is also well known for UML modeling.</td>
+</tr>
+<tr>
+<td><input name="x" value="T" type="checkbox"></td>
+<td>ERWin</td>
+<td style="display: none;">This is true. ERWin is a full-featured database design tool capable of modeling, executing DDL script, and even reverse engineering.</td>
+</tr>
+<tr>
+<td><input name="x" value="T" type="checkbox"></td>
+<td>Oracle Designer</td>
+<td style="display: none;">This is true. Designer is one of the most capable database design and lifecycle tools.</td>
+</tr>
+</tbody>
+</table>
+<button>Show Answer</button></form></div>
+
+</div>
+<script>
+getHeader('c8','../module2/metcs779_M2L3T08_DatabaseCASETools.htm','body');
+</script>
+
+
+<div class="xl-chrome-ext-bar" id="xl_chrome_ext_{4DB361DE-01F7-4376-B494-639E489D19ED}" style="display: none;">
+      <div class="xl-chrome-ext-bar__logo"></div>
+
+      <a id="xl_chrome_ext_download" href="javascript:;" class="xl-chrome-ext-bar__option">下载视频</a>
+      <a id="xl_chrome_ext_close" href="javascript:;" class="xl-chrome-ext-bar__close"></a>
+    </div></body></html>

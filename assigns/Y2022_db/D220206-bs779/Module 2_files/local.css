@@ -1,0 +1,54 @@
+﻿/* Last updated 17 May 2012 */
+
+@charset "UTF-8";
+@import url('https://onlinecampus.bu.edu/bbcswebdav/courses/00cwr_odeelements/css/screen.css');
+@import url('https://onlinecampus.bu.edu/bbcswebdav/courses/00cwr_odeelements/css/print.css') print;
+
+/* College graphic */
+body:after {
+	clear: both;
+	display: block;
+	content: url('https://onlinecampus.bu.edu/bbcswebdav/courses/00cwr_odeelements/course_template_images/colleges/metropolitan_college/college.png');
+	padding-top: 4em;
+	padding-bottom: 1.3em;
+	text-align: right;
+	}
+/*Hide/show due dates in the syllabus*/
+/*.date {display: none}*/
+	
+/* Custom CSS for this course goes under here */
+
+.code {
+	font-family: "Courier New", Courier, monospace;
+	color:#00F;
+	}
+
+pre {
+	font-size: small;
+	}
+
+/* Shadow to the book sc */	
+img.screens {
+	border: thin solid #000;
+	box-shadow: 8px 8px 5px #777;
+}
+
+table.data td {
+	vertical-align: top;
+}
+
+
+/*to highlight parts of code*/
+span.highlight {
+    background-color: yellow;
+}
+
+/*to increase size of title font and next-level subheader font in Spark Optional Technical Details callout boxes*/
+
+h4.techDetailTitle{
+	font-size: 20px;
+}
+
+h4.techDetailSub{
+	font-size: 18px;
+}
