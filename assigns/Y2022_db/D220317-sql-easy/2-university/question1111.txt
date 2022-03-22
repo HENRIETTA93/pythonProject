@@ -1,0 +1,20 @@
+Display the name and department name of all instructors, sorted by department name and, within each department, sorted by name.
+Find the department name and median salary of instructors in departments whose median salary is higher than $50,000 and lower than $90,000. Sort the results by median salary, from highest to lowest. HINT: use the aggregate function median().
+a) Create a table num_students(ID, number_advisees) that references instructor.
+b) Insert into the table num_students one row (incl. ID and number_advisees) for each advisor that has at least one advised. Include the number 
+Delete all rows in the table takes that contains information about courses taught before 2022 and that does not have information for student grade.
+Display the student name and the total credits for all students who have taken at least 3 courses with a grade B or better. Sort the results by the total number of credits, in ascending order.
+Add an extra section to all computer science courses. Make sure that the sec_id is one digit higher than the number of sections offered in each semester/year.
+(Extra Credit) Find the most frequent time slot for each course that has ever been taught. Display the course_id, the time_slot_id, and the number of times the course has been taught at that time slot. Sort the result by the number of times the course_id, followed by the number of times it was taught in a timeslot.
+ 
+
+显示所有教员的姓名和部门名称，按部门名称排序，在每个部门内，按姓名排序。
+查找部门名称和工资中位数高于50,000美元和低于90,000美元的部门中的教员的工资中位数。将结果按工资中位数从高到低排序。提示：使用聚合函数median()。
+a) 创建一个表num_students(ID, number_advisees)，引用指导老师。
+b) 在num_students表中插入每一个至少有一个顾问的行（包括ID和顾问人数）。包括数字 
+删除表格中所有包含2022年以前教授的课程信息和没有学生成绩信息的行。
+显示所有至少修过3门B级或以上课程的学生的学生姓名和总学分。按学分总数对结果进行排序，以升序排列。
+在所有计算机科学课程中增加一个额外的部分。确保sec_id比每学期/每年提供的章节数多一位。
+(额外学分)为每一门课程找到最频繁的时间段，这些课程曾经被教授过。显示课程编号，时间段编号，以及该课程在该时间段的授课次数。将结果按课程_id的次数排序，然后是该课程在某个时间段的授课次数。
+ 
+
