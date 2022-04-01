@@ -1,0 +1,40 @@
+1. 一个数据文件中包含多个json数据，通过python读取文件时须额外处理
+2. 数据文件中的date 为13位毫秒数据，通过转换为秒级时间戳，并将其转换为时间格式。
+3. 根据以下查询可知，有3008条receipt的barcode在brands数据中不存在。
+select * from receipt_items where barcode not in (select distinct barcode from brands);
+4. users数据中有多组重复。
+select count(distinct user_id), count(*) from users;
+5. receipts数据中有148条数据，其user_id 在users表中找不到。
+select user_id from receipts where user_id not in (select distinct user_id from users);
+
+
+•	What questions do you have about the data?
+•	How did you discover the data quality issues?
+•	What do you need to know to resolve the data quality issues?
+•	What other information would you need to help you optimize the data assets you're trying to create?
+•	What performance and scaling concerns do you anticipate in production and how do you plan to address them?
+
+--1
+-- what's the meaning of 【cpg":{"$ref":"Cogs","$id":{"$oid":"5a734034e4b0d58f376be874"}】
+几乎所有的brand都有cpg 具体指的含义不清楚，且cpg的$ref 几乎都是Cogs
+
+-- 在recipts中存在不在brands中的数据项，疑惑是否brands缺少了采集相关的数据。
+
+--2
+在加载json数据，解析并存储到关系型数据库时，发现了数据的缺失值问题。
+使用sql发现了数据的duplicated问题，数据的不一致问题。
+
+-- 3
+我认为应该通过数据清洗去解决一些duplicated问题
+对于缺失值问题，通过给定默认值的方式解决，或直接删除没有意义的数据。
+
+-- 4
+建立元数据字典，用以描述数据项的含义，及字段取值联系。
+
+-- 5
+在实际生产中，脏数据太多的情况下，etl过程非常复杂，将耗费大量的人力物力。
+
+part4:
+通过将非关系数据加载到关系数据库中，使用sql查询发现数据质量问题。
+需要了解数据的来源，以及存在数据质量问题的是否能被清洗。
+
