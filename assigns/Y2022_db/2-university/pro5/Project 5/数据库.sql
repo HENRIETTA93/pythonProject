@@ -4,8 +4,9 @@
 
 DROP TABLE IF EXISTS band;
 CREATE TABLE band
-( 
-	name VARCHAR(100) PRIMARY KEY,
+(
+    ID int primary key auto_increment,
+	name VARCHAR(100),
 	genre VARCHAR(50), 
 	date_of_formation DATE
 );
@@ -14,14 +15,14 @@ DROP TABLE IF EXISTS musician;
 CREATE TABLE musician
 (
 	ID INTEGER PRIMARY KEY AUTO_INCREMENT,
-	band_name VARCHAR(100),
+	band int,
 	f_name VARCHAR(50),
   	m_initial VARCHAR(1),
   	l_name VARCHAR(50),
 	dob DATE,
 	nationality VARCHAR(60),
 	years_exp INTEGER,
-	FOREIGN KEY (band_name) REFERENCES band(name) ON DELETE SET NULL
+	FOREIGN KEY (band) REFERENCES band(ID) ON DELETE SET NULL
 );
 
 DROP TABLE IF EXISTS concert;
@@ -39,26 +40,27 @@ CREATE TABLE concert
 DROP TABLE IF EXISTS song;
 CREATE TABLE song
 (
+    ID int primary key auto_increment,
 	name VARCHAR(100),
 	composer INTEGER,
   	lyrics varchar(10000),
   	duration INTEGER,
 	style VARCHAR(100),
-	PRIMARY KEY (name, composer),
 	FOREIGN KEY (composer) REFERENCES musician(ID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS set_list;
-CREATE TABLE set_list
-(
-	band_name VARCHAR(100),
-	conc_ID INTEGER,
-  	song_name VARCHAR(100),
-	composer INTEGER,
-	PRIMARY KEY (band_name, conc_ID, song_name, composer),
-	FOREIGN KEY (band_name) REFERENCES band(name) ON DELETE CASCADE,
+
+
+create table set_list(
+ ID int primary key auto_increment,
+ band int,
+ conc_ID int,
+ song int,
+ 	FOREIGN KEY (band) REFERENCES band(ID) ON DELETE CASCADE,
 	FOREIGN KEY (conc_ID) REFERENCES concert(ID) ON DELETE CASCADE,
-	FOREIGN KEY (song_name, composer) REFERENCES song(name, composer) ON DELETE CASCADE
+	FOREIGN KEY (song) REFERENCES song(ID) ON DELETE CASCADE
+
 );
 
 DROP TABLE IF EXISTS vocalist;
@@ -102,3 +104,22 @@ CREATE TABLE plays
 	FOREIGN KEY (instr_ID) REFERENCES instrumentalist(ID) ON DELETE CASCADE,
 	FOREIGN KEY (instrument) REFERENCES instrument(name) ON DELETE CASCADE
 );
+
+
+--
+DROP TABLE IF EXISTS plays;
+DROP TABLE IF EXISTS instrument;
+DROP TABLE IF EXISTS instrumentalist;
+DROP TABLE IF EXISTS language;
+DROP TABLE IF EXISTS vocalist;
+DROP TABLE IF EXISTS set_list;
+DROP TABLE IF EXISTS song;
+DROP TABLE IF EXISTS concert;
+DROP TABLE IF EXISTS musician;
+DROP TABLE IF EXISTS band;
+
+--
+select count(*) from band;
+select count(*) from song;
+select count(*) from concert;
+select count(*) from set_list;
