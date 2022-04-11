@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>COMP3005</title>
+<style>
+body {
+	font-family: Arial, Helvetica, sans-serif;	
+	margin-left:80px;
+	margin-right:80px;
+}
+h1, h2, h3 {
+	font-weight: bold;
+	color: blue;
+}
+p {
+	font-size: large;
+}
+pre {
+	font-size: 14pt;
+}
+
+.red {
+	color: #F00;
+}
+.green {
+	color: forestgreen;
+}
+  .bold {
+	font-weight: bold;
+}
+.requirement {
+	font-weight: bold;
+	background-color: #6AF37A;
+}
+.requirement_danger {
+	font-weight: bold;
+	background-color: #F47272
+}
+.requirement_warning {
+	font-weight: bold;
+	background-color: #F6CA54
+}
+  .code {
+	font-family: "Courier New", Courier, monospace;
+}
+  .requirement_warning1 {	font-weight: bold;
+	background-color: #F7BD36
+}
+</style>
+</head>
+<body class="arial">
+<h1>COMP 3005 Winter 2022 Assignment 3</h1>
+<h1><span class="red">Due: Wed. Mar. 2 by 10:00pm </span><span class="red">submitted to <a href="https://brightspace.carleton.ca">brightspace</a></span></h1>
+<p class="red">&nbsp;</p>
+<hr>
+<p class="red">Revisions:</p>
+<p class="auto-style7">Revisions will be noted here.</p>
+<hr>
+<p><span class="badge-danger">Marking:</span> This assignment 
+  is based on itemized requirements  totaling <span class="red">50</span> marks. </p>
+<p>Marks are awarded, or deducted, based on requirements as follows:</p>
+<table border="1">
+  <tr>
+    <th width="83">Req Type</th>
+    <th width="716">Assignment Grading</th>
+  </tr>
+  <tr>
+    <td><span class="requirement_danger">R0.x</span></td>
+    <td><p><span class="requirement_danger">Critical Submission and Intent Requirements.</span> Assignment (or problem in some cases) gets 0 if <span class="bold">any</span> critical submission requirement (shown in red) is not met.<br>
+    </p></td>
+  </tr>
+  <tr>
+    <td><span class="requirement_warning">R0.x</span></td>
+    <td><p><span class="requirement_warning">Good Practice Requirements.</span> You lose 2 marks for any good practice <br>
+      requirement (shown in amber) not met.<br>
+    </p></td>
+  </tr>
+  <tr>
+    <td><span class="requirement">Rx.x</span></td>
+    <td><p><span class="requirement">Design Requirements.</span> You earn 2 marks for each design requirement (green) satisfied, well implemented, and demonstrated as requested; 1 mark if it's partly met, met but not well implemented, or met but not demonstrated; and 0 if it's not attempted or met.</p></td>
+  </tr>
+</table>
+<p></p>
+<h2 class = "red">&nbsp;</h2>
+<h2 class = "red">Submission (what to submit):</h2>
+<table border="1" class="code">
+  <tr>
+    <th width="226">Question</th>
+    <th width="641">Devliverable to Submit</th>
+  </tr>
+  <tr>
+    <td>Problem 1</td>
+    <td><p>Submit 10 .sql query files named P1_01.sql ... P1_10.sql (one for each problem P1.1-P.10) that adhere to requirements R1.1, R1.2, R1.3<br>
+      </p></td>
+  </tr>
+  <tr>
+    <td>Problem 2</td>
+    <td>Single SQL script called myTunes_assembly.sql</td>
+  </tr>
+</table><p>&nbsp;</p>
+<p class="red">(Marking Instructions in Red)</p>
+<p class="red">Total 50 marks</p>
+<p class="red">Problem 1 (40 marks)</p>
+<p class="red">Problems 1.1-1.10: 4 marks each for total 
+of 40 marks.<br>
+Give one mark for English query statement that accompanies the sql, 2 marks for the  correct SQL logic, and 1 mark for correct output table. </p>
+<p class="red">For SQL they can either do a single query or could make temporary tables and 
+  break things up into smaller queries. We are not judging performance, just 
+whether the correct result is produced.</p>
+<p class="red"></p>
+<p class="red">Problem 2 (10 marks) Two marks each for problems Requirements 2.1-2.5 (0 marks if not implemented; 1 if partly implemented; 2 if fully implemented and working.<br>
+</p>
+<p class="red">&nbsp;</p>
+<hr><br>
+<h2>SQL Queries</h2>
+<p>In this assignment you will get practice doing sql queries.</p>
+<p>Problem 1 consists of some  questions relating to the telephone
+switching
+database we have examined before. It stores information about
+subscribers, lines, trunks, calls in progress, services lines subscribe
+to, routing information used by trunks. You need to answers the
+query questions using SQL.</p>
+<p>The background material for this assignment are the videos entitled SQL 1 and SQL 2 and the SQL examples from the SQL section of the course notes. Also the thinking for solving these problems is the same as that demonstrated in the videos on Relational Algebra.</p>
+<p>&nbsp;</p>
+<hr>
+<h2>Problem 1: SQL Queries</h2>
+<p>The course notes provides an example sqlite database <span class="code">telephone_switch_rev4.db</span> that you must use for this question. Here are some more details about this database.</p>
+<p>The video Telephone Database Rev 4 on the course schedule website walks you through the scenario, ER model, and schema for this database.</p>
+<p>Digit translations during a call works like this.
+The dialled digits are entered into the call table
+along
+with the originator information (portid, channel). Then the dialled
+digits
+are used to find the terminator which could be a line, a trunk, or
+a treatment.
+</p>
+<p>Choosing the terminating facility based on the dialed digits is called translation. It works as follows. The dialled digits in the <font face="Courier New">call </font>table are compared to the
+directory
+numbers of the lines. If one matches then that is the line that was
+called
+and would be entered as the terminator of the call and the line's channel state
+updated from IDLE to BUSY. If the called line however turns out to be BUSY, a busy
+treatment
+facility would be used as the terminator instead.</p>
+<p>Suppose however a caller dials a number that is not
+  among
+  those of the lines. That means the digits represent a called party
+  attached
+  to
+  another switch and so the call will connect to the appropriate
+  trunk
+  instead of a line. Trunks connect switches to each other and support
+  up to 24 conversations at once. To select the appropriate trunk the <font face="Courier New">trunk_routes</font>
+  table is used and is interpreted as follows.
+</p>
+<p>The preferred trunks to use in a call are those for
+which
+the area and office code match those of the dialled digits. Otherwise
+(less
+preferred) trunks that match the area code and have 000 for the office
+code can be used. If there are no matches but a valid phone number was
+dialled a trunk serving area=000 and office=000 can be used (least
+preferred
+option). Several trunks could satisfy any one of the above criteria
+which would
+make them an equally preferred choice.</p>
+<p>The following problems must all be solved by
+  coming up
+  with the required SQL queries. If necessary you can create temporary
+  tables.
+  In each case show the output of the table that shows the result. <span
+ style="text-decoration: underline;">In all
+    cases your query should still work if more data is added to the database or some 
+    data deleted.</span> That
+  is, don't
+  hard code any data dependent values in the query based on what the tables 
+  currently contain. </p>
+<p class="red">(For these queries we will assume that an SQL CONTAINS operation is not 
+  available -which it is not with SQLite, MySQL and many other relational database products).</p>
+<p>For each problem you must provide a query script and sample output: Put your output as a comment at the bottom of the query script so we see it when it runs. Notice you are also asked to provide an english statement of the query with your script. That way when we run your script with .echo ON we will see the english statement, the query, your sample output and the actual output we get. Name your scripts <span class="code">P1_01.sql</span> for question 1 etc. So you will submit 10 individual script files each with the following format:</p>
+<pre>
+/*
+Problem 1.3
+List the names of all the subscribers who are originators of a call 
+to someone who is also a subscriber on the same switch 
+(i.e. a line to line call)
+*/
+
+SELECT portid, name from ...;
+
+/*
+Test Output:
+name       
+-----------
+Mats Sundin
+Jason Allis
+Homer Simps
+Michael Jor
+Ed Belfour 
+*/
+
+</pre>
+<p><span class="requirement">R1.1</span> <span class="red">[1 mark]</span> Include an 
+  English description of what the query 
+is supposed to find (already done for you, but repeat it with your answer so the TA can see it when they are running your code) as a comment at the top of your sql query script. Note: the English provided for the question is OK, you don't have to re-phrase it, just have it in your script so we see it when the script is run.</p>
+<p><span class="requirement">R1.2</span> <span class="red">[2 marks (0 not done, 1 partly OK, 2 all good)]</span> Your SQL query code.</p>
+<p><span class="requirement">R1.3</span> <span class="red">[1 mark]</span> The anwer table you obtained put as a comment at the bottom of the sql script so we can compare it to answer we get when we run the script. </p>
+<p><span class="red">Submission: submit 10 individual sql scripts called </span><span class="code">P1_01.sql - P1_10.sql</span>.</p>
+<p>When your script for a problem is run it would look something like the following to the marker (needs <span class="code">.echo ON</span> when running in sqlite3 command interface to show the query statement on the output).</p>
+<p><img src="images/p1-1.png" width="878" height="803" alt=""/></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span class="requirement">Problem 1.1</span> Produce a table consisting of the names and addresses of the subscribers and their phone 
+  numbers.</p>
+<p><span class="requirement">Problem 1.2</span> Produce a 
+table that lists all the area code, office code combinations and the number of 
+subscribers with that area code, office code combination. </p>
+<p><span class="requirement">Problem 1.3</span> List the 
+names of all the subscribers who are originators of a call to someone who is 
+also a subscriber on the same switch (i.e. a line to line call)</p>
+<p><span class="requirement">Problem 1.4</span> Find
+the names and address of all subscribers who subscribe to all of the available services. (Note the result for the current data might  be empty but your query should work if the TA's add more data to the databse.)</p>
+<p><span class="requirement">Problem 1.5</span> Find the names of all the subscribers who subscribe to at least 
+three services. </p>
+<p><span class="requirement">Problem 1.6</span> Produce a 
+table that lists the most popular service (or services). That is, give the name 
+of the service that has the most subscribers.</p>
+<p><span class="requirement">Problem 1.7</span> Write an SQL query that will produce in one table a list of 
+all the acceptable trunks that can be used to route a call to the 416 area code, 
+office code 334. This query should list the trunks in the order of 
+preference. (The answer should list trunks with routes 416,334 then those with 416,000 
+and then those with 000,000 for example)</p>
+<p><span class="requirement">Problem 1.8</span> Write an SQL query that would find if the line with phone 
+number (613) 712-0024 is currently available to take a call because its channel is IDLE. That is, select the portid, directory number, and channel state of line (613) 712-0024.</p>
+<p><span class="requirement">Problem 1.9</span> Do the same as question 1.7 but this time only include trunks that have at least one 'IDLE' channel. That is, write an SQL query that will produce in one table a list of 
+all the acceptable trunks that can be used to route a call to the 416 area code, 
+office code 334 have at least one idle channel. This query should list the trunks in the order of 
+preference. (The answer should list trunks routes 416,334 then 416,000 
+then 000,000 for example)</p>
+<p><span class="requirement">Problem 1.10</span> Produce a table that lists the name of all the 
+service-subscribers that subscribe to at least all the same services as Jason Allison 
+subscribes to but possibly others as well. Jason Allison rents the line with portID=2. (So this is the classic &quot;subset&quot; query.)</p>
+<hr>
+<p>&nbsp;</p>
+<h2>Problem 2: Script to Create CDs Database</h2>
+<p>In assignment 1 you were asked to provide sql scripts that would contribute two CDs worth of information to a database that contained a cds and songs table. A similar question was done in the previous offering of the course. The TAs  ran the student's answer scripts and each TA produced a database consisting of the contributions of the students they marked. We have dumped those individual databases into SQL scripts (one script per TA from winter 2021). In this problem we want you to write a script that would read all those individual scripts and create one single database with all the data from those scripts. Thus your script will have to read the individual scripts from and end up with a single database with all the data. The scripts are included with this assignment in the folder <span class="code">myTunes w2021 TA  scripts</span>. Here are the specific requirements.</p>
+<p><span class="requirement_danger">Intent Requirement R0.1</span>  Your script must read and make use of the TA files. That is, you cannot just cut and paste the information from these files and then ignore the files in your script. Your script should work even if new content is added to the TA files. <span class="requirement_danger">0 marks for this question if this requirement is not met.</span></p>
+<p><span class="requirement_danger">Script Errors Requirement R0.2</span> Your script must NOT throw SQL or dot command erros if run against an initially empty database of a legitimate database created by a previous student. (Note your script will, of course, destroy old copies of the <span class="code">cds</span> and <span class="code">songs</span> table.) <span class="requirement_danger">0 marks for this question if this requirement is not met.</span></p>
+<p></p>
+<p>&nbsp;</p>
+<p><span class="requirement">R2.1</span> Your script must be called <span class="code">myTunes_assembly.sql</span> and may use both SQL commands and SQLite dot commands. The TA's will mark your script by executing.</p>
+<p class="code">sqlite3 myTunes.db<br>
+sqlite&gt;.read myTunes_assembly.sql</p>
+<p>on their console. The TA scripts will be in the same directory as your <span class="code">myTunes_assembly.sql</span> script. In the command above <span class="code">myTunes.db</span> could be either a non-existing database or a database that already contains a <span class="code">cds</span> and <span class="code">songs</span> table but these tables could be dropped by your script. This way the TA's can keep using the same database to run student scripts one after the other as each script would start by dropping the existing tables if they exist.</p>
+<p><span class="requirement">R2.2</span> You may not alter the files provided by the TA's in any way. When your script is being marked they will use their own copies of the files so any changes you make would not be picked up anyway. </p>
+<p><span class="requirement">R2.3</span> When your script has run the database should consist of ONLY a <span class="code">cds</span> table and a <span class="code">songs</span> table. There should not be any old or temporary tables that result from your script running. Your script can create other tables but must drop them before it completes. You can assume that when your script is run the database would either have no existing tables or only has a <span class="code">cds</span> and <span class="code">songs</span> table in it.</p>
+<p><span class="requirement">R2.4</span> Your resulting database should contain all the data represented by the winter 2021 TA scripts included with this assignment. (The TA's will run a query that counts the entries, for example). You can assume the TA scripts will be in the same directory as your sql script when we .read yours.</p>
+<p><span class="requirement">R2.5</span> Your script should be itempotent (and not throw any SQL or dot command errors when run).</p>
+<p>&nbsp;</p>
+<p>The strategy for solving these problems would involve creating and altering and dropping tables using SQL commands. Perhaps copying data from one table to another using sql like</p>
+<p class="code">insert into table1 (col1, col2) select (colA,colB) from table2;</p>
+<p>Also your script would likely have muliple .read commands to read the individual TA scripts. You should investigate whatever dot commands and sql commands you might need to do this.</p>
+<p>&nbsp;</p>
+</body>
+</html>
