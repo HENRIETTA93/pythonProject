@@ -12,7 +12,18 @@
 <span> <a href="InsertSong.php">Insert song</a> </span>
 
 <span><a href="InsertMusician.php">Insert musician</a></span>
-<br/>
 
+<span><a href="InsertSetlist.php">Insert setlist</a></span>
+<br/>
+<span> <a href="QuerySong.php">Query song</a> </span>
+
+<span> <a href="QueryMusician.php">Query musician</a> </span>
+<span> <a href="QueryConcert.php">Query concert</a> </span>
+
+<br>
+<span> <a href="DeleteConcert.php">Delete concert</a> </span>
+
+<br>
+<span> <a href="UpdateSong.php">Update song</a> </span>
 </body>
 </html>
