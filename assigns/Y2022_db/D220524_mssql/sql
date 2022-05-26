@@ -1,0 +1,34 @@
+insert into Foodservice_Product
+select distinct  [Product ID], [Product Description], Discontinued, [Supplier Name], [Unit Price], Website, 'Decorations' as Category_Name
+from Decorations
+where [Product ID] is not null
+and [Product ID] not in (select [Product ID] from Decorations group by [Product ID] having count([Product ID])>1)
+union
+select [Product ID], [Product Description], Discontinued, [Supplier Name], [Unit Price],   Website, Category as Category_Name
+from Equipment
+where [Product ID] is not null
+and [Product ID] not in (select [Product ID] from Equipment group by [Product ID] having count([Product ID])>1)
+union
+select [Product ID], [Product Description], Discontinued, [Supplier Name], [Price],  Website,  Category as Category_Name
+from Frozen
+where [Product ID] is not null
+and [Product ID] not in (select [Product ID] from Frozen group by [Product ID] having count([Product ID])>1)
+union
+select [Product ID], [Product Description], Discontinued, [Supplier Name], [Unit Price],  Website, Category as Category_Name
+from [Food Service]
+where [Product ID] is not null
+and [Product ID] not in (select [Product ID] from [Food Service] group by [Product ID] having count([Product ID])>1)
+union
+select [Product ID], [Product Description], Discontinued, [Supplier Name], [Unit Price],  Website, Category as Category_Name
+from [Imported Loose Chocolates]
+where [Product ID] is not null
+and [Product ID] not in (select [Product ID] from [Imported Loose Chocolates] group by [Product ID] having count([Product ID])>1)
+union
+select [Product Description], [Product Description], Discontinued, [Supplier Name], [Unit Price],  Website, Category as Category_Name
+from Packaging
+union
+select [Product], [Product Description], Discontinued, [Supplier Name], [Unit Price],  Website, Category as Category_Name
+from Patisserie
+where [Product ID] is not null
+and [Product ID] not in (select [Product] from Patisserie group by [Product ID] having count([Product ID])>1);
+
