@@ -46,6 +46,7 @@ foreign key (Product) references Products(sku2)
 
 
 -- clean data
+select site
 from customers
 group by site
 having count(site)>1;
