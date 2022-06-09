@@ -304,17 +304,54 @@ where s.产地 in (select distinct 产地 from 蔬果产品 where 蔬果名称 i
 group by g.姓名
 having sum(s.单价*dt.数量*dt.折扣)>=500
 
--- 9 ALL 子查询- 查询购买的蔬果数量比所有购买过叶菜类顾客的平均购买数量大的顾客信息，以及他购买过的蔬果信息
-select
-from
-
-select g.顾客ID, sum(dt.数量)
-from 顾客 g on g.顾客ID=g.顾客ID
+-- 9 - 查询购买的蔬果数量比所有购买过叶菜类顾客的平均购买数量大的顾客信息，以及他购买过的蔬果信息
+    -- all 子查询
+    -- group by
+    -- join 连接
+    -- having 子句
+    -- 聚合函数
+go
+select g.姓名
+from 顾客 g
+join 订单 d on g.顾客ID=d.顾客ID
+join 订单条目 dt on d.订单ID=dt.订单ID
+join 蔬果产品 s on s.蔬果ID=dt.蔬果ID
+group by g.姓名
+having sum(dt.数量)>
+all
+(
+select sum(dt.数量) / count(d.订单ID) as avg_num
+from 顾客 g
+join 订单 d on g.顾客ID=d.顾客ID
 join 订单条目 dt on d.订单ID=dt.订单ID
 join 蔬果产品 s on s.蔬果ID=dt.蔬果ID
 join 外卖类别 lb on s.外卖类别=lb.类别ID
 where lb.类别名称='叶菜类'
 group by g.顾客ID
+)
+
+
+-- 9 - 查询购买的蔬果数量比所有购买过叶菜类顾客的平均购买数量大的顾客信息，以及他购买过的蔬果信息
+    -- any 子查询
+go
+select g.姓名
+from 顾客 g
+join 订单 d on g.顾客ID=d.顾客ID
+join 订单条目 dt on d.订单ID=dt.订单ID
+join 蔬果产品 s on s.蔬果ID=dt.蔬果ID
+group by g.姓名
+having sum(dt.数量)>
+any
+(
+select sum(dt.数量) / count(d.订单ID) as avg_num
+from 顾客 g
+join 订单 d on g.顾客ID=d.顾客ID
+join 订单条目 dt on d.订单ID=dt.订单ID
+join 蔬果产品 s on s.蔬果ID=dt.蔬果ID
+join 外卖类别 lb on s.外卖类别=lb.类别ID
+where lb.类别名称='叶菜类'
+group by g.顾客ID
+)
 
 -- 10 查询比苹果售价高的所有蔬果信息 和所属类别
     -- 带有比较范围的子查询
