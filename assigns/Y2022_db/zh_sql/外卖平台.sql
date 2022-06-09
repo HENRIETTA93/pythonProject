@@ -32,7 +32,7 @@ create table 蔬果产品(
 蔬果名称 varchar(30) not null,
 产地 varchar(20) ,
 单价 float,
-重量 varchar(20)
+重量 varchar(20),
 外卖类别 int
 )
 
@@ -51,17 +51,6 @@ insert into 蔬果产品 values ('SC011012','西葫芦','河南','15','400g',2);
 insert into 蔬果产品 values ('SC011013','红薯','河北','40','2000g',3);
 insert into 蔬果产品 values ('SC011014','葡萄','新疆','40','500g',5);
 
-
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
 
 go
 create table 顾客(
