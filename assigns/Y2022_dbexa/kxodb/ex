@@ -1,0 +1,229 @@
+Q1: 2,3
+Q2: 1,2,4
+Q3: 3
+Q4: 1,4
+Q5: 3 小说本身算非结构化数据
+Q6:
+There's three entities for the above 场景，
+An event is identified by event_id,it is primary key, its datatype is int, and has attribute event_name, its datatype is varchar(20).
+An event may has many competitions.
+A competition is identified by competition_id, it's primary key, and its datatype is int. And has attributes
+competition_name,medal_id,event_id. competition_name and medal_id datatype is varchar(20).
+and event_id datatype is int. event_id is referenced event entity.
+A person is identified by person_id, it's primary key, and its datatype is int.
+and has gender\height\weight attributes. gender is char(1) type for it can use 'F' to 代表 female and M for male.
+height and weight are all float type.
+
+A person can participate many competitons and a competition can be participated by many persons.
+and they are many to many.
+
+for an event must have at least one competition, and a person must participate at least one competiton
+and a competiton also has at least person ,so i use '|' 。
+
+Q7:
+1) input the text content, the original text content is raw data
+ input is text content as below:
+ You may have noticed that the map function is stateless and only requires the input value to compute it's output value. This allows us to run the map function against values in parallel and provides a huge advantage. Before we get to the reduce function, the mapreduce framework groups all of the values together
+
+
+2) split the word by " " and "\n ", data pre-processing.
+ input is text content, output is split words.
+  input is text content as below:
+ You may have noticed that the map function is stateless and only requires the input value to compute it's output value. This allows us to run the map function against values in parallel and provides a huge advantage. Before we get to the reduce function, the mapreduce framework groups all of the values together
+ output:
+You
+may
+have
+noticed
+that
+the
+map
+function
+is
+stateless
+and
+only
+requires
+the
+input
+value
+to
+compute
+it's
+output
+value.
+This
+allows
+us
+to
+run
+the
+map
+function
+against
+values
+in
+parallel
+and
+provides
+a
+huge
+advantage
+Before
+we
+get
+to
+the
+reduce
+function
+the
+mapreduce
+framework
+groups
+all
+of
+the
+values
+together
+
+3) use map() function to map the word as (word,1) pairs.
+ input is split words, output is (word,1)pairs
+(You        ,1)
+(may        ,1)
+(have       ,1)
+(noticed    ,1)
+(that       ,1)
+(the        ,1)
+(map        ,1)
+(function   ,1)
+(is         ,1)
+(stateless  ,1)
+(and        ,1)
+(only       ,1)
+(requires   ,1)
+(the        ,1)
+(input      ,1)
+(value      ,1)
+(to         ,1)
+(compute    ,1)
+(it's       ,1)
+(output     ,1)
+(value.     ,1)
+(This       ,1)
+(allows     ,1)
+(us         ,1)
+(to         ,1)
+(run        ,1)
+(the        ,1)
+(map        ,1)
+(function   ,1)
+(against    ,1)
+(values     ,1)
+(in         ,1)
+(parallel   ,1)
+(and        ,1)
+(provides   ,1)
+(a          ,1)
+(huge       ,1)
+(advantage  ,1)
+(Before     ,1)
+(we         ,1)
+(get        ,1)
+(to         ,1)
+(the        ,1)
+(reduce     ,1)
+(function   ,1)
+(the        ,1)
+(mapreduce  ,1)
+(framework  ,1)
+(groups     ,1)
+(all        ,1)
+(of         ,1)
+(the        ,1)
+(values     ,1)
+(together   ,1)
+4) use reduct() funciton to reduce the result then get the number of the words
+ input is (word,1)pairs. output is (word, number) pairs
+(You        ,1)
+(may        ,1)
+(have       ,1)
+(noticed    ,1)
+(that       ,1)
+(the        ,7)
+(map        ,3)
+(function   ,3)
+(is         ,2)
+(stateless  ,1)
+(and        ,2)
+(only       ,1)
+(requires   ,1)
+
+(input      ,1)
+(value      ,4)
+(to         ,4)
+(compute    ,1)
+(it's       ,1)
+(output     ,1)
+
+(This       ,1)
+(allows     ,1)
+(us         ,1)
+
+(run        ,1)
+
+
+
+(against    ,1)
+(values     ,2)
+(in         ,1)
+(parallel   ,1)
+
+(provides   ,1)
+(a          ,1)
+(huge       ,1)
+(advantage  ,1)
+(Before     ,1)
+(we         ,1)
+(get        ,2)
+
+
+(reduce     ,1)
+
+
+(mapreduce  ,1)
+(framework  ,1)
+(groups     ,1)
+(all        ,1)
+(of         ,1)
+
+
+(together   ,1)
+
+
+Q8:
+
+
+Q9:
+select concat(First_name, ' ',Last_name) as name, Address.City, Address.State
+from Employee
+join Address on Employee.Emp_id=Address.Emp_id;
+
+comment:
+-- concat() fist name and last name to get employee's name
+select concat(First_name, ' ',Last_name) as name, Address.City, Address.State
+from Employee
+join Address on Employee.Emp_id=Address.Emp_id;
+-- use employee and address join using emp_id
+
+Q10:
+select Students.Suburb, Students.ID as SID, Teachers.T_ID as TID
+from Students
+join Teachers on Students.Suburb=Teachers.T_Suburb;
+
+comment:
+select Students.Suburb, Students.ID as SID, Teachers.T_ID as TID
+from Students
+join Teachers on Students.Suburb=Teachers.T_Suburb;
+
+-- join Students and Teachers using Suburb, then find the suburb and students id, teacher id
+-- it can see from the result which student and teacher live in the same suburb

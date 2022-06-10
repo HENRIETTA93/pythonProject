@@ -1,0 +1,54 @@
+(You        ,1)
+(may        ,1)
+(have       ,1)
+(noticed    ,1)
+(that       ,1)
+(the        ,7)
+(map        ,3)
+(function   ,3)
+(is         ,2)
+(stateless  ,1)
+(and        ,2)
+(only       ,1)
+(requires   ,1)
+
+(input      ,1)
+(value      ,4)
+(to         ,4)
+(compute    ,1)
+(it's       ,1)
+(output     ,1)
+
+(This       ,1)
+(allows     ,1)
+(us         ,1)
+
+(run        ,1)
+
+
+
+(against    ,1)
+(values     ,2)
+(in         ,1)
+(parallel   ,1)
+
+(provides   ,1)
+(a          ,1)
+(huge       ,1)
+(advantage  ,1)
+(Before     ,1)
+(we         ,1)
+(get        ,2)
+
+
+(reduce     ,1)
+
+
+(mapreduce  ,1)
+(framework  ,1)
+(groups     ,1)
+(all        ,1)
+(of         ,1)
+
+
+(together   ,1)

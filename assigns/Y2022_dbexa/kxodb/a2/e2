@@ -1,0 +1,68 @@
+Question 6 (20 points)
+Case study - IKA tacking System
+
+
+A Tracking system designed by IKA company keep track of processed item and current location of each shipped item. Shipped items are the heart of the IKA designed Tracking system.
+•    Shipped items can be identifed by their item number (unique), weight, shape, insurance amount, destination, and final delivery date.
+•    Shipped items are received into the tracking system at many retail center. Retail centers are characterized by their, uniqueID, name and address.
+•    Shipped items make their way to their destination via one or more standard tracking system transportation events (i.e., flights, truck deliveries). These transportation events are characterized by a unique schedule Number, a type (e.g, flight, truck), a delivery address and a deliveryRoute.
+
+A)    Create an ER-diagram for this case study. ER-diagram should indicate all the entities with their attributes and identifiers (primary and referential integrity) and relationships (cardinality).
+
+Write a paragraph to explain your ER - diagram and identifiers. The paragraph should cover the following points:
+1.    All the entities and attributes names with their datatypes represented in the ER- diagram.
+2.    All the identifiers (primary and referential integrity) names and reason/(s) for their applicability on an attribute.
+3.    An explanation about the relationships (cardinality) which you would have represented in your ER - diagram and why.
+
+You can draw ER - diagram using any software or on the paper and can upload/copy and paste it in the answer box.
+
+
+-- 6
+entity ship item 主键是item number, 可以使用varchar 类型
+其他属性weight应该使用float类型，insurance amount  使用decimal类型
+shape destination 使用varchar类型，delivery date使用date类型
+
+entity retail center 主键是ID，使用int属性
+name
+address 使用varchar属性，其中address内容可以比较长，所以使用较长的宽度
+
+transportation events 主键是schedule Number，可以使用int或者varchar属性
+type
+elivery address
+deliveryRoute 这三个属性都可使用varchar类型
+
+ship item 和retail center 是多对多关系，
+retal center和transportation events 也是多对多关系。
+
+
+-- 9
+select Salary
+from
+(
+select Emp_ID, Name, Salary, rank() over(order by Salary desc) as salary_rank
+from Salary_Details
+) t
+where salary_rank=4;
+
+comment: use rank() function to rank (倒序） for the salaries.
+use subquery to filter salary_rank is 4, then find the fourthest high.
+
+-- 10
+select Teachers.Suburb, Teachers.T_ID, Students.ID
+from Teachers
+join Students on Teachers.T_Suburb=Students.Suburb;
+
+-- use suburb to join teachers and students together then will find students and teachers live in the same suburb
+
+-- 7:
+1) input the paragraph content as raw data
+-- copy the content(抄一下下面那段话）
+2) split the word from the content
+-- 把里面的单词一个个分开
+3) map the word as (word,1) pairs.
+-- 把每个单词换成(单词,1)
+比如 第一个就是（Goole，1）
+
+4) reduce the result
+-- 得到词频统计
+(Google，数一下几个）
