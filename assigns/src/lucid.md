@@ -94,7 +94,7 @@ Notations for relational algebra / calculus:
   ∪ - union
   ∩ - intersect
   Gavg
-
+  g
   i.e.  { t | E t in Employee E w in Works_in ( e.sin=e.sin and t.fname=e.fname ) }
   i.e. proj (name, age) sel (income >= 18) (Employee join(eid=wid) Works)
 ```
