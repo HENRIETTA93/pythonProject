@@ -83,6 +83,27 @@ foreign key (蔬果ID) references 蔬果产品(蔬果ID)
 )
 
 
+-- 创建触发器 当新增订单条目时，自动更新订单金额
+
+go
+
+drop trigger if exists upd_订单金额
+go
+create trigger upd_订单金额
+on 订单条目
+after insert
+as
+declare @total float;
+declare @price float;
+begin
+  select @total=订单金额 from 订单;
+  select @price=单价 from 蔬果产品 t, inserted i where t.蔬果ID=i.蔬果ID;
+  if @total is not null
+    update 订单 set 订单金额=订单金额+(select @price*数量*折扣 from inserted ) where 订单ID=(select 订单ID from inserted);
+  else
+    update 订单 set 订单金额=(select @price*数量*折扣 from inserted ) where 订单ID=(select 订单ID from inserted);
+end
+
 
 
 go
@@ -108,7 +129,7 @@ insert into 蔬果产品 values ('SC011007','茄子','山东','12','500g',2);
 insert into 蔬果产品 values ('SC011008','土豆','北京','15','500g',3);
 insert into 蔬果产品 values ('SC011009','豆皮','北京','20','500g',4);
 insert into 蔬果产品 values ('SC011010','西瓜','北京','25','2000g',5);
-insert into 蔬果产品 values ('SC011011','菠菜','北京','20','500g',1);
+insert into 蔬果产品 values ('SC011011','菠菜','北京','8','500g',1);
 insert into 蔬果产品 values ('SC011012','西葫芦','河南','15','400g',2);
 insert into 蔬果产品 values ('SC011013','红薯','河北','40','2000g',3);
 insert into 蔬果产品 values ('SC011014','葡萄','新疆','40','500g',5);
@@ -196,6 +217,7 @@ insert into 订单条目 values('D0011','SC011003',5, 1);
 insert into 订单条目 values('D0012','SC011004',3, 1);
 insert into 订单条目 values('D0013','SC011005',3, 1);
 insert into 订单条目 values('D0014','SC011006',3, 1);
+insert into 订单条目 values('D0013','SC011007',3, 1);
 insert into 订单条目 values('D0015','SC011007',3, 1);
 
 go
@@ -238,9 +260,16 @@ select * from 订单
 go
 select 蔬果ID,蔬果名称,产地, 单价,重量
 from 蔬果产品
-where 单价 between 15 and 20;
+where 单价 between 15 and 20
 
--- 4. 查询蔬果产品中包含'菜'的叶菜信息,并按照价格排序
+-- 4. 查询价格不在15-20范围内的蔬果产品信息
+    -- between...and ...范围查询
+go
+select 蔬果ID,蔬果名称,产地, 单价,重量
+from 蔬果产品
+where 单价 not between 15 and 20;
+
+-- 5. 查询蔬果产品中包含'菜'的叶菜信息,并按照价格排序
     -- like
     -- 多重条件
     -- order by
@@ -248,25 +277,58 @@ go
 select s.*, lb.类别名称
 from 蔬果产品  s
 join 外卖类别 lb on s.外卖类别=lb.类别ID
-where lb.类别名称='叶菜类' and s.蔬果名称 like '%菜%'
+where lb.类别名称='叶菜' and s.蔬果名称 like '%菜%'
 order by s.单价
 
--- 5. 查询没有收到订单的信息
+
+-- 6. 查询蔬果产品中不包含'菜'的叶菜信息,并按照价格排序
+    -- not like
+    -- 多重条件
+    -- order by
+go
+select s.*, lb.类别名称
+from 蔬果产品  s
+join 外卖类别 lb on s.外卖类别=lb.类别ID
+where lb.类别名称='叶菜' and s.蔬果名称 not like '%菜%'
+order by s.单价
+
+
+-- 7. 查询没有收到订单的信息
     -- null 条件
 go
 select *
 from 订单
 where 送达时间 is null
 
+-- 8. 查询已经收到订单的信息
+    -- not null 条件
+go
+select *
+from 订单
+where 送达时间 is not null
+
+
+-- 9. 查询属于根茎类的价格大于10元的蔬果信息或者叶菜类价格小于10的蔬果信息, 按照价格倒序排列
+    -- 连接
+    -- 多重条件
+    -- order by  desc
+    -- or and
+go
+select s.*, lb.类别名称
+from 蔬果产品  s
+join 外卖类别 lb on s.外卖类别=lb.类别ID
+where lb.类别名称='根茎' and s.单价>10 or lb.类别名称='叶菜' and s.单价<10
+order by s.单价 desc
+
 -- 连接查询
--- 4. 查询叮咚买菜平台所售卖的蔬果信息及其所属类别
+-- 10. 查询叮咚买菜平台所售卖的蔬果信息及其所属类别
     --等值连接查询
 go
 select s.*, lb.类别名称
 from 蔬果产品 s
 join 外卖类别 lb on s.外卖类别=lb.类别ID
 
--- 5. 查询价格比西瓜便宜的所有蔬果产品信息
+-- 11. 查询价格比西瓜便宜的所有蔬果产品信息
     -- 自连接、非等值连接查询
     -- 比较大小<
 go
@@ -276,7 +338,7 @@ join 蔬果产品 s2
 on s1.单价<s2.单价
 where s2.蔬果名称='西瓜'
 
--- 6.查询所有的顾客购买的订单蔬果信息，包含从未购买的顾客信息
+-- 12.查询所有的顾客购买的订单蔬果信息，包含从未购买的顾客信息
     --外连接(左外连接)
 go
 select g.*, s.蔬果名称
@@ -285,10 +347,10 @@ left join 订单 d on g.顾客ID=g.顾客ID
 left join 订单条目 dt on d.订单ID=dt.订单ID
 left join 蔬果产品 s on s.蔬果ID=dt.蔬果ID
 
--- 7.
+
 
 -- 嵌套查询
--- 7 查询购买了来自苹果和白菜的产地所生产的蔬果信息的顾客和购买总件数、购买总价,筛选购买总价大于等于500的
+-- 13. 查询购买了来自苹果和白菜的产地所生产的蔬果信息的顾客和购买总件数、购买总价,筛选购买总价大于等于500的
     -- IN子查询
     -- join 连接
     -- 聚集函数sum
@@ -304,19 +366,59 @@ where s.产地 in (select distinct 产地 from 蔬果产品 where 蔬果名称 i
 group by g.姓名
 having sum(s.单价*dt.数量*dt.折扣)>=500
 
--- 9 ALL 子查询- 查询购买的蔬果数量比所有购买过叶菜类顾客的平均购买数量大的顾客信息，以及他购买过的蔬果信息
-select
-from
-
-select g.顾客ID, sum(dt.数量)
-from 顾客 g on g.顾客ID=g.顾客ID
+-- 14. 查询购买的蔬果数量比所有购买过叶菜类顾客的平均购买数量大的顾客信息，以及他购买过的蔬果信息
+    -- all 子查询
+    -- group by
+    -- join 连接
+    -- having 子句
+    -- 聚合函数
+go
+select g.姓名
+from 顾客 g
+join 订单 d on g.顾客ID=d.顾客ID
+join 订单条目 dt on d.订单ID=dt.订单ID
+join 蔬果产品 s on s.蔬果ID=dt.蔬果ID
+group by g.姓名
+having sum(dt.数量)>
+all
+(
+select sum(dt.数量) / count(d.订单ID) as avg_num
+from 顾客 g
+join 订单 d on g.顾客ID=d.顾客ID
 join 订单条目 dt on d.订单ID=dt.订单ID
 join 蔬果产品 s on s.蔬果ID=dt.蔬果ID
 join 外卖类别 lb on s.外卖类别=lb.类别ID
 where lb.类别名称='叶菜类'
 group by g.顾客ID
+)
 
--- 10 查询比苹果售价高的所有蔬果信息 和所属类别
+
+-- 15 - 查询购买的蔬果数量比所有购买过叶菜类顾客的平均购买数量大的顾客信息，以及他购买过的蔬果信息
+    -- any 子查询
+    -- 聚合函数
+    -- group by
+    -- having 子句
+go
+select g.姓名
+from 顾客 g
+join 订单 d on g.顾客ID=d.顾客ID
+join 订单条目 dt on d.订单ID=dt.订单ID
+join 蔬果产品 s on s.蔬果ID=dt.蔬果ID
+group by g.姓名
+having sum(dt.数量)>
+any
+(
+select sum(dt.数量) / count(d.订单ID) as avg_num
+from 顾客 g
+join 订单 d on g.顾客ID=d.顾客ID
+join 订单条目 dt on d.订单ID=dt.订单ID
+join 蔬果产品 s on s.蔬果ID=dt.蔬果ID
+join 外卖类别 lb on s.外卖类别=lb.类别ID
+where lb.类别名称='叶菜'
+group by g.顾客ID
+)
+
+-- 16 查询比苹果售价高的所有蔬果信息 和所属类别
     -- 带有比较范围的子查询
 select s.*, lb.类别名称
 from 蔬果产品 s
