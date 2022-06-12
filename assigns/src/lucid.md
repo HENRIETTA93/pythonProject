@@ -1,5 +1,3 @@
-
-
 # Useful Links
 ```shell
 ## design
@@ -70,9 +68,9 @@ ER图
 
 
 
-![image-20200806185415933](lucid.assets/image-20200806185415933-1654250367609.png)
+<img src="lucid.assets/image-20200806185415933-1654250367609.png" alt="image-20200806185415933" style="zoom: 50%;" />
 
-![image-20200806185520126](lucid.assets/image-20200806185520126-1654250367609.png)
+<img src="lucid.assets/image-20200806185520126-1654250367609.png" alt="image-20200806185520126" style="zoom:50%;" />
 
 ## Normalization
 
@@ -499,7 +497,7 @@ listen_addresses = '*'         # what IP address(es) to listen on;
 
 PLpgSQL = Procedural Language extensions to PostgreSQL
 
-![image-20200729093409634](lucid.assets/image-20200729093409634.png)
+<img src="lucid.assets/image-20200729093409634.png" alt="image-20200729093409634" style="zoom:50%;" />
 
 
 
@@ -520,13 +518,13 @@ $$ language plpgsql
 
 
 
-![image-20200729094144408](lucid.assets/image-20200729094144408.png)
+<img src="lucid.assets/image-20200729094144408.png" alt="image-20200729094144408" style="zoom:50%;" />
 
-![image-20200729095725273](lucid.assets/image-20200729095725273.png)
+<img src="lucid.assets/image-20200729095725273.png" alt="image-20200729095725273" style="zoom:50%;" />
 
-![image-20200729095823855](lucid.assets/image-20200729095823855.png)
+<img src="lucid.assets/image-20200729095823855.png" alt="image-20200729095823855" style="zoom:50%;" />
 
-![image-20200729100336600](lucid.assets/image-20200729100336600.png)
+<img src="lucid.assets/image-20200729100336600.png" alt="image-20200729100336600" style="zoom:50%;" />
 
 
 
@@ -695,7 +693,7 @@ In general, BI provides a framework for:
 
   Operational Database----->Data warehouse
 
-![image-20200810105407666](lucid.assets/image-20200810105407666.png)
+<img src="lucid.assets/image-20200810105407666.png" alt="image-20200810105407666" style="zoom: 33%;" />
 
 Two-Column Table Methodology
 
@@ -976,11 +974,11 @@ constraint fk_stksup_sup foreign key(supplier_id) references supplier(supplier_i
 
 A trucking company is responsible for picking up shipments from warehouses of a retail chain called MYER, and delivering the shipments to individual retail store of MYER. A truck may carry several shipments during a single trip, which is identified by TripID, and delivers those shipments to multiple stores. Trucks have different capacities for both the volumes they can hold and the weights they can carry. At the moment, a truck makes several trips each week. An operational database is being used to keep track the deliveries, including the scheduling of trucks, which provide timely deliveries to stores. The following is an E/R diagram of the truck delivery system.
 
-![image-20200812102537719](lucid.assets/image-20200812102537719.png)
+<img src="lucid.assets/image-20200812102537719.png" alt="image-20200812102537719" style="zoom:33%;" />
 
 
 
-![image-20200812102700395](lucid.assets/image-20200812102700395.png)
+<img src="lucid.assets/image-20200812102700395.png" alt="image-20200812102700395" style="zoom:33%;" />
 
 
 
@@ -1162,7 +1160,7 @@ group by SeasonID,WeightFactor,StoreGroupList;
 
 Border bookstore that has a number of branches in Melbourne would like to build a data warehouse to analyze their book sales. They have already stored all book sales transactions in an operational database. The management would particularly like to analyze their book sales performance from various perspectives, such as monthly basis, book basis, and branch basis. The following is an E/R diagram of the Bookshop system.
 
-![image-20200812151651225](lucid.assets/image-20200812151651225.png)
+<img src="lucid.assets/image-20200812151651225.png" alt="image-20200812151651225" style="zoom:33%;" />
 
 ```sql
 --pg实现版 Oracle把numeric改成number，varchar改成varchar2
@@ -1661,6 +1659,38 @@ existing dimension.
 # XML
 
 ```
+XML information
+version  (must have)
+encoding (optional – default: UTF-8)
+standalone (optional)
+DOCTYPE (optional)
+Can include
+DTD (Document Type Declarations) - internal DTD
+Reference information for external DTD
+
+Enclosing tags
+	<?xml...?>
+Contents Example
+	<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+encoding-->tells parser how to decode document
+standalone-->indicates whether the definitions for tags are internal or external
+
+All documents must have a root element
+All elements which have an opening tag must have a closing tag 
+Tags are case sensitive
+All elements must be properly nested
+Attribute values must always be quoted
+Use entity references for special characters in data
+Comments are enclosed in by <!-- and --> 
+White space is preserved
+A new line is stored as LF (line feed)
+```
+
+
+
+
+
+```
 xpath
 
 xquery
@@ -1824,7 +1854,7 @@ Stage:
 
 # Linux
 
-![image-20220521204548455](lucid.assets/image-20220521204548455.png)
+<img src="lucid.assets/image-20220521204548455.png" alt="image-20220521204548455" style="zoom:50%;" />
 
 
 
