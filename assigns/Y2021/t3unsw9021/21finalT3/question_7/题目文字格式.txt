@@ -1,0 +1,95 @@
+Question 7
+You can assume that i and j are both between 0 and 9 included. 
+i is the row number (indexed from top to bottom), j is the column number (indexed from left to right) of the displayed grid.
+
+Here are some execution examples:
+
+    >>> area(0, 1, 5, 5)
+    The grid is:
+    1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1
+    The area of the largest empty region of the grid
+    containing the point (5, 5) is: 0
+    
+    >>> area(0, 1000, 5, 5)
+    The grid is:
+    0 0 0 0 0 0 0 0 0 0
+    0 0 0 0 0 0 0 0 0 0
+    0 0 0 0 0 0 0 0 0 0
+    0 0 0 0 0 0 0 0 0 0
+    0 0 0 0 0 0 0 0 0 0
+    0 0 0 0 0 0 0 0 0 0
+    0 0 0 0 0 0 0 0 0 0
+    0 0 0 0 0 0 0 0 0 0
+    0 0 0 0 0 0 0 0 0 0
+    0 0 0 0 0 0 0 0 0 0
+    The area of the largest empty region of the grid
+    containing the point (5, 5) is: 100
+    
+    >>> area(0, 3, 6, 2)
+    The grid is:
+    0 0 1 0 0 0 0 0 0 0
+    0 1 0 1 0 1 1 0 0 0
+    0 0 1 0 1 0 1 0 0 0
+    0 1 0 0 0 0 0 1 0 0
+    0 0 0 1 0 1 1 0 0 0
+    0 0 1 0 0 0 1 0 0 0
+    1 1 0 1 1 1 0 0 1 1
+    0 0 0 1 0 0 0 0 1 0
+    0 0 1 0 0 0 0 0 1 0
+    0 0 0 1 0 1 1 1 1 0
+    The area of the largest empty region of the grid
+    containing the point (6, 2) is: 9
+    
+    >>> area(0, 2, 9, 5)
+    The grid is:
+    0 0 1 0 0 0 0 0 0 1
+    1 0 1 1 0 1 0 1 1 0
+    0 1 0 0 0 1 0 0 0 1
+    1 1 0 1 0 0 1 0 1 1
+    1 1 1 0 1 1 0 0 1 0
+    0 1 0 1 0 0 1 0 0 1
+    0 1 1 1 1 0 0 1 1 1
+    1 1 1 0 0 1 1 0 0 0
+    0 0 1 0 1 0 0 1 1 1
+    0 1 1 0 1 0 0 1 1 1
+    The area of the largest empty region of the grid
+    containing the point (9, 5) is: 4
+    
+    >>> area(0, 2, 2, 7)
+    The grid is:
+    0 0 1 0 0 0 0 0 0 1
+    1 0 1 1 0 1 0 1 1 0
+    0 1 0 0 0 1 0 0 0 1
+    1 1 0 1 0 0 1 0 1 1
+    1 1 1 0 1 1 0 0 1 0
+    0 1 0 1 0 0 1 0 0 1
+    0 1 1 1 1 0 0 1 1 1
+    1 1 1 0 0 1 1 0 0 0
+    0 0 1 0 1 0 0 1 1 1
+    0 1 1 0 1 0 0 1 1 1
+    The area of the largest empty region of the grid
+    containing the point (2, 7) is: 22
+    
+    >>> area(0, 4, 2, 7)
+    The grid is:
+    0 0 1 0 0 0 0 0 0 0
+    0 0 0 1 0 0 0 1 1 0
+    0 1 0 0 0 0 0 0 0 1
+    1 1 0 1 0 0 0 0 1 0
+    0 0 0 0 1 1 0 0 1 0
+    0 1 0 0 0 0 1 0 0 0
+    0 0 0 0 1 0 0 1 1 0
+    0 1 1 0 0 0 0 0 0 0
+    0 0 1 0 1 0 0 0 0 1
+    0 1 0 0 0 0 0 1 1 0
+    The area of the largest empty region of the grid
+    containing the point (2, 7) is: 73

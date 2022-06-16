@@ -1,0 +1,25 @@
+Question 3
+You might find the ord() function useful.
+
+Here are some execution examples:
+
+    >>> longest_leftmost_sequence_of_consecutive_letters('')
+    ''
+    
+    >>> longest_leftmost_sequence_of_consecutive_letters('a')
+    'a'
+    
+    >>> longest_leftmost_sequence_of_consecutive_letters('zuba')
+    'z'
+    
+    >>> longest_leftmost_sequence_of_consecutive_letters('ab')
+    'ab'
+    
+    >>> longest_leftmost_sequence_of_consecutive_letters('bcab')
+    'bc'
+    
+    >>> longest_leftmost_sequence_of_consecutive_letters('aefbxyzcrsdt')
+    'xyz'
+    
+    >>> longest_leftmost_sequence_of_consecutive_letters('efghuvwrstuvabcde')
+    'rstuv'
