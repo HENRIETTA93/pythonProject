@@ -1,0 +1,39 @@
+$ python3
+...
+>>> from fibonacci_codes import *
+>>> encode(1)
+’11’
+>>> encode(2)
+’011’
+>>> encode(3)
+’0011’
+>>> encode(4)
+’1011’
+>>> encode(8)
+’000011’
+>>> encode(11)
+’001011’
+>>> encode(12)
+’101011’
+>>> encode(14)
+’1000011’
+>>> decode(’1’)
+0
+>>> decode(’01’)
+0
+>>> decode(’100011011’)
+0
+>>> decode(’11’)
+1
+>>> decode(’011’)
+2
+>>> decode(’0011’)
+3
+>>> decode(’1011’)
+4
+>>> decode(’000011’)
+8
+>>> decode(’001011’)
+11
+>>> decode(’1000011’)
+14

@@ -59,8 +59,37 @@ def f(height):
     123456789012345678901234567890123456789
     '''
     # Insert your code here
+    mountain_dic={}
+    for i in range(height):
+        mountain_dic[height]=''
+
+    width=height*2-1
+    count=[0,1,2,3,4,5,6,7,8,9]
+    j=0
+    str1=''
+    for i in range(height):
+        str1+=' '*(height-i-1)
+        k=0
+        while k<width-(height-i-1)*2:
+            if j==10:
+                j=0
+            str1+=str(count[j])
+            k+=1
+            j+=1
+        # str1+=' '*(height-i-1)+""
+        mountain_dic[i]=str1
+        str1=""
+
+    # print(mountain_dic)
+    for key in mountain_dic.keys():
+        if mountain_dic[key]==''or mountain_dic[key]=='\n':
+            continue
+        print(mountain_dic[key])
 
 
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+    f(6)
+    f(6)
+    f(6)

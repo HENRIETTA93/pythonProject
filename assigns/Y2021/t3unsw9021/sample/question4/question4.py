@@ -32,7 +32,9 @@ def f(a, b):
     number_of_primes_at_most_equal_to_b = 0
 
     # Insert your code here
-
+    for i in range(a,b+1):
+        if is_prime(i):
+            number_of_primes_at_most_equal_to_b+=1
     if not number_of_primes_at_most_equal_to_b:
         print(f'There is no prime number beween {a} and {b}.')
     elif number_of_primes_at_most_equal_to_b == 1:
@@ -40,7 +42,11 @@ def f(a, b):
     else:
         print(f'There are {number_of_primes_at_most_equal_to_b} prime numbers between {a} and {b}.')
 
-
+def is_prime(n):
+    for i in range(2,int(sqrt(n))+1):
+        if n%i==0:
+            return False
+    return True
 if __name__ == '__main__':
     import doctest
 

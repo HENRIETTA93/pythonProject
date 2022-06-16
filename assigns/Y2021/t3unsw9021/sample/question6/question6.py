@@ -75,9 +75,47 @@ def f(for_seed, n, upper_bound):
     square = [[randrange(upper_bound) for _ in range(n)] for _ in range(n)]
     duplicates = set()
     ordered_square = [[]]
-    print('Here is the square: ')
+    print('Here is the square:')
     display(square, len(str(upper_bound)))
     # Insert your code here
+
+    square_item={}
+    def is_square(square):
+        is_sq=False
+        for line in square:
+            for item in line:
+                if item in square_item.keys():
+                    is_sq=False
+                    square_item[item]+=1
+                    duplicates.add(item)
+                else:
+                    square_item[item]=1
+        if len(square_item.keys())==len(square)*len(square[0]):
+            is_sq=True
+        return is_sq
+
+    if is_square(square):
+        items=list(square_item.keys())
+        items.sort()
+        row_len=len(square[0])
+        ss=[]
+        i=0
+        j=0
+        ordered_square.remove([])
+        while i<=row_len and j<=len(items):
+            if i==row_len:
+                i=0
+                ordered_square.append(ss)
+                ss=[]
+            if j==len(items):
+                break
+            ss.append(items[j])
+            i+=1
+            j+=1
+    import numpy as np
+    nparr=np.array(ordered_square)
+    nparr=nparr.transpose()
+    ordered_square=nparr.tolist()
     if duplicates:
         print('It is not a good square because it contains duplicates, namely: ', end='')
         print(' '.join(str(e) for e in sorted(duplicates)))
@@ -90,4 +128,5 @@ def f(for_seed, n, upper_bound):
 if __name__ == '__main__':
     import doctest
 
-    doctest.testmod()
+    # doctest.testmod()
+    f(0, 2, 50)

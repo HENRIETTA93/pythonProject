@@ -27,8 +27,61 @@ def f(year):
     '''
     months = 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     # Insert your code here
+    f=open("cpiai.csv","r")
+    f_content=f.read()
+    flines=f_content.split("\n")
+    dic = {}
+    for line in flines[1:]:
+        yyyy=line[0:4]
+        month=line[5:7]
+        arrs=line.split(",")
 
+        inflation=arrs[-1]
+        # dic[year][month]=inflation
+        if yyyy not in dic.keys():
+            dic[yyyy]={}
+            if 'max' not in dic[yyyy].keys():
+                dic[yyyy]['max']=inflation
+            else:
+                if float(inflation)>float(dic[yyyy]['max']):
+                    dic[yyyy]['max']=inflation
+            if month not in dic[yyyy].keys():
+                dic[yyyy][month]=[inflation]
+            else:
+                dic[yyyy][month].append(inflation)
+
+
+        else:
+            if 'max' not in dic[yyyy].keys():
+                dic[yyyy]['max']=inflation
+            else:
+                if float(inflation)>float(dic[yyyy]['max']):
+                    dic[yyyy]['max']=inflation
+            if month not in dic[yyyy].keys():
+                dic[yyyy][month]=[inflation]
+            else:
+                dic[yyyy][month].append(inflation)
+
+    year_key=str(year)
+    year_dic=dic[year_key]
+    max_inflation=year_dic['max']
+    month_inf=[]
+    for m in year_dic.keys():
+        if m!='max' and max_inflation==year_dic[m][0]:
+            mm=int(m)
+            month_inf.append(months[mm-1])
+
+    print('In '+str(year)+', maximum inflation was: '+max_inflation)
+    strs='It was achieved in the following months: '
+    for i in month_inf:
+        strs+=i+', '
+    print(strs[:-2])
+
+    # print(max_inflation, month_inf)
 
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+    # f(1914)
+    # f(1914)
+    # f(1914)
