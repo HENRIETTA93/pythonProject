@@ -1,0 +1,62 @@
+un21_9311=# select * from terms where year=2005 and sess='X1';
+ id  | year | sess |  starting  |   ending   | startbrk | endbrk |  endenrol  |   endwd
+-----+------+------+------------+------------+----------+--------+------------+------------
+ 185 | 2005 | X1   | 2004-12-03 | 2005-02-14 |          |        | 2005-01-09 | 2005-01-23
+(1 行记录)
+
+时间：0.395 ms
+un21_9311=# select * from terms where year=2005 and sess='S1';
+ id  | year | sess |  starting  |   ending   |  startbrk  |   endbrk   |  endenrol  |   endwd
+
+-----+------+------+------------+------------+------------+------------+------------+-----------
+ 186 | 2005 | S1   | 2005-03-01 | 2005-06-05 | 2005-04-20 | 2005-04-27 | 2005-03-31 | 2005-04-30
+(1 行记录)
+
+时间：0.347 ms
+un21_9311=# select * from terms where year=2009 and sess='X1';
+ id  | year | sess |  starting  |   ending   | startbrk | endbrk |  endenrol  |   endwd
+-----+------+------+------------+------------+----------+--------+------------+------------
+ 206 | 2009 | X1   | 2008-12-03 | 2009-02-14 |          |        | 2009-01-09 | 2009-01-23
+
+un21_9311=# select * from terms where year=2009 and sess='S1';
+ id  | year | sess |  starting  |   ending   |  startbrk  |   endbrk   |  endenrol  |   endwd
+
+-----+------+------+------------+------------+------------+------------+------------+-----------
+ 207 | 2009 | S1   | 2009-03-01 | 2009-06-05 | 2009-04-20 | 2009-04-27 | 2009-03-31 | 2009-04-30
+(1 行记录)
+
+
+select *,
+(
+select t1.starting-7
+from terms t1
+where t1.id=t.id
+) actual_staring
+from terms t order by t.starting limit 10;
+
+select tt.*,
+(
+select min(tt1.actual_starting)-1
+from
+(
+select *,
+(
+select t1.starting-7
+from terms t1
+where t1.id=t.id
+) actual_starting
+from terms t
+order by starting
+) tt1 where tt.ending<=tt1.actual_starting
+) as actual_ending
+from
+(
+select *,
+(
+select t1.starting-7
+from terms t1
+where t1.id=t.id
+) actual_starting
+from terms t
+order by starting
+) tt  order by actual_starting;
