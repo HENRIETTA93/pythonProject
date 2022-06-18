@@ -1,0 +1,35 @@
+>>> diophantine('1x + 1y = 0')
+1x + 1y = 0 has as solutions all pairs of the form
+    (n, -n) with n an arbitrary integer.
+>>> diophantine('-1x + 1y = 0')
+-1x + 1y = 0 has as solutions all pairs of the form
+    (n, n) with n an arbitrary integer.
+>>> diophantine('1x - 1y = 0')
+1x - 1y = 0 has as solutions all pairs of the form
+    (n, n) with n an arbitrary integer.
+>>> diophantine('-1x - 1y = 0')
+-1x - 1y = 0 has as solutions all pairs of the form
+    (n, -n) with n an arbitrary integer.
+>>> diophantine('1x + 1y = -1')
+1x + 1y = -1 has as solutions all pairs of the form
+    (n, -1 - n) with n an arbitrary integer.
+>>> diophantine('-1x + 1y = 1')
+-1x + 1y = 1 has as solutions all pairs of the form
+    (n, 1 + n) with n an arbitrary integer.
+>>> diophantine('4x + 6y = 9')
+4x + 6y = 9 has no solution.
+>>> diophantine('4x + 6y = 10')
+4x + 6y = 10 has as solutions all pairs of the form
+    (1 + 3n, 1 - 2n) with n an arbitrary integer.
+>>> diophantine('71x+83y=2')
+71x + 83y = 2 has as solutions all pairs of the form
+    (69 + 83n, -59 - 71n) with n an arbitrary integer.
+>>> diophantine(' 782 x + 253 y = 92')
+782x + 253y = 92 has as solutions all pairs of the form
+    (4 + 11n, -12 - 34n) with n an arbitrary integer.
+>>> diophantine('-123x -456y = 78')
+-123x - 456y = 78 has as solutions all pairs of the form
+    (118 + 152n, -32 - 41n) with n an arbitrary integer.
+>>> diophantine('-321x +654y = -87')
+-321x + 654y = -87 has as solutions all pairs of the form
+    (149 + 218n, 73 + 107n) with n an arbitrary integer.

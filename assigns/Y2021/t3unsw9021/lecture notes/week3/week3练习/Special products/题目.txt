@@ -1,0 +1,5 @@
+Special products
+Insert your code into special_products.py so as to find all triples of positive integers (i, j, k)such that i, j and k are two digit numbers, no digit occurs more than once in i, j and k, and the set of digits that occur in i, j or k is equal to
+the set of digits that occur in the product of i, j and k.
+
+If you are stuck, but only when you are stuck, then use special_products_scaffold_1.py. If you are still stuck, but only when you are still stuck, then use special_products_scaffold_2.py.

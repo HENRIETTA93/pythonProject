@@ -1,0 +1,4 @@
+Finding particular sequences of prime numbers
+Insert your code into consecutive_primes.py so as to find all sequences of 6 consecutive prime 5-digit numbers, say (a, b, c, d, e, f), with b = a + 2, c = b + 4, d = c + 6, e = d + 8, and f = e + 10. So a, b, c, d, e and f are all 5-digit prime numbers and no number between a and b, between b and c, between c and d, between d and e, and between e and f is prime.
+
+If you are stuck, but only when you are stuck, then use consecutive_primes_scaffold.py.

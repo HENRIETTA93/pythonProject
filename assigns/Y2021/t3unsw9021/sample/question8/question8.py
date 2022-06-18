@@ -58,7 +58,19 @@ def f(letters):
     solutions = []
 
     # Insert your code here
-
+    f=open('dictionary.txt','r')
+    f_content=f.read()
+    lines=[]
+    for l in f_content.split("\n"):
+        lines.append(l)
+    # print(lines)
+    from itertools import permutations
+    for word in permutations(letters):
+        words=''.join(word)
+        for l in lines:
+            if l in words:
+                solutions.append(l)
+    # solutions.sort()
     if not solutions:
         print('There is no solution')
     else:
@@ -68,6 +80,7 @@ def f(letters):
 
 
 if __name__ == '__main__':
-    import doctest
+    # import doctest
 
-    doctest.testmod()
+    # doctest.testmod()
+    f('UTAROFSMN')

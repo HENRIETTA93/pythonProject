@@ -32,8 +32,16 @@ def f(n):
     8 bits are set to 1 in the binary representation of 9871.
     '''
     # Insert your code here
-
-
+    bin_n=bin(n)[2:]
+    print(f'{n} in binary reads as: {bin_n}.')
+    count=0
+    for b in str(bin_n):
+        if int(b)==1:
+            count+=1
+    if count==1:
+        print(f'Only one bit is set to 1 in the binary representation of {n}.')
+    else:
+        print(f'{count} bits are set to 1 in the binary representation of {n}.')
 if __name__ == '__main__':
     import doctest
     doctest.testmod()

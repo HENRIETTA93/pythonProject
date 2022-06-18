@@ -49,13 +49,42 @@ def f(n):
     factors = {}
 
     # Insert your code here
+    primes_list=[]
+    for p in range(2,n+1):
+        if is_prime(p):
+            primes_list.append(p)
 
+    nn =n
+    while nn>1:
+        for p in primes_list:
+            if nn % p == 0:
+                nn = int(nn / p)
+                if p in factors.keys():
+                    factors[p] += 1
+                else:
+                    factors[p] = 1
     print(f'The decomposition of {n} into prime factors reads:')
     print('  ', n, '=', end=' ')
     print(' x '.join(factors[x] == 1 and str(x) or f'{x}^{factors[x]}' for x in sorted(factors)))
 
+def is_prime(n):
+    # if n==2:
+    #     return True
+    for i in range(2,int(n/2)+1):
+        if n%i==0:
+            return False
+    return True
 
 if __name__ == '__main__':
     import doctest
 
     doctest.testmod()
+    # f(3)
+    # f(4)
+    f(8)
+    # f(3)
+    # f(4)
+    f(8)
+    # f(3)
+    # f(4)
+    f(8)
