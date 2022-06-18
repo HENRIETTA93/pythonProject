@@ -101,6 +101,97 @@ Notations for relational algebra / calculus:
 
 ## SQL
 
+```
+SQL three valued logic:
+and：false > unknown > true
+or：true > unknown > false
+
+mysql> set @a=2;
+mysql> set @b=3;
+mysql> set @c=null;
+
+mysql> select @a<@b and @b>@c;
++-----------------+
+| @a<@b and @b>@c |
++-----------------+
+|            NULL |
++-----------------+
+
+mysql> select @a<@b and @b>@c or @a>@b;
++--------------------------+
+| @a<@b and @b>@c or @a>@b |
++--------------------------+
+|                     NULL |
++--------------------------+
+
+
+mysql> select @a>@b;
++-------+
+| @a>@b |
++-------+
+|     0 |
++-------+
+
+mysql> select @a<@b;
++-------+
+| @a<@b |
++-------+
+|     1 |
++-------+
+
+```
+
+
+
+SQL解析顺序
+
+```
+1. FROM 和JOINs
+2. WHERE
+3. GROUP BY
+4. HAVING
+5. SELECT
+6. DISTINCT
+7. ORDER BY
+8. LIMIT /OFFSET
+```
+
+
+
+```
+mysql> create table a(c1 int primary key, c2 int);
+mysql> insert into a values (1,3),(2,3),(3,null);
+
+mysql> select count(*) from a;
++----------+
+| count(*) |
++----------+
+|        3 |
++----------+
+
+mysql> select count(*), count(c1), count(c2) from a;
++----------+-----------+-----------+
+| count(*) | count(c1) | count(c2) |
++----------+-----------+-----------+
+|        3 |         3 |         2 |
++----------+-----------+-----------+
+
+mysql> select count(*), count(c1), count(c2), count(distinct c2) from a;
++----------+-----------+-----------+--------------------+
+| count(*) | count(c1) | count(c2) | count(distinct c2) |
++----------+-----------+-----------+--------------------+
+|        3 |         3 |         2 |                  1 |
++----------+-----------+-----------+--------------------+
+
+
+```
+
+
+
+
+
+
+
 ## Advanced SQL
 
 ### Postgres function
