@@ -1,0 +1,251 @@
+-- Q1
+-- 首先确认一下最后电话访问的时间
+select max(appointment_time) from appointmentdata;
+
+-- 根据上述时间确定每天，下班后，每一小时内的电话访问数量，然后统计需要的医生数量，取最大值方可满足要求
+
+select appointment_date,
+case when appointment_time>= '17:30:00' and appointment_time<'18:30:00' then '17:30~18:30'
+when appointment_time>= '18:30:00' and appointment_time<'19:30:00' then '18:30~19:30'
+when appointment_time>= '19:30:00' and appointment_time<'20:30:00' then '19:30~20:30'
+when appointment_time>= '20:30:00' and appointment_time<'21:30:00' then '20:30~21:30'
+end as time_range,
+count(patient_id) as telvisits_num,
+ceil(count(patient_id)/4) as teldoctors_need
+from appointmentdata
+where appointment_time>='17:30:00' and appointment_type='Telephone Visit'
+group by
+appointment_date, case when appointment_time>= '17:30:00' and appointment_time<'18:30:00' then '17:30~18:30'
+when appointment_time>= '18:30:00' and appointment_time<'19:30:00' then '18:30~19:30'
+when appointment_time>= '19:30:00' and appointment_time<'20:30:00' then '19:30~20:30'
+when appointment_time>= '20:30:00' and appointment_time<'21:30:00' then '20:30~21:30'
+end
+order by telvisits_num desc;
+
+-- Q2
+
+-- step1. 查出每次电话预约及其7天内再次电话预约的时间
+
+with t1
+as
+(
+select patient_id, appointment_date, appointment_time
+from appointmentdata
+where appointment_type='Telephone Visit'
+and appointment_time>='17:30:00'
+),
+t2 as
+(
+select patient_id, appointment_date, appointment_time
+from appointmentdata
+where appointment_type='Telephone Visit'
+)
+select distinct t1.patient_id, t1.appointment_date, t1.appointment_time,
+t2.appointment_date as appointment_again_date, t2.appointment_time as appointment_again_time
+from t1 join t2
+on t1.patient_id= t2.patient_id
+where t2.appointment_date=t1.appointment_date and t2.appointment_time>t1.appointment_time
+or
+t2.appointment_date>t1.appointment_date
+and t2.appointment_date<date_add(t1.appointment_date,interval 7 day);
+
+
+-- step2. 查出每次patient电话预约后7天内再次电话预约的次数
+with t1
+as
+(
+select patient_id, appointment_date, appointment_time
+from appointmentdata
+where appointment_type='Telephone Visit'
+and appointment_time>='17:30:00'
+),
+t2 as
+(
+select patient_id, appointment_date, appointment_time
+from appointmentdata
+where appointment_type='Telephone Visit'
+)
+select patient_id, appointment_date, count(patient_id) as tel_again_count
+from
+(
+select distinct t1.patient_id, t1.appointment_date, t1.appointment_time,
+t2.appointment_date as appointment_again_date, t2.appointment_time as appointment_again_time
+from t1 join t2
+on t1.patient_id= t2.patient_id
+where t2.appointment_date=t1.appointment_date and t2.appointment_time>t1.appointment_time
+or
+t2.appointment_date>t1.appointment_date
+and t2.appointment_date<date_add(t1.appointment_date,interval 7 day)
+) t
+group by patient_id, appointment_date;
+
+
+-- 把上面这个查询建成一个视图
+create view vw1
+as
+with t1
+as
+(
+select patient_id, appointment_date, appointment_time
+from appointmentdata
+where appointment_type='Telephone Visit'
+and appointment_time>='17:30:00'
+),
+t2 as
+(
+select patient_id, appointment_date, appointment_time
+from appointmentdata
+where appointment_type='Telephone Visit'
+)
+select patient_id, appointment_date, count(patient_id) as tel_again_count
+from
+(
+select distinct t1.patient_id, t1.appointment_date, t1.appointment_time,
+t2.appointment_date as appointment_again_date, t2.appointment_time as appointment_again_time
+from t1 join t2
+on t1.patient_id= t2.patient_id
+where t2.appointment_date=t1.appointment_date and t2.appointment_time>t1.appointment_time
+or
+t2.appointment_date>t1.appointment_date
+and t2.appointment_date<date_add(t1.appointment_date,interval 7 day)
+) t
+group by patient_id, appointment_date;
+
+-- step3. 计算在17.30后电话预约的总patient数
+create view vw2
+as
+select count(after_work_tels) as tel_count_after
+from
+(
+select count(patient_id) as after_work_tels
+from appointmentdata
+where appointment_type='Telephone Visit'
+and appointment_time>='17:30:00'
+group by patient_id, appointment_date
+) tt;
+
+-- step4. 查找出当天有电话问诊并且有实地问诊的记录
+create view vw3
+as
+with t1
+as
+(
+select patient_id, appointment_date, appointment_time
+from appointmentdata
+where appointment_type='Telephone Visit'
+and appointment_time>='17:30:00'
+),
+t2 as
+(
+select patient_id, appointment_date, appointment_time
+from appointmentdata
+where appointment_type='In-Person Visit'
+)
+select patient_id, appointment_date, count(patient_id) as invalid_count
+from
+(
+select t1.patient_id, t1.appointment_date,t1.appointment_time,
+t2.appointment_date as inperson_date,t2.appointment_time as inperson_time
+from t1, t2
+where t1.patient_id=t2.patient_id and t1.appointment_date=t2.appointment_date
+)t
+group by patient_id, appointment_date;
+
+
+
+
+-- 最终查询
+select
+(select count(patient_id) as again_count
+from vw1
+) +
+(select count(patient_id) as inperson_count
+from vw3
+) as invalid_count,
+(select tel_count_after from vw2) as tel_count_after,
+(
+select
+(select count(patient_id) as again_count
+from vw1
+) +
+(select count(patient_id) as inperson_count
+from vw3
+))/(select tel_count_after from vw2) as percent_valid_appoint
+;
+
+-- 812	4362	0.1862
+-- 结论：大概有18.6%的比例是无效的电话问诊.因此有效问诊为81%
+
+
+-- Q3
+-- 分析
+-- 7天内复约电话问诊数，有165人进行了复约
+select count(patient_id) as again_count
+from vw1;
+-- 除了电话预约外，当天进行了实地预约的人数：647
+select count(patient_id) as inperson_count
+from vw3;
+
+-- 查询出第一次预约没有checkin和第二次预约没有checkin的人数，分别为43、32.根据165人进行了复约
+with t1
+as
+(
+select patient_id, appointment_date, appointment_time, checkin_date, checkin_time
+from appointmentdata
+where appointment_type='Telephone Visit'
+and appointment_time>='17:30:00'
+),
+t2 as
+(
+select patient_id, appointment_date, appointment_time, checkin_date, checkin_time
+from appointmentdata
+where appointment_type='Telephone Visit'
+)
+select
+sum(case when checkin_date is null then 1 else 0 end) as first_notcheck_appointment,
+sum(case when checkin_again_date is null then 1 else 0 end) as notcheck_appointment_again
+from
+(
+select distinct t1.patient_id, t1.appointment_date, t1.appointment_time,
+t2.appointment_date as appointment_again_date, t2.appointment_time as appointment_again_time,
+t1.checkin_date, t1.checkin_time,
+t2.checkin_date as checkin_again_date, t2.checkin_time as checkin_again_time
+from t1 join t2
+on t1.patient_id= t2.patient_id
+where (t2.appointment_date=t1.appointment_date and t2.appointment_time>t1.appointment_time
+or
+t2.appointment_date>t1.appointment_date
+and t2.appointment_date<date_add(t1.appointment_date,interval 7 day)
+)
+)t;
+
+
+--  有647再次进行了实地预约，根据下面查询得到同一天内既进行了电话约约，又实地预约的，没有checkin的情况，分别是123、73
+with t1
+as
+(
+select patient_id, appointment_date, appointment_time, checkin_date, checkin_time
+from appointmentdata
+where appointment_type='Telephone Visit'
+and appointment_time>='17:30:00'
+),
+t2 as
+(
+select patient_id, appointment_date, appointment_time, checkin_date, checkin_time
+from appointmentdata
+where appointment_type='In-Person Visit'
+)
+select
+sum(case when checkin_date is null then 1 else 0 end) as tel_notcheck_appointment,
+sum(case when checkin_again_date is null then 1 else 0 end) as inperson_notcheck_appointment
+from
+(
+select distinct t1.patient_id, t1.appointment_date, t1.appointment_time,
+t2.appointment_date as appointment_again_date, t2.appointment_time as appointment_again_time,
+t1.checkin_date, t1.checkin_time,
+t2.checkin_date as checkin_again_date, t2.checkin_time as checkin_again_time
+from t1 join t2
+on t1.patient_id= t2.patient_id and  t1.appointment_date=t2.appointment_date
+)t;
+
+-- 结论：根据以上分析，可以计算出重复预约且没有checkin的比例较高，可见重复预约的问诊效率不高，因此可以建议初次预约不赴约者排期延后，降低复约情况

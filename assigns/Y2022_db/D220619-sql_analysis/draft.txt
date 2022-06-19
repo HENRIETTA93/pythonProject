@@ -1,0 +1,22 @@
+c列 医生id
+de列 预约时间
+f列 病人id
+g列 问诊形式 inperson指的是面对面实地就诊；telephone指的是电话就诊
+hi列 何时预约的
+j列 是否赴约 y表示来了 n表示没来
+kl列 实际到了/打进电话 开始问诊的时间
+
+第二问问的是有效百分比，一个患者在夜间电话问诊后 七天之内没有再次问诊记录(包括实地和电话)，记为一次有效问诊。值得注意的就是 存在不少情况是当晚电话问诊后 当天再次出现实地问诊，这种即为无效的电话问诊。
+
+另外值得注意的，数据中存在show code为Y但是没有checkin数据的情况
+
+
+Background:  Some time ago, for our evening clinic (visits after 5:30pm) we explored the idea of providing telephone visits as an alternative to a face-to-face visit to patients to improve service.  We felt that this would be a more convenient alternative for the patient to get their medical needs met without having to come in.  Attached is about 6 months worth of visits, which includes the telephone encounters.  After we implemented the program, we wanted to use the visit data to determine how to staff for the evening appointments and evaluate the effectiveness of the program.
+
+Please use this data to determine the effectiveness of the program by answering the following business questions:
+
+* How many physicians would you need to staff the after-hours (appointments after 5:30pm) telephone clinic?  Assume, that 1 physician can see 4 telephone visits per hour.
+
+* How effective are the Telephone Appointments during after-hours (appointments after 5:30pm)? An effective telephone appointment is one where there are no follow-up appointments to the call within the following 7 days
+
+* Based on the available data, what suggestions would you have to improve the effectiveness of the telephone appointments (reduce the number of telephone appointments needing a follow-up appointment within 7 days)?
