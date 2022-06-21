@@ -17,21 +17,47 @@ go
 use 药品存销信息管理系统
 go
 
-create table 药品(
-药品编号 int primary key,
-药品类别 varchar(20) not null,
-药品名称 varchar(20) not null,
-产地 varchar(20)
+create table 员工(
+工号 int primary key,
+姓名 varchar(20) not null,
+性别 varchar(2) not null,
+年龄 int,
+学历 varchar(20),
+职务 varchar(20)
 );
 
-alter table 药品 add constraint chk_leibie check(药品类别 in('中药','草药','中成药'));
+create table 药品(
+药品编号 int primary key,
+药品名称 varchar(20) not null,
+生产厂家 varchar(50),
+生产日期 date,
+保质期 int,
+用途 varchar(30),
+价格 int,
+数量 int,
+经手人 int
+);
 
-create table 进货信息(
-进货编号 int primary key,
+
+create table 客户(
+客户编号 int primary key,
+姓名 varchar(20) not null,
+联系方式 varchar(11)
+);
+
+create table 购买(
+购买编号 int primary key,
+客户编号 int,
+药品编号 int,
+购买时间 date,
+数量 int
+);
+
+create table 入库信息(
+入库编号 int primary key,
 药品编号 int not null,
 进货日期 date not null default (getdate()),
 生产日期 date,
-有效期 date,
 进货单价 decimal not null,
 进货数量 int not null,
 constraint fk_yaopin foreign key (药品编号) references 药品(药品编号)
