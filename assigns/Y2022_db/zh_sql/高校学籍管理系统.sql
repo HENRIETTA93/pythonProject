@@ -234,3 +234,26 @@ from 学生, 选课, 课程
 where 学生.学生id=选课.学生id
 and 选课.课程id=课程.课程id
 group by 学生.学生id,姓名;
+
+
+
+select 院系.院系名, max(选课.成绩) as 最高分,min (选课.成绩) as 最低分
+from 院系
+left join 班级 on 院系.院系id=班级.院系id
+left join 学生 on 学生.班级=班级.班级id
+left join 选课 on 选课.学生id= 学生.学生id
+group by 院系.院系名;
+
+select 姓名, avg(选课.成绩) as 平均分
+from 学生
+left join 选课 on 选课.学生id= 学生.学生id
+where 姓名 like '%白%'
+group by 姓名
+order by 平均分 desc;
+
+
+select 教师.姓名, sum(课程.学分) as 总学分
+from 教师
+left join 课程 on 课程.教师id=教师.教师id
+group by 教师.姓名
+order by 总学分 desc;
