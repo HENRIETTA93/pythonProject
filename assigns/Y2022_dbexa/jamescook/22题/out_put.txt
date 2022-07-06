@@ -1,0 +1,4 @@
+You have 16 stamps (7 rare).
+Stamps with most number of denominations are from Australia
+You have stamps from these 5 countries:
+Australia,England,Hong Kong,New Zealand,South Africa

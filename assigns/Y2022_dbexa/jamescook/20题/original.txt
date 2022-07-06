@@ -1,0 +1,7 @@
+This file contains names and dates of births
+Ray Charles,23/9/1930
+Nina Simone,21/2/1933
+Michael Buble,9/9/1976
+Louis Armstrong,4/8/1901
+Harry Connick Jr.,11/9/1967
+Ella Fitzgerald,25/4/1917

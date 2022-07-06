@@ -1,0 +1,7 @@
+This file contains names and dates of births
+1917-4-25 = Ella Fitzgerald
+1967-9-11 = Harry Connick Jr.
+1901-8-4 = Louis Armstrong
+1976-9-9 = Michael Buble
+1933-2-21 = Nina Simone
+1930-9-23 = Ray Charles
