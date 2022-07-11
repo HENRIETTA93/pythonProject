@@ -1,0 +1,470 @@
+An existing project has a had a new optional biometric feature added to its login.
+
+The standard login for the system, which worked before, is now failing.
+
+What type of testing would have revealed this problem?
+
+Group of answer choices
+
+Partition testing
+
+Boundary testing
+
+Path testing
+
+Blackbox testing
+
+Regression testing
+
+
+Which of the following statements a true about black box testing?
+
+(select all correct answers)
+
+Group of answer choices
+
+Testing uses path testing
+
+The tests are written using test data equivalence  partitioning
+
+Black box testing keeps the source code hidden
+
+Test cases control the flow round loops
+
+The tests are based on the specification
+
+
+Which of the following are processes in the waterfall software lifecycle?
+
+(select all correct answers)
+
+Group of answer choices
+
+Requirements analysis and definition
+
+Operation and maintenance
+
+Integration and system testing
+
+SCRUM
+
+Risk Analysis
+
+
+
+Which of the following statements comparing black box and white box testing are true?
+
+(select all correct answers)
+
+Group of answer choices
+
+Black box testing can use the specification only to develop the test, white box testing needs the source code as well
+
+White box testing can be used to test all the paths in the code
+
+Black box testing can be used to test all the paths in the code
+
+White box testing is a form of regression testing
+
+White box testing can be started earlier in the product lifecycle
+
+
+Which of the following are disadvantages of the waterfall method?
+
+(select all correct answers)
+
+Group of answer choices
+
+Lack of testing phase
+
+Inflexible partitioning
+
+Lack of process visibility
+
+Difficult to respond to changing customer requirements
+
+Systems are sometimes poorly structured
+
+
+Which of the following are non functional requirements?
+
+(select all correct answers)
+
+Group of answer choices
+
+The users will login with a username and a password
+
+The system should use OO modelling and UML as part of its design approach
+
+The username must be at least 10 characters long
+
+The code must be written in Java
+
+The system has a forgot password button which uses email
+
+
+Which of the following is true about Mealy machines?
+
+(select all correct answers)
+
+Group of answer choices
+
+The output is determined by the input only only
+
+A state has to have a token on the input to be enabled
+
+They are finite state machines
+
+The can be used to model deterministic systems
+
+The output is determine by the currant state only
+
+
+Parkinson’s law is best described by which of the following statements?
+Group of answer choices
+
+The project cost is computed by comparing the project to a similar project in the same application domain
+
+The project cost is estimated as a mathematical function of product, project and process attributes whose values are estimated by project managers
+
+The project costs expand to consume whatever resources are available
+
+One or more experts in both software development and the application domain use their experience to predict the project costs
+
+The cost of the project is computed by a computer simulation of the project
+
+
+
+Which of the following statements is true, with respect to synchronization bars in a UML activity diagram?
+
+(select all correct answers)
+
+Group of answer choices
+
+It can be used to represent a decision
+
+It represents a user case
+
+It can be used to start multiple activities
+
+It is used to control the start time of a new activity
+
+It is represented by a thick line
+
+
+Which of the following are examples of software coupling?
+
+(select all correct answers)
+
+Group of answer choices
+
+One piece of software calling another piece of software
+
+One class being a superclass of another class
+
+Two pieces of software communicating by sharing data
+
+Two software methods executing at the same time
+
+
+Which of the following statements are true about white box testing?
+
+(select all correct answers)
+
+
+Group of answer choices
+
+Cyclomatic complexity can be used to work out the minimum number of tests required to check every path
+
+It can be used to ensure every path of the code is executed at least once
+
+It uses knowledge of the source code
+
+It guarantees to find all execution faults
+
+It can be used to test code that is rarely executed when running a program with  typical data
+
+
+
+What is the best description of Algorithmic cost modelling?
+
+
+
+Group of answer choices
+
+The project costs whatever the customer has to spend on it
+
+The work expands to fill the time available
+
+A formulaic approach based on historical cost information
+
+The project is compared to previous projects
+
+The project is estimated based on market conditions
+
+
+
+Which of the following are problems associated with task dependencies when task scheduling?
+
+(select all correct answers)
+
+Group of answer choices
+
+Increases the number of staff required to complete the project
+
+Makes testing more difficult
+
+Dependencies will result in code coupling
+
+Stops tasks to be being executed concurrently
+
+Can increase total schedule time
+
+Which of the following statements about petri-nets are false?
+
+Group of answer choices
+
+Transitions fire atomically
+
+The weight on an incoming Petri arc to a place defines the number of tokens it produces
+
+Petri nets are always finite state machines
+
+Petri nets are useful for modelling concurrent systems
+
+Petri nets can be non-deterministic
+
+
+Which of the following are non-functional requirements?
+
+(select all correct answers)
+
+Group of answer choices
+
+The password should contain both upper and lower case letters
+
+The system must comply with the Data Protection Act
+
+The system should be secure
+
+The system should have a login which uses a username and password
+
+All encryption of data should use DES
+
+
+Which of the following are verifiable non-functional requirements?
+
+(select all correct answers)
+
+
+
+Group of answer choices
+
+The system responds quickly
+
+The implementation of the code is to be done in Java
+
+All passwords must be at least 8 characters
+
+The system is secure
+
+The system provides login and forgot password features
+
+A number of modules which are used to start up and test a coffee machine, when it is powered on, are grouped
+
+together.  What type of cohesion is this an example of?
+
+Group of answer choices
+
+Temporal cohesion
+
+Logical cohesion
+
+Sequential cohesion
+
+Coincidental cohesion
+
+Object cohesion
+
+
+Which of the following statements are TRUE for incremental development?
+X1 Customer value can be delivered with each increment so system functionality is available earlier
+X2 Early increments act as a prototype to help elicit requirements for later increments
+X3 Lower risk of overall project failure
+X4 The highest priority system services tend to receive the most testing
+
+Group of answer choices
+
+X1 and X2 only
+
+X2,  X3 and X4 only
+
+X1, X3 and X4 only
+
+X1, X2, X3 and X4
+
+X1, X2 and X3 only
+
+Match the non-functional requirement to the appropriate measure.
+
+Group of answer choices
+Reliability
+
+[ Choose ]
+Ease of use
+
+[ Choose ]
+Portability
+
+
+Which of the following is/are the benefits when using a repository model?
+
+(select all correct answers)
+
+Group of answer choices
+
+Sub-systems must agree on the data model.
+
+Sub-systems producing data need not be concerned with how that data is used by other sub-systems.
+
+Databases are an efficient way to share large amounts of data and data does not have to be transformed between different sub-systems (they agree on a single data representation).
+
+Backups can be controlled by a single repository manager.
+
+The data model is visible through the repository schema.
+
+
+Databases are an efficient way to share large amounts of data and data does not have to be transformed between different sub-systems (they agree on a single data representation).
+Sub-systems producing data need not be concerned with how that data is used by other sub-systems.
+Many standard operations such as backup, security, access control, recovery and data integrity are centralised and can be controlled by a single repository manager.
+The data model is visible through the repository schema.
+
+
+
+Match the interface error with its description.
+
+Group of answer choices
+Interface misuse
+
+[ Choose ]
+Interface misunderstanding
+
+[ Choose ]
+Timing errors
+
+What is the benefit of black box testing over white box testing?
+
+
+
+Group of answer choices
+
+The code will be simpler
+
+The tests will guarantee that every bug is revealed
+
+The tests run faster
+
+The tests can be developed before the code is written
+
+The tests can ensure every path is executed
+
+
+Which of the following would be tested best using a bottom up approach to testing?
+
+(select all correct answers)
+
+Group of answer choices
+
+Prototype systems (demonstration)
+
+Real time systems
+
+Systems with strict performance requirements
+
+Object-oriented systems
+
+
+Which of the following is true about incremental testing?
+
+(select all correct answers)
+
+Group of answer choices
+
+Helps to localise errors
+
+Involves regressive testing
+
+Exhaustively tests the software
+
+Good for speed testing of software
+
+
+Indicate what information is provided by Non-Functional requirements?
+
+X1:  How the system should behave in particular situations.
+X2:  The constraints on the development process, standards.
+X3:  How the system should react to particular inputs.
+X4:  The constraints on the services offered by the system such as timing constraints.
+
+Which of the following are depicted in a typical UML class diagram?
+
+(select all correct answers)
+
+Group of answer choices
+
+Access modifiers
+
+State events
+
+Processes
+
+Actors
+
+Attributes
+
+
+Even though the software passes all the specifications, the customer is unhappy with the final product.
+
+Which of the following statements is true?
+
+Group of answer choices
+
+By using path testing this could be discovered earlier in the life cycle
+
+This is an example of verification failure
+
+This would resolved by more white box testing
+
+This is an example of validation failure
+
+This would be resolved using regression
+
+
+What is true about two tests that are in the same equivalence partition?
+
+Group of answer choices
+
+The tests reveal the same bug
+
+The use the same test data
+
+The test data is stored in the same database
+
+They both produce the same behaviour from the system
+
+The data for the test is of the same type
+
+
+What is the purpose of extension in a use case diagram?
+
+Group of answer choices
+
+It is shows what must be true for a use case to proceed
+
+It is used to describe tasks which take a long time
+
+It shows the change of the system internal state after the use case has finished
+
+It describes optional use case behaviour
+
+It defines the order of events in the use case
