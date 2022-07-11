@@ -1,0 +1,17 @@
+*~
+\#*
+.#*
+.DS_Store
+*.bak
+TAGS
+*.swn
+*.swo
+*.swp
+.gdb_history
+/.vscode/
+
+*.orig
+*.rej
+
+# coredumps
+*.core
