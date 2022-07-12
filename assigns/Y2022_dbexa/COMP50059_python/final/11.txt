@@ -1,0 +1,194 @@
+[expression for item in list]
+
+Q1:3
+Q2:3
+Q3:4
+Q4:1
+Q5:2
+Q6:5
+Q7:4
+Q8:1
+Q9:3
+Q10:1
+
+Q11:1
+Q12:[2,4,6] 选则aaa，5，28
+Q13:[1,4] typeerror, indexerror
+Q14:[2,4] continue,break
+Q15:[2,4] list,stringvariable
+
+Q16：
+syntax error is the error type which is
+likely to be the least harmful in the long-run.
+For the syntax error can be found before executed,
+so it can be fixed 及时地，but run-time and logic
+error may not found 及时地，可能在运行时造成意外的错误导致与期望不一致。
+
+
+Q17:
+(1) For every card 都有两个属性，分别是number，和suite，it is represented as
+the pair(X,Y)， and X is the number, Y is the suite.
+tuple type can 最好地匹配card 的数据特征，因此tuple是最适合的数据类型。
+
+(2)
+For a set/deck of playing cards is 52.
+一组牌有52张，每张牌都有相同的数据结构，即都是pair(X,Y) 形式。
+在playing cards时需要shuffle before each round，即在每个round的游戏中，每张牌都有一个固定的index（位置），
+由于List type 是具有索引的顺序集合，可以标识每个元素的位置，因此是最适合表示deck of cards 的数据类型。
+
+Q18: recommend=genre=='Sci-Fi' or genre=='Western' and year_made<1980 or genre='Action' and year>_made=1990 and rating>=4
+
+Q19:
+(1) because lst2 and lst1 are the same object, for lst1 has be assigned to lst2 在代码第二行中：lst2=lst1
+so when lst1 changed, lst2 will changed
+(2) 在代码的第三行中，lst3=lst1.copy()
+lst3 is a shallow copy of lst1, and lst3 是lst1产生的新副本
+不可变的元素进入一个新的结构，但可变元素不进行复制而是对其进行引用。
+在lst1中，元素（1，2，3）是tuple类型，是不可变元素，因此在lst3中将其复制，
+而元素[1,2,3]是list类型，是可变元素，lst3不进行复制，对其进行引用，当lst1中
+的元素[1,2,3]发生变化时，由于lst3指向其，so the second element of lst3 changed along
+with the same change in lst1.
+
+(3)
+use deepcopy can completely makes a new copy of all immutable and mutable elements
+so:
+lst3=lst1.deepcopy() that lst3 will not change by lst1.
+
+
+
+Q20:
+filename="city_rainfalls.csv"
+
+Q21:
+初始set max_rainfall=0, then compare to the initial max_rainfall,if new rainfall value bigger than it,
+reset the max_rainfall to the new value， and 像这样循环比较，最终找到最大值
+因此，初始设置max_rainfall =0 是为了后续的循环比较从而寻找到最大值。
+
+Q22:
+def wettest_city(data):
+    max_rainfall = 0
+    data= data[1:]
+    city_list = []
+    for row in data:
+        current_city=row[0]
+        for cell in row[1:]:
+            rainfall = float(cell)
+            if rainfall>max_rainfall:
+                max_rainfall= rainfall
+                city_list = [current_city]
+            elif rainfall == max_rainfall:
+                if current_city not in city_list:
+                    city_list.append (current_city)
+    return (max_rainfall, sorted(city_list))
+
+说明：在添加新的city到city_list时，判断当前city是否已经在city_list 中，如果不存在再进行添加
+
+
+Q23:
+data[X][Y] form in code is cell=data[j][i]:
+根据代码中cell=data[j][i]：
+j表示行索引，i表示列索引，即j表示月份，i表示city
+即：
+X 表示data的每一列的索引
+Y 表示data的每一行的索引
+
+
+
+Q24:
+use data= data[1:] for the first column of the file city_rainfalls.csv is city, 不是有效的月份信息。
+同理 row[1:] has the same reason for the first row of the file is month info.
+
+
+
+Q25:
+    if rainfall >= max_rainfall:
+    should be
+    if rainfall > max_rainfall:
+
+   使用>=进行比较，则符合相等条件的进入该分支，则每次都将对month_list重新赋值，会丢失掉有相同降雨量且都是最大降雨量的月份
+
+Q26：
+        i=1
+        while i<len(row):
+            cell = row[i]
+            rainfall = float(cell)
+            if rainfall > max_rainfall:
+                max_rainfall = rainfall
+                city_list = [current_city]
+            elif rainfall == max_rainfall:
+                if current_city not in city_list:
+                    city_list.append(current_city)
+            i+=1
+
+
+Q27:
+def reverse_dict(dictionary):
+    assert type(dictionary)==dict
+    res={}
+    for key in dictionary.keys():
+        val=dictionary[key]
+        if val not in res.keys():
+            res[val]=[key]
+        else:
+            res[val].append(key)
+    res=dict(sorted(res.items(),key=lambda x:x[0],reverse=False))
+    return res
+
+
+Q28:
+def note_separation(string_of_notes):
+    lst=[]
+    for x in string_of_notes:
+        if x not in ['#','b']:
+            lst.append(x)
+        else:
+            val=lst[-1]+x
+            lst.pop()
+            lst.append(val)
+    return lst
+
+Q29:
+def not_like_the_others(lst1,lst2):
+    x1=None
+    x2=None
+    i1=0
+    i2=0
+    typetuple=[]
+    for item in lst1:
+        if type(item) not in typetuple:
+            typetuple.append(type(item))
+    i=0
+    for i in range(0,len(lst1)):
+        if typetuple.index(type(lst1[i]))==0:
+            continue
+        else:
+            x1=lst1[i]
+            i1=i
+    for i in range(0,len(lst2)):
+        if typetuple.index(type(lst2[i]))==1:
+            continue
+        else:
+            x2=lst2[i]
+            i2=i
+
+    lst1[i1]=x2
+    lst2[i2]=x1
+
+Q30:
+def sum_list(lst):
+    if len(lst)==0:
+        return 0
+    else:
+        return lst[0]+sum_list(lst[1:])
+def sum_multi_list(mlst):
+    if len(mlst)==0:
+        return 0
+    else:
+        a=mlst[0]
+        if type(a)==list:
+            return a[0]+sum_multi_list(a[1:])+sum_multi_list(mlst[1:])
+        else:
+            return a+sum_multi_list(mlst[1:])
+Q31:
+
+
