@@ -1,0 +1,170 @@
+-- 1. 用join方式找出没有分班的学生ID及姓名
+-- a.学生信息表student_info，包含字段：
+-- student_id：学生ID
+-- name: 		学生姓名
+-- desc：		学生其它信息
+--
+-- b.班级表class_info：
+-- class_id：班级ID
+-- name：	  班级名称
+-- last_update: 条目最后更新时间
+--
+-- c.学生分班表：student_class:
+-- student_id: 学生ID
+-- class_id:	班级ID
+-- last_update: 条目最后更新时间
+--
+-- 问题：用join方式找出没有分班的学生ID及姓名
+
+create table student_info(
+student_id int primary key,
+name varchar(20),
+`desc` text
+);
+create table student_class(
+student_id int,
+class_id int,
+last_update date
+);
+
+select student_info.student_id, student_info.name
+from student_info
+left join student_class on student_info.student_id=student_class.student_id
+where class_id is null;
+
+
+-- 2. 查找成交的商品
+-- a. 商品列表：goods：
+-- id：商品ID
+-- name：商品名称
+-- price：商品价格
+--
+-- b. 成交表：trans：
+-- id：交易ID
+-- goods_id：商品ID
+-- count：成交个数
+--
+-- 问题：查找购买个数超过200,价格小于80的商品，按照商品id升序排序
+
+create table goods(
+id int,
+name varchar(20),
+price int
+);
+create table trans(
+id int,
+goods_id int,
+count int
+);
+
+
+select goods.id, goods.name
+from goods
+join trans on goods.id=trans.goods_id
+where goods.price<80
+group by goods.id, goods.name
+having sum(count)>200;
+
+
+
+-- 3. 留存率统计
+-- ebay每天有很多人登录
+-- a. 有一个登录记录表 login_info：
+-- id：session_id
+-- user_id: 用户ID
+-- client_id：客户端ID
+-- date：登录日期
+-- 示例：
+-- id，user_id，client_id，date
+-- 1	2	1	2020-10-12
+-- 2	3	2	2020-10-12
+-- 3	1	2	2020-10-12
+-- 4	2	2	2020-10-13
+-- 5	1	2	2020-10-13
+-- 6	3	1	2020-10-14
+-- 7	4	1	2020-10-14
+-- 8	4	1	2020-10-15
+-- 第1行表示user_id为2的用户在2020-10-12使用了客户端id为1的设备登录，因为是第1次登录，所以是新用户
+-- 第4行表示user_id为2的用户在2020-10-13使用了客户端id为2的设备登录，因为是第2次登录，所以是老用户
+--
+-- 问题：请写出一个sql语句查询每个日期新用户的次日留存率，结果保留小数点后面3位数(3位之后的四舍五入)，并且查询结果按照日期升序排序，上面的例子查询结果如下:
+-- date，p
+-- 2020-10-12   0.667
+-- 2020-10-13   0.000
+-- 2020-10-14   1.000
+-- 2020-10-15   0.000
+-- 含义是：
+-- 2020-10-12登录了3个(user_id为2，3，1)新用户，2020-10-13，只有2个(id为2,1)登录，故2020-10-12新用户次日留存率为2/3=0.667;
+-- 2020-10-13没有新用户登录，输出0.000;
+-- 2020-10-14登录了1个(user_id为4)新用户，2020-10-15，user_id为4的用户登录，故2020-10-14新用户次日留存率为1/1=1.000;
+-- 2020-10-15没有新用户登录，输出0.000;
+
+create table login_info(
+id int,
+user_id int,
+client_id int,
+date date
+);
+
+insert into login_info
+values
+(1,	2,	1,'	2020-10-12'),
+(2,	3,	2,'	2020-10-12'),
+(3,	1,	2,'	2020-10-12'),
+(4,	2,	2,'	2020-10-13'),
+(5,	1,	2,'	2020-10-13'),
+(6,	3,	1,'	2020-10-14'),
+(7,	4,	1,'	2020-10-14'),
+(8,	4,  1,'	2020-10-15');
+
+-- find new user count for every day
+select date, count(distinct user_id) as new_user_count
+from login_info t1
+where user_id not in (select user_id from login_info where date<t1.date)
+group by date;
+
+-- find next day 's users
+with tmp
+as
+(
+select distinct date, user_id
+from login_info t1
+where user_id not in (select user_id from login_info where date<t1.date)
+)
+select distinct tt.date as next_date, tmp.date, tt.user_id
+from login_info tt
+join tmp on tt.date=DATE_ADD(tmp.date,INTERVAL 1 day);
+
+--
+select tt1.date, round(count(tt2.user_id)/tt1.new_user_count,3) as p
+from
+(
+select date, count(distinct user_id) as new_user_count
+from login_info t1
+where user_id not in (select user_id from login_info where date<t1.date)
+group by date
+) tt1
+join
+(
+with tmp
+as
+(
+select distinct date, user_id
+from login_info t1
+where user_id not in (select user_id from login_info where date<t1.date)
+)
+select distinct tt.date as next_date, tmp.date, tt.user_id
+from login_info tt
+join tmp on tt.date=DATE_ADD(tmp.date,INTERVAL 1 day)
+) tt2 on tt1.date=tt2.date
+group by tt1.date
+
+union
+
+select distinct date, 0.000
+from login_info
+where date not in (select distinct date
+from login_info t1
+where user_id not in (select user_id from login_info where date<t1.date)
+)
+order by date;
